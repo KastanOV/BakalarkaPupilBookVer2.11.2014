@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ResultsEditDlg" widgetVar="ResultsEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditResultsTitle}">
+            <h:form id="ResultsEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{resultsController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditResultsLabel_idResults}" for="idResults" />
+                        <p:inputText id="idResults" value="#{resultsController.selected.idResults}" title="#{bundle.EditResultsTitle_idResults}" required="true" requiredMessage="#{bundle.EditResultsRequiredMessage_idResults}"/>
+                        <p:outputLabel value="#{bundle.EditResultsLabel_description}" for="description" />
+                        <p:inputText id="description" value="#{resultsController.selected.description}" title="#{bundle.EditResultsTitle_description}" />
+                        <p:outputLabel value="#{bundle.EditResultsLabel_score}" for="score" />
+                        <p:selectBooleanCheckbox id="score" value="#{resultsController.selected.score}" required="true" requiredMessage="#{bundle.EditResultsRequiredMessage_score}"/>
+                        <p:outputLabel value="#{bundle.EditResultsLabel_date}" for="date" />
+                        <p:calendar id="date" pattern="MM/dd/yyyy HH:mm:ss" value="#{resultsController.selected.date}" title="#{bundle.EditResultsTitle_date}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditResultsLabel_studySubjectidStudySubject}" for="studySubjectidStudySubject" />
+                        <p:selectOneMenu id="studySubjectidStudySubject" value="#{resultsController.selected.studySubjectidStudySubject}" required="true" requiredMessage="#{bundle.EditResultsRequiredMessage_studySubjectidStudySubject}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{studysubjectController.itemsAvailableSelectOne}"
+                                           var="studySubjectidStudySubjectItem"
+                                           itemValue="#{studySubjectidStudySubjectItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditResultsLabel_teacherLogin}" for="teacherLogin" />
+                        <p:selectOneMenu id="teacherLogin" value="#{resultsController.selected.teacherLogin}" required="true" requiredMessage="#{bundle.EditResultsRequiredMessage_teacherLogin}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{usersController.itemsAvailableSelectOne}"
+                                           var="teacherLoginItem"
+                                           itemValue="#{teacherLoginItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditResultsLabel_studentLogin}" for="studentLogin" />
+                        <p:selectOneMenu id="studentLogin" value="#{resultsController.selected.studentLogin}" required="true" requiredMessage="#{bundle.EditResultsRequiredMessage_studentLogin}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{usersController.itemsAvailableSelectOne}"
+                                           var="studentLoginItem"
+                                           itemValue="#{studentLoginItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{resultsController.update}" value="#{bundle.Save}" update="display,:ResultsListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ResultsEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ResultsEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
