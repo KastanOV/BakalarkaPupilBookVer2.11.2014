@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SchoolyearEditDialog" widgetVar="SchoolyearEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditSchoolyearTitle}">
+            <h:form id="SchoolyearEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{schoolYearMB.edited != null}">
+                        <p:outputLabel value="Název" for="name" />
+                        <p:inputText id="name" value="#{schoolYearMB.edited.name}" title="Název" required="true" />
+                        <p:outputLabel value="Je to aktualní" for="isactualyear" />
+                        <p:selectBooleanCheckbox id="isactualyear" value="#{schoolYearMB.edited.isactualyear}" required="true" />
+                        <p:outputLabel value="StartDate" for="startDate" />
+                        <p:calendar id="startDate" pattern="MM/dd/yyyy" value="#{schoolYearMB.edited.startDate}" title="Start" required="true" showOn="button"/>
+                        <p:outputLabel value="EndDate" for="endDate" />
+                        <p:calendar id="endDate" pattern="MM/dd/yyyy" value="#{schoolYearMB.edited.endDate}" title="End" required="true" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{schoolYearMB.saveSchoolYears}" value="Ulozit" update="display,:AdminMainMenu:SchoolYears,:growl" oncomplete="handleSubmit(args,'SchoolyearEditDialog');"/>
+                    <p:commandButton value="Zrusit" onclick="SchoolyearEditForm.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+    </ui:composition>
+</html>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+    	
+    	<ui:composition template="/templates/admin.xhtml">
+    	
+            <ui:define name="body">
+                <h:form id="AdminMainMenu">
+                    <h:panelGrid columns="2" style="margin-bottom: 10px" cellpadding="5">
+                        <p:outputLabel for="SchoolYears" value="Select School Year: "/>
+                        <p:selectOneMenu id="SchoolYears" value="#{schoolYearMB.edited}" onchange="submit()" converter="#{SchoolYearConverter}" effect="fold" >
+                            <f:selectItems value="#{schoolYearMB.allSchoolYears}" var="item "/>
+                        </p:selectOneMenu>
+                        <p:commandButton id="createButton" icon="ui-icon-plus"   value="Create" actionListener="#{schoolYearMB.prepareNew}" update=":SchoolyearCreateForm" oncomplete="PF('SchoolyearCreateDialog').show()"/>
+                        <p:commandButton id="editButton"   icon="ui-icon-pencil" value="Edit" update=":SchoolyearEditForm" oncomplete="PF('SchoolyearEditDialog').show()" disabled="#{empty schoolyearController.selected}"/>
+                    </h:panelGrid>
+                </h:form>
+                <ui:include src="Admin/CreateSY.xhtml"/>
+                <ui:include src="Admin/EditSY.xhtml"/>
+            </ui:define>
+    	</ui:composition>
+    	
+    </h:body>
+
+</html>
+

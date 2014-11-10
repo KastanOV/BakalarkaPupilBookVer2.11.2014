@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+    	
+    	<ui:composition template="/templates/admin.xhtml">
+    	
+            <ui:define name="body">
+                <h:form id="AdminMainMenu">
+                    <h:panelGrid columns="2" style="margin-bottom: 10px" cellpadding="5" border="1">
+                        <p:outputLabel for="SchoolYears" value="Select School Year: "/>
+                        <p:selectOneMenu id="SchoolYears" value="#{schoolYearMB.edited}" onchange="submit()" converter="#{SchoolYearConverter}" effect="fold" >
+                            <f:selectItem itemLabel="#{bundle.dropdownSchoolYear}" itemValue="" />
+                            <f:selectItems value="#{schoolYearMB.allSchoolYears}" var="itemSchoolYear"/>
+                        </p:selectOneMenu>
+                        <p:commandButton id="createButton" icon="ui-icon-plus"   value="Create" actionListener="#{schoolYearMB.prepareNew}" update=":SchoolyearCreateForm" oncomplete="PF('SchoolyearCreateDialog').show()"/>
+                        <p:commandButton id="editButton"   icon="ui-icon-pencil" value="Edit" update=":SchoolyearEditForm" oncomplete="PF('SchoolyearEditDialog').show()" disabled="#{empty schoolYearMB.edited}"/>
+                        <p:outputLabel for="StudyGroupsOneMenu" value="VyberStudíjní skupinu: "/>
+                        <p:selectOneMenu id="StudyGroupsOneMenu" value="#{studyGroupMB.edited}" onchange="submit()" converter="#{studyGroupConverter}" effect="fold">
+                            <f:selectItem itemLabel="#{bundle.dropdownStudyGroups}" itemValue="" />
+                            <f:selectItems value="#{studyGroupMB.getStudyGroups(schoolYearMB.edited.idSchoolYear)}" var="itemStudyGroup"/>
+                        </p:selectOneMenu>
+                        <p:commandButton id="createButtonSG" icon="ui-icon-plus"   value="Nová studijní skupina" actionListener="#{studyGroupMB.prepareNew(schoolYearMB.edited)}" update=":StudyGroupCreateForm" oncomplete="PF('StudyGroupCreateDialog').show()"/>
+                        <!--<p:commandButton id="editButton"   icon="ui-icon-pencil" value="Edit" update=":StudyGroupEditForm" oncomplete="PF('StudyGroupEditDialog').show()" disabled="#{empty StudyGroupMB.edited}"/>-->
+                        
+                    </h:panelGrid>
+                </h:form>
+                <ui:include src="CreateSY.xhtml"/>
+                <ui:include src="EditSY.xhtml"/>
+                <ui:include src="CreateSG.xhtml"/>
+            </ui:define>
+    	</ui:composition>
+    	
+    </h:body>
+
+</html>
+
