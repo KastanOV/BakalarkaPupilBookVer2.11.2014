@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AttendanceCreateDlg" widgetVar="AttendanceCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{names.CreateAttendanceTitle}">
+            <h:form id="AttendanceCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{attendanceController.selected != null}">
+                        <p:outputLabel value="#{names.CreateAttendanceLabel_idAttendance}" for="idAttendance" />
+                        <p:inputText id="idAttendance" value="#{attendanceController.selected.idAttendance}" title="#{names.CreateAttendanceTitle_idAttendance}" required="true" requiredMessage="#{names.CreateAttendanceRequiredMessage_idAttendance}"/>
+                        <p:outputLabel value="#{names.CreateAttendanceLabel_missingStart}" for="missingStart" />
+                        <p:calendar id="missingStart" pattern="MM/dd/yyyy HH:mm:ss" value="#{attendanceController.selected.missingStart}" title="#{names.EditAttendanceTitle_missingStart}" required="true" requiredMessage="#{names.EditAttendanceRequiredMessage_missingStart}" showOn="button"/>
+                        <p:outputLabel value="#{names.CreateAttendanceLabel_missingEnd}" for="missingEnd" />
+                        <p:calendar id="missingEnd" pattern="MM/dd/yyyy HH:mm:ss" value="#{attendanceController.selected.missingEnd}" title="#{names.EditAttendanceTitle_missingEnd}"  showOn="button"/>
+                        <p:outputLabel value="#{names.CreateAttendanceLabel_excussed}" for="excussed" />
+                        <p:selectBooleanCheckbox id="excussed" value="#{attendanceController.selected.excussed}" required="true" requiredMessage="#{names.EditAttendanceRequiredMessage_excussed}"/>
+                        <p:outputLabel value="#{names.CreateAttendanceLabel_usersLogin}" for="usersLogin" />
+                        <p:selectOneMenu id="usersLogin" value="#{attendanceController.selected.usersLogin}" required="true" requiredMessage="#{names.EditAttendanceRequiredMessage_usersLogin}">
+                            <f:selectItems value="#{usersController.itemsAvailableSelectOne}"
+                                           var="usersLoginItem"
+                                           itemValue="#{usersLoginItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{attendanceController.create}" value="#{names.Save}" update="display,:AttendanceListForm:datalist,:growl" oncomplete="handleSubmit(args,'AttendanceCreateDialog');"/>
+                    <p:commandButton value="#{names.Cancel}" onclick="AttendanceCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

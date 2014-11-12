@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SchoolyearViewDlg" widgetVar="SchoolyearViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{names.ViewSchoolyearTitle}">
+            <h:form id="SchoolyearViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{schoolyearController.selected != null}">
+                        <h:outputText value="#{names.ViewSchoolyearLabel_idSchoolYear}"/>
+                        <h:outputText value="#{schoolyearController.selected.idSchoolYear}" title="#{names.ViewSchoolyearTitle_idSchoolYear}"/>
+                        <h:outputText value="#{names.ViewSchoolyearLabel_name}"/>
+                        <h:outputText value="#{schoolyearController.selected.name}" title="#{names.ViewSchoolyearTitle_name}"/>
+                        <h:outputText value="#{names.ViewSchoolyearLabel_isactualyear}"/>
+                        <p:selectBooleanCheckbox value="#{schoolyearController.selected.isactualyear}" disabled="true"/>
+                        <h:outputText value="#{names.ViewSchoolyearLabel_startDate}"/>
+                        <h:outputText value="#{schoolyearController.selected.startDate}" title="#{names.ViewSchoolyearTitle_startDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{names.ViewSchoolyearLabel_endDate}"/>
+                        <h:outputText value="#{schoolyearController.selected.endDate}" title="#{names.ViewSchoolyearTitle_endDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{names.Close}" onclick="SchoolyearViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

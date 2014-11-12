@@ -23,7 +23,7 @@
                         <p:outputLabel for="StudyGroupsOneMenu" value="VyberStudíjní skupinu: "/>
                         <p:selectOneMenu id="StudyGroupsOneMenu" value="#{studyGroupMB.edited}" onchange="submit()" converter="#{studyGroupConverter}" effect="fold">
                             <f:selectItem itemLabel="#{bundle.dropdownStudyGroups}" itemValue="" />
-                            <f:selectItems value="#{studyGroupMB.getStudyGroups(schoolYearMB.edited.idSchoolYear)}" var="itemStudyGroup"/>
+                            <f:selectItems value="#{studyGroupMB.getStudyGroups(schoolYearMB.edited.idSchoolYear)}" var="i" itemLabel="#{i.name}" itemValue="#{i}"/>
                         </p:selectOneMenu>
                         <p:commandButton id="createButtonSG" icon="ui-icon-plus"   value="Nová studijní skupina" actionListener="#{studyGroupMB.prepareNew(schoolYearMB.edited)}" update=":StudyGroupCreateForm" oncomplete="PF('StudyGroupCreateDialog').show()"/>
                         <!--<p:commandButton id="editButton"   icon="ui-icon-pencil" value="Edit" update=":StudyGroupEditForm" oncomplete="PF('StudyGroupEditDialog').show()" disabled="#{empty StudyGroupMB.edited}"/>-->

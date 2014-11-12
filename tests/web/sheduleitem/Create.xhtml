@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SheduleitemCreateDlg" widgetVar="SheduleitemCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{names.CreateSheduleitemTitle}">
+            <h:form id="SheduleitemCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{sheduleitemController.selected != null}">
+                        <p:outputLabel value="#{names.CreateSheduleitemLabel_idSheduleItem}" for="idSheduleItem" />
+                        <p:inputText id="idSheduleItem" value="#{sheduleitemController.selected.idSheduleItem}" title="#{names.CreateSheduleitemTitle_idSheduleItem}" required="true" requiredMessage="#{names.CreateSheduleitemRequiredMessage_idSheduleItem}"/>
+                        <p:outputLabel value="#{names.CreateSheduleitemLabel_day}" for="day" />
+                        <p:selectBooleanCheckbox id="day" value="#{sheduleitemController.selected.day}" required="true" requiredMessage="#{names.EditSheduleitemRequiredMessage_day}"/>
+                        <p:outputLabel value="#{names.CreateSheduleitemLabel_hour}" for="hour" />
+                        <p:selectBooleanCheckbox id="hour" value="#{sheduleitemController.selected.hour}" />
+                        <p:outputLabel value="#{names.CreateSheduleitemLabel_studyGroupidStudyGroup}" for="studyGroupidStudyGroup" />
+                        <p:selectOneMenu id="studyGroupidStudyGroup" value="#{sheduleitemController.selected.studyGroupidStudyGroup}" required="true" requiredMessage="#{names.EditSheduleitemRequiredMessage_studyGroupidStudyGroup}">
+                            <f:selectItems value="#{studygroupController.itemsAvailableSelectOne}"
+                                           var="studyGroupidStudyGroupItem"
+                                           itemValue="#{studyGroupidStudyGroupItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{names.CreateSheduleitemLabel_studySubjectidStudySubject}" for="studySubjectidStudySubject" />
+                        <p:selectOneMenu id="studySubjectidStudySubject" value="#{sheduleitemController.selected.studySubjectidStudySubject}" required="true" requiredMessage="#{names.EditSheduleitemRequiredMessage_studySubjectidStudySubject}">
+                            <f:selectItems value="#{studysubjectController.itemsAvailableSelectOne}"
+                                           var="studySubjectidStudySubjectItem"
+                                           itemValue="#{studySubjectidStudySubjectItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{names.CreateSheduleitemLabel_usersLogin}" for="usersLogin" />
+                        <p:selectOneMenu id="usersLogin" value="#{sheduleitemController.selected.usersLogin}" required="true" requiredMessage="#{names.EditSheduleitemRequiredMessage_usersLogin}">
+                            <f:selectItems value="#{usersController.itemsAvailableSelectOne}"
+                                           var="usersLoginItem"
+                                           itemValue="#{usersLoginItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{sheduleitemController.create}" value="#{names.Save}" update="display,:SheduleitemListForm:datalist,:growl" oncomplete="handleSubmit(args,'SheduleitemCreateDialog');"/>
+                    <p:commandButton value="#{names.Cancel}" onclick="SheduleitemCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

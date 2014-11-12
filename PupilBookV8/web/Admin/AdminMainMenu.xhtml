@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+    	
+    	<ui:composition template="/templates/admin.xhtml">
+    	
+            <ui:define name="body">
+                <h:form id="AdminMainMenu">
+                    <p:messages autoUpdate="true" />
+                        <h:panelGrid columns="3" style="margin-bottom: 10px" cellpadding="5">
+                            <p:outputLabel for="SchoolYears" value="Select School Year: "/>
+                            <p:selectOneMenu id="SchoolYears" value="#{AdminMainMB.editedSY}" converter="SchoolYearConverter" effect="fold" >
+
+                                <f:selectItems value="#{AdminMainMB.years2}" var="item "/>
+                            </p:selectOneMenu>
+
+                            <p:commandButton action="#{AdminMainMB.prepareCreateSY()}" value="Přidat nový školní rok"  update="display" oncomplete="PF('dlg').show()" icon="ui-icon-plus"  />
+                        </h:panelGrid>
+                    <p:dialog header="Přidat" modal="true" showEffect="bounce" widgetVar="dlg" appendTo="@(body)" resizable="false">
+                        <p:panelGrid columns="2" id="display" columnClasses="label,value">
+                            <p:outputLabel value="Název školního roku" for="SchoolYearName" />
+                            <p:inputText id="SchoolYearName" value="#{AdminMainMB.editedSY.name}" title="bla" required="true" requiredMessage="Povinné pole pico" />
+                            <p:outputLabel value="Začátek školního roku" for="StartYear" />
+                            <p:calendar id="StartYear" pattern="MM/dd/yyyy" value="#{adminMainMB.editedSY.startDate}" title="Datum Začátku" required="true" requiredMessage="Povinné" showOn="button"/>
+                            <p:outputLabel value="konec školního roku" for="EndYear" />
+                            <p:calendar id="EndYear" pattern="MM/dd/yyyy" value="#{adminMainMB.editedSY.endDate}" title=""  showOn="button"/>
+                            <p:outputLabel value="Aktuální školní rok" for="actualYear" />
+                            <p:selectBooleanCheckbox id="actualYear" value="#{adminMainMB.editedSY.isactualyear}" required="true" requiredMessage="Toto pole je povinné"/>
+                        </p:panelGrid>
+                        <p:commandButton action="#{AdminMainMB.saveNewSchoolYear}" value="Ulozit" update="display,:AdminMainMenu:SchoolYears,:growl" oncomplete="handleSubmit(args,'dlg');"/>
+                        <p:commandButton value="Zrusit" onclick="dlg.hide()"/>
+                    </p:dialog>
+                
+                </h:form>
+                
+            </ui:define>
+    		
+    	</ui:composition>
+    	
+    </h:body>
+
+</html>

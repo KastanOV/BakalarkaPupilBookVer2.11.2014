@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="UsersEditDlg" widgetVar="UsersEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{names.EditUsersTitle}">
+            <h:form id="UsersEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{usersController.selected != null}">
+                        <p:outputLabel value="#{names.EditUsersLabel_firstName}" for="firstName" />
+                        <p:inputText id="firstName" value="#{usersController.selected.firstName}" title="#{names.EditUsersTitle_firstName}" required="true" requiredMessage="#{names.EditUsersRequiredMessage_firstName}"/>
+                        <p:outputLabel value="#{names.EditUsersLabel_middleName}" for="middleName" />
+                        <p:inputText id="middleName" value="#{usersController.selected.middleName}" title="#{names.EditUsersTitle_middleName}" />
+                        <p:outputLabel value="#{names.EditUsersLabel_lastName}" for="lastName" />
+                        <p:inputText id="lastName" value="#{usersController.selected.lastName}" title="#{names.EditUsersTitle_lastName}" required="true" requiredMessage="#{names.EditUsersRequiredMessage_lastName}"/>
+                        <p:outputLabel value="#{names.EditUsersLabel_phone}" for="phone" />
+                        <p:inputText id="phone" value="#{usersController.selected.phone}" title="#{names.EditUsersTitle_phone}" />
+                        <p:outputLabel value="#{names.EditUsersLabel_email}" for="email" />
+                        <p:inputText id="email" value="#{usersController.selected.email}" title="#{names.EditUsersTitle_email}" />
+                        <p:outputLabel value="#{names.EditUsersLabel_login}" for="login" />
+                        <p:inputText id="login" value="#{usersController.selected.login}" title="#{names.EditUsersTitle_login}" required="true" requiredMessage="#{names.EditUsersRequiredMessage_login}"/>
+                        <p:outputLabel value="#{names.EditUsersLabel_password}" for="password" />
+                        <p:inputText id="password" value="#{usersController.selected.password}" title="#{names.EditUsersTitle_password}" required="true" requiredMessage="#{names.EditUsersRequiredMessage_password}"/>
+                        <p:outputLabel value="#{names.EditUsersLabel_birthDate}" for="birthDate" />
+                        <p:calendar id="birthDate" pattern="MM/dd/yyyy" value="#{usersController.selected.birthDate}" title="#{names.EditUsersTitle_birthDate}"  showOn="button"/>
+                        <p:outputLabel value="#{names.EditUsersLabel_role}" for="role" />
+                        <p:inputText id="role" value="#{usersController.selected.role}" title="#{names.EditUsersTitle_role}" required="true" requiredMessage="#{names.EditUsersRequiredMessage_role}"/>
+                        <p:outputLabel value="#{names.EditUsersLabel_studyGroupidStudyGroup}" for="studyGroupidStudyGroup" />
+                        <p:selectOneMenu id="studyGroupidStudyGroup" value="#{usersController.selected.studyGroupidStudyGroup}" required="true" requiredMessage="#{names.EditUsersRequiredMessage_studyGroupidStudyGroup}">
+                            <f:selectItem itemLabel="#{names.SelectOneMessage}"/>
+                            <f:selectItems value="#{studygroupController.itemsAvailableSelectOne}"
+                                           var="studyGroupidStudyGroupItem"
+                                           itemValue="#{studyGroupidStudyGroupItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{usersController.update}" value="#{names.Save}" update="display,:UsersListForm:datalist,:growl" oncomplete="handleSubmit(args, 'UsersEditDialog');"/>
+                    <p:commandButton value="#{names.Cancel}" onclick="UsersEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

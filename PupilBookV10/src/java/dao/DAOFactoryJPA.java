@@ -1,0 +1,42 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package dao;
+
+import javax.persistence.EntityManager;
+
+/**
+ *
+ * @author KastanNotas
+ */
+public class DAOFactoryJPA implements DAOFactory{
+
+    private EntityManager em;
+    
+    private SchooyearDAOjpa schoolyearJpa = null;
+    private StudygroupDAOjpa studygroupJpa = null;
+    
+    public DAOFactoryJPA(EntityManager em){
+        super();
+        this.em = em;
+    }
+    
+    @Override
+    public SchooyearDAOjpa getSchoolYearDAO() {
+        if(schoolyearJpa == null){
+            schoolyearJpa = new SchooyearDAOjpa(em);
+        }
+        return schoolyearJpa;
+    }
+
+    @Override
+    public StudygroupDAOjpa getStudygroupDAO() {
+        if(studygroupJpa == null){
+            studygroupJpa = new StudygroupDAOjpa(em);
+        }
+        return studygroupJpa;
+    }
+    
+}

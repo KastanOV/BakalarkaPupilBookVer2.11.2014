@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ResultsViewDlg" widgetVar="ResultsViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{names.ViewResultsTitle}">
+            <h:form id="ResultsViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{resultsController.selected != null}">
+                        <h:outputText value="#{names.ViewResultsLabel_idResults}"/>
+                        <h:outputText value="#{resultsController.selected.idResults}" title="#{names.ViewResultsTitle_idResults}"/>
+                        <h:outputText value="#{names.ViewResultsLabel_description}"/>
+                        <h:outputText value="#{resultsController.selected.description}" title="#{names.ViewResultsTitle_description}"/>
+                        <h:outputText value="#{names.ViewResultsLabel_score}"/>
+                        <p:selectBooleanCheckbox value="#{resultsController.selected.score}" disabled="true"/>
+                        <h:outputText value="#{names.ViewResultsLabel_date}"/>
+                        <h:outputText value="#{resultsController.selected.date}" title="#{names.ViewResultsTitle_date}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{names.ViewResultsLabel_studySubjectidStudySubject}"/>
+                        <h:outputText value="#{resultsController.selected.studySubjectidStudySubject}" title="#{names.ViewResultsTitle_studySubjectidStudySubject}"/>
+                        <h:outputText value="#{names.ViewResultsLabel_teacherLogin}"/>
+                        <h:outputText value="#{resultsController.selected.teacherLogin}" title="#{names.ViewResultsTitle_teacherLogin}"/>
+                        <h:outputText value="#{names.ViewResultsLabel_studentLogin}"/>
+                        <h:outputText value="#{resultsController.selected.studentLogin}" title="#{names.ViewResultsTitle_studentLogin}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{names.Close}" onclick="ResultsViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

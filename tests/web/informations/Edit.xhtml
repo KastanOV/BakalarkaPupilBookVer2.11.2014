@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="InformationsEditDlg" widgetVar="InformationsEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{names.EditInformationsTitle}">
+            <h:form id="InformationsEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{informationsController.selected != null}">
+                        <p:outputLabel value="#{names.EditInformationsLabel_idinformations}" for="idinformations" />
+                        <p:inputText id="idinformations" value="#{informationsController.selected.idinformations}" title="#{names.EditInformationsTitle_idinformations}" required="true" requiredMessage="#{names.EditInformationsRequiredMessage_idinformations}"/>
+                        <p:outputLabel value="#{names.EditInformationsLabel_description}" for="description" />
+                        <p:inputText id="description" value="#{informationsController.selected.description}" title="#{names.EditInformationsTitle_description}" required="true" requiredMessage="#{names.EditInformationsRequiredMessage_description}"/>
+                        <p:outputLabel value="#{names.EditInformationsLabel_infoForParrents}" for="infoForParrents" />
+                        <p:selectBooleanCheckbox id="infoForParrents" value="#{informationsController.selected.infoForParrents}" required="true" requiredMessage="#{names.EditInformationsRequiredMessage_infoForParrents}"/>
+                        <p:outputLabel value="#{names.EditInformationsLabel_someMessage}" for="someMessage" />
+                        <p:inputText id="someMessage" value="#{informationsController.selected.someMessage}" title="#{names.EditInformationsTitle_someMessage}" required="true" requiredMessage="#{names.EditInformationsRequiredMessage_someMessage}"/>
+                        <p:outputLabel value="#{names.EditInformationsLabel_createDate}" for="createDate" />
+                        <p:calendar id="createDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{informationsController.selected.createDate}" title="#{names.EditInformationsTitle_createDate}" required="true" requiredMessage="#{names.EditInformationsRequiredMessage_createDate}" showOn="button"/>
+                        <p:outputLabel value="#{names.EditInformationsLabel_studyGroupidStudyGroup}" for="studyGroupidStudyGroup" />
+                        <p:selectOneMenu id="studyGroupidStudyGroup" value="#{informationsController.selected.studyGroupidStudyGroup}" required="true" requiredMessage="#{names.EditInformationsRequiredMessage_studyGroupidStudyGroup}">
+                            <f:selectItem itemLabel="#{names.SelectOneMessage}"/>
+                            <f:selectItems value="#{studygroupController.itemsAvailableSelectOne}"
+                                           var="studyGroupidStudyGroupItem"
+                                           itemValue="#{studyGroupidStudyGroupItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{names.EditInformationsLabel_usersLogin}" for="usersLogin" />
+                        <p:selectOneMenu id="usersLogin" value="#{informationsController.selected.usersLogin}" required="true" requiredMessage="#{names.EditInformationsRequiredMessage_usersLogin}">
+                            <f:selectItem itemLabel="#{names.SelectOneMessage}"/>
+                            <f:selectItems value="#{usersController.itemsAvailableSelectOne}"
+                                           var="usersLoginItem"
+                                           itemValue="#{usersLoginItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{informationsController.update}" value="#{names.Save}" update="display,:InformationsListForm:datalist,:growl" oncomplete="handleSubmit(args, 'InformationsEditDialog');"/>
+                    <p:commandButton value="#{names.Cancel}" onclick="InformationsEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

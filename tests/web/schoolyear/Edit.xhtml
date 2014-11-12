@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SchoolyearEditDlg" widgetVar="SchoolyearEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{names.EditSchoolyearTitle}">
+            <h:form id="SchoolyearEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{schoolyearController.selected != null}">
+                        <p:outputLabel value="#{names.EditSchoolyearLabel_idSchoolYear}" for="idSchoolYear" />
+                        <p:inputText id="idSchoolYear" value="#{schoolyearController.selected.idSchoolYear}" title="#{names.EditSchoolyearTitle_idSchoolYear}" required="true" requiredMessage="#{names.EditSchoolyearRequiredMessage_idSchoolYear}"/>
+                        <p:outputLabel value="#{names.EditSchoolyearLabel_name}" for="name" />
+                        <p:inputText id="name" value="#{schoolyearController.selected.name}" title="#{names.EditSchoolyearTitle_name}" required="true" requiredMessage="#{names.EditSchoolyearRequiredMessage_name}"/>
+                        <p:outputLabel value="#{names.EditSchoolyearLabel_isactualyear}" for="isactualyear" />
+                        <p:selectBooleanCheckbox id="isactualyear" value="#{schoolyearController.selected.isactualyear}" required="true" requiredMessage="#{names.EditSchoolyearRequiredMessage_isactualyear}"/>
+                        <p:outputLabel value="#{names.EditSchoolyearLabel_startDate}" for="startDate" />
+                        <p:calendar id="startDate" pattern="MM/dd/yyyy" value="#{schoolyearController.selected.startDate}" title="#{names.EditSchoolyearTitle_startDate}" required="true" requiredMessage="#{names.EditSchoolyearRequiredMessage_startDate}" showOn="button"/>
+                        <p:outputLabel value="#{names.EditSchoolyearLabel_endDate}" for="endDate" />
+                        <p:calendar id="endDate" pattern="MM/dd/yyyy" value="#{schoolyearController.selected.endDate}" title="#{names.EditSchoolyearTitle_endDate}" required="true" requiredMessage="#{names.EditSchoolyearRequiredMessage_endDate}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{schoolyearController.update}" value="#{names.Save}" update="display,:SchoolyearListForm:datalist,:growl" oncomplete="handleSubmit(args, 'SchoolyearEditDialog');"/>
+                    <p:commandButton value="#{names.Cancel}" onclick="SchoolyearEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

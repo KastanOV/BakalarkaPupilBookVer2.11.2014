@@ -31,8 +31,8 @@ public class StudyGroupSB implements StudyGroupSBLocal {
         } else {
             em.persist(s);
         }
-        em.setFlushMode(FlushModeType.COMMIT);
         em.flush();
+        em.refresh(em.find(Schoolyear.class, s.getSchoolYearidSchoolYear().getIdSchoolYear()));
         return s;
     }
 
@@ -62,7 +62,9 @@ public class StudyGroupSB implements StudyGroupSBLocal {
     @Override
     public Collection<Studygroup> getStudyGroupFromYear(int id) {
         em.clear();
-        Collection<Studygroup> studygroupCollection = em.find(Schoolyear.class, id).getStudygroupCollection();
+        Schoolyear s = em.find(Schoolyear.class, id);
+        em.refresh(s);
+        Collection<Studygroup> studygroupCollection = s.getStudygroupCollection();
         return studygroupCollection;
     }
 }

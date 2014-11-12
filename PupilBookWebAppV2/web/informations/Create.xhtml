@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="InformationsCreateDlg" widgetVar="InformationsCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateInformationsTitle}">
+            <h:form id="InformationsCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{informationsController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateInformationsLabel_idinformations}" for="idinformations" />
+                        <p:inputText id="idinformations" value="#{informationsController.selected.idinformations}" title="#{bundle.CreateInformationsTitle_idinformations}" required="true" requiredMessage="#{bundle.CreateInformationsRequiredMessage_idinformations}"/>
+                        <p:outputLabel value="#{bundle.CreateInformationsLabel_description}" for="description" />
+                        <p:inputText id="description" value="#{informationsController.selected.description}" title="#{bundle.CreateInformationsTitle_description}" required="true" requiredMessage="#{bundle.CreateInformationsRequiredMessage_description}"/>
+                        <p:outputLabel value="#{bundle.CreateInformationsLabel_infoForParrents}" for="infoForParrents" />
+                        <p:selectBooleanCheckbox id="infoForParrents" value="#{informationsController.selected.infoForParrents}" required="true" requiredMessage="#{bundle.EditInformationsRequiredMessage_infoForParrents}"/>
+                        <p:outputLabel value="#{bundle.CreateInformationsLabel_someMessage}" for="someMessage" />
+                        <p:inputText id="someMessage" value="#{informationsController.selected.someMessage}" title="#{bundle.CreateInformationsTitle_someMessage}" required="true" requiredMessage="#{bundle.CreateInformationsRequiredMessage_someMessage}"/>
+                        <p:outputLabel value="#{bundle.CreateInformationsLabel_createDate}" for="createDate" />
+                        <p:calendar id="createDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{informationsController.selected.createDate}" title="#{bundle.EditInformationsTitle_createDate}" required="true" requiredMessage="#{bundle.EditInformationsRequiredMessage_createDate}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateInformationsLabel_studyGroupidStudyGroup}" for="studyGroupidStudyGroup" />
+                        <p:selectOneMenu id="studyGroupidStudyGroup" value="#{informationsController.selected.studyGroupidStudyGroup}" required="true" requiredMessage="#{bundle.EditInformationsRequiredMessage_studyGroupidStudyGroup}">
+                            <f:selectItems value="#{studygroupController.itemsAvailableSelectOne}"
+                                           var="studyGroupidStudyGroupItem"
+                                           itemValue="#{studyGroupidStudyGroupItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateInformationsLabel_usersLogin}" for="usersLogin" />
+                        <p:selectOneMenu id="usersLogin" value="#{informationsController.selected.usersLogin}" required="true" requiredMessage="#{bundle.EditInformationsRequiredMessage_usersLogin}">
+                            <f:selectItems value="#{usersController.itemsAvailableSelectOne}"
+                                           var="usersLoginItem"
+                                           itemValue="#{usersLoginItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{informationsController.create}" value="#{bundle.Save}" update="display,:InformationsListForm:datalist,:growl" oncomplete="handleSubmit(args,'InformationsCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="InformationsCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
