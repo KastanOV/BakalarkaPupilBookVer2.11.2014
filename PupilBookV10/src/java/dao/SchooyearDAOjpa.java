@@ -13,7 +13,7 @@ import javax.persistence.EntityManager;
  *
  * @author KastanNotas
  */
-class SchooyearDAOjpa {
+public class SchooyearDAOjpa {
     private final EntityManager em;
     
     public SchooyearDAOjpa(EntityManager em){

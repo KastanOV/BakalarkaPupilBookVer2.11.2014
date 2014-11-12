@@ -23,37 +23,37 @@ import javax.faces.convert.ConverterException;
  *
  * @author KastanNotas
  */
-@ManagedBean
+@ManagedBean (name = "StudyGroupConverter")
 @SessionScoped
 public class StudyGroupConverter implements Converter{
 
     @EJB
     private StudyGroupSBLocal studyGroupSB; 
     
-    
-    
+
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component,
 			String value) {
-            int id = 0;
-            if(value == null){
-                    return null;
+            
+            if (value == null || value.length() == 0) {
+                return null;
             }
+            
             if(value instanceof String){
                 try{
-                    id = Integer.parseInt(value);
+                    return studyGroupSB.getStudygroup(Integer.parseInt(value));
                 } catch (Exception e){
                     return null;
                 }
             }
             
             try{
-                    id = Integer.parseInt(value);
+                Integer.parseInt(value);
             } catch(NumberFormatException ex){
                     context.addMessage(component.getClientId(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "Nelze převést string na číslo ID.", "Chyba konvertoru kontaktujete Administrátora systému." + ex.getMessage()));
                     throw new ConverterException("Nelze provést konverzi!", ex);
             }
-            return studyGroupSB.getStudygroup(id);
+            return null;
 	}
 
 	@Override
@@ -63,10 +63,9 @@ public class StudyGroupConverter implements Converter{
                     return null;
             }
             if(value instanceof Studygroup){
-                    return Integer.toString(((Studygroup)value).getIdStudyGroup());
+                    return ((Studygroup)value).getIdStudyGroup().toString();
             }
             if(value instanceof String){
-                
                 if("".equals(value)) return null;
             }
             context.addMessage(component.getClientId(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "Entitu nelze převést.", "Chyba konvertoru kontaktujete Administrátora systému."));

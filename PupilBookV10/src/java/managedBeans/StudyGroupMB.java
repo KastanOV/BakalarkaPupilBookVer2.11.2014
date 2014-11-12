@@ -45,19 +45,7 @@ public class StudyGroupMB implements Serializable{
         if(edited != null)
         this.edited = edited;
     }
-    
-    public List<SelectItem> getStudyGroups(int id){
-        it = new ArrayList<>();
-        if(id != 0){
-            Collection<Studygroup> studyGroupFromYear = db.getStudyGroupFromYear(id);
-            for(Studygroup item : studyGroupFromYear){
-                it.add(new SelectItem(item, item.getName()));
-            }
-            return it;
-        }else{
-           return null;
-        }
-    }
+
     public String saveStudyGroups(){
 		try {
 		db.saveStudygroup(edited);

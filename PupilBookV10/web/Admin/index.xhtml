@@ -9,27 +9,44 @@
     <h:body>
     	
     	<ui:composition template="/templates/admin.xhtml">
-    	
             <ui:define name="body">
+                <p:panelGrid style="margin-top:20px">
+                <f:facet name="header">
+                    <p:row>
+                        <p:column colspan="2">Drag and drop paráda</p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column colspan="1">
+                            Studenti ve třídě #{adminmainController.editedStudygroup.name} 
+                        </p:column>
+                        <p:column colspan="1">
+                            Všíchni studenti 
+                        </p:column>
+                    </p:row>
+                </f:facet>
+            </p:panelGrid>
+            </ui:define>
+            <ui:define name="west">
                 <h:form id="AdminMainMenu">
-                    <h:panelGrid columns="2" style="margin-bottom: 10px" cellpadding="5" border="1">
-                        <p:outputLabel for="SchoolYears" value="Select School Year: "/>
-                        <p:selectOneMenu id="SchoolYears" value="#{schoolYearMB.edited}" onchange="submit()" converter="#{SchoolYearConverter}" effect="fold" >
+                    <h:panelGrid columns="2" style="margin-bottom: 10px" cellpadding="5">
+                        <p:outputLabel for="SchoolYears" value="#{bundle.dropdownSchoolYear}"/>
+                        <p:selectOneMenu id="SchoolYears" value="#{adminmainController.edited}" onchange="submit()" converter="#{SchoolYearConverter}" effect="fold" >
                             <f:selectItem itemLabel="#{bundle.dropdownSchoolYear}" itemValue="" />
-                            <f:selectItems value="#{schoolYearMB.allSchoolYears}" var="itemSchoolYear"/>
+                            <f:selectItems value="#{adminmainController.allSchoolYears}" var="item" itemLabel="#{item.name}" itemValue="#{item}" />
                         </p:selectOneMenu>
-                        <p:commandButton id="createButton" icon="ui-icon-plus"   value="Create" actionListener="#{schoolYearMB.prepareNew}" update=":SchoolyearCreateForm" oncomplete="PF('SchoolyearCreateDialog').show()"/>
-                        <p:commandButton id="editButton"   icon="ui-icon-pencil" value="Edit" update=":SchoolyearEditForm" oncomplete="PF('SchoolyearEditDialog').show()" disabled="#{empty schoolYearMB.edited}"/>
-                        <p:outputLabel for="StudyGroupsOneMenu" value="VyberStudíjní skupinu: "/>
-                        <p:selectOneMenu id="StudyGroupsOneMenu" value="#{studyGroupMB.edited}" onchange="submit()" converter="#{studyGroupConverter}" effect="fold">
+                        <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.createSchoolYear}" actionListener="#{adminmainController.prepareNew}" update=":SchoolyearCreateForm" oncomplete="PF('SchoolyearCreateDialog').show()"/>
+                        <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.editSchoolYear}" update=":SchoolyearEditForm" oncomplete="PF('SchoolyearEditDialog').show()" disabled="#{empty adminmainController.edited}"/>
+                    
+                        <p:outputLabel for="StudyGroupsOneMenu" value="#{bundle.selectStudyGroup}"/>
+                        <p:selectOneMenu id="StudyGroupsOneMenu" value="#{adminmainController.editedStudygroup}" onchange="submit()" converter="#{StudyGroupConverter}" effect="fold">
                             <f:selectItem itemLabel="#{bundle.dropdownStudyGroups}" itemValue="" />
-                            <f:selectItems value="#{studyGroupMB.getStudyGroups(schoolYearMB.edited.idSchoolYear)}" var="i" itemLabel="#{i.name}" itemValue="#{i}"/>
+                            <f:selectItems value="#{adminmainController.edited.studygroupCollection}" var="i" itemLabel="#{i.name}" itemValue="#{i}"/>
                         </p:selectOneMenu>
-                        <p:commandButton id="createButtonSG" icon="ui-icon-plus"   value="Nová studijní skupina" actionListener="#{studyGroupMB.prepareNew(schoolYearMB.edited)}" update=":StudyGroupCreateForm" oncomplete="PF('StudyGroupCreateDialog').show()"/>
-                        <!--<p:commandButton id="editButton"   icon="ui-icon-pencil" value="Edit" update=":StudyGroupEditForm" oncomplete="PF('StudyGroupEditDialog').show()" disabled="#{empty StudyGroupMB.edited}"/>-->
-                        
+                        <p:commandButton id="createButtonSG" icon="ui-icon-plus"   value="#{bundle.createStudyGroup}" actionListener="#{adminmainController.prepareNewStudyGroup}" update=":StudyGroupCreateForm" oncomplete="PF('StudyGroupCreateDialog').show()"/>
+                        <!--<p:commandButton id="editButton"   icon="ui-icon-pencil" value="Edit" update=":StudyGroupEditForm" oncomplete="PF('StudyGroupEditDialog').show()" disabled="#{empty adminmainController.edited}"/>-->
                     </h:panelGrid>
                 </h:form>
+ 
                 <ui:include src="CreateSY.xhtml"/>
                 <ui:include src="EditSY.xhtml"/>
                 <ui:include src="CreateSG.xhtml"/>

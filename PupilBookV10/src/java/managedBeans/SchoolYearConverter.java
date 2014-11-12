@@ -6,6 +6,7 @@
 package managedBeans;
 
 import Entity.Schoolyear;
+import Entity.Studygroup;
 import SessionBeans.SchoolYearSBLocal;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;

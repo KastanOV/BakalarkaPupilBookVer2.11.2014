@@ -5,13 +5,12 @@
  */
 package SessionBeans;
 
-import Entity.Schoolyear;
 import Entity.Studygroup;
-import java.util.Collection;
+import dao.DAOFactory;
+import dao.DAOFactoryJPA;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.FlushModeType;
 import javax.persistence.PersistenceContext;
 
 /**
@@ -22,49 +21,44 @@ import javax.persistence.PersistenceContext;
 public class StudyGroupSB implements StudyGroupSBLocal {
 
     @PersistenceContext
-	private EntityManager em;
+    private EntityManager em;
+    
+    private DAOFactory factory;
+    
+    private DAOFactory getFactory(){
+        if(factory == null){
+            factory = new DAOFactoryJPA(em);
+        }
+        return factory;
+    }
     
     @Override
     public Studygroup saveStudygroup(Studygroup s) {
-        if(s.getIdStudyGroup() != null){
-            em.merge(s);
-        } else {
-            em.persist(s);
-        }
-        em.flush();
-        em.refresh(em.find(Schoolyear.class, s.getSchoolYearidSchoolYear().getIdSchoolYear()));
-        return s;
+        return getFactory().getStudygroupDAO().saveStudygroup(s);
     }
 
     @Override
     public List<Studygroup> getAllStudygroup() {
-        return em.createNamedQuery("Studygroup.findAll").getResultList();
+        return getFactory().getStudygroupDAO().getAllStudygroup();
     }
 
     @Override
     public Studygroup getStudygroup(int StudygroupId) {
-        return em.find(Studygroup.class, StudygroupId);
+        return getFactory().getStudygroupDAO().getStudygroup(StudygroupId);
     }
 
     @Override
     public void deleteStudygroup(Studygroup p) {
-        em.remove(em.find(Studygroup.class, p.getIdStudyGroup()));
+        getFactory().getStudygroupDAO().deleteStudygroup(p);
     }
 
     @Override
     public void deleteStudygroup(int StudygroupId) {
-        em.remove(em.find(Studygroup.class, StudygroupId));
+        getFactory().getStudygroupDAO().deleteStudygroup(StudygroupId);
     }
         
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
 
-    @Override
-    public Collection<Studygroup> getStudyGroupFromYear(int id) {
-        em.clear();
-        Schoolyear s = em.find(Schoolyear.class, id);
-        em.refresh(s);
-        Collection<Studygroup> studygroupCollection = s.getStudygroupCollection();
-        return studygroupCollection;
-    }
+    
 }

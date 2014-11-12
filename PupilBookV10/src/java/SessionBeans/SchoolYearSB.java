@@ -1,6 +1,7 @@
 
 package SessionBeans;
 
+import dao.*;
 import Entity.Schoolyear;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -16,35 +17,39 @@ public class SchoolYearSB implements SchoolYearSBLocal {
     @PersistenceContext
     private EntityManager em;
     
+    private DAOFactory factory;
+    
+    private DAOFactory getFactory(){
+        if(factory == null){
+            factory = new DAOFactoryJPA(em);
+        }
+        return factory;
+    }
+    
     @Override
     public Schoolyear saveSchoolyear(Schoolyear s) {
-        if(s.getIdSchoolYear() != null){
-            em.merge(s);
-        } else {
-            em.persist(s);
-        }
-        em.flush();
+        getFactory().getSchoolYearDAO().saveSchoolyear(s);
         return s;
     }
 
     @Override
     public List<Schoolyear> getAllSchoolYears() {
-        return em.createNamedQuery("Schoolyear.findAll").getResultList();
+        return getFactory().getSchoolYearDAO().getAllSchoolYears();
     }
 
     @Override
     public Schoolyear getSchoolyear(int id) {
-        return em.find(Schoolyear.class, id);
+        return getFactory().getSchoolYearDAO().getSchoolyear(id);
     }
 
     @Override
     public void deleteSchooYear(Schoolyear s) {
-        em.remove(em.find(Schoolyear.class, s.getIdSchoolYear()));
+        getFactory().getSchoolYearDAO().deleteSchooYear(s);
     }
 
     @Override
     public void deleteSchooYear(int id) {
-        em.remove(em.find(Schoolyear.class, id));
+        getFactory().getSchoolYearDAO().deleteSchooYear(id);
     }
 
     // Add business logic below. (Right-click in editor and choose

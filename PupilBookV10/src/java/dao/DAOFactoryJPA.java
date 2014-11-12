@@ -13,7 +13,7 @@ import javax.persistence.EntityManager;
  */
 public class DAOFactoryJPA implements DAOFactory{
 
-    private EntityManager em;
+    private final EntityManager em;
     
     private SchooyearDAOjpa schoolyearJpa = null;
     private StudygroupDAOjpa studygroupJpa = null;
@@ -23,6 +23,10 @@ public class DAOFactoryJPA implements DAOFactory{
         this.em = em;
     }
     
+    /**
+     *
+     * @return
+     */
     @Override
     public SchooyearDAOjpa getSchoolYearDAO() {
         if(schoolyearJpa == null){
@@ -31,6 +35,10 @@ public class DAOFactoryJPA implements DAOFactory{
         return schoolyearJpa;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public StudygroupDAOjpa getStudygroupDAO() {
         if(studygroupJpa == null){

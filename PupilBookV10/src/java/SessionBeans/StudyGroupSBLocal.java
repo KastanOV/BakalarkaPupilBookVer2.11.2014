@@ -18,9 +18,7 @@ import javax.ejb.Local;
 public interface StudyGroupSBLocal {
     public Studygroup saveStudygroup(Studygroup p);
     public List<Studygroup> getAllStudygroup();
-    public Collection<Studygroup> getStudyGroupFromYear(int id);
     public Studygroup getStudygroup(int StudygroupId);
-    
     public void deleteStudygroup(Studygroup p);
     public void deleteStudygroup(int StudygroupId);
     
