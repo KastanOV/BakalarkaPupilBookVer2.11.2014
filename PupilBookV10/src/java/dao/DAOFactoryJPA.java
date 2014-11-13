@@ -17,6 +17,7 @@ public class DAOFactoryJPA implements DAOFactory{
     
     private SchooyearDAOjpa schoolyearJpa = null;
     private StudygroupDAOjpa studygroupJpa = null;
+    private StudentsDAOjpa studentsJpa = null;
     
     public DAOFactoryJPA(EntityManager em){
         super();
@@ -27,6 +28,7 @@ public class DAOFactoryJPA implements DAOFactory{
      *
      * @return
      */
+    
     @Override
     public SchooyearDAOjpa getSchoolYearDAO() {
         if(schoolyearJpa == null){
@@ -45,6 +47,14 @@ public class DAOFactoryJPA implements DAOFactory{
             studygroupJpa = new StudygroupDAOjpa(em);
         }
         return studygroupJpa;
+    }
+
+    @Override
+    public StudentsDAOjpa getStudentsDAO() {
+        if(studentsJpa == null){
+            studentsJpa = new StudentsDAOjpa(em);
+        }
+        return studentsJpa;
     }
     
 }

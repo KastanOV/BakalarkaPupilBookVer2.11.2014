@@ -7,7 +7,9 @@ package managedBeans;
 
 import Entity.Schoolyear;
 import Entity.Studygroup;
+import Entity.Users;
 import SessionBeans.SchoolYearSBLocal;
+import SessionBeans.StudentsSBLocal;
 import SessionBeans.StudyGroupSBLocal;
 import java.util.List;
 import javax.ejb.EJB;
@@ -28,13 +30,25 @@ public class AdminmainController{
     private SchoolYearSBLocal dbSchoolYear;
     @EJB
     private StudyGroupSBLocal dbStudyGroup;
+    @EJB
+    private StudentsSBLocal dbStudents;
     
     private Schoolyear edited;
-    
     private Studygroup editedStudygroup;
-   
+    private Users editedUser;
 
-       
+    public Users getEditedUser() {
+        return editedUser;
+    }
+
+    public void setEditedUser(Users editedUser) {
+        this.editedUser = editedUser;
+    }
+    public Users prepareNewUser(){
+        editedUser = new Users();
+        return editedUser;
+    }
+    
     public List<Schoolyear> getAllSchoolYears(){
         return dbSchoolYear.getAllSchoolYears();
     }
