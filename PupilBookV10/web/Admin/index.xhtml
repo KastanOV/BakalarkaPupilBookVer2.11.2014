@@ -10,30 +10,87 @@
     	
     	<ui:composition template="/templates/admin.xhtml">
             <ui:define name="body">
-                <p:panelGrid style="margin-top:20px">
-                <f:facet name="header">
-                    <p:row>
-                        <p:column colspan="2">Drag and drop paráda</p:column>
-                    </p:row>
-                    <p:row>
-                        <p:column colspan="1">
-                            Studenti ve třídě #{adminmainController.editedStudygroup.name} 
-                        </p:column>
-                        <p:column colspan="1">
-                            Všíchni studenti 
-                        </p:column>
-                    </p:row>
-                </f:facet>
-                    <p:row>
-                        <p:column colspan="1">
-                            
-                        </p:column>
-                        <p:column colspan="1">
-                            DATA TABLE All students
-                        </p:column>
-                    </p:row>
+                <script type="text/javascript">
+                    function handleDrop(event, ui) {
+                    var droppedStudent = ui.draggable;
+                    droppedStudent.fadeOut('fast');
+                    }
+                </script>
+                <h:form id="Students">
+                    <p:panelGrid style="margin-top:20px">
+                    <f:facet name="header">
+                        <p:row>
+                            <p:column colspan="2">Drag and drop paráda</p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column colspan="1">
+                                Studenti ve třídě #{adminmainController.editedStudygroup.name} 
+                            </p:column>
+                            <p:column colspan="1">
+                                Všíchni studenti 
+                            </p:column>
+                        </p:row>
+                    </f:facet>
+                        <p:row>
+                            <p:column colspan="1">
+                                STUDENTI VE VYBRANNE TRIDE
+                            </p:column>
+                            <p:column colspan="1">
+                                <p:commandButton id="createButtonStudent" icon="ui-icon-plus"   value="Přidej studenta" actionListener="#{adminmainController.prepareNewStudent()}" update=":UserCreateForm" oncomplete="PF('UserCreateDialog').show()"/>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column colspan="1">
+                                <p:fieldset id="selectedStudentsField" legend="Selected Students" style="margin-top:20px">
+                                    <p:outputPanel id="dropArea">
+                                        <h:outputText value="Zde přesuňte studenty" rendered="#{empty adminmainController.dropedStudents}" style="font-size: 24px" />
+                                        <p:dataTable id="selectedStudents" var="selStudents" value="#{adminmainController.dropedStudents}" rendered="#{not empty adminmainController.dropedStudents}" >
+                                            <p:column headerText="login">
+                                                <h:outputText value="#{selStudents.login}" />
+                                            </p:column>
+                                            <p:column headerText="Příjmení">
+                                                <h:outputText value="#{selStudents.lastName}"/>
+                                            </p:column>
+                                            <p:column headerText="Jméno">
+                                                <h:outputText value="#{selStudents.firstName}"/>
+                                            </p:column>
+                                            <p:column headerText="Datum narození">
+                                                <h:outputText value="#{selStudents.birthDate}"/>
+                                            </p:column>
+                                        </p:dataTable>
+                                    </p:outputPanel>
+                                </p:fieldset>
+                            </p:column>
+                            <p:column colspan="1">
+                                <p:fieldset id="availableStudentsField" legend="Available Students">
+                                    <p:dataTable id="StudentsTable" var="studentTable" value="#{adminmainController.students}">
+                                        <p:column style="width:20px">
+                                            <h:outputText id="dragIcon" styleClass="ui-icon ui-icon-arrow-4" />
+                                            <p:draggable for="dragIcon" revert="true" helper="clone"/>
+                                        </p:column>
+                                        <p:column headerText="login">
+                                            <h:outputText value="#{studentTable.login}"/>
+                                        </p:column>
+                                        <p:column headerText="Příjmení">
+                                            <h:outputText value="#{studentTable.lastName}"/>
+                                        </p:column>
+                                        <p:column headerText="Jméno">
+                                            <h:outputText value="#{studentTable.firstName}"/>
+                                        </p:column>
+                                        <p:column headerText="Datum narození">
+                                            <h:outputText value="#{studentTable.birthDate}"/>
+                                        </p:column>
+                                    </p:dataTable>
+                                </p:fieldset>
+                            </p:column> 
+                        </p:row>
+                    </p:panelGrid>
                     
-            </p:panelGrid>
+                    
+                    <p:droppable for="selectedStudentsField" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="StudentsTable" onDrop="handleDrop">
+                        <p:ajax listener="#{adminmainController.onStudentDrop}" update="dropArea StudentsTable" />
+                    </p:droppable>
+                </h:form>
             </ui:define>
             <ui:define name="west">
                 <h:form id="AdminMainMenu">
@@ -59,6 +116,7 @@
                 <ui:include src="CreateSY.xhtml"/>
                 <ui:include src="EditSY.xhtml"/>
                 <ui:include src="CreateSG.xhtml"/>
+                <ui:include src="CreateUser.xhtml"/>
             </ui:define>
     	</ui:composition>
     	

@@ -6,6 +6,7 @@
 package dao;
 
 import Entity.Users;
+import java.util.Collection;
 import java.util.Random;
 import javax.persistence.EntityManager;
 
@@ -20,7 +21,9 @@ public class StudentsDAOjpa {
         super();
         this.em = em;
     }
-    
+    public Collection<Users> getAllStudents(){
+        return em.createNamedQuery("Users.findByRole").setParameter("role", 'S').getResultList();
+    }
     public Users saveStudent(Users s){
         if(s.getLogin() != null){
             em.merge(s);
@@ -33,9 +36,12 @@ public class StudentsDAOjpa {
     }
     public Users createNewUser(Users s){
         getFreeLogin(s);
-        createPassword(s);
+        if(s.getPassword() == null) createPassword(s);
+        em.persist(s);
+        em.flush();
         return s;
     }
+    
     private void createPassword(Users s){
         char[] symbols;
         StringBuilder tmp = new StringBuilder();
@@ -55,8 +61,14 @@ public class StudentsDAOjpa {
         s.setPassword(value.toString());
     }
     private void getFreeLogin(Users s){
-        String LoginPrefix = s.getLastName().substring(0,3);
-        s.setLogin(getPostFix(em.createNamedQuery("Users.loginCounter").setParameter("createLogin", LoginPrefix).getSingleResult().toString()));
+        String LoginPrefix = removeDiak(s.getLastName()
+                .substring(0,3)
+                .toUpperCase()
+                .trim());
+        s.setLogin(LoginPrefix + getPostFix(em.createNamedQuery("Users.loginCounter")
+                .setParameter("createLogin", LoginPrefix + "%")
+                .getSingleResult()
+                .toString()));
     }
     private String getPostFix(String Postfix){
         switch(Postfix.length()){
@@ -65,4 +77,16 @@ public class StudentsDAOjpa {
             default : return Postfix;    
         }
     };
+    private String removeDiak(String retazec){
+       String retazecBD="";
+       String sdiak="áäčďěéíĺžňóöôŕřšťúüýžźÁÄČĎĚÉÍĹŇÓÖÔŔŘŤÚÜÝŠŽŐőÖöŰűÜü";
+       String bdiak="aacdeeillnooorrstuuyzzAACDEEILNOOORRTUUYSZOoOoUuUu";
+       for (int l=0;l<retazec.length();l++){
+           if (sdiak.indexOf(retazec.charAt(l))!=-1)
+               retazecBD+=bdiak.charAt(sdiak.indexOf(retazec.charAt(l)));
+           else
+               retazecBD+=retazec.charAt(l);
+       }
+       return retazecBD;
+   }
 }

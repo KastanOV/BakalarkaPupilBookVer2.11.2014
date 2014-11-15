@@ -8,6 +8,7 @@ package SessionBeans;
 import Entity.Users;
 import dao.DAOFactory;
 import dao.DAOFactoryJPA;
+import java.util.Collection;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -35,5 +36,15 @@ public class StudentsSB implements StudentsSBLocal {
     @Override
     public Users createNewUser(Users s) {
         return getFactory().getStudentsDAO().createNewUser(s);
+    }
+
+    @Override
+    public Users saveNewStudent(Users s) {
+        return getFactory().getStudentsDAO().saveStudent(s);
+    }
+
+    @Override
+    public Collection<Users> getAllStudents() {
+        return getFactory().getStudentsDAO().getAllStudents();
     }
 }
