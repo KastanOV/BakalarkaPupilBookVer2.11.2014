@@ -7,8 +7,7 @@ package managedBeans;
 
 
 import Entity.Studygroup;
-
-import SessionBeans.StudyGroupSBLocal;
+import SessionBeans.AdminmainSessionBeanLocal;
 
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -28,7 +27,7 @@ import javax.faces.convert.ConverterException;
 public class StudyGroupConverter implements Converter{
 
     @EJB
-    private StudyGroupSBLocal studyGroupSB; 
+    private AdminmainSessionBeanLocal sb;
     
 
 	@Override
@@ -41,7 +40,7 @@ public class StudyGroupConverter implements Converter{
             
             if(value instanceof String){
                 try{
-                    return studyGroupSB.getStudygroup(Integer.parseInt(value));
+                    return sb.getStudygroup(Integer.parseInt(value));
                 } catch (Exception e){
                     return null;
                 }

@@ -5,6 +5,7 @@
  */
 package dao;
 
+import Entity.Schoolyear;
 import Entity.Studygroup;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -47,4 +48,9 @@ public class StudygroupDAOjpa {
         em.remove(em.find(Studygroup.class, StudygroupId));
     }
     
+    public List<Studygroup> getEditedStudyGroup(Schoolyear s){
+        return em.createNamedQuery("Studygroup.findBySchoolyear")
+                .setParameter("SchoolYearID", s)
+                .getResultList();
+    }
 }

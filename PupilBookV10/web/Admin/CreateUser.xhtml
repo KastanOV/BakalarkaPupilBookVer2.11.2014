@@ -30,7 +30,7 @@
                         
                     
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{adminmainController.saveStudent}" value="#{bundle.save}" update="display,:AdminMainMenu,:growl" oncomplete="handleSubmit(args,'UserCreateDialog');"/>
+                    <p:commandButton actionListener="#{adminmainController.saveStudent}" value="#{bundle.save}" update="display,:AdminMainMenu :Students,:growl" oncomplete="handleSubmit(args,'UserCreateDialog');"/>
                     <p:commandButton value="#{bundle.cancel}" onclick="UserCreateDialog.hide()"/>
                 </h:panelGroup>
             </h:form>

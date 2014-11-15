@@ -22,6 +22,7 @@ public interface AdminmainSessionBeanLocal {
 //Study Groups
     public Studygroup saveStudygroup(Studygroup p);
     public List<Studygroup> getAllStudygroup();
+    public List<Studygroup> getEditedStudyGroup(Schoolyear s);
     public Studygroup getStudygroup(int StudygroupId);
     public void deleteStudygroup(Studygroup p);
     public void deleteStudygroup(int StudygroupId);

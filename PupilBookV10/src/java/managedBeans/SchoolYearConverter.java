@@ -6,8 +6,8 @@
 package managedBeans;
 
 import Entity.Schoolyear;
-import Entity.Studygroup;
-import SessionBeans.SchoolYearSBLocal;
+import SessionBeans.AdminmainSessionBeanLocal;
+
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -27,7 +27,7 @@ import javax.faces.convert.ConverterException;
 public class SchoolYearConverter implements Converter{
 
     @EJB
-    private SchoolYearSBLocal schoolYearSB; 
+    private AdminmainSessionBeanLocal sb;
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component,
 			String value) {
@@ -48,7 +48,7 @@ public class SchoolYearConverter implements Converter{
 			context.addMessage(component.getClientId(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "Nelze převést string na číslo ID.", "Chyba konvertoru kontaktujete Administrátora systému." + ex.getMessage()));
 			throw new ConverterException("Nelze provést konverzi!", ex);
 		}
-		return schoolYearSB.getSchoolyear(id);
+		return sb.getSchoolyear(id);
 	}
 	@Override
 	public String getAsString(FacesContext context, UIComponent component,

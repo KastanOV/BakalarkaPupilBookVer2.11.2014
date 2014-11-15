@@ -8,9 +8,8 @@ package managedBeans;
 import Entity.Schoolyear;
 import Entity.Studygroup;
 import Entity.Users;
-import SessionBeans.SchoolYearSBLocal;
-import SessionBeans.StudentsSBLocal;
-import SessionBeans.StudyGroupSBLocal;
+import SessionBeans.AdminmainSessionBeanLocal;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -28,19 +27,15 @@ import org.primefaces.event.DragDropEvent;
  */
 @ManagedBean
 @SessionScoped
-public class AdminmainController{
+public class AdminmainController implements Serializable{
     @EJB
-    private SchoolYearSBLocal dbSchoolYear;
-    @EJB
-    private StudyGroupSBLocal dbStudyGroup;
-    @EJB
-    private StudentsSBLocal dbStudents;
+    private AdminmainSessionBeanLocal sb;
     
-    private Schoolyear edited;
+    private Schoolyear editedSchoolYear;
     private Studygroup editedStudygroup;
     private Users editedUser;
     private List<Users> dropedStudents = new ArrayList<>();
-
+    
     public void onStudentDrop(DragDropEvent ddEvent){
         Users s = ((Users) ddEvent.getData());
         try {
@@ -54,11 +49,11 @@ public class AdminmainController{
         }
     }
     public Collection<Users> getStudents() {
-        return dbStudents.getAllStudents();
+        return sb.getAllStudents();
     }
     public void saveStudent(Users u){
         try{
-            dbStudents.saveStudent(u);
+            sb.saveStudent(u);
             
         } catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, 
@@ -68,7 +63,7 @@ public class AdminmainController{
     }
     public void saveStudent(){
         try{
-            dbStudents.createNewUser(editedUser);
+            sb.createNewUser(editedUser);
             
         } catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, 
@@ -78,7 +73,7 @@ public class AdminmainController{
     }
     public void saveSchoolYears(){
 		try {
-			dbSchoolYear.saveSchoolyear(edited);
+			sb.saveSchoolyear(editedSchoolYear);
                         
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, 
@@ -88,16 +83,14 @@ public class AdminmainController{
 	}
     public void saveStudyGroup(){
         try{
-            edited.getStudygroupCollection().add(editedStudygroup);
-            editedStudygroup.setSchoolYearidSchoolYear(edited);
-            dbStudyGroup.saveStudygroup(editedStudygroup);
-            int bla = 0;
+            //editedSchoolYear.getStudygroupCollection().add(editedStudygroup);
+            editedStudygroup.setSchoolYearidSchoolYear(editedSchoolYear);
+            sb.saveStudygroup(editedStudygroup);
         }   catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, 
 					"Nepodařilo se uložit data do databáze.", 
 					"Nepodařilo se uložit data do databáze.. Příčina: " + e.getMessage()));
 	}
-        
     }
     
     public Users prepareNewStudent(){
@@ -106,8 +99,8 @@ public class AdminmainController{
         return editedUser;
     }
     public Schoolyear prepareNew(){
-        edited = new Schoolyear();
-        return edited;
+        editedSchoolYear = new Schoolyear();
+        return editedSchoolYear;
     }
     public Studygroup prepareNewStudyGroup(){
         editedStudygroup = new Studygroup();
@@ -115,19 +108,23 @@ public class AdminmainController{
     }
     
     public List<Schoolyear> getAllSchoolYears(){
-        return dbSchoolYear.getAllSchoolYears();
+        return sb.getAllSchoolYears();
+    }
+    public List<Studygroup> getEditedStudyGroups(){
+        return sb.getEditedStudyGroup(editedSchoolYear);
     }
     public Studygroup getEditedStudygroup() {
         return editedStudygroup;
     }
+    
     public void setEditedStudygroup(Studygroup editedStudygroup) {
         this.editedStudygroup = editedStudygroup;
     }
     public Schoolyear getEdited() {
-        return edited;
+        return editedSchoolYear;
     }
     public void setEdited(Schoolyear edited) {
-        this.edited = edited;
+        this.editedSchoolYear = edited;
         
     }
     public Users getEditedUser() {

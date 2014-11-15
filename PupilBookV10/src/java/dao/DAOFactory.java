@@ -16,6 +16,10 @@ public interface DAOFactory {
     
     public abstract StudygroupDAOjpa getStudygroupDAO();
     
-    public abstract StudentsDAOjpa getStudentsDAO();
+    /**
+     *
+     * @return
+     */
+    public abstract UsersDAOjpa getUsersDAO();
     
 }

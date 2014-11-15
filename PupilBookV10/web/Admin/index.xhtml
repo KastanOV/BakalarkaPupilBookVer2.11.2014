@@ -109,7 +109,7 @@
                         <p:outputLabel for="StudyGroupsOneMenu" value="#{bundle.selectStudyGroup}"/>
                         <p:selectOneMenu id="StudyGroupsOneMenu" value="#{adminmainController.editedStudygroup}" onchange="submit()" converter="#{StudyGroupConverter}" effect="fold">
                             <f:selectItem itemLabel="#{bundle.dropdownStudyGroups}" itemValue="" />
-                            <f:selectItems value="#{adminmainController.edited.studygroupCollection}" var="i" itemLabel="#{i.name}" itemValue="#{i}"/>
+                            <f:selectItems value="#{adminmainController.editedStudyGroups}" var="itemSG" itemLabel="#{itemSG.name}" itemValue="#{itemSG}"/>
                         </p:selectOneMenu>
                         <p:commandButton id="createButtonSG" icon="ui-icon-plus"   value="#{bundle.createStudyGroup}" actionListener="#{adminmainController.prepareNewStudyGroup}" update=":StudyGroupCreateForm" oncomplete="PF('StudyGroupCreateDialog').show()"/>
                         <!--<p:commandButton id="editButton"   icon="ui-icon-pencil" value="Edit" update=":StudyGroupEditForm" oncomplete="PF('StudyGroupEditDialog').show()" disabled="#{empty adminmainController.edited}"/>-->

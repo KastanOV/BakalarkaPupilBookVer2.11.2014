@@ -6,7 +6,6 @@
 package SessionBeans;
 
 import Entity.Users;
-import java.util.Collection;
 import javax.ejb.Local;
 
 /**
@@ -14,8 +13,7 @@ import javax.ejb.Local;
  * @author KastanNotas
  */
 @Local
-public interface StudentsSBLocal {
-    public Users createNewUser(Users s);
-    public Users saveStudent(Users s);
-    public Collection<Users> getAllStudents();
+public interface loginSessionBeanLocal {
+    public Users doLogin(Users u);
+    
 }
