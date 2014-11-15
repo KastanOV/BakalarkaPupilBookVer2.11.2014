@@ -16,6 +16,6 @@ import javax.ejb.Local;
 @Local
 public interface StudentsSBLocal {
     public Users createNewUser(Users s);
-    public Users saveNewStudent(Users s);
+    public Users saveStudent(Users s);
     public Collection<Users> getAllStudents();
 }

@@ -25,12 +25,7 @@ public class StudentsDAOjpa {
         return em.createNamedQuery("Users.findByRole").setParameter("role", 'S').getResultList();
     }
     public Users saveStudent(Users s){
-        if(s.getLogin() != null){
-            em.merge(s);
-        } else {
-            //TODO generovani loginu
-            em.persist(s);
-        }
+        em.merge(s);
         em.flush();
         return s;
     }
@@ -39,6 +34,7 @@ public class StudentsDAOjpa {
         if(s.getPassword() == null) createPassword(s);
         em.persist(s);
         em.flush();
+        
         return s;
     }
     

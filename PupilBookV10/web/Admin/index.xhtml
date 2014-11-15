@@ -24,7 +24,7 @@
                         </p:row>
                         <p:row>
                             <p:column colspan="1">
-                                Studenti ve třídě #{adminmainController.editedStudygroup.name} 
+                                Studenti ve třídě #{adminmainController.editedStudygroup.name} školní rok #{adminmainController.edited.name}
                             </p:column>
                             <p:column colspan="1">
                                 Všíchni studenti 
@@ -70,6 +70,9 @@
                                         </p:column>
                                         <p:column headerText="login">
                                             <h:outputText value="#{studentTable.login}"/>
+                                        </p:column>
+                                        <p:column headerText="Třída">
+                                            <h:outputText value="#{studentTable.studyGroupidStudyGroup.name} #{studentTable.studyGroupidStudyGroup.schoolYearidSchoolYear.name}"/>
                                         </p:column>
                                         <p:column headerText="Příjmení">
                                             <h:outputText value="#{studentTable.lastName}"/>

@@ -5,12 +5,13 @@
  */
 package dao;
 
+
 /**
  *
  * @author KastanNotas
  */
 public interface DAOFactory {
-    
+
     public abstract SchooyearDAOjpa getSchoolYearDAO();
     
     public abstract StudygroupDAOjpa getStudygroupDAO();

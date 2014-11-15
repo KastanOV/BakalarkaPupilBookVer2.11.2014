@@ -13,7 +13,6 @@ import SessionBeans.StudentsSBLocal;
 import SessionBeans.StudyGroupSBLocal;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -41,19 +40,32 @@ public class AdminmainController{
     private Studygroup editedStudygroup;
     private Users editedUser;
     private List<Users> dropedStudents = new ArrayList<>();
-    
 
-     
-    
-       
     public void onStudentDrop(DragDropEvent ddEvent){
         Users s = ((Users) ddEvent.getData());
-        dropedStudents.add(s);
+        try {
+            editedStudygroup.getUsersCollection().add(s);
+            s.setStudyGroupidStudyGroup(editedStudygroup);
+            saveStudent(s);
+        } catch(Exception e) {
+			FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+					"Zřejmě jste nevybral studíjní skupinu", 
+					"Nepodařilo se uložit data do databáze.. Příčina: " + e.getMessage()));
+        }
     }
     public Collection<Users> getStudents() {
         return dbStudents.getAllStudents();
     }
-
+    public void saveStudent(Users u){
+        try{
+            dbStudents.saveStudent(u);
+            
+        } catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+					"Nepodařilo se uložit data do databáze.", 
+					"Nepodařilo se uložit data do databáze.. Příčina: " + e.getMessage()));
+		}
+    }
     public void saveStudent(){
         try{
             dbStudents.createNewUser(editedUser);
@@ -124,7 +136,12 @@ public class AdminmainController{
     public void setEditedUser(Users editedUser) {
         this.editedUser = editedUser;
     }
-    public List<Users> getDropedStudents() {
-        return dropedStudents;
+    public Collection<Users> getDropedStudents() {
+        if(editedStudygroup != null){
+            return editedStudygroup.getUsersCollection();
+        } else {
+            return null;
+        }
+        
     }
 }

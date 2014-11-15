@@ -39,12 +39,12 @@ public class StudentsSB implements StudentsSBLocal {
     }
 
     @Override
-    public Users saveNewStudent(Users s) {
-        return getFactory().getStudentsDAO().saveStudent(s);
+    public Collection<Users> getAllStudents() {
+        return getFactory().getStudentsDAO().getAllStudents();
     }
 
     @Override
-    public Collection<Users> getAllStudents() {
-        return getFactory().getStudentsDAO().getAllStudents();
+    public Users saveStudent(Users s) {
+        return getFactory().getStudentsDAO().saveStudent(s);
     }
 }

@@ -31,27 +31,20 @@ public class SchoolYearSB implements SchoolYearSBLocal {
         getFactory().getSchoolYearDAO().saveSchoolyear(s);
         return s;
     }
-
     @Override
     public List<Schoolyear> getAllSchoolYears() {
         return getFactory().getSchoolYearDAO().getAllSchoolYears();
     }
-
     @Override
     public Schoolyear getSchoolyear(int id) {
         return getFactory().getSchoolYearDAO().getSchoolyear(id);
     }
-
     @Override
     public void deleteSchooYear(Schoolyear s) {
         getFactory().getSchoolYearDAO().deleteSchooYear(s);
     }
-
     @Override
     public void deleteSchooYear(int id) {
         getFactory().getSchoolYearDAO().deleteSchooYear(id);
     }
-
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
 }
