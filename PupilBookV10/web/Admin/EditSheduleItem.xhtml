@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition>
+
+        <p:dialog id="SheduleitemEditDialog" widgetVar="SheduleitemEditDialog" modal="true" resizable="false" appendTo="@(body)" header="Upravit rozvrh">
+            <h:form id="SheduleitemEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{adminmainController.editedSheduleItem != null}">
+                        <p:outputLabel value="Vyberte Učitele" for="selectUser" />
+                        <p:selectOneMenu id="selectUser" var="UsersItems" value="#{adminmainController.editedUser}">
+                            <f:selectItems var="SelectedTeacher" value="#{adminmainController.teachers}" itemValue="#{SelectedTeacher}" itemLabel="#{SelectedTeacher.login}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Vyberte Predmet" for="selectSubject" />
+                        <p:selectOneMenu id="selectSubject" var="SubjectsItems" value="#{adminmainController.editedStudySubject}">
+                            <f:selectItems var="SelectedSubject" value="#{adminmainController.studySubjects}" itemValue="#{SelectedSubject}" itemLabel="#{SelectedSubject.shortName}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    
+                    <p:commandButton actionListener="#{adminmainController.saveEditedSheduleItem(SelectedTeacher,selectSubject)}" value="#{bundle.save}" update="display,:AdminMainMenu:SchoolYears,:growl" oncomplete="handleSubmit(args,'SheduleitemEditDialog');"/>
+                    <p:commandButton value="#{bundle.cancel}" onclick="SheduleitemEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+    </ui:composition>
+</html>

@@ -6,7 +6,9 @@
 package SessionBeans;
 
 import Entity.Schoolyear;
+import Entity.Sheduleitem;
 import Entity.Studygroup;
+import Entity.Studysubject;
 import Entity.Users;
 import dao.DAOFactory;
 import dao.DAOFactoryJPA;
@@ -33,6 +35,38 @@ public class AdminmainSessionBean implements AdminmainSessionBeanLocal {
             factory = new DAOFactoryJPA(em);
         }
         return factory;
+    }
+//Shedule Items
+    @Override
+    public void insertNewSheduleItem(Sheduleitem s) {
+        em.persist(s);
+    }
+
+    @Override
+    public Sheduleitem saveSheduleItem(Sheduleitem s) {
+        em.merge(s);
+        return s;
+    }
+//Subjects
+    @Override
+    public Collection<Studysubject> getAllStudySubjects(){
+        return em.createNamedQuery("Studysubject.findAll").getResultList();
+    }
+    @Override
+    public Studysubject insertNewStudySubject(Studysubject s){
+        em.persist(s);
+        em.flush();
+        return s;
+    }
+    @Override
+    public Studysubject saveStudySubject(Studysubject s){
+        em.merge(s);
+        em.flush();
+        return s;
+    }
+    @Override
+    public Studysubject getStudysubject(int id) {
+        return em.find(Studysubject.class, id);
     }
 //StudyGroups    
     @Override
@@ -99,6 +133,10 @@ public class AdminmainSessionBean implements AdminmainSessionBeanLocal {
     public List<Studygroup> getEditedStudyGroup(Schoolyear s) {
         return getFactory().getStudygroupDAO().getEditedStudyGroup(s);
     }
+
+    
+
+    
 
     
 }

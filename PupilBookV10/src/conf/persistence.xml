@@ -3,6 +3,7 @@
   <persistence-unit name="PupilBookV10PU" transaction-type="JTA">
     <jta-data-source>PupilBook</jta-data-source>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
-    <properties/>
+    <properties>
+    </properties>
   </persistence-unit>
 </persistence>

@@ -48,7 +48,7 @@ public class Results implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "Score")
-    private boolean score;
+    private short score;
     @Column(name = "Date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
@@ -69,7 +69,7 @@ public class Results implements Serializable {
         this.idResults = idResults;
     }
 
-    public Results(Integer idResults, boolean score) {
+    public Results(Integer idResults, short score) {
         this.idResults = idResults;
         this.score = score;
     }
@@ -90,11 +90,11 @@ public class Results implements Serializable {
         this.description = description;
     }
 
-    public boolean getScore() {
+    public short getScore() {
         return score;
     }
 
-    public void setScore(boolean score) {
+    public void setScore(short score) {
         this.score = score;
     }
 

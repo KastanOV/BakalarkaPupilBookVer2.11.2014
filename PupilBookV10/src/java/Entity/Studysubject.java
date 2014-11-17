@@ -46,6 +46,20 @@ public class Studysubject implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "Name")
     private String name;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "ShortName")
+    private String ShortName;
+
+    public String getShortName() {
+        return ShortName;
+    }
+
+    public void setShortName(String ShortName) {
+        this.ShortName = ShortName;
+    }
+    
     @OneToMany(mappedBy = "studySubjectidStudySubject")
     private Collection<Sheduleitem> sheduleitemCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "studySubjectidStudySubject")
@@ -60,9 +74,10 @@ public class Studysubject implements Serializable {
         this.idStudySubject = idStudySubject;
     }
 
-    public Studysubject(Integer idStudySubject, String name) {
+    public Studysubject(Integer idStudySubject, String name, String ShortName) {
         this.idStudySubject = idStudySubject;
         this.name = name;
+        this.ShortName = ShortName;
     }
 
     public Integer getIdStudySubject() {

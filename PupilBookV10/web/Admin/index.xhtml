@@ -18,14 +18,18 @@
                             <ui:include src="TeachersDragAndDrop.xhtml"/>
                         </p:tab>
                         <p:tab title="Rozvrhy hodin">
-                            
+                            <ui:include src="Shedule.xhtml"/>
                         </p:tab>
-                    </p:tabView>    
+                        <p:tab title="Předměty">
+                            <ui:include src="StudySubjects.xhtml"/>
+                        </p:tab>
+                    </p:tabView>
                 </h:form>
             </ui:define>
             <ui:define name="west">
                 <ui:include src="MainMenu.xhtml"/>
-
+                <ui:include src="EditSheduleItem.xhtml"/>
+                <ui:include src="CreateSS.xhtml"/>
                 <ui:include src="CreateSY.xhtml"/>
                 <ui:include src="EditSY.xhtml"/>
                 <ui:include src="CreateSG.xhtml"/>

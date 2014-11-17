@@ -42,11 +42,11 @@ public class Sheduleitem implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "day")
-    private boolean day;
+    private short day;
     @Basic(optional = false)
     @NotNull
     @Column(name = "hour")
-    private boolean hour;
+    private short hour;
     @JoinColumn(name = "StudyGroup_idStudyGroup", referencedColumnName = "idStudyGroup")
     @ManyToOne(optional = false)
     private Studygroup studyGroupidStudyGroup;
@@ -64,7 +64,7 @@ public class Sheduleitem implements Serializable {
         this.idSheduleItem = idSheduleItem;
     }
 
-    public Sheduleitem(Integer idSheduleItem, boolean day, boolean hour) {
+    public Sheduleitem(Integer idSheduleItem, short day, short hour) {
         this.idSheduleItem = idSheduleItem;
         this.day = day;
         this.hour = hour;
@@ -78,19 +78,19 @@ public class Sheduleitem implements Serializable {
         this.idSheduleItem = idSheduleItem;
     }
 
-    public boolean getDay() {
+    public short getDay() {
         return day;
     }
 
-    public void setDay(boolean day) {
+    public void setDay(short day) {
         this.day = day;
     }
 
-    public boolean getHour() {
+    public short getHour() {
         return hour;
     }
 
-    public void setHour(boolean hour) {
+    public void setHour(short hour) {
         this.hour = hour;
     }
 

@@ -6,7 +6,9 @@
 package SessionBeans;
 
 import Entity.Schoolyear;
+import Entity.Sheduleitem;
 import Entity.Studygroup;
+import Entity.Studysubject;
 import Entity.Users;
 import java.util.Collection;
 import java.util.List;
@@ -18,7 +20,16 @@ import javax.ejb.Local;
  */
 @Local
 public interface AdminmainSessionBeanLocal {
-    
+//Shedule Items
+    public void insertNewSheduleItem(Sheduleitem s);
+    public Sheduleitem saveSheduleItem(Sheduleitem s);
+
+// Subjects
+    public Collection<Studysubject> getAllStudySubjects();
+    public Studysubject insertNewStudySubject(Studysubject s);
+    public Studysubject saveStudySubject(Studysubject s);
+    public Studysubject getStudysubject(int id);
+
 //Study Groups
     public Studygroup saveStudygroup(Studygroup p);
     public List<Studygroup> getAllStudygroup();

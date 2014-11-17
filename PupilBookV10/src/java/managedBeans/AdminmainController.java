@@ -9,6 +9,7 @@ import Entity.Schoolyear;
 import Entity.Studygroup;
 import Entity.Studysubject;
 import Entity.Users;
+import Entity.Sheduleitem;
 import SessionBeans.AdminmainSessionBeanLocal;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -36,7 +37,19 @@ public class AdminmainController implements Serializable{
     private Studygroup editedStudygroup;
     private Users editedUser;
     private List<Users> dropedStudents = new ArrayList<>();
-    private Studysubject[][] SheduleItems;
+    private Collection<Sheduleitem> selectedSheduleItems;
+    private Studysubject editedStudySubject;
+    private Sheduleitem editedSheduleItem;
+
+    public Sheduleitem getEditedSheduleItem() {
+        return editedSheduleItem;
+    }
+
+    public void setEditedSheduleItem(Sheduleitem editedSheduleItem) {
+        this.editedSheduleItem = editedSheduleItem;
+    }
+
+    
 
     public void onStudentDrop(DragDropEvent ddEvent){
         Users s = ((Users) ddEvent.getData());
@@ -91,12 +104,36 @@ public class AdminmainController implements Serializable{
         try{
             //editedSchoolYear.getStudygroupCollection().add(editedStudygroup);
             editedStudygroup.setSchoolYearidSchoolYear(editedSchoolYear);
+            
             sb.saveStudygroup(editedStudygroup);
+            for (short i = 0; i < 8; i++){
+                for (short j = 0; j < 5; j++){
+                    Sheduleitem item = new Sheduleitem();
+                    item.setStudyGroupidStudyGroup(editedStudygroup);
+                    item.setDay(j);
+                    item.setHour(i);
+                    sb.insertNewSheduleItem(item);
+                }
+            }
         }   catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, 
 					"Nepodařilo se uložit data do databáze.", 
 					"Nepodařilo se uložit data do databáze.. Příčina: " + e.getMessage()));
 	}
+    }
+    public void saveStudySubject(){
+        try{
+            sb.insertNewStudySubject(editedStudySubject);
+        }catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+					"Nepodařilo se uložit data do databáze.", 
+					"Nepodařilo se uložit data do databáze.. Příčina: " + e.getMessage()));
+		}
+    }
+    //TODO save study subject
+    public void saveEditedSheduleItem(Users u, Studysubject s){
+        editedSheduleItem.setUsersLogin(u);
+        editedSheduleItem.setStudySubjectidStudySubject(s);
     }
     
     public Users prepareNewStudent(){
@@ -115,13 +152,13 @@ public class AdminmainController implements Serializable{
     }
     public Studygroup prepareNewStudyGroup(){
         editedStudygroup = new Studygroup();
-//        for (int i = 0; i < 10; i++){
-//            for (int j = 0; j < 5; j++){
-//                
-//            }
-//        }
         return editedStudygroup;
     }
+    public Studysubject prepareNewStudySubject(){
+        editedStudySubject = new Studysubject();
+        return editedStudySubject;
+    }
+    
     
     public List<Schoolyear> getAllSchoolYears(){
         return sb.getAllSchoolYears();
@@ -130,9 +167,9 @@ public class AdminmainController implements Serializable{
         return sb.getEditedStudyGroup(editedSchoolYear);
     }
     public Studygroup getEditedStudygroup() {
+        if(editedStudygroup != null) selectedSheduleItems = editedStudygroup.getSheduleitemCollection();
         return editedStudygroup;
     }
-    
     public void setEditedStudygroup(Studygroup editedStudygroup) {
         this.editedStudygroup = editedStudygroup;
     }
@@ -156,6 +193,35 @@ public class AdminmainController implements Serializable{
             return null;
         }
         
+    }
+    
+    public Sheduleitem getSheduleitem(short day, short hour){
+        if(selectedSheduleItems != null){
+            for (Sheduleitem item : selectedSheduleItems){
+                if(item.getDay() == day && item.getHour() == hour) return item;
+            }
+        }
+        return null;
+    }
+    public void setEditedSheduleItem(short day, short hour){
+        if(selectedSheduleItems != null){
+            for (Sheduleitem item : selectedSheduleItems){
+                if(item.getDay() == day && item.getHour() == hour){
+                    editedSheduleItem = item;
+                    break;
+                }
+            }
+        }
+    }
+    
+    public Collection<Studysubject> getStudySubjects(){
+        return sb.getAllStudySubjects();
+    }
+    public Studysubject getEditedStudySubject() {
+        return editedStudySubject;
+    }
+    public void setEditedStudySubject(Studysubject editedStudySubject) {
+        this.editedStudySubject = editedStudySubject;
     }
     
 }
