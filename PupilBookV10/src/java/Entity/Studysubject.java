@@ -46,7 +46,7 @@ public class Studysubject implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "Name")
     private String name;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "studySubjectidStudySubject")
+    @OneToMany(mappedBy = "studySubjectidStudySubject")
     private Collection<Sheduleitem> sheduleitemCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "studySubjectidStudySubject")
     private Collection<TeacherSubjects> teacherSubjectsCollection;

@@ -7,6 +7,7 @@ package managedBeans;
 
 import Entity.Schoolyear;
 import Entity.Studygroup;
+import Entity.Studysubject;
 import Entity.Users;
 import SessionBeans.AdminmainSessionBeanLocal;
 import java.io.Serializable;
@@ -35,10 +36,8 @@ public class AdminmainController implements Serializable{
     private Studygroup editedStudygroup;
     private Users editedUser;
     private List<Users> dropedStudents = new ArrayList<>();
-    
+    private Studysubject[][] SheduleItems;
 
-    
-    
     public void onStudentDrop(DragDropEvent ddEvent){
         Users s = ((Users) ddEvent.getData());
         try {
@@ -116,6 +115,11 @@ public class AdminmainController implements Serializable{
     }
     public Studygroup prepareNewStudyGroup(){
         editedStudygroup = new Studygroup();
+//        for (int i = 0; i < 10; i++){
+//            for (int j = 0; j < 5; j++){
+//                
+//            }
+//        }
         return editedStudygroup;
     }
     

@@ -35,7 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Studygroup.findAll", query = "SELECT s FROM Studygroup s"),
     @NamedQuery(name = "Studygroup.findByIdStudyGroup", query = "SELECT s FROM Studygroup s WHERE s.idStudyGroup = :idStudyGroup"),
-    @NamedQuery(name = "Studygroup.findBySchoolyear", query = "SELECT s FROM Studygroup s WHERE s.schoolYearidSchoolYear = :SchoolYearID")})
+    @NamedQuery(name = "Studygroup.findByName", query = "SELECT s FROM Studygroup s WHERE s.name = :name")})
 public class Studygroup implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

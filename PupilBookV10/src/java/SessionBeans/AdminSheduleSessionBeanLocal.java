@@ -5,6 +5,8 @@
  */
 package SessionBeans;
 
+import Entity.Studysubject;
+import java.util.Collection;
 import javax.ejb.Local;
 
 /**
@@ -13,5 +15,7 @@ import javax.ejb.Local;
  */
 @Local
 public interface AdminSheduleSessionBeanLocal {
-    
+    public Collection<Studysubject> getAllStudySubjects();
+    public Studysubject insertNewStudySubject(Studysubject s);
+    public Studysubject saveStudySubject(Studysubject s);
 }

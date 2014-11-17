@@ -43,10 +43,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Users.findByLogin", query = "SELECT u FROM Users u WHERE u.login = :login"),
     @NamedQuery(name = "Users.findByPassword", query = "SELECT u FROM Users u WHERE u.password = :password"),
     @NamedQuery(name = "Users.findByBirthDate", query = "SELECT u FROM Users u WHERE u.birthDate = :birthDate"),
-    @NamedQuery(name = "Users.findByRole", query = "SELECT u FROM Users u WHERE u.role = :role"),
-    @NamedQuery(name = "Users.loginCounter", query = "SELECT COUNT(u) FROM Users u WHERE u.login LIKE :createLogin"),
-    @NamedQuery(name = "Users.doLogin", query = "SELECT u FROM Users u WHERE u.login = :login and u.password = :password")})
-
+    @NamedQuery(name = "Users.findByRole", query = "SELECT u FROM Users u WHERE u.role = :role")})
 public class Users implements Serializable {
     private static final long serialVersionUID = 1L;
     @Basic(optional = false)
@@ -88,7 +85,7 @@ public class Users implements Serializable {
     @NotNull
     @Column(name = "Role")
     private Character role;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usersLogin")
+    @OneToMany(mappedBy = "usersLogin")
     private Collection<Sheduleitem> sheduleitemCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "studentLogin")
     private Collection<Parrentstudent> parrentstudentCollection;
