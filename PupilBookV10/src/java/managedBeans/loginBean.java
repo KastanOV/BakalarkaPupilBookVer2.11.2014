@@ -10,6 +10,7 @@ import SessionBeans.loginSessionBeanLocal;
 import java.io.IOException;
 import java.io.Serializable;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
@@ -42,16 +43,20 @@ public class loginBean implements Serializable{
     public String login() throws IOException{
         loggedUser.setLogin(user);
         loggedUser.setPassword(Password);
+        
         loggedUser = sb.doLogin(loggedUser);
-        if(loggedUser == null){
-            loggedIn = false;
-            return null;
-        } 
-        else loggedIn = true;
-        if (loggedUser.getRole() == 'A'){
+        
+        if (loggedUser.getRole() != null){
+            loggedIn = true;
             ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
-            context.redirect("faces/Admin/index.xhtml");
-        }
+            context.redirect("Admin/index.xhtml");
+        } 
+        else{
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Chyba", "Sorry kámo, ale něco máš "));  
+        } 
+            
+        
+        
         return null;
     }
     

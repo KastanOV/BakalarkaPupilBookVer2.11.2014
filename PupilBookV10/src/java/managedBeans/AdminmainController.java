@@ -36,6 +36,9 @@ public class AdminmainController implements Serializable{
     private Users editedUser;
     private List<Users> dropedStudents = new ArrayList<>();
     
+
+    
+    
     public void onStudentDrop(DragDropEvent ddEvent){
         Users s = ((Users) ddEvent.getData());
         try {
@@ -51,9 +54,13 @@ public class AdminmainController implements Serializable{
     public Collection<Users> getStudents() {
         return sb.getAllStudents();
     }
+    public Collection<Users> getTeachers(){
+        return sb.getAllTeachers();
+    }
+    
     public void saveStudent(Users u){
         try{
-            sb.saveStudent(u);
+            sb.saveUser(u);
             
         } catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, 
@@ -98,7 +105,12 @@ public class AdminmainController implements Serializable{
         editedUser.setRole('S');
         return editedUser;
     }
-    public Schoolyear prepareNew(){
+    public Users prepareNewTeacher(){
+        editedUser = new Users();
+        editedUser.setRole('T');
+        return editedUser;
+    }
+    public Schoolyear prepareNewSchoolYear(){
         editedSchoolYear = new Schoolyear();
         return editedSchoolYear;
     }
@@ -141,4 +153,5 @@ public class AdminmainController implements Serializable{
         }
         
     }
+    
 }

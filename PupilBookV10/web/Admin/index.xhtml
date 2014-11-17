@@ -4,118 +4,28 @@
 <html xmlns="http://www.w3.org/1999/xhtml"   
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:p="http://primefaces.org/ui">
     <h:body>
     	
     	<ui:composition template="/templates/admin.xhtml">
             <ui:define name="body">
-                <script type="text/javascript">
-                    function handleDrop(event, ui) {
-                    var droppedStudent = ui.draggable;
-                    droppedStudent.fadeOut('fast');
-                    }
-                </script>
                 <h:form id="Students">
-                    <p:panelGrid style="margin-top:20px">
-                    <f:facet name="header">
-                        <p:row>
-                            <p:column colspan="2">Drag and drop paráda</p:column>
-                        </p:row>
-                        <p:row>
-                            <p:column colspan="1">
-                                Studenti ve třídě #{adminmainController.editedStudygroup.name} školní rok #{adminmainController.edited.name}
-                            </p:column>
-                            <p:column colspan="1">
-                                Všíchni studenti 
-                            </p:column>
-                        </p:row>
-                    </f:facet>
-                        <p:row>
-                            <p:column colspan="1">
-                                STUDENTI VE VYBRANNE TRIDE
-                            </p:column>
-                            <p:column colspan="1">
-                                <p:commandButton id="createButtonStudent" icon="ui-icon-plus"   value="Přidej studenta" actionListener="#{adminmainController.prepareNewStudent()}" update=":UserCreateForm" oncomplete="PF('UserCreateDialog').show()"/>
-                            </p:column>
-                        </p:row>
-                        <p:row>
-                            <p:column colspan="1">
-                                <p:fieldset id="selectedStudentsField" legend="Selected Students" style="margin-top:20px">
-                                    <p:outputPanel id="dropArea">
-                                        <h:outputText value="Zde přesuňte studenty" rendered="#{empty adminmainController.dropedStudents}" style="font-size: 24px" />
-                                        <p:dataTable id="selectedStudents" var="selStudents" value="#{adminmainController.dropedStudents}" rendered="#{not empty adminmainController.dropedStudents}" >
-                                            <p:column headerText="login">
-                                                <h:outputText value="#{selStudents.login}" />
-                                            </p:column>
-                                            <p:column headerText="Příjmení">
-                                                <h:outputText value="#{selStudents.lastName}"/>
-                                            </p:column>
-                                            <p:column headerText="Jméno">
-                                                <h:outputText value="#{selStudents.firstName}"/>
-                                            </p:column>
-                                            <p:column headerText="Datum narození">
-                                                <h:outputText value="#{selStudents.birthDate}"/>
-                                            </p:column>
-                                        </p:dataTable>
-                                    </p:outputPanel>
-                                </p:fieldset>
-                            </p:column>
-                            <p:column colspan="1">
-                                <p:fieldset id="availableStudentsField" legend="Available Students">
-                                    <p:dataTable id="StudentsTable" var="studentTable" value="#{adminmainController.students}">
-                                        <p:column style="width:20px">
-                                            <h:outputText id="dragIcon" styleClass="ui-icon ui-icon-arrow-4" />
-                                            <p:draggable for="dragIcon" revert="true" helper="clone"/>
-                                        </p:column>
-                                        <p:column headerText="login">
-                                            <h:outputText value="#{studentTable.login}"/>
-                                        </p:column>
-                                        <p:column headerText="Třída">
-                                            <h:outputText value="#{studentTable.studyGroupidStudyGroup.name} #{studentTable.studyGroupidStudyGroup.schoolYearidSchoolYear.name}"/>
-                                        </p:column>
-                                        <p:column headerText="Příjmení">
-                                            <h:outputText value="#{studentTable.lastName}"/>
-                                        </p:column>
-                                        <p:column headerText="Jméno">
-                                            <h:outputText value="#{studentTable.firstName}"/>
-                                        </p:column>
-                                        <p:column headerText="Datum narození">
-                                            <h:outputText value="#{studentTable.birthDate}"/>
-                                        </p:column>
-                                    </p:dataTable>
-                                </p:fieldset>
-                            </p:column> 
-                        </p:row>
-                    </p:panelGrid>
-                    
-                    
-                    <p:droppable for="selectedStudentsField" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="StudentsTable" onDrop="handleDrop">
-                        <p:ajax listener="#{adminmainController.onStudentDrop}" update="dropArea StudentsTable" />
-                    </p:droppable>
+                    <p:tabView>
+                        <p:tab title="Studenti">
+                            <ui:include src="StudentsDragAndDrop.xhtml"/>
+                        </p:tab>
+                        <p:tab title="Učitelé">
+                            <ui:include src="TeachersDragAndDrop.xhtml"/>
+                        </p:tab>
+                        <p:tab title="Rozvrhy hodin">
+                            
+                        </p:tab>
+                    </p:tabView>    
                 </h:form>
             </ui:define>
             <ui:define name="west">
-                <h:form id="AdminMainMenu">
-                    <h:panelGrid columns="2" style="margin-bottom: 10px" cellpadding="5">
-                        <p:outputLabel for="SchoolYears" value="#{bundle.dropdownSchoolYear}"/>
-                        <p:selectOneMenu id="SchoolYears" value="#{adminmainController.edited}" onchange="submit()" converter="#{SchoolYearConverter}" effect="fold" >
-                            <f:selectItem itemLabel="#{bundle.dropdownSchoolYear}" itemValue="" />
-                            <f:selectItems value="#{adminmainController.allSchoolYears}" var="item" itemLabel="#{item.name}" itemValue="#{item}" />
-                        </p:selectOneMenu>
-                        <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.createSchoolYear}" actionListener="#{adminmainController.prepareNew}" update=":SchoolyearCreateForm" oncomplete="PF('SchoolyearCreateDialog').show()"/>
-                        <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.editSchoolYear}" update=":SchoolyearEditForm" oncomplete="PF('SchoolyearEditDialog').show()" disabled="#{empty adminmainController.edited}"/>
-                    
-                        <p:outputLabel for="StudyGroupsOneMenu" value="#{bundle.selectStudyGroup}"/>
-                        <p:selectOneMenu id="StudyGroupsOneMenu" value="#{adminmainController.editedStudygroup}" onchange="submit()" converter="#{StudyGroupConverter}" effect="fold">
-                            <f:selectItem itemLabel="#{bundle.dropdownStudyGroups}" itemValue="" />
-                            <f:selectItems value="#{adminmainController.editedStudyGroups}" var="itemSG" itemLabel="#{itemSG.name}" itemValue="#{itemSG}"/>
-                        </p:selectOneMenu>
-                        <p:commandButton id="createButtonSG" icon="ui-icon-plus"   value="#{bundle.createStudyGroup}" actionListener="#{adminmainController.prepareNewStudyGroup}" update=":StudyGroupCreateForm" oncomplete="PF('StudyGroupCreateDialog').show()"/>
-                        <!--<p:commandButton id="editButton"   icon="ui-icon-pencil" value="Edit" update=":StudyGroupEditForm" oncomplete="PF('StudyGroupEditDialog').show()" disabled="#{empty adminmainController.edited}"/>-->
-                    </h:panelGrid>
-                </h:form>
- 
+                <ui:include src="MainMenu.xhtml"/>
+
                 <ui:include src="CreateSY.xhtml"/>
                 <ui:include src="EditSY.xhtml"/>
                 <ui:include src="CreateSG.xhtml"/>

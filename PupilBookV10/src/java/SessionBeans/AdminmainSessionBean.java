@@ -65,8 +65,12 @@ public class AdminmainSessionBean implements AdminmainSessionBeanLocal {
         return getFactory().getUsersDAO().getAllStudents();
     }
     @Override
-    public Users saveStudent(Users s) {
-        return getFactory().getUsersDAO().saveStudent(s);
+    public Users saveUser(Users s) {
+        return getFactory().getUsersDAO().saveUser(s);
+    }
+    @Override
+    public Collection<Users> getAllTeachers() {
+        return getFactory().getUsersDAO().getAllTeachers();
     }
 //Schoool Years    
     @Override
@@ -95,4 +99,6 @@ public class AdminmainSessionBean implements AdminmainSessionBeanLocal {
     public List<Studygroup> getEditedStudyGroup(Schoolyear s) {
         return getFactory().getStudygroupDAO().getEditedStudyGroup(s);
     }
+
+    
 }

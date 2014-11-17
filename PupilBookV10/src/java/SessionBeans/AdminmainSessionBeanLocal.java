@@ -28,8 +28,9 @@ public interface AdminmainSessionBeanLocal {
     public void deleteStudygroup(int StudygroupId);
 //Users
     public Users createNewUser(Users s);
-    public Users saveStudent(Users s);
+    public Users saveUser(Users s);
     public Collection<Users> getAllStudents();
+    public Collection<Users> getAllTeachers();
 //SchoolYear Method
     public Schoolyear saveSchoolyear(Schoolyear s);
     public List<Schoolyear> getAllSchoolYears();

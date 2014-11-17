@@ -24,11 +24,15 @@ public class UsersDAOjpa {
     public Collection<Users> getAllStudents(){
         return em.createNamedQuery("Users.findByRole").setParameter("role", 'S').getResultList();
     }
-    public Users saveStudent(Users s){
+    public Collection<Users> getAllTeachers(){
+        return em.createNamedQuery("Users.findByRole").setParameter("role", 'T').getResultList();
+    }
+    public Users saveUser(Users s){
         em.merge(s);
         em.flush();
         return s;
     }
+    
     public Users createNewUser(Users s){
         getFreeLogin(s);
         if(s.getPassword() == null) createPassword(s);
@@ -38,10 +42,15 @@ public class UsersDAOjpa {
         return s;
     }
     public Users doLogin(Users u){
-        return (Users) em.createNamedQuery("Users.doLogin")
+        try{
+            Users loaded = (Users) em.createNamedQuery("Users.doLogin")
                 .setParameter("login", u.getLogin())
                 .setParameter("password", u.getPassword())
                 .getSingleResult();
+            return loaded;
+        } catch (Exception e){
+            return u;
+        }
     }
     
     private void createPassword(Users s){
