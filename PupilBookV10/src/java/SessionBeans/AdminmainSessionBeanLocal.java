@@ -42,6 +42,7 @@ public interface AdminmainSessionBeanLocal {
     public Users saveUser(Users s);
     public Collection<Users> getAllStudents();
     public Collection<Users> getAllTeachers();
+    public Users getUser(String UserId);
 //SchoolYear Method
     public Schoolyear saveSchoolyear(Schoolyear s);
     public List<Schoolyear> getAllSchoolYears();

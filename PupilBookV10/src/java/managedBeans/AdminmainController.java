@@ -49,8 +49,6 @@ public class AdminmainController implements Serializable{
         this.editedSheduleItem = editedSheduleItem;
     }
 
-    
-
     public void onStudentDrop(DragDropEvent ddEvent){
         Users s = ((Users) ddEvent.getData());
         try {
@@ -67,7 +65,8 @@ public class AdminmainController implements Serializable{
         return sb.getAllStudents();
     }
     public Collection<Users> getTeachers(){
-        return sb.getAllTeachers();
+        Collection<Users> u = sb.getAllTeachers() ;
+        return u;
     }
     
     public void saveStudent(Users u){
@@ -134,6 +133,14 @@ public class AdminmainController implements Serializable{
     public void saveEditedSheduleItem(Users u, Studysubject s){
         editedSheduleItem.setUsersLogin(u);
         editedSheduleItem.setStudySubjectidStudySubject(s);
+        try{
+            sb.saveSheduleItem(editedSheduleItem);
+        
+        }catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+					"Nepodařilo se uložit data do databáze.", 
+					"Nepodařilo se uložit data do databáze.. Příčina: " + e.getMessage()));
+		}
     }
     
     public Users prepareNewStudent(){
@@ -208,6 +215,8 @@ public class AdminmainController implements Serializable{
             for (Sheduleitem item : selectedSheduleItems){
                 if(item.getDay() == day && item.getHour() == hour){
                     editedSheduleItem = item;
+                    editedUser = item.getUsersLogin();
+                    editedStudySubject = item.getStudySubjectidStudySubject();
                     break;
                 }
             }
@@ -215,7 +224,8 @@ public class AdminmainController implements Serializable{
     }
     
     public Collection<Studysubject> getStudySubjects(){
-        return sb.getAllStudySubjects();
+        Collection<Studysubject> s = sb.getAllStudySubjects();
+        return s;
     }
     public Studysubject getEditedStudySubject() {
         return editedStudySubject;

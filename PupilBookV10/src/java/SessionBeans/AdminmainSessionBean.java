@@ -106,6 +106,16 @@ public class AdminmainSessionBean implements AdminmainSessionBeanLocal {
     public Collection<Users> getAllTeachers() {
         return getFactory().getUsersDAO().getAllTeachers();
     }
+
+    /**
+     *
+     * @param UserId
+     * @return
+     */
+    @Override
+    public Users getUser(String UserId){
+        return em.find(Users.class, UserId);
+    }
 //Schoool Years    
     @Override
     public Schoolyear saveSchoolyear(Schoolyear s) {
