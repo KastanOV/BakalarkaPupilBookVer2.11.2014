@@ -42,7 +42,10 @@ public interface AdminmainSessionBeanLocal {
     public Users saveUser(Users s);
     public Collection<Users> getAllStudents();
     public Collection<Users> getAllTeachers();
+    public Collection<Users> getByLastName(String lastName);
     public Users getUser(String UserId);
+    public Collection<Users> getStudentByStudyGroup(Studygroup s);
+    public Collection<Users> getTeachersByStudyGroup(Studygroup s);
 //SchoolYear Method
     public Schoolyear saveSchoolyear(Schoolyear s);
     public List<Schoolyear> getAllSchoolYears();

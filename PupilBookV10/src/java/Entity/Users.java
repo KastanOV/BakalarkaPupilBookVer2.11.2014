@@ -37,7 +37,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Users.findAll", query = "SELECT u FROM Users u"),
     @NamedQuery(name = "Users.findByFirstName", query = "SELECT u FROM Users u WHERE u.firstName = :firstName"),
     @NamedQuery(name = "Users.findByMiddleName", query = "SELECT u FROM Users u WHERE u.middleName = :middleName"),
-    @NamedQuery(name = "Users.findByLastName", query = "SELECT u FROM Users u WHERE u.lastName = :lastName"),
+    @NamedQuery(name = "Users.findByLastName", query = "SELECT u FROM Users u WHERE u.lastName LIKE :lastName"),
     @NamedQuery(name = "Users.findByPhone", query = "SELECT u FROM Users u WHERE u.phone = :phone"),
     @NamedQuery(name = "Users.findByEmail", query = "SELECT u FROM Users u WHERE u.email = :email"),
     @NamedQuery(name = "Users.findByLogin", query = "SELECT u FROM Users u WHERE u.login = :login"),
@@ -45,7 +45,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Users.findByBirthDate", query = "SELECT u FROM Users u WHERE u.birthDate = :birthDate"),
     @NamedQuery(name = "Users.findByRole", query = "SELECT u FROM Users u WHERE u.role = :role"),
     @NamedQuery(name = "Users.loginCounter", query = "SELECT COUNT(u) FROM Users u WHERE u.login LIKE :createLogin"),
-    @NamedQuery(name = "Users.doLogin", query = "SELECT u FROM Users u WHERE u.login = :login and u.password = :password")})
+    @NamedQuery(name = "Users.doLogin", query = "SELECT u FROM Users u WHERE u.login = :login and u.password = :password"),
+    @NamedQuery(name = "Users.byStudyGroupAndRole", query = "SELECT u FROM Users u WHERE u.role = :role AND u.studyGroupidStudyGroup = :studygroup")})
 public class Users implements Serializable {
     private static final long serialVersionUID = 1L;
     @Basic(optional = false)

@@ -40,7 +40,16 @@ public class AdminmainController implements Serializable{
     private Collection<Sheduleitem> selectedSheduleItems;
     private Studysubject editedStudySubject;
     private Sheduleitem editedSheduleItem;
+    private String searchByLastname;
 
+    public String getSearchByLastname() {
+        return searchByLastname;
+    }
+
+    public void setSearchByLastname(String SearchByLastname) {
+        this.searchByLastname = SearchByLastname;
+    }
+    
     public Sheduleitem getEditedSheduleItem() {
         return editedSheduleItem;
     }
@@ -62,7 +71,12 @@ public class AdminmainController implements Serializable{
         }
     }
     public Collection<Users> getStudents() {
-        return sb.getAllStudents();
+        if(searchByLastname == null || searchByLastname.equals("")){
+            return sb.getAllStudents();
+        } else {
+            return sb.getByLastName(searchByLastname);
+        }
+        
     }
     public Collection<Users> getTeachers(){
         Collection<Users> u = sb.getAllTeachers() ;
@@ -71,7 +85,9 @@ public class AdminmainController implements Serializable{
     
     public void saveStudent(Users u){
         try{
-            sb.saveUser(u);
+            if(u.getLogin() != null){
+                sb.saveUser(u);    
+            }else sb.createNewUser(editedUser);
             
         } catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, 
@@ -81,7 +97,12 @@ public class AdminmainController implements Serializable{
     }
     public void saveStudent(){
         try{
-            sb.createNewUser(editedUser);
+            if(editedUser.getLogin() == null){
+                sb.createNewUser(editedUser);
+            }
+            else {
+                sb.saveUser(editedUser);
+            }
             
         } catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, 
@@ -195,11 +216,17 @@ public class AdminmainController implements Serializable{
     }
     public Collection<Users> getDropedStudents() {
         if(editedStudygroup != null){
-            return editedStudygroup.getUsersCollection();
+            return sb.getStudentByStudyGroup(editedStudygroup);
         } else {
             return null;
         }
-        
+    }
+    public Collection<Users> getDropedTeachers() {
+        if(editedStudygroup != null){
+            return sb.getTeachersByStudyGroup(editedStudygroup);
+        } else {
+            return null;
+        }
     }
     
     public Sheduleitem getSheduleitem(short day, short hour){

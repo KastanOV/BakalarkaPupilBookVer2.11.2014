@@ -16,9 +16,7 @@
             
                 <p:panelGrid style="margin-top:20px">
                 <f:facet name="header">
-                    <p:row>
-                        <p:column colspan="2">Drag and drop paráda</p:column>
-                    </p:row>
+                    
                     <p:row>
                         <p:column colspan="1">
                             Třídní učitel ve třídě #{adminmainController.editedStudygroup.name} školní rok #{adminmainController.edited.name}
@@ -40,23 +38,19 @@
                         <p:column colspan="1">
                             <p:fieldset id="selectedTeachersField" legend="Selected Teachers" style="margin-top:20px">
                                 <p:outputPanel id="dropArea2">
-                                    <h:outputText value="Zde přesuňte třídního učitele" rendered="#{empty adminmainController.dropedStudents}" style="font-size: 24px" />
-                                    <p:dataTable id="selectedStudents2" var="selStudents" value="#{adminmainController.dropedStudents}" rendered="#{not empty adminmainController.dropedStudents}" >
-                                        <p:column headerText="Role" >
-                                            <h:outputText value="Student" rendered="#{selStudents.role == 'S'}"/>
-                                            <h:outputText value="Teacher" rendered="#{selStudents.role == 'T'}"/>
-                                        </p:column>
+                                    <h:outputText value="Zde přesuňte třídního učitele" rendered="#{empty adminmainController.dropedTeachers}" style="font-size: 24px" />
+                                    <p:dataTable id="selectedStudents2" var="selStudents" value="#{adminmainController.dropedTeachers}" rendered="#{not empty adminmainController.dropedStudents}" >
                                         <p:column headerText="login">
                                             <h:outputText value="#{selStudents.login}" />
                                         </p:column>
                                         <p:column headerText="Příjmení">
-                                            <h:outputText value="#{selStudents.lastName}"/>
+                                            <h:outputText value="#{selStudents.lastName}" />
                                         </p:column>
                                         <p:column headerText="Jméno">
-                                            <h:outputText value="#{selStudents.firstName}"/>
+                                            <h:outputText value="#{selStudents.firstName}" />
                                         </p:column>
                                         <p:column headerText="Datum narození">
-                                            <h:outputText value="#{selStudents.birthDate}"/>
+                                            <h:outputText value="#{selStudents.birthDate}" />
                                         </p:column>
                                     </p:dataTable>
                                 </p:outputPanel>
@@ -77,6 +71,11 @@
                                     </p:column>
                                     <p:column headerText="Příjmení">
                                         <h:outputText value="#{teacher.lastName}"/>
+                                    </p:column>
+                                    <p:column style="width:32px">
+                                        <p:commandButton update=":UserCreateForm" oncomplete="PF('UserCreateDialog').show()" icon="ui-icon-search">
+                                            <f:setPropertyActionListener value="#{teacher}" target="#{adminmainController.editedUser}" />
+                                        </p:commandButton>
                                     </p:column>
                                 </p:dataTable>
                             </p:fieldset>

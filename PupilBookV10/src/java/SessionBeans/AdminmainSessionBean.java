@@ -91,9 +91,17 @@ public class AdminmainSessionBean implements AdminmainSessionBeanLocal {
     }
 //Students and users
     @Override
+    public Collection<Users> getByLastName(String lastName){
+        lastName = lastName + "%";
+        return em.createNamedQuery("Users.findByLastName")
+                .setParameter("lastName", lastName)
+                .getResultList();
+    }
+    @Override
     public Users createNewUser(Users s) {
         return getFactory().getUsersDAO().createNewUser(s);
     }
+    
     @Override
     public Collection<Users> getAllStudents() {
         return getFactory().getUsersDAO().getAllStudents();
@@ -106,7 +114,21 @@ public class AdminmainSessionBean implements AdminmainSessionBeanLocal {
     public Collection<Users> getAllTeachers() {
         return getFactory().getUsersDAO().getAllTeachers();
     }
+     @Override
+    public Collection<Users> getStudentByStudyGroup(Studygroup s) {
+        return em.createNamedQuery("Users.byStudyGroupAndRole")
+                .setParameter("role", 'S')
+                .setParameter("studygroup", s)
+                .getResultList();
+    }
 
+    @Override
+    public Collection<Users> getTeachersByStudyGroup(Studygroup s) {
+        return em.createNamedQuery("Users.byStudyGroupAndRole")
+                .setParameter("role", 'T')
+                .setParameter("studygroup", s)
+                .getResultList();
+    }
     /**
      *
      * @param UserId
@@ -143,6 +165,8 @@ public class AdminmainSessionBean implements AdminmainSessionBeanLocal {
     public List<Studygroup> getEditedStudyGroup(Schoolyear s) {
         return getFactory().getStudygroupDAO().getEditedStudyGroup(s);
     }
+
+   
 
     
 

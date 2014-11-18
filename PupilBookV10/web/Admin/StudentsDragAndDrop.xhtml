@@ -13,12 +13,11 @@
                 droppedStudent.fadeOut('fast');
                 }
             </script>
-            
+            <p:commandButton id="createButtonStudent" icon="ui-icon-plus" value="Přidej studenta" actionListener="#{adminmainController.prepareNewStudent()}" update=":UserCreateForm" oncomplete="PF('UserCreateDialog').show()"/>
+                            
                 <p:panelGrid style="margin-top:20px">
                 <f:facet name="header">
-                    <p:row>
-                        <p:column colspan="2">Drag and drop paráda</p:column>
-                    </p:row>
+                    
                     <p:row>
                         <p:column colspan="1">
                             Studenti ve třídě #{adminmainController.editedStudygroup.name} školní rok #{adminmainController.edited.name}
@@ -33,7 +32,10 @@
                             STUDENTI VE VYBRANNE TRIDE
                         </p:column>
                         <p:column colspan="1">
-                            <p:commandButton id="createButtonStudent" icon="ui-icon-plus"   value="Přidej studenta" actionListener="#{adminmainController.prepareNewStudent()}" update=":UserCreateForm" oncomplete="PF('UserCreateDialog').show()"/>
+                            <p:fieldset legend="Vyhledávání" style="margin-top:20px">
+                                <p:inputText id="SearchByLastName" title="Vyhledávání podle příjmení" value="#{adminmainController.searchByLastname}" />
+                                <p:commandButton update="StudentsTable" value="hledej"/>
+                            </p:fieldset>
                         </p:column>
                     </p:row>
                     <p:row>
@@ -42,21 +44,17 @@
                                 <p:outputPanel id="dropArea">
                                     <h:outputText value="Zde přesuňte studenty" rendered="#{empty adminmainController.dropedStudents}" style="font-size: 24px" />
                                     <p:dataTable id="selectedStudents" var="selStudents" value="#{adminmainController.dropedStudents}" rendered="#{not empty adminmainController.dropedStudents}" >
-                                        <p:column headerText="Role" >
-                                            <h:outputText value="Student" rendered="#{selStudents.role == 'S'}"/>
-                                            <h:outputText value="Teacher" rendered="#{selStudents.role == 'T'}"/>
-                                        </p:column>
-                                        <p:column headerText="login">
+                                        <p:column headerText="login" >
                                             <h:outputText value="#{selStudents.login}" />
                                         </p:column>
-                                        <p:column headerText="Příjmení">
-                                            <h:outputText value="#{selStudents.lastName}"/>
+                                        <p:column headerText="Příjmení" >
+                                            <h:outputText value="#{selStudents.lastName}" />
                                         </p:column>
-                                        <p:column headerText="Jméno">
-                                            <h:outputText value="#{selStudents.firstName}"/>
+                                        <p:column headerText="Jméno" >
+                                            <h:outputText value="#{selStudents.firstName}" />
                                         </p:column>
                                         <p:column headerText="Datum narození">
-                                            <h:outputText value="#{selStudents.birthDate}"/>
+                                            <h:outputText value="#{selStudents.birthDate}" />
                                         </p:column>
                                     </p:dataTable>
                                 </p:outputPanel>
@@ -84,6 +82,11 @@
                                     </p:column>
                                     <p:column headerText="Datum narození">
                                         <h:outputText value="#{studentTable.birthDate}"/>
+                                    </p:column>
+                                    <p:column style="width:32px">
+                                        <p:commandButton update=":UserCreateForm" oncomplete="PF('UserCreateDialog').show()" icon="ui-icon-search">
+                                            <f:setPropertyActionListener value="#{studentTable}" target="#{adminmainController.editedUser}" />
+                                        </p:commandButton>
                                     </p:column>
                                 </p:dataTable>
                             </p:fieldset>
