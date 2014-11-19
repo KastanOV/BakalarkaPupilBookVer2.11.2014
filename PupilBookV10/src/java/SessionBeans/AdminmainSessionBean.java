@@ -14,6 +14,7 @@ import dao.DAOFactory;
 import dao.DAOFactoryJPA;
 import java.util.Collection;
 import java.util.List;
+import java.util.Random;
 import javax.ejb.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,15 +28,6 @@ public class AdminmainSessionBean implements AdminmainSessionBeanLocal {
 
     @PersistenceContext
     private EntityManager em;
-    
-    private DAOFactory factory;
-    
-    private DAOFactory getFactory(){
-        if(factory == null){
-            factory = new DAOFactoryJPA(em);
-        }
-        return factory;
-    }
 //Shedule Items
     @Override
     public void insertNewSheduleItem(Sheduleitem s) {
@@ -71,23 +63,29 @@ public class AdminmainSessionBean implements AdminmainSessionBeanLocal {
 //StudyGroups    
     @Override
     public Studygroup saveStudygroup(Studygroup s) {
-        return getFactory().getStudygroupDAO().saveStudygroup(s);
+        if(s.getIdStudyGroup() != null){
+            em.merge(s);
+        } else {
+            em.persist(s);
+        }
+        em.flush();
+        return s;
     }
     @Override
     public List<Studygroup> getAllStudygroup() {
-        return getFactory().getStudygroupDAO().getAllStudygroup();
+        return em.createNamedQuery("Studygroup.findAll").getResultList();
     }
     @Override
     public Studygroup getStudygroup(int StudygroupId) {
-        return getFactory().getStudygroupDAO().getStudygroup(StudygroupId);
+        return em.find(Studygroup.class, StudygroupId);
     }
     @Override
     public void deleteStudygroup(Studygroup p) {
-        getFactory().getStudygroupDAO().deleteStudygroup(p);
+        em.remove(em.find(Studygroup.class, p.getIdStudyGroup()));
     }
     @Override
     public void deleteStudygroup(int StudygroupId) {
-        getFactory().getStudygroupDAO().deleteStudygroup(StudygroupId);
+        em.remove(em.find(Studygroup.class, StudygroupId));
     }
 //Students and users
     @Override
@@ -99,22 +97,29 @@ public class AdminmainSessionBean implements AdminmainSessionBeanLocal {
     }
     @Override
     public Users createNewUser(Users s) {
-        return getFactory().getUsersDAO().createNewUser(s);
+        getFreeLogin(s);
+        if(s.getPassword() == null) createPassword(s);
+        em.persist(s);
+        em.flush();
+        return s;
     }
     
     @Override
-    public Collection<Users> getAllStudents() {
-        return getFactory().getUsersDAO().getAllStudents();
+    public Collection<Users> getAllStudents(){
+        return em.createNamedQuery("Users.findByRole").setParameter("role", 'S').getResultList();
     }
     @Override
-    public Users saveUser(Users s) {
-        return getFactory().getUsersDAO().saveUser(s);
+    public Collection<Users> getAllTeachers(){
+        return em.createNamedQuery("Users.findByRole").setParameter("role", 'T').getResultList();
     }
     @Override
-    public Collection<Users> getAllTeachers() {
-        return getFactory().getUsersDAO().getAllTeachers();
+    public Users saveUser(Users s){
+        em.merge(s);
+        em.flush();
+        return s;
     }
-     @Override
+
+    @Override
     public Collection<Users> getStudentByStudyGroup(Studygroup s) {
         return em.createNamedQuery("Users.byStudyGroupAndRole")
                 .setParameter("role", 'S')
@@ -141,32 +146,85 @@ public class AdminmainSessionBean implements AdminmainSessionBeanLocal {
 //Schoool Years    
     @Override
     public Schoolyear saveSchoolyear(Schoolyear s) {
-        getFactory().getSchoolYearDAO().saveSchoolyear(s);
+        if(s.getIdSchoolYear() != null){
+            em.merge(s);
+        } else {
+            em.persist(s);
+        }
+        em.flush();
         return s;
     }
     @Override
     public List<Schoolyear> getAllSchoolYears() {
-        return getFactory().getSchoolYearDAO().getAllSchoolYears();
+        return em.createNamedQuery("Schoolyear.findAll").getResultList();
     }
     @Override
     public Schoolyear getSchoolyear(int id) {
-        return getFactory().getSchoolYearDAO().getSchoolyear(id);
+        return em.find(Schoolyear.class, id);
     }
     @Override
     public void deleteSchooYear(Schoolyear s) {
-        getFactory().getSchoolYearDAO().deleteSchooYear(s);
+        em.remove(em.find(Schoolyear.class, s.getIdSchoolYear()));
     }
     @Override
     public void deleteSchooYear(int id) {
-        getFactory().getSchoolYearDAO().deleteSchooYear(id);
+        em.remove(em.find(Schoolyear.class, id));
     }
 
     @Override
-    public List<Studygroup> getEditedStudyGroup(Schoolyear s) {
-        return getFactory().getStudygroupDAO().getEditedStudyGroup(s);
+    public List<Studygroup> getEditedStudyGroup(Schoolyear s){
+        return em.createNamedQuery("Studygroup.findBySchoolyear")
+                .setParameter("SchoolYearID", s)
+                .getResultList();
     }
 
-   
+    private void createPassword(Users s){
+        char[] symbols;
+        StringBuilder tmp = new StringBuilder();
+        for (char ch = '0'; ch <= '9'; ++ch)
+            tmp.append(ch);
+        for (char ch = 'a'; ch <= 'z'; ++ch)
+            tmp.append(ch);
+        for (char ch = 'A'; ch <= 'Z'; ++ch)
+            tmp.append(ch);
+        symbols = tmp.toString().toCharArray();
+        Random random = new Random();
+        
+        StringBuilder value = new StringBuilder();
+
+        for (int idx = 0; idx < 10; ++idx) 
+            value.append(symbols[random.nextInt(symbols.length)]);
+        s.setPassword(value.toString());
+    }
+    private void getFreeLogin(Users s){
+        String LoginPrefix = removeDiak(s.getLastName()
+                .substring(0,3)
+                .toUpperCase()
+                .trim());
+        s.setLogin(LoginPrefix + getPostFix(em.createNamedQuery("Users.loginCounter")
+                .setParameter("createLogin", LoginPrefix + "%")
+                .getSingleResult()
+                .toString()));
+    }
+    private String getPostFix(String Postfix){
+        switch(Postfix.length()){
+            case 1 : return "00" + Postfix;
+            case 2 : return "0" + Postfix;
+            default : return Postfix;    
+        }
+    };
+    private String removeDiak(String retazec){
+       String retazecBD="";
+       String sdiak="áäčďěéíĺžňóöôŕřšťúüýžźÁÄČĎĚÉÍĹŇÓÖÔŔŘŤÚÜÝŠŽŐőÖöŰűÜü";
+       String bdiak="aacdeeillnooorrstuuyzzAACDEEILNOOORRTUUYSZOoOoUuUu";
+       for (int l=0;l<retazec.length();l++){
+           if (sdiak.indexOf(retazec.charAt(l))!=-1)
+               retazecBD+=bdiak.charAt(sdiak.indexOf(retazec.charAt(l)));
+           else
+               retazecBD+=retazec.charAt(l);
+       }
+       return retazecBD;
+   }
 
     
 

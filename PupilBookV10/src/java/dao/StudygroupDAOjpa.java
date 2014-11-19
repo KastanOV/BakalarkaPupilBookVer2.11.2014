@@ -39,18 +39,4 @@ public class StudygroupDAOjpa {
      public Studygroup getStudygroup(int StudygroupId) {
         return em.find(Studygroup.class, StudygroupId);
     }
-
-    public void deleteStudygroup(Studygroup p) {
-        em.remove(em.find(Studygroup.class, p.getIdStudyGroup()));
-    }
-
-    public void deleteStudygroup(int StudygroupId) {
-        em.remove(em.find(Studygroup.class, StudygroupId));
-    }
-    
-    public List<Studygroup> getEditedStudyGroup(Schoolyear s){
-        return em.createNamedQuery("Studygroup.findBySchoolyear")
-                .setParameter("SchoolYearID", s)
-                .getResultList();
-    }
 }

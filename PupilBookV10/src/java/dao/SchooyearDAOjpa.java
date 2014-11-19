@@ -20,30 +20,4 @@ public class SchooyearDAOjpa {
         super();
         this.em = em;
     }
-    
-    public Schoolyear saveSchoolyear(Schoolyear s) {
-        if(s.getIdSchoolYear() != null){
-            em.merge(s);
-        } else {
-            em.persist(s);
-        }
-        em.flush();
-        return s;
-    }
-
-    public List<Schoolyear> getAllSchoolYears() {
-        return em.createNamedQuery("Schoolyear.findAll").getResultList();
-    }
-
-    public Schoolyear getSchoolyear(int id) {
-        return em.find(Schoolyear.class, id);
-    }
-
-    public void deleteSchooYear(Schoolyear s) {
-        em.remove(em.find(Schoolyear.class, s.getIdSchoolYear()));
-    }
-
-    public void deleteSchooYear(int id) {
-        em.remove(em.find(Schoolyear.class, id));
-    }
 }

@@ -31,7 +31,15 @@ public class loginSessionBean implements loginSessionBeanLocal {
     }
     
     @Override
-    public Users doLogin(Users u) {
-        return getFactory().getUsersDAO().doLogin(u);
+    public Users doLogin(Users u){
+        try{
+            Users loaded = (Users) em.createNamedQuery("Users.doLogin")
+                .setParameter("login", u.getLogin())
+                .setParameter("password", u.getPassword())
+                .getSingleResult();
+            return loaded;
+        } catch (Exception e){
+            return u;
+        }
     }
 }
