@@ -26,6 +26,7 @@ import javax.persistence.PersistenceContext;
 @Singleton
 public class AdminmainSessionBean implements AdminmainSessionBeanLocal {
 
+    
     @PersistenceContext
     private EntityManager em;
 //Shedule Items

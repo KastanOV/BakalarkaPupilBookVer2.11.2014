@@ -1,9 +1,13 @@
 package src.pupilbookteachers;
 
 import android.app.Activity;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import src.restdao.restTest;
@@ -15,14 +19,21 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         restTest test = new restTest();
-        try {
-            String returned = test.getTestData();
-            testText.setText(returned);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
     }
 
+    public void myClickHandler(View view) {
+        // Gets the URL from the UI's text field.
+        String stringUrl = "http://192.168.1.155:8080/PupilBookV10/test";
+        ConnectivityManager connMgr = (ConnectivityManager)
+                getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+            new DownloadWebpageTask().execute(stringUrl);
+        } else {
+           testText.setText("No network connection available.");
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
