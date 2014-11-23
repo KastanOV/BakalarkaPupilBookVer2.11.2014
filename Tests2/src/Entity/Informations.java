@@ -18,8 +18,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -40,25 +38,18 @@ public class Informations implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
     @Column(name = "idinformations")
     private Integer idinformations;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
     @Column(name = "Description")
     private String description;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "InfoForParrents")
     private boolean infoForParrents;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2000)
     @Column(name = "SomeMessage")
     private String someMessage;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "CreateDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createDate;

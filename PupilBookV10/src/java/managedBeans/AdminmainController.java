@@ -11,6 +11,8 @@ import Entity.Studysubject;
 import Entity.Users;
 import Entity.Sheduleitem;
 import SessionBeans.AdminmainSessionBeanLocal;
+import SessionBeans.WebServicesDaoLocal;
+import WebServicesEntities.ServiceTransactionObject;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -32,6 +34,8 @@ import org.primefaces.event.DragDropEvent;
 public class AdminmainController implements Serializable{
     @EJB
     private AdminmainSessionBeanLocal sb;
+    @EJB
+    private WebServicesDaoLocal testDAO;
     
     private Schoolyear editedSchoolYear;
     private Studygroup editedStudygroup;
@@ -42,6 +46,10 @@ public class AdminmainController implements Serializable{
     private Sheduleitem editedSheduleItem;
     private String searchByLastname;
 
+    public void testButton(){
+        ServiceTransactionObject alldata = testDAO.getAlldata("JIR000");
+        String nasrat = "Nasrat";
+    }
     public String getSearchByLastname() {
         return searchByLastname;
     }

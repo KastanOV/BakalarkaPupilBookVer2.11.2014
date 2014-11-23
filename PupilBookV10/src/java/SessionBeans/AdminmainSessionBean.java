@@ -10,8 +10,6 @@ import Entity.Sheduleitem;
 import Entity.Studygroup;
 import Entity.Studysubject;
 import Entity.Users;
-import dao.DAOFactory;
-import dao.DAOFactoryJPA;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
