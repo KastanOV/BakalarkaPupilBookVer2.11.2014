@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Entity.service;
+package service;
 
-import Entity.Users;
+import Entity.Studygroup;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -24,53 +24,53 @@ import javax.ws.rs.Produces;
  * @author Topr
  */
 @Stateless
-@Path("entity.users")
-public class UsersFacadeREST extends AbstractFacade<Users> {
+@Path("entity.studygroup")
+public class StudygroupFacadeREST extends AbstractFacade<Studygroup> {
     @PersistenceContext(unitName = "PupilBookV10PU")
     private EntityManager em;
 
-    public UsersFacadeREST() {
-        super(Users.class);
+    public StudygroupFacadeREST() {
+        super(Studygroup.class);
     }
 
     @POST
     @Override
     @Consumes({"application/xml", "application/json"})
-    public void create(Users entity) {
+    public void create(Studygroup entity) {
         super.create(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
-    public void edit(@PathParam("id") String id, Users entity) {
+    public void edit(@PathParam("id") Integer id, Studygroup entity) {
         super.edit(entity);
     }
 
     @DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") String id) {
+    public void remove(@PathParam("id") Integer id) {
         super.remove(super.find(id));
     }
 
     @GET
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
-    public Users find(@PathParam("id") String id) {
+    public Studygroup find(@PathParam("id") Integer id) {
         return super.find(id);
     }
 
     @GET
     @Override
     @Produces({"application/xml", "application/json"})
-    public List<Users> findAll() {
+    public List<Studygroup> findAll() {
         return super.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({"application/xml", "application/json"})
-    public List<Users> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+    public List<Studygroup> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
 

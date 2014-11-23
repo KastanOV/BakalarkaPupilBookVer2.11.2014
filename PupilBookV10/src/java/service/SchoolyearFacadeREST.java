@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Entity.service;
+package service;
 
-import Entity.Studygroup;
+import Entity.Schoolyear;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -24,26 +24,26 @@ import javax.ws.rs.Produces;
  * @author Topr
  */
 @Stateless
-@Path("entity.studygroup")
-public class StudygroupFacadeREST extends AbstractFacade<Studygroup> {
+@Path("entity.schoolyear")
+public class SchoolyearFacadeREST extends AbstractFacade<Schoolyear> {
     @PersistenceContext(unitName = "PupilBookV10PU")
     private EntityManager em;
 
-    public StudygroupFacadeREST() {
-        super(Studygroup.class);
+    public SchoolyearFacadeREST() {
+        super(Schoolyear.class);
     }
 
     @POST
     @Override
     @Consumes({"application/xml", "application/json"})
-    public void create(Studygroup entity) {
+    public void create(Schoolyear entity) {
         super.create(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
-    public void edit(@PathParam("id") Integer id, Studygroup entity) {
+    public void edit(@PathParam("id") Integer id, Schoolyear entity) {
         super.edit(entity);
     }
 
@@ -56,21 +56,21 @@ public class StudygroupFacadeREST extends AbstractFacade<Studygroup> {
     @GET
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
-    public Studygroup find(@PathParam("id") Integer id) {
+    public Schoolyear find(@PathParam("id") Integer id) {
         return super.find(id);
     }
 
     @GET
     @Override
     @Produces({"application/xml", "application/json"})
-    public List<Studygroup> findAll() {
+    public List<Schoolyear> findAll() {
         return super.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({"application/xml", "application/json"})
-    public List<Studygroup> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+    public List<Schoolyear> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
 
