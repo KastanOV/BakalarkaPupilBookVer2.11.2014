@@ -7,6 +7,8 @@ package Entity;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 
@@ -17,6 +19,9 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Users")
 @DiscriminatorValue(value = "T")
+@NamedQueries({
+    @NamedQuery(name = "Teachers.findAll", query = "SELECT u FROM Teacher u"),
+    @NamedQuery(name = "Teacher.byStudyGroupAndRole", query = "SELECT u FROM Teacher u WHERE u.studyGroupidStudyGroup = :studygroup" )})
 public class Teacher extends Users {
     
     

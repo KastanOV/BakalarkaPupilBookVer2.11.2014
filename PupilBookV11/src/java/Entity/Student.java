@@ -8,6 +8,8 @@ package Entity;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 import javax.persistence.Table;
 
@@ -18,6 +20,10 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Users")
 @DiscriminatorValue(value = "S")
+@NamedQueries({
+    @NamedQuery(name = "Student.findAll", query = "SELECT u FROM Student u"),
+    @NamedQuery(name = "Student.byStudyGroupAndRole", query = "SELECT u FROM Student u WHERE u.studyGroupidStudyGroup = :studygroup" ),
+    @NamedQuery(name = "Student.findByLastName", query = "SELECT u FROM Student u WHERE u.lastName LIKE :lastName")})
 public class Student extends Users{
     
     

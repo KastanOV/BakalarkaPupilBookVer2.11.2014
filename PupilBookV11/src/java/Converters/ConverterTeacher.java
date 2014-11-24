@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package managedBeans;
+package Converters;
 
-import Entity.Users;
+import Entity.Student;
+import Entity.Teacher;
 import SessionBeans.AdminmainSessionBeanLocal;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -18,12 +19,11 @@ import javax.faces.convert.ConverterException;
 
 /**
  *
- * @author KastanNotas
+ * @author Topr
  */
-@ManagedBean (name = "ConverterUsers")
+@ManagedBean (name = "ConverterTeacher")
 @SessionScoped
-public class ConverterUsers implements Converter{
-
+public class ConverterTeacher implements Converter{
     @EJB
     private AdminmainSessionBeanLocal sb;
 	@Override
@@ -35,7 +35,7 @@ public class ConverterUsers implements Converter{
                 if(value instanceof String){
                     if(value.equals("")) return null;
                 }
-		return sb.getUser(value);
+		return sb.getTeacher(value);
 	}
 	@Override
 	public String getAsString(FacesContext context, UIComponent component,
@@ -43,14 +43,15 @@ public class ConverterUsers implements Converter{
 		if(value == null){
 			return "null";
 		}
-		if(value instanceof Users){
-			return ((Users)value).getLogin();
+		
+                if(value instanceof Teacher){
+			return ((Teacher)value).getLogin();
 		}
+                
                 if(value instanceof String){
                     if("".equals(value)) return null;
                 }
 		context.addMessage(component.getClientId(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "Entitu nelze převést.", "Chyba konvertoru kontaktujete Administrátora systému."));
 		throw new ConverterException("Nelze provést konverzi!");
 	}
-    
 }

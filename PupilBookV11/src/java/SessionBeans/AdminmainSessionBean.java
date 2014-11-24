@@ -7,8 +7,10 @@ package SessionBeans;
 
 import Entity.Schoolyear;
 import Entity.Sheduleitem;
+import Entity.Student;
 import Entity.Studygroup;
 import Entity.Studysubject;
+import Entity.Teacher;
 import Entity.Users;
 import java.util.Collection;
 import java.util.List;
@@ -86,16 +88,16 @@ public class AdminmainSessionBean implements AdminmainSessionBeanLocal {
     public void deleteStudygroup(int StudygroupId) {
         em.remove(em.find(Studygroup.class, StudygroupId));
     }
-//Students and users
+//Students 
     @Override
-    public Collection<Users> getByLastName(String lastName){
+    public Collection<Student> getByLastName(String lastName){
         lastName = lastName + "%";
-        return em.createNamedQuery("Users.findByLastName")
+        return em.createNamedQuery("Student.findByLastName")
                 .setParameter("lastName", lastName)
                 .getResultList();
     }
     @Override
-    public Users createNewUser(Users s) {
+    public Student createNewUser(Student s) {
         getFreeLogin(s);
         if(s.getPassword() == null) createPassword(s);
         em.persist(s);
@@ -104,32 +106,29 @@ public class AdminmainSessionBean implements AdminmainSessionBeanLocal {
     }
     
     @Override
-    public Collection<Users> getAllStudents(){
-        return em.createNamedQuery("Users.findByRole").setParameter("role", 'S').getResultList();
+    public Collection<Student> getAllStudents(){
+        return em.createNamedQuery("Student.findAll").getResultList();
     }
     @Override
-    public Collection<Users> getAllTeachers(){
-        return em.createNamedQuery("Users.findByRole").setParameter("role", 'T').getResultList();
+    public Collection<Teacher> getAllTeachers(){
+        return em.createNamedQuery("Teachers.findAll").getResultList();
     }
     @Override
-    public Users saveUser(Users s){
+    public Student saveUser(Student s){
         em.merge(s);
         em.flush();
         return s;
     }
 
     @Override
-    public Collection<Users> getStudentByStudyGroup(Studygroup s) {
-        return em.createNamedQuery("Users.byStudyGroupAndRole")
-                .setParameter("role", 'S')
+    public Collection<Student> getStudentByStudyGroup(Studygroup s) {
+        return em.createNamedQuery("Student.byStudyGroupAndRole")
                 .setParameter("studygroup", s)
                 .getResultList();
     }
-
     @Override
-    public Collection<Users> getTeachersByStudyGroup(Studygroup s) {
-        return em.createNamedQuery("Users.byStudyGroupAndRole")
-                .setParameter("role", 'T')
+    public Collection<Teacher> getTeachersByStudyGroup(Studygroup s) {
+        return em.createNamedQuery("Teacher.byStudyGroupAndRole")
                 .setParameter("studygroup", s)
                 .getResultList();
     }
@@ -139,8 +138,27 @@ public class AdminmainSessionBean implements AdminmainSessionBeanLocal {
      * @return
      */
     @Override
-    public Users getUser(String UserId){
-        return em.find(Users.class, UserId);
+    public Student getStudent(String UserId){
+        return em.find(Student.class, UserId);
+    }
+//Teachers
+    @Override
+    public Teacher getTeacher(String UserId){
+        return em.find(Teacher.class, UserId);
+    }
+    @Override
+    public Teacher saveTeacher(Teacher t){
+        em.merge(t);
+        em.flush();
+        return t;
+    }
+    @Override
+    public Teacher createNewTeacher(Teacher t){
+        getFreeLogin(t);
+        if(t.getPassword() == null) createPassword(t);
+        em.persist(t);
+        em.flush();
+        return t;
     }
 //Schoool Years    
     @Override

@@ -31,7 +31,7 @@
                             Třídní učitel
                         </p:column>
                         <p:column colspan="1">
-                            <p:commandButton id="createNewTeacher" icon="ui-icon-plus" value="Přidat Učitele" actionListener="#{adminmainController.prepareNewTeacher}" update=":UserCreateForm" oncomplete="PF('UserCreateDialog').show()" />
+                            <p:commandButton id="createNewTeacher" icon="ui-icon-plus" value="Přidat Učitele" actionListener="#{adminmainController.prepareNewTeacher}" update=":TeacherCreateForm" oncomplete="PF('TeacherCreateDialog').show()" />
                         </p:column>
                     </p:row>
                     <p:row>
@@ -73,8 +73,8 @@
                                         <h:outputText value="#{teacher.lastName}"/>
                                     </p:column>
                                     <p:column style="width:32px">
-                                        <p:commandButton update=":UserCreateForm" oncomplete="PF('UserCreateDialog').show()" icon="ui-icon-search">
-                                            <f:setPropertyActionListener value="#{teacher}" target="#{adminmainController.editedUser}" />
+                                        <p:commandButton update=":TeacherCreateForm" oncomplete="PF('TeacherCreateDialog').show()" icon="ui-icon-search">
+                                            <f:setPropertyActionListener value="#{teacher}" target="#{adminmainController.editedTeacher}" />
                                         </p:commandButton>
                                     </p:column>
                                 </p:dataTable>
@@ -83,7 +83,7 @@
                     </p:row>
                 </p:panelGrid>
                 <p:droppable for="selectedTeachersField" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="teacheTable" onDrop="handleDrop">
-                    <p:ajax listener="#{adminmainController.onStudentDrop}" update="dropArea2 dropArea teacheTable" />
+                    <p:ajax listener="#{adminmainController.onTeacherDrop}" update="dropArea2 dropArea teacheTable" />
                 </p:droppable>
             
     </ui:composition>

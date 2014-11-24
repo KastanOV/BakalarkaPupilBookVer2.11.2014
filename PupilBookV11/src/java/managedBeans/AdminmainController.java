@@ -37,7 +37,10 @@ public class AdminmainController implements Serializable{
     
     private Schoolyear editedSchoolYear;
     private Studygroup editedStudygroup;
-    private Users editedUser;
+    private Student editedStudent;
+
+    
+    private Teacher editedTeacher;
     private List<Users> dropedStudents = new ArrayList<>();
     private Collection<Sheduleitem> selectedSheduleItems;
     private Studysubject editedStudySubject;
@@ -61,7 +64,7 @@ public class AdminmainController implements Serializable{
     }
 
     public void onStudentDrop(DragDropEvent ddEvent){
-        Users s = ((Users) ddEvent.getData());
+        Student s = ((Student) ddEvent.getData());
         try {
             editedStudygroup.getUsersCollection().add(s);
             s.setStudyGroupidStudyGroup(editedStudygroup);
@@ -72,7 +75,19 @@ public class AdminmainController implements Serializable{
 					"Nepodařilo se uložit data do databáze.. Příčina: " + e.getMessage()));
         }
     }
-    public Collection<Users> getStudents() {
+    public void onTeacherDrop(DragDropEvent ddEvent){
+        Teacher s = ((Teacher) ddEvent.getData());
+        try {
+            editedStudygroup.getUsersCollection().add(s);
+            s.setStudyGroupidStudyGroup(editedStudygroup);
+            saveTeacher(s);
+        } catch(Exception e) {
+			FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+					"Zřejmě jste nevybral studíjní skupinu", 
+					"Nepodařilo se uložit data do databáze.. Příčina: " + e.getMessage()));
+        }
+    }
+    public Collection<Student> getStudents() {
         if(searchByLastname == null || searchByLastname.equals("")){
             return sb.getAllStudents();
         } else {
@@ -80,16 +95,43 @@ public class AdminmainController implements Serializable{
         }
         
     }
-    public Collection<Users> getTeachers(){
-        Collection<Users> u = sb.getAllTeachers() ;
+    public Collection<Teacher> getTeachers(){
+        Collection<Teacher> u = sb.getAllTeachers() ;
         return u;
     }
     
-    public void saveStudent(Users u){
+    public void saveStudent(Student u){
         try{
             if(u.getLogin() != null){
                 sb.saveUser(u);    
-            }else sb.createNewUser(editedUser);
+            }else sb.createNewUser(editedStudent);
+            
+        } catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+					"Nepodařilo se uložit data do databáze.", 
+					"Nepodařilo se uložit data do databáze.. Příčina: " + e.getMessage()));
+		}
+    }
+    public void saveTeacher(Teacher u){
+        try{
+            if(u.getLogin() != null){
+                sb.saveTeacher(u);    
+            }else sb.createNewTeacher(editedTeacher);
+            
+        } catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+					"Nepodařilo se uložit data do databáze.", 
+					"Nepodařilo se uložit data do databáze.. Příčina: " + e.getMessage()));
+		}
+    }
+    public void saveTeacher(){
+        try{
+            if(editedTeacher.getLogin() == null){
+                sb.createNewTeacher(editedTeacher);
+            }
+            else {
+                sb.saveTeacher(editedTeacher);
+            }
             
         } catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, 
@@ -99,11 +141,11 @@ public class AdminmainController implements Serializable{
     }
     public void saveStudent(){
         try{
-            if(editedUser.getLogin() == null){
-                sb.createNewUser(editedUser);
+            if(editedStudent.getLogin() == null){
+                sb.createNewUser(editedStudent);
             }
             else {
-                sb.saveUser(editedUser);
+                sb.saveUser(editedStudent);
             }
             
         } catch (Exception e) {
@@ -153,7 +195,7 @@ public class AdminmainController implements Serializable{
 		}
     }
     //TODO save study subject
-    public void saveEditedSheduleItem(Users u, Studysubject s){
+    public void saveEditedSheduleItem(Teacher u, Studysubject s){
         editedSheduleItem.setUsersLogin(u);
         editedSheduleItem.setStudySubjectidStudySubject(s);
         try{
@@ -166,15 +208,16 @@ public class AdminmainController implements Serializable{
 		}
     }
     
-    public Users prepareNewStudent(){
-        editedUser = new Student();
+    public Student prepareNewStudent(){
+        editedStudent = new Student();
         
-        return editedUser;
+        return editedStudent;
     }
-    public Users prepareNewTeacher(){
-        editedUser = new Teacher();
-        return editedUser;
+    public Teacher prepareNewTeacher(){
+        editedTeacher = new Teacher();
+        return editedTeacher;
     }
+    
     public Schoolyear prepareNewSchoolYear(){
         editedSchoolYear = new Schoolyear();
         return editedSchoolYear;
@@ -209,20 +252,15 @@ public class AdminmainController implements Serializable{
         this.editedSchoolYear = edited;
         
     }
-    public Users getEditedUser() {
-        return editedUser;
-    }
-    public void setEditedUser(Users editedUser) {
-        this.editedUser = editedUser;
-    }
-    public Collection<Users> getDropedStudents() {
+    
+    public Collection<Student> getDropedStudents() {
         if(editedStudygroup != null){
             return sb.getStudentByStudyGroup(editedStudygroup);
         } else {
             return null;
         }
     }
-    public Collection<Users> getDropedTeachers() {
+    public Collection<Teacher> getDropedTeachers() {
         if(editedStudygroup != null){
             return sb.getTeachersByStudyGroup(editedStudygroup);
         } else {
@@ -243,7 +281,7 @@ public class AdminmainController implements Serializable{
             for (Sheduleitem item : selectedSheduleItems){
                 if(item.getDay() == day && item.getHour() == hour){
                     editedSheduleItem = item;
-                    editedUser = item.getUsersLogin();
+                    editedTeacher = (Teacher) item.getUsersLogin();
                     editedStudySubject = item.getStudySubjectidStudySubject();
                     break;
                 }
@@ -261,5 +299,19 @@ public class AdminmainController implements Serializable{
     public void setEditedStudySubject(Studysubject editedStudySubject) {
         this.editedStudySubject = editedStudySubject;
     }
-    
+    public Student getEditedStudent() {
+        return editedStudent;
+    }
+
+    public void setEditedStudent(Student editedStudent) {
+        this.editedStudent = editedStudent;
+    }
+
+    public Teacher getEditedTeacher() {
+        return editedTeacher;
+    }
+
+    public void setEditedTeacher(Teacher editedTeacher) {
+        this.editedTeacher = editedTeacher;
+    }
 }

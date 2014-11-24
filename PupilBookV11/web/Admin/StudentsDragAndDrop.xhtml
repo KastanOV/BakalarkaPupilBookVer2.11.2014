@@ -13,7 +13,7 @@
                 droppedStudent.fadeOut('fast');
                 }
             </script>
-            <p:commandButton id="createButtonStudent" icon="ui-icon-plus" value="Přidej studenta" actionListener="#{adminmainController.prepareNewStudent()}" update=":UserCreateForm" oncomplete="PF('UserCreateDialog').show()"/>
+            <p:commandButton id="createButtonStudent" icon="ui-icon-plus" value="Přidej studenta" actionListener="#{adminmainController.prepareNewStudent()}" update=":StudentCreateForm" oncomplete="PF('StudentCreateDialog').show()"/>
                             
                 <p:panelGrid style="margin-top:20px">
                 <f:facet name="header">
@@ -84,8 +84,8 @@
                                         <h:outputText value="#{studentTable.birthDate}"/>
                                     </p:column>
                                     <p:column style="width:32px">
-                                        <p:commandButton update=":UserCreateForm" oncomplete="PF('UserCreateDialog').show()" icon="ui-icon-search">
-                                            <f:setPropertyActionListener value="#{studentTable}" target="#{adminmainController.editedUser}" />
+                                        <p:commandButton update=":StudentCreateForm" oncomplete="PF('StudentCreateDialog').show()" icon="ui-icon-search">
+                                            <f:setPropertyActionListener value="#{studentTable}" target="#{adminmainController.editedStudent}" />
                                         </p:commandButton>
                                     </p:column>
                                 </p:dataTable>

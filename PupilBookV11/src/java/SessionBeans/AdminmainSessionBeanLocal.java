@@ -7,9 +7,11 @@ package SessionBeans;
 
 import Entity.Schoolyear;
 import Entity.Sheduleitem;
+import Entity.Student;
 import Entity.Studygroup;
 import Entity.Studysubject;
-import Entity.Users;
+import Entity.Teacher;
+
 import java.util.Collection;
 import java.util.List;
 import javax.ejb.Local;
@@ -38,15 +40,21 @@ public interface AdminmainSessionBeanLocal {
     public void deleteStudygroup(Studygroup p);
     public void deleteStudygroup(int StudygroupId);
 //Users
-    public Users createNewUser(Users s);
-    public Users saveUser(Users s);
-    public Collection<Users> getAllStudents();
-    public Collection<Users> getAllTeachers();
-    public Collection<Users> getByLastName(String lastName);
-    public Users getUser(String UserId);
-    public Collection<Users> getStudentByStudyGroup(Studygroup s);
-    public Collection<Users> getTeachersByStudyGroup(Studygroup s);
+    public Student createNewUser(Student s);
+    public Student saveUser(Student s);
+    public Collection<Student> getAllStudents();
+    
+    public Collection<Student> getByLastName(String lastName);
+    public Student getStudent(String UserId);
+    public Collection<Student> getStudentByStudyGroup(Studygroup s);
+//Teachers
+    public Collection<Teacher> getAllTeachers();
+    public Teacher getTeacher(String UserId);
+    public Teacher saveTeacher(Teacher t);
+    public Teacher createNewTeacher(Teacher t);
 //SchoolYear Method
+    public Collection<Teacher> getTeachersByStudyGroup(Studygroup s);
+
     public Schoolyear saveSchoolyear(Schoolyear s);
     public List<Schoolyear> getAllSchoolYears();
     public Schoolyear getSchoolyear(int id);

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="StudentCreateDialog" widgetVar="StudentCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Přidat Student">
+            <h:form id="StudentCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{adminmainController.editedStudent != null}">
+                        <p:outputLabel value="Login" for="login" rendered="#{adminmainController.editedStudent.login != null}"/>
+                        <p:outputLabel id="login" value="#{adminmainController.editedStudent.login}" for="name" rendered="#{adminmainController.editedStudent.login != null}"/>
+                        <p:outputLabel value="Jméno" for="name" />
+                        <p:inputText id="name" value="#{adminmainController.editedStudent.firstName}" title="Jméno" required="true" />
+                        <p:outputLabel value="Druhé jméno" for="middlename" />
+                        <p:inputText id="middlename" value="#{adminmainController.editedStudent.middleName}" title="Druhé jméno" required="false" />
+                        <p:outputLabel value="Příjmení" for="lastname" />
+                        <p:inputText id="lastname" value="#{adminmainController.editedStudent.lastName}" title="Příjmení" required="true" />
+                        <p:outputLabel value="Email" for="email" />
+                        <p:inputText id="email" value="#{adminmainController.editedStudent.email}" required="false" />
+                        <p:outputLabel value="Phone" for="phone" />
+                        <p:inputText id="phone" value="#{adminmainController.editedStudent.phone}" required="false" />
+                        <p:outputLabel value="Password" for="password" rendered="#{adminmainController.editedStudent.password != null}"/>
+                        <p:inputText id="password" value="#{adminmainController.editedStudent.password}" required="false" rendered="#{adminmainController.editedStudent.password != null}"/>
+                        <p:outputLabel value="Datum narození" for="startDate" />
+                        <p:calendar id="startDate" pattern="MM/dd/yyyy" value="#{adminmainController.editedStudent.birthDate}" required="false" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{adminmainController.saveStudent}" value="#{bundle.save}" update="display,:AdminMainMenu :Students,:growl" oncomplete="handleSubmit(args,'StudentCreateDialog');"/>
+                    <p:commandButton value="#{bundle.cancel}" onclick="StudentCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
