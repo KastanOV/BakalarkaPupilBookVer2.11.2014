@@ -5,6 +5,7 @@
  */
 package managedBeans;
 
+import Entity.Admin;
 import Entity.Users;
 import SessionBeans.loginSessionBeanLocal;
 import java.io.IOException;
@@ -46,14 +47,13 @@ public class loginBean implements Serializable{
         
         loggedUser = sb.doLogin(loggedUser);
         
-        if (loggedUser.getRole() != null){
-            loggedIn = true;
-            ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
-            context.redirect("Admin/index.xhtml");
-        } 
-        else{
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Chyba", "Sorry kámo, ale něco máš "));  
-        } 
+//        if (!(loggedUser instanceof Admin.class) {
+//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Chyba", "Sorry kámo, ale něco máš "));
+//        } elseclass){
+//        loggedIn = true;
+//        ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+//        context.redirect("Admin/index.xhtml");
+//    } 
             
         
         

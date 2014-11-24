@@ -10,6 +10,8 @@ import Entity.Studygroup;
 import Entity.Studysubject;
 import Entity.Users;
 import Entity.Sheduleitem;
+import Entity.Student;
+import Entity.Teacher;
 import SessionBeans.AdminmainSessionBeanLocal;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -165,13 +167,12 @@ public class AdminmainController implements Serializable{
     }
     
     public Users prepareNewStudent(){
-        editedUser = new Users();
-        editedUser.setRole('S');
+        editedUser = new Student();
+        
         return editedUser;
     }
     public Users prepareNewTeacher(){
-        editedUser = new Users();
-        editedUser.setRole('T');
+        editedUser = new Teacher();
         return editedUser;
     }
     public Schoolyear prepareNewSchoolYear(){
