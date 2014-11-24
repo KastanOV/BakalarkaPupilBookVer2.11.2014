@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:body>
+    	
+    	<ui:composition template="/templates/admin.xhtml">
+            <ui:define name="body">
+                <h:form id="Students">
+                    <p:tabView>
+                        <p:tab title="Studenti">
+                            <ui:include src="StudentsDragAndDrop.xhtml"/>
+                        </p:tab>
+                        <p:tab title="Učitelé">
+                            <ui:include src="TeachersDragAndDrop.xhtml"/>
+                        </p:tab>
+                        <p:tab title="Rozvrhy hodin">
+                            <ui:include src="Shedule.xhtml"/>
+                        </p:tab>
+                        <p:tab title="Předměty">
+                            <ui:include src="StudySubjects.xhtml"/>
+                        </p:tab>
+                    </p:tabView>
+                </h:form>
+            </ui:define>
+            <ui:define name="west">
+                <ui:include src="MainMenu.xhtml"/>
+                <ui:include src="EditSheduleItem.xhtml"/>
+                <ui:include src="CreateSS.xhtml"/>
+                <ui:include src="CreateSY.xhtml"/>
+                <ui:include src="EditSY.xhtml"/>
+                <ui:include src="CreateSG.xhtml"/>
+                <ui:include src="EditUser.xhtml"/>
+            </ui:define>
+    	</ui:composition>
+    	
+    </h:body>
+
+</html>
+

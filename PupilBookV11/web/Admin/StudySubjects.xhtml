@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:commandButton id="createButtonStudysubject" icon="ui-icon-plus"   value="Přidat předmět" actionListener="#{adminmainController.prepareNewStudySubject}" update=":StudySubjectCreateForm" oncomplete="PF('StudySubjectCreateDialog').show()"/>
+            <p:dataTable id="StudySubjectTable" var="StudySubject" value="#{adminmainController.studySubjects}">
+                <p:column headerText="Název předmětu">
+                    <h:outputText value="#{StudySubject.name}"/>
+                </p:column>
+                <p:column headerText="Zkratka předmětu">
+                    <h:outputText value="#{StudySubject.shortName}"/>
+                </p:column>
+            </p:dataTable>
+    </ui:composition>
+</html>
