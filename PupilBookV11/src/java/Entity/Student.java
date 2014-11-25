@@ -12,12 +12,14 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author Topr
  */
 @Entity
+@XmlRootElement
 @Table(name = "Users")
 @DiscriminatorValue(value = "S")
 @NamedQueries({

@@ -5,6 +5,7 @@
  */
 package service;
 
+import Entity.Student;
 import Entity.Users;
 import java.util.List;
 import javax.ejb.Stateless;

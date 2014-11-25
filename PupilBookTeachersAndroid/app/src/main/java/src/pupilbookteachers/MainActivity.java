@@ -2,6 +2,9 @@ package src.pupilbookteachers;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -10,29 +13,42 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import src.restdao.restTest;
 
 public class MainActivity extends Activity {
     TextView testText;
+    protected final static String SHARED_PREFERENCES = "Preferences";
+    protected final static String LOGIN = "loginKey";
+    protected final static String PASSWORD = "passwordKey";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        restTest test = new restTest();
 
+        SharedPreferences sharedpreferences = getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        if(sharedpreferences.contains(LOGIN)){
+            //TODO Stahni aktualizace
+        } else {
+            Intent in =  new Intent(this, LoginActivity.class);
+            startActivity(in);
+        }
+        setContentView(R.layout.activity_main);
     }
 
     public void myClickHandler(View view) {
+        final TextView textViewToChange = (TextView) findViewById(R.id.textView2);
+        textViewToChange.setText(
+                "The new text that I'd like to display now that the user has pushed a button.");
         // Gets the URL from the UI's text field.
-        String stringUrl = "http://192.168.1.155:8080/PupilBookV10/test";
+        String stringUrl = "http://192.168.1.61:8080/PupilBookV11/webresources/entity.schoolyear/2";
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            new DownloadWebpageTask().execute(stringUrl);
+            new DownloadWebpageTask(this).execute(stringUrl);
         } else {
            testText.setText("No network connection available.");
         }
+
     }
 
     @Override

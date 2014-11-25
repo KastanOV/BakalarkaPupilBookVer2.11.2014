@@ -1,8 +1,13 @@
-package src.pupilbookteachers;
+package src.restapi;
 
+
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.TextView;
+
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,19 +17,19 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import src.pupilbookteachers.DownloadWebpageTask;
+import src.pupilbookteachers.MainActivity;
+import src.pupilbookteachers.R;
+
 /**
- * Created by KastanNotas on 20.11.2014.
+ * Created by Topr on 11/25/2014.
  */
-public class DownloadWebpageTask extends AsyncTask<String, Void, String> {
+public class Login extends AsyncTask<String, Void, String> {
     private static final String DEBUG_TAG = "PupilBook";
-    protected MainActivity context;
-    final TextView textViewToChange;
 
-    public DownloadWebpageTask(MainActivity context) {
-        this.context = context;
-        textViewToChange = (TextView) context.findViewById (R.id.textView2);
+    public Login() {
+
     }
-
     @Override
     protected String doInBackground(String... urls) {
 
@@ -38,14 +43,7 @@ public class DownloadWebpageTask extends AsyncTask<String, Void, String> {
     // onPostExecute displays the results of the AsyncTask.
     @Override
     protected void onPostExecute(final String result) {
-
-
-        context.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                textViewToChange.setText(result);
-            }
-        });
+        
     }
     private String downloadUrl(String myurl) throws IOException {
         InputStream is = null;
@@ -85,4 +83,6 @@ public class DownloadWebpageTask extends AsyncTask<String, Void, String> {
         reader.read(buffer);
         return new String(buffer);
     }
+
+
 }
