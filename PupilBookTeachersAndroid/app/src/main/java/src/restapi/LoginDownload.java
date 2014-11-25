@@ -1,13 +1,8 @@
 package src.restapi;
 
-
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.TextView;
-
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,19 +12,20 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import src.pupilbookteachers.DownloadWebpageTask;
 import src.pupilbookteachers.MainActivity;
 import src.pupilbookteachers.R;
 
 /**
  * Created by Topr on 11/25/2014.
  */
-public class Login extends AsyncTask<String, Void, String> {
-    private static final String DEBUG_TAG = "PupilBook";
+public class LoginDownload extends AsyncTask<String, Void, String> {
 
-    public Login() {
+    private static final String DEBUG_TAG = "PupilBook";
+    
+    public LoginDownload() {
 
     }
+
     @Override
     protected String doInBackground(String... urls) {
 
@@ -83,6 +79,4 @@ public class Login extends AsyncTask<String, Void, String> {
         reader.read(buffer);
         return new String(buffer);
     }
-
-
 }

@@ -14,7 +14,8 @@ import android.widget.TextView;
 
 public class LoginActivity extends Activity {
 
-    private final String stringUrl = "http://192.168.1.61:8080/PupilBookV11/webresources/entity.schoolyear/2";
+    private final String stringUrl = "http://192.168.1.61:8080/PupilBookV11/webresources/";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,15 +37,16 @@ public class LoginActivity extends Activity {
         Login.setEnabled(false);
         Password.setEnabled(false);
         SubmitButton.setEnabled(false);
-
+        tryLogin(Login.getText().toString(), Password.getText().toString());
 
 
     }
-    public void tryLogin(){
+    public void tryLogin(String login, String Password){
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
+            String tmpUrl = stringUrl + login + "/" + Password;
 
         } else {
 

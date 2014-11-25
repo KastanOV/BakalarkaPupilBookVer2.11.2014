@@ -19,11 +19,18 @@ public class TeachersSessionBean implements TeachersSessionBeanLocal {
     @PersistenceContext
     private EntityManager em;
     
+    @Override
     public Teacher checkLogin(String login, String password){
-        return (Teacher) em.createNamedQuery("Teacher.checkLogin")
+        
+        try{
+            return (Teacher) em.createNamedQuery("Teacher.checkLogin")
                 .setParameter("login", login)
                 .setParameter("password", password)
-                .getSingleResult();
+                .getSingleResult();     
+        } catch (Exception e){
+            return null;
+        }
+        
     }
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")

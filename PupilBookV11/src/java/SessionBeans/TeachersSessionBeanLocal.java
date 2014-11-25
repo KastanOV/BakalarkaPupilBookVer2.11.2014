@@ -5,6 +5,7 @@
  */
 package SessionBeans;
 
+import Entity.Teacher;
 import javax.ejb.Local;
 
 /**
@@ -13,5 +14,5 @@ import javax.ejb.Local;
  */
 @Local
 public interface TeachersSessionBeanLocal {
-    
+   public Teacher checkLogin(String login, String password); 
 }

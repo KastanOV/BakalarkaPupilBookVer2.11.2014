@@ -6,27 +6,26 @@
 package service;
 
 import Entity.Teacher;
-import Entity.Users;
-import SessionBeans.TeachersSessionBean;
+import SessionBeans.TeachersSessionBeanLocal;
 import javax.ejb.EJB;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PUT;
+
 
 /**
  * REST Web Service
  *
  * @author Topr
  */
-@Path("generic")
+
+@Path("teachers")
 public class TeacherFacadeREST {
     @EJB
-    TeachersSessionBean sb;
+    TeachersSessionBeanLocal sb;
     
     @Context
     private UriInfo context;
@@ -38,7 +37,7 @@ public class TeacherFacadeREST {
     @GET
     @Path("{login}/{password}")
     @Produces({"application/xml", "application/json"})
-    public Teacher findRange(@PathParam("login") String login, @PathParam("password") String password) {
+    public Teacher tryLogin(@PathParam("login") String login, @PathParam("password") String password) {
         return sb.checkLogin(login, password);
     }
     
