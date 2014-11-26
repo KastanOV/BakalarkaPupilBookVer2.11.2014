@@ -40,5 +40,6 @@
         android:id="@+id/buttonSubmitLogin"
         android:layout_below="@+id/editPassword"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp" />
+        android:layout_marginTop="30dp"
+        android:onClick="clickLogin" />
 </RelativeLayout>

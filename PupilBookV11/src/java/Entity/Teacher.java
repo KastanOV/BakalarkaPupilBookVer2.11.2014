@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Teachers.findAll", query = "SELECT u FROM Teacher u"),
     @NamedQuery(name = "Teacher.byStudyGroupAndRole", query = "SELECT u FROM Teacher u WHERE u.studyGroupidStudyGroup = :studygroup" ),
-    @NamedQuery(name = "Teacher.checkLogin", query = "SELECT t FROM Teacher t WHERE t.login = :login AND t.password = :password")})
+    @NamedQuery(name = "Teacher.checkLogin", query = "SELECT COUNT(t.login) FROM Teacher t WHERE t.login = :login AND t.password = :password")})
 public class Teacher extends Users {
     
     

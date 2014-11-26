@@ -36,7 +36,7 @@ public class TeacherFacadeREST {
     
     @GET
     @Path("{login}/{password}")
-    @Produces({"application/xml", "application/json"})
+    
     public Teacher tryLogin(@PathParam("login") String login, @PathParam("password") String password) {
         return sb.checkLogin(login, password);
     }

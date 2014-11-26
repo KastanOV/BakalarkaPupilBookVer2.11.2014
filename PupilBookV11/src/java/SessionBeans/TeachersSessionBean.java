@@ -10,6 +10,7 @@ import javax.ejb.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+
 /**
  *
  * @author Topr
@@ -21,15 +22,13 @@ public class TeachersSessionBean implements TeachersSessionBeanLocal {
     
     @Override
     public Teacher checkLogin(String login, String password){
-        
-        try{
-            return (Teacher) em.createNamedQuery("Teacher.checkLogin")
+        long tmp = (long)em.createNativeQuery("SELECT count(*) FROM Users u WHERE u.login = ?login AND u.password = ?password AND Role = 'T'")
                 .setParameter("login", login)
                 .setParameter("password", password)
-                .getSingleResult();     
-        } catch (Exception e){
-            return null;
-        }
+                .getSingleResult();
+        if(tmp > 0){
+            return em.find(Teacher.class, login);
+        }else return null;
         
     }
     // Add business logic below. (Right-click in editor and choose

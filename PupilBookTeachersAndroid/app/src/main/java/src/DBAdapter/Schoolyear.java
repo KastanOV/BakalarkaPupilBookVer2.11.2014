@@ -2,9 +2,12 @@ package src.DBAdapter;
 
 import android.provider.BaseColumns;
 
+
+
 /**
  * Created by Topr on 11/25/2014.
  */
+
 public class Schoolyear {
 
     private int _id;

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -16,15 +15,17 @@ import android.widget.TextView;
 
 public class MainActivity extends Activity {
     TextView testText;
-    protected final static String SHARED_PREFERENCES = "Preferences";
-    protected final static String LOGIN = "loginKey";
-    protected final static String PASSWORD = "passwordKey";
+    protected final static String SHARED_PREFERENCES = "PupilBook";
+    protected final static String LOGIN = "login";
+    protected final static String PASSWORD = "password";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         SharedPreferences sharedpreferences = getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
+
+
         if(sharedpreferences.contains(LOGIN)){
             //TODO Stahni aktualizace
         } else {

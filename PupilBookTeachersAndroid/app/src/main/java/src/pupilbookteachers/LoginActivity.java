@@ -11,10 +11,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import src.restapi.LoginDownload;
+
 
 public class LoginActivity extends Activity {
 
-    private final String stringUrl = "http://192.168.1.61:8080/PupilBookV11/webresources/";
+    private final String stringUrl = "http://192.168.1.61:8080/PupilBookV11/webresources/teachers/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +36,9 @@ public class LoginActivity extends Activity {
         TextView Login =  (TextView) findViewById(R.id.editUserName);
         TextView Password = (TextView) findViewById(R.id.editPassword);
         Button SubmitButton = (Button) findViewById(R.id.buttonSubmitLogin);
-        Login.setEnabled(false);
-        Password.setEnabled(false);
-        SubmitButton.setEnabled(false);
+        //Login.setEnabled(false);
+        //Password.setEnabled(false);
+        //SubmitButton.setEnabled(false);
         tryLogin(Login.getText().toString(), Password.getText().toString());
 
 
@@ -47,6 +49,7 @@ public class LoginActivity extends Activity {
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
             String tmpUrl = stringUrl + login + "/" + Password;
+                new LoginDownload(this).execute(tmpUrl);
 
         } else {
 
