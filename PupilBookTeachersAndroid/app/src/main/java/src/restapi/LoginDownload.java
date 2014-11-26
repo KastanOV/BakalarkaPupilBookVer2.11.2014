@@ -51,7 +51,6 @@ public class LoginDownload extends AsyncTask<String, Void, String> {
     // onPostExecute displays the results of the AsyncTask.
     @Override
     protected void onPostExecute(final String result) {
-        String tmp = result;
 
     }
 
@@ -101,6 +100,8 @@ public class LoginDownload extends AsyncTask<String, Void, String> {
         String text=null;
         String login = null;
         String password = null;
+        String firstName = null;
+        String lastName = null;
 
         try {
             event = myParser.getEventType();
@@ -116,10 +117,12 @@ public class LoginDownload extends AsyncTask<String, Void, String> {
                     case XmlPullParser.END_TAG:
                         if(name.equals(TEACHER_LOGIN)){
                             login = text;
-                        }
-                        else if(name.equals(TEACHER_PASSWORD)){
+                        }else if(name.equals(TEACHER_PASSWORD)){
                             password = text;
-                            int bla = 123;
+                        }else if(name.equals("firstName")){
+                            firstName = text;
+                        }else if (name.equals("lastName")){
+                            lastName = text;
                         }
                         else{
                         }
@@ -132,6 +135,8 @@ public class LoginDownload extends AsyncTask<String, Void, String> {
             SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.putString("login", login);
             editor.putString("password", password);
+            editor.putString("firstName", firstName);
+            editor.putString("lastName", lastName);
             editor.commit();
             Intent in =  new Intent(context, MainActivity.class);
             context.startActivity(in);

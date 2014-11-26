@@ -5,7 +5,9 @@
  */
 package SessionBeans;
 
+import Entity.Sheduleitem;
 import Entity.Teacher;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -14,5 +16,7 @@ import javax.ejb.Local;
  */
 @Local
 public interface TeachersSessionBeanLocal {
-   public Teacher checkLogin(String login, String password); 
+   public Teacher checkLogin(String login, String password);
+   
+   public List<Sheduleitem> getSheduleItems(String login, String password);
 }

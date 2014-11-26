@@ -19,6 +19,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -29,9 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Sheduleitem.findAll", query = "SELECT s FROM Sheduleitem s"),
-    @NamedQuery(name = "Sheduleitem.findByIdSheduleItem", query = "SELECT s FROM Sheduleitem s WHERE s.idSheduleItem = :idSheduleItem"),
-    @NamedQuery(name = "Sheduleitem.findByDay", query = "SELECT s FROM Sheduleitem s WHERE s.day = :day"),
-    @NamedQuery(name = "Sheduleitem.findByHour", query = "SELECT s FROM Sheduleitem s WHERE s.hour = :hour")})
+    @NamedQuery(name = "Sheduleitem.findByUser", query = "SELECT s FROM Sheduleitem s WHERE s.usersLogin = :login")})
 public class Sheduleitem implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -56,8 +55,29 @@ public class Sheduleitem implements Serializable {
     @JoinColumn(name = "Users_Login", referencedColumnName = "Login")
     @ManyToOne
     private Users usersLogin;
+    
+    private int studyGroupId;
+    
+    private int studySubjectId;
 
-    public Sheduleitem() {
+    public int getStudySubjectId() {
+        return studySubjectidStudySubject.getIdStudySubject();
+    }
+
+    public void setStudySubjectId(int studySubjectId) {
+        this.studySubjectId = studySubjectId;
+    }
+    
+
+    public void setStudyGroupId(int studyGroupId) {
+        this.studyGroupId = studyGroupId;
+    }
+
+    public int getStudyGroupId() {
+        return studyGroupidStudyGroup.getIdStudyGroup();
+    }
+
+        public Sheduleitem() {
     }
 
     public Sheduleitem(Integer idSheduleItem) {
@@ -93,7 +113,7 @@ public class Sheduleitem implements Serializable {
     public void setHour(short hour) {
         this.hour = hour;
     }
-
+    @XmlTransient
     public Studygroup getStudyGroupidStudyGroup() {
         return studyGroupidStudyGroup;
     }
@@ -101,7 +121,7 @@ public class Sheduleitem implements Serializable {
     public void setStudyGroupidStudyGroup(Studygroup studyGroupidStudyGroup) {
         this.studyGroupidStudyGroup = studyGroupidStudyGroup;
     }
-
+    @XmlTransient
     public Studysubject getStudySubjectidStudySubject() {
         return studySubjectidStudySubject;
     }
@@ -109,7 +129,7 @@ public class Sheduleitem implements Serializable {
     public void setStudySubjectidStudySubject(Studysubject studySubjectidStudySubject) {
         this.studySubjectidStudySubject = studySubjectidStudySubject;
     }
-
+    @XmlTransient
     public Users getUsersLogin() {
         return usersLogin;
     }

@@ -18,23 +18,32 @@ public class MainActivity extends Activity {
     protected final static String SHARED_PREFERENCES = "PupilBook";
     protected final static String LOGIN = "login";
     protected final static String PASSWORD = "password";
+    protected SharedPreferences sharedpreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        SharedPreferences sharedpreferences = getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
-
-
+        sharedpreferences = getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        setContentView(R.layout.activity_main);
         if(sharedpreferences.contains(LOGIN)){
-            //TODO Stahni aktualizace
+            TextView cr =  (TextView) findViewById(R.id.textCredentials);
+            cr.setText(sharedpreferences.getString("firstName", "Error") + " " + sharedpreferences.getString("lastName", "Something wrong"));
         } else {
             Intent in =  new Intent(this, LoginActivity.class);
             startActivity(in);
         }
-        setContentView(R.layout.activity_main);
     }
 
+    public void logout(View view) {
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.remove(LOGIN);
+        editor.remove(PASSWORD);
+        editor.remove("firstName");
+        editor.remove("lastName");
+        editor.commit();
+        Intent in =  new Intent(this, LoginActivity.class);
+        startActivity(in);
+    }
     public void myClickHandler(View view) {
         final TextView textViewToChange = (TextView) findViewById(R.id.textView2);
         textViewToChange.setText(
