@@ -10,6 +10,7 @@ import android.provider.BaseColumns;
 
 public class Schoolyear {
 
+
     private int _id;
     private String _name;
 

@@ -93,7 +93,7 @@ public class Users implements Serializable {
     @Column(name = "BirthDate")
     @Temporal(TemporalType.DATE)
     private Date birthDate;
-        
+            
     @OneToMany(mappedBy = "usersLogin")
     private Collection<Sheduleitem> sheduleitemCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "studentLogin")
@@ -177,7 +177,7 @@ public class Users implements Serializable {
     public void setLogin(String login) {
         this.login = login;
     }
-
+   
     public String getPassword() {
         return password;
     }
@@ -257,7 +257,7 @@ public class Users implements Serializable {
         this.attendanceCollection = attendanceCollection;
     }
     
-    @XmlTransient
+    
     public Studygroup getStudyGroupidStudyGroup() {
         return studyGroupidStudyGroup;
     }

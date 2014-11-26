@@ -94,7 +94,7 @@ public class Studygroup implements Serializable {
     public void setSheduleitemCollection(Collection<Sheduleitem> sheduleitemCollection) {
         this.sheduleitemCollection = sheduleitemCollection;
     }
-
+    @XmlTransient
     public Schoolyear getSchoolYearidSchoolYear() {
         return schoolYearidSchoolYear;
     }

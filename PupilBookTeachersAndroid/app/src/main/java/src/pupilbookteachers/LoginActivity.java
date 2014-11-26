@@ -11,12 +11,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import src.restapi.LoginDownload;
+import src.restapi.Login;
 
 
 public class LoginActivity extends Activity {
 
-    private final String stringUrl = "http://192.168.1.61:8080/PupilBookV11/webresources/teachers/";
+    //private final String stringUrl = "http://192.168.1.61:8080/PupilBookV11/webresources/teachers/";
+    private final String stringUrl = "http://86.49.147.135:9001/PupilBookV11/webresources/teachers/";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +51,7 @@ public class LoginActivity extends Activity {
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
             String tmpUrl = stringUrl + login + "/" + Password;
-                new LoginDownload(this).execute(tmpUrl);
+                new Login(this).execute(tmpUrl);
 
         } else {
 

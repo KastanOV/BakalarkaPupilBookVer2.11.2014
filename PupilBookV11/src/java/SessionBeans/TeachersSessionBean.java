@@ -6,6 +6,8 @@
 package SessionBeans;
 
 import Entity.Sheduleitem;
+import Entity.Student;
+import Entity.Studygroup;
 import Entity.Teacher;
 import java.util.List;
 import javax.ejb.Singleton;
@@ -39,6 +41,35 @@ public class TeachersSessionBean implements TeachersSessionBeanLocal {
                     + " left join studygroup on sheduleitem.StudyGroup_idStudyGroup = studygroup.idStudyGroup"
                     + " join schoolyear on schoolyear.idSchoolYear = studygroup.SchoolYear_idSchoolYear"
                     + " WHERE Users_Login = ?login AND schoolyear.isactualyear = true", Sheduleitem.class)
+                    .setParameter("login", login)
+                    .getResultList();
+        }else {
+            return null;
+        }
+    }
+    
+    @Override
+    public List<Studygroup> getStudyGroups(String login, String password){
+        //DISTINCT studygroup.idStudyGroup, studygroup.Name
+        if(checkTeacher(login, password)){
+            return em.createNativeQuery("SELECT DISTINCT studygroup.idStudyGroup, studygroup.Name FROM SheduleItem"
+                    + " left join studygroup on sheduleitem.StudyGroup_idStudyGroup = studygroup.idStudyGroup"
+                    + " join schoolyear on schoolyear.idSchoolYear = studygroup.SchoolYear_idSchoolYear"
+                    + " WHERE Users_Login = ?login AND schoolyear.isactualyear = true", Studygroup.class)
+                    .setParameter("login", login)
+                    .getResultList();
+        }else {
+            return null;
+        }
+    }
+    @Override
+    public List<Student> getStudents(String login, String password){
+        if(checkTeacher(login, password)){
+            return em.createNativeQuery("SELECT DISTINCT s.FirstName, s.MiddleName, s.LastName, s.Phone, s.Email, s.Login, s.BirthDate, s.StudyGroup_idStudyGroup FROM SheduleItem"
+                    + " left join studygroup on sheduleitem.StudyGroup_idStudyGroup = studygroup.idStudyGroup"
+                    + " join schoolyear on schoolyear.idSchoolYear = studygroup.SchoolYear_idSchoolYear "
+                    + " join Users s on studygroup.idStudyGroup = s.StudyGroup_idStudyGroup "
+                    + " WHERE Users_Login = ?login AND schoolyear.isactualyear = true AND s.Role = 'S'", Student.class)
                     .setParameter("login", login)
                     .getResultList();
         }else {

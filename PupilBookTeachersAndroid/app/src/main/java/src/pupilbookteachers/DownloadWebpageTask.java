@@ -1,5 +1,6 @@
 package src.pupilbookteachers;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.TextView;
@@ -19,10 +20,12 @@ public class DownloadWebpageTask extends AsyncTask<String, Void, String> {
     private static final String DEBUG_TAG = "PupilBook";
     protected MainActivity context;
     final TextView textViewToChange;
+    ProgressDialog dialog;
 
     public DownloadWebpageTask(MainActivity context) {
         this.context = context;
-        textViewToChange = (TextView) context.findViewById (R.id.textView2);
+        textViewToChange = (TextView) context.findViewById(R.id.textView2);
+        dialog = ProgressDialog.show(context, "Loading", "Please wait...", true);
     }
 
     @Override
@@ -38,7 +41,7 @@ public class DownloadWebpageTask extends AsyncTask<String, Void, String> {
     // onPostExecute displays the results of the AsyncTask.
     @Override
     protected void onPostExecute(final String result) {
-
+        dialog.cancel();
 
         context.runOnUiThread(new Runnable() {
             @Override

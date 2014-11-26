@@ -49,7 +49,9 @@ public class MainActivity extends Activity {
         textViewToChange.setText(
                 "The new text that I'd like to display now that the user has pushed a button.");
         // Gets the URL from the UI's text field.
-        String stringUrl = "http://192.168.1.61:8080/PupilBookV11/webresources/entity.schoolyear/2";
+        //String stringUrl = "http://192.168.1.61:8080/PupilBookV11/webresources/entity.schoolyear/2";
+        String stringUrl = "http://86.49.147.135:9001/PupilBookV11/webresources/entity.schoolyear/2";
+
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();

@@ -28,5 +28,4 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Student.findByLastName", query = "SELECT u FROM Student u WHERE u.lastName LIKE :lastName")})
 public class Student extends Users{
     
-    
 }
