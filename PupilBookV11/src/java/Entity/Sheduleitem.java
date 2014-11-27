@@ -56,26 +56,26 @@ public class Sheduleitem implements Serializable {
     @ManyToOne
     private Users usersLogin;
     
-    private int studyGroupId;
-    
-    private int studySubjectId;
-
-    public int getStudySubjectId() {
-        return studySubjectidStudySubject.getIdStudySubject();
-    }
-
-    public void setStudySubjectId(int studySubjectId) {
-        this.studySubjectId = studySubjectId;
-    }
-    
-
-    public void setStudyGroupId(int studyGroupId) {
-        this.studyGroupId = studyGroupId;
-    }
-
-    public int getStudyGroupId() {
-        return studyGroupidStudyGroup.getIdStudyGroup();
-    }
+//    private int studyGroupId;
+//    
+//    private int studySubjectId;
+//
+//    public int getStudySubjectId() {
+//        return studySubjectidStudySubject.getIdStudySubject();
+//    }
+//
+//    public void setStudySubjectId(int studySubjectId) {
+//        this.studySubjectId = studySubjectId;
+//    }
+//    
+//
+//    public void setStudyGroupId(int studyGroupId) {
+//        this.studyGroupId = studyGroupId;
+//    }
+//
+//    public int getStudyGroupId() {
+//        return studyGroupidStudyGroup.getIdStudyGroup();
+//    }
 
         public Sheduleitem() {
     }

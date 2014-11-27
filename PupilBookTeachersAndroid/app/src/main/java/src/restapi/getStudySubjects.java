@@ -1,5 +1,6 @@
 package src.restapi;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,24 +19,23 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import src.pupilbookteachers.LoginActivity;
 import src.pupilbookteachers.MainActivity;
 
 /**
- * Created by Topr on 11/25/2014.
+ * Created by Topr on 11/27/2014.
  */
-public class LoginDownload extends AsyncTask<String, Void, String> {
-
+public class getStudySubjects extends AsyncTask<String, Void, String> {
     private XmlPullParserFactory xmlFactoryObject;
 
     private static final String DEBUG_TAG = "PupilBook";
     private static final String TEACHER_LOGIN = "login";
     private static final String TEACHER_PASSWORD = "password";
+    private MainActivity context;
+    ProgressDialog dialog;
 
-    private LoginActivity context;
-
-    public LoginDownload(LoginActivity context) {
+    public getStudySubjects(MainActivity context) {
         this.context = context;
+        dialog = ProgressDialog.show(context, "Loading", "Please wait...", true);
     }
 
     @Override
@@ -43,6 +43,7 @@ public class LoginDownload extends AsyncTask<String, Void, String> {
 
         // params comes from the execute() call: params[0] is the url.
         try {
+
             return downloadUrl(urls[0]);
         } catch (IOException e) {
             return "Unable to retrieve web page. URL may be invalid.";
@@ -51,7 +52,7 @@ public class LoginDownload extends AsyncTask<String, Void, String> {
     // onPostExecute displays the results of the AsyncTask.
     @Override
     protected void onPostExecute(final String result) {
-
+        //dialog.cancel();
     }
 
     private String downloadUrl(String myurl) throws IOException {
@@ -130,19 +131,20 @@ public class LoginDownload extends AsyncTask<String, Void, String> {
                 }
                 event = myParser.next();
             }
-        if(login != null && password != null){
-            SharedPreferences sharedpreferences = context.getSharedPreferences("PupilBook", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString("login", login);
-            editor.putString("password", password);
-            editor.putString("firstName", firstName);
-            editor.putString("lastName", lastName);
-            editor.commit();
-            Intent in =  new Intent(context, MainActivity.class);
-            context.startActivity(in);
-        } else {
-            return;
-        }
+            if(login != null && password != null){
+                SharedPreferences sharedpreferences = context.getSharedPreferences("PupilBook", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+
+                editor.putString("login", login);
+                editor.putString("password", password);
+                editor.putString("firstName", firstName);
+                editor.putString("lastName", lastName);
+                editor.commit();
+                Intent in =  new Intent(context, MainActivity.class);
+                context.startActivity(in);
+            } else {
+                return;
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -156,4 +158,5 @@ public class LoginDownload extends AsyncTask<String, Void, String> {
         reader.read(buffer);
         return new String(buffer);
     }
+
 }

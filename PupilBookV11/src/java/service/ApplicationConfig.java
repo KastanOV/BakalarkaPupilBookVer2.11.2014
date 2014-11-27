@@ -32,6 +32,7 @@ public class ApplicationConfig extends Application {
         resources.add(service.SchoolyearFacadeREST.class);
         resources.add(service.SheduleitemsResource.class);
         resources.add(service.StudentsResource.class);
+        resources.add(service.StudySubjectsResource.class);
         resources.add(service.StudygroupResource.class);
         resources.add(service.TeacherReasource.class);
     }

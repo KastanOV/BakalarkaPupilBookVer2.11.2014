@@ -8,6 +8,7 @@ package SessionBeans;
 import Entity.Sheduleitem;
 import Entity.Student;
 import Entity.Studygroup;
+import Entity.Studysubject;
 import Entity.Teacher;
 import java.util.List;
 import javax.ejb.Singleton;
@@ -75,6 +76,10 @@ public class TeachersSessionBean implements TeachersSessionBeanLocal {
         }else {
             return null;
         }
+    }
+    @Override
+    public List<Studysubject> getStudySubjects(){
+        return  em.createNativeQuery("SELECT * FROM studysubject", Studysubject.class).getResultList();
     }
     
     private boolean checkTeacher(String login, String password){
