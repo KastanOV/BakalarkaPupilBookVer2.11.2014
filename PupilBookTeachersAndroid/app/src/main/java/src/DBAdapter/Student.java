@@ -12,11 +12,10 @@ public class Student {
     private String email;
     private String login;
     private String password;
-
     private int studyGroupID;
 
-    public Student(String firstName, String middleName,String lastName,String phone,String email,String login,String password,int studyGroupID){
-this.firstName = firstName;
+    public Student(String login,String firstName, String middleName,String lastName,String phone,String email,String password,int studyGroupID){
+        this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
         this.phone = phone;

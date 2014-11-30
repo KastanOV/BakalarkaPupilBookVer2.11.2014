@@ -12,23 +12,23 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import src.DBAdapter.StudyGroup;
-import src.DBAdapter.StudyGroupTable;
+import src.DBAdapter.SheduleItem;
+import src.DBAdapter.SheduleItemTable;
 import src.pupilbookteachers.MainActivity;
 
 /**
- * Created by Topr on 11/27/2014.
+ * Created by Topr on 11/30/2014.
  */
-public class getStudyGroups {
+public class getSheduleItems {
     private XmlPullParserFactory xmlFactoryObject;
 
     private static final String DEBUG_TAG = "PupilBook";
     private MainActivity context;
 
     private String targetURL;
-    public getStudyGroups(String URL, MainActivity context) {
+    public getSheduleItems(String URL, MainActivity context) {
         SharedPreferences sharedpreferences = context.getSharedPreferences("PupilBook", context.MODE_PRIVATE);
-        this.targetURL = URL + "studygroups/" + sharedpreferences.getString("login", "Error") + "/" + sharedpreferences.getString("password", "Something wrong");
+        this.targetURL = URL + "sheduleitems/" + sharedpreferences.getString("login", "Error") + "/" + sharedpreferences.getString("password", "Something wrong");
         this.context = context;
     }
     public String downloadUrl() throws IOException {
@@ -66,11 +66,10 @@ public class getStudyGroups {
     private void parseXMLAndStoreIt(XmlPullParser myParser) {
         int event;
         String text=null;
-        Integer id = null;
-        String Name = null,ShortName = null;
-        StudyGroupTable db = new StudyGroupTable(context);
-        db.deleteAllStudyGrops();
-
+        Integer id = null, day = null, hour = null,idStudyGroup = null, idStudySubject = null;
+        String Login = null;
+        SheduleItemTable db = new SheduleItemTable(context);
+        db.deleteAllSheduleItems();
 
         try {
             event = myParser.getEventType();
@@ -86,16 +85,27 @@ public class getStudyGroups {
                     case XmlPullParser.END_TAG:
                         if(name.equals("id")){
                             id = Integer.parseInt(text);
-                        }else if(name.equals("name")){
-                            Name = text;
-                            StudyGroup ss = new StudyGroup(id,Name);
-                            db.createStudyGroup(ss);
+                        }else if(name.equals("day")){
+                            day = Integer.parseInt(text);
+
+                        }else if(name.equals("hour")){
+                            hour = Integer.parseInt(text);
+
+                        }else if(name.equals("idStudyGroup")){
+                            idStudyGroup = Integer.parseInt(text);
+
+                        }else if(name.equals("idStudySubject")){
+                            idStudySubject = Integer.parseInt(text);
+
+                        }else if(name.equals("login")){
+                            Login = text;
+                            SheduleItem si = new SheduleItem(id,day,hour,idStudyGroup,idStudySubject,Login);
+                            db.createSheduleItem(si);
                         }
                         else{
                         }
                         break;
                 }
-
                 event = myParser.next();
             }
 

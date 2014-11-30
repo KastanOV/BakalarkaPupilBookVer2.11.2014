@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 /**
  * Created by Topr on 11/30/2014.
  */
-public class DBMain extends SQLiteOpenHelper {
+public abstract class DBMain extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
 
 
@@ -34,11 +34,16 @@ public class DBMain extends SQLiteOpenHelper {
                 + Utils.STUDENT_KEY_PASSWORD + " TEXT, "
                 + Utils.STUDENT_KEY_STUDYGROUP + " INTEGER)");
         db.execSQL("CREATE TABLE IF NOT EXISTS " + Utils.TABLE_STUDYGROUP + "(" + Utils.STUDY_GROUP_KEY_ID + " INTEGER PRIMARY KEY," + Utils.STUDY_GROUP_KEY_NAME + " TEXT)");
-
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + Utils.TABLE_STUDYSUBJECT + "(" + Utils.STUDY_SUBJECT_KEY_ID + " INTEGER PRIMARY KEY, " + Utils.STUDY_SUBJECT_KEY_NAME + " TEXT, " + Utils.STUDY_SUBJECT_KEY_SHORT_NAME + " TEXT)");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        db.execSQL("DROP TABLE IF EXISTS " + Utils.TABLE_SCHOOLYEAR);
+        db.execSQL("DROP TABLE IF EXISTS " + Utils.TABLE_SHEDULEITEM);
+        db.execSQL("DROP TABLE IF EXISTS " + Utils.TABLE_STUDENT);
+        db.execSQL("DROP TABLE IF EXISTS " + Utils.TABLE_STUDYGROUP);
+        db.execSQL("DROP TABLE IF EXISTS " + Utils.TABLE_STUDYSUBJECT);
+        onCreate(db);
     }
 }

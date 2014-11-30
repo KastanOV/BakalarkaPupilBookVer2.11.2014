@@ -9,14 +9,15 @@
         android:layout_height="wrap_content"
         android:id="@+id/textCredentials"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        style="@android:style/TextAppearance.DeviceDefault.Large" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/ClasificationButton"
-        android:id="@+id/button"
-        android:onClick="myClickHandler"
+        android:id="@+id/buttonClasification"
+        android:onClick="doSynchronization"
         android:layout_below="@+id/textCredentials"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
@@ -29,10 +30,7 @@
         android:text="Odhlásit"
         android:id="@+id/button2"
         android:onClick="logout"
-        android:layout_above="@+id/SyncButton"
-        android:layout_marginBottom="40dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -41,12 +39,9 @@
         android:layout_height="wrap_content"
         android:text="@string/Synchronization"
         android:id="@+id/SyncButton"
-        android:layout_above="@+id/SyncSwitch"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/button"
-        android:layout_alignEnd="@+id/button"
-        android:onClick="doSynchronization" />
+        android:onClick="doSynchronization"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
     <Switch
         android:layout_width="wrap_content"
@@ -54,7 +49,7 @@
         android:text="@string/AutoSync"
         android:id="@+id/SyncSwitch"
         android:checked="false"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/button2"
         android:layout_centerHorizontal="true" />
 
     <Button
@@ -62,9 +57,9 @@
         android:layout_height="wrap_content"
         android:text="@string/testButton"
         android:id="@+id/button3"
-        android:layout_above="@+id/button2"
-        android:layout_alignRight="@+id/button2"
-        android:layout_alignEnd="@+id/button2"
-        android:onClick="myClickHandler" />
+        android:onClick="myClickHandler"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

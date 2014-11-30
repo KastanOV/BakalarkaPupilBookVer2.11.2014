@@ -40,5 +40,6 @@ public class Utils {
     //STUDY_SUBJECT
     protected static final String
             STUDY_SUBJECT_KEY_ID = "id",
-            STUDY_SUBJECT_KEY_NAME = "name";
+            STUDY_SUBJECT_KEY_NAME = "name",
+            STUDY_SUBJECT_KEY_SHORT_NAME = "short_name";
 }

@@ -14,6 +14,12 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import src.DBAdapter.SheduleItem;
+import src.DBAdapter.SheduleItemTable;
+import src.DBAdapter.Student;
+import src.DBAdapter.StudentTable;
+import src.DBAdapter.StudyGroup;
+import src.DBAdapter.StudyGroupTable;
 import src.DBAdapter.StudySubject;
 import src.DBAdapter.StudySubjectTable;
 import src.restapi.downSynchonization;
@@ -70,8 +76,14 @@ public class MainActivity extends Activity {
     public void myClickHandler(View view) {
 
         StudySubjectTable db = new StudySubjectTable(this);
+        StudyGroupTable dbg = new StudyGroupTable(this);
+        SheduleItemTable dbsi = new SheduleItemTable(this);
+        StudentTable st = new StudentTable(this);
         //db.deleteAllStudySubjects();
         List<StudySubject> llllllll = db.getAllStudySubject();
+        List<StudyGroup> ppppppp = dbg.getAllStudyGroup();
+        List<SheduleItem> sssssss= dbsi.getAllSheduleItem();
+        List<Student> Students = st.getAllStudent();
         String bla = "bla";
     }
 

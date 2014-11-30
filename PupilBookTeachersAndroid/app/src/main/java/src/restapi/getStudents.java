@@ -12,23 +12,23 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import src.DBAdapter.StudyGroup;
-import src.DBAdapter.StudyGroupTable;
+import src.DBAdapter.Student;
+import src.DBAdapter.StudentTable;
 import src.pupilbookteachers.MainActivity;
 
 /**
- * Created by Topr on 11/27/2014.
+ * Created by Topr on 11/30/2014.
  */
-public class getStudyGroups {
+public class getStudents {
     private XmlPullParserFactory xmlFactoryObject;
 
     private static final String DEBUG_TAG = "PupilBook";
     private MainActivity context;
 
     private String targetURL;
-    public getStudyGroups(String URL, MainActivity context) {
+    public getStudents(String URL, MainActivity context) {
         SharedPreferences sharedpreferences = context.getSharedPreferences("PupilBook", context.MODE_PRIVATE);
-        this.targetURL = URL + "studygroups/" + sharedpreferences.getString("login", "Error") + "/" + sharedpreferences.getString("password", "Something wrong");
+        this.targetURL = URL + "StudentsList/" + sharedpreferences.getString("login", "Error") + "/" + sharedpreferences.getString("password", "Something wrong");
         this.context = context;
     }
     public String downloadUrl() throws IOException {
@@ -66,11 +66,10 @@ public class getStudyGroups {
     private void parseXMLAndStoreIt(XmlPullParser myParser) {
         int event;
         String text=null;
-        Integer id = null;
-        String Name = null,ShortName = null;
-        StudyGroupTable db = new StudyGroupTable(context);
-        db.deleteAllStudyGrops();
-
+        Integer idStudyGroup = null;
+        String Login = null, firstName = null, middleName = null, lastName = null, phone = null, email = null;
+        StudentTable db = new StudentTable(context);
+        db.deleteAllStudents();
 
         try {
             event = myParser.getEventType();
@@ -84,18 +83,35 @@ public class getStudyGroups {
                         break;
 
                     case XmlPullParser.END_TAG:
-                        if(name.equals("id")){
-                            id = Integer.parseInt(text);
-                        }else if(name.equals("name")){
-                            Name = text;
-                            StudyGroup ss = new StudyGroup(id,Name);
-                            db.createStudyGroup(ss);
+                        if(name.equals("email")){
+                            email = text;
+                            text = null;
+                        }else if(name.equals("firstName")){
+                            firstName = text;
+                            text = null;
+
+                        }else if(name.equals("lastName")){
+                            lastName = text;
+                            text = null;
+                        }else if(name.equals("login")){
+                            Login = text;
+                            text = null;
+                        }else if(name.equals("middleName")){
+                            middleName = text;
+                            text = null;
+                        }else if(name.equals("phone")){
+                            phone = text;
+                            text = null;
+                        }else if(name.equals("studyGroupID")){
+                            idStudyGroup = Integer.parseInt(text);
+                            Student st = new Student(Login,firstName,middleName,lastName,phone,email,null,idStudyGroup);
+
+                            db.createStudent(st);
                         }
                         else{
                         }
                         break;
                 }
-
                 event = myParser.next();
             }
 
