@@ -15,4 +15,14 @@
         android:spinnerMode="dialog"
         style="@android:style/Widget.Spinner"
         android:clickable="true" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinnerStudent"
+        android:layout_below="@+id/spinnerStudyGroup"
+        android:layout_centerHorizontal="true"
+        android:spinnerMode="dialog"
+        android:clickable="true"
+        style="@android:style/Widget.Spinner" />
 </RelativeLayout>

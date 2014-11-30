@@ -18,12 +18,17 @@ import src.DBAdapter.StudyGroupTable;
 
 public class ClasificationActivity extends Activity {
     private Spinner spinerStudyGroup;
+    public Spinner spinnerStudent;
+    public String SelectedStudent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clasification);
         spinerStudyGroup = (Spinner) findViewById(R.id.spinnerStudyGroup);
-        loadSpinnerDataHama();
+        spinnerStudent = (Spinner) findViewById(R.id.spinnerStudent);
+
+        loadSpinnerStudyGroup();
     }
 
 
@@ -48,11 +53,8 @@ public class ClasificationActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    /*private void studyGroupChange(){
-        Object tmp = spinerStudyGroup.getSelectedItem();
-        String nasrat = "Nasrat";
-    }*/
-    private void loadSpinnerDataHama() {
+
+    private void loadSpinnerStudyGroup() {
         List < SpinnerObject > labels = new ArrayList< SpinnerObject >();
         StudyGroupTable db = new StudyGroupTable(this);
         List<StudyGroup> sg = db.getAllStudyGroup();
@@ -67,6 +69,6 @@ public class ClasificationActivity extends Activity {
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // attaching data adapter to spinner
         spinerStudyGroup.setAdapter(dataAdapter);
-        spinerStudyGroup.setOnItemSelectedListener(new onStudyGroupClickListener());
+        spinerStudyGroup.setOnItemSelectedListener(new onStudyGroupClickListener(this));
     }
 }

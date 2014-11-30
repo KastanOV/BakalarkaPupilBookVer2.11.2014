@@ -80,14 +80,20 @@ public class StudentTable extends DBMain{
         Cursor cursor = db.rawQuery("SELECT * FROM " + Utils.TABLE_STUDENT, null);
         if(cursor.moveToFirst()){
             do{
-                String c0 = cursor.getString(0);
-                String c1 = cursor.getString(1);
-                String c2 = cursor.getString(2);
-                String c3 = cursor.getString(3);
-                String c4 = cursor.getString(4);
-                String c5 = cursor.getString(5);
-                String c6 = cursor.getString(6);
-                String c7 = cursor.getString(7);
+                Student sy = new Student(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6),Integer.parseInt(cursor.getString(7)) );
+                sys.add(sy);
+            } while(cursor.moveToNext());
+        }
+        return sys;
+    }
+    public List<Student> getStudentsAsStudyGroup(int StudyGroup){
+        List<Student> sys = new ArrayList<Student>();
+
+        SQLiteDatabase db = getWritableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + Utils.TABLE_STUDENT + " WHERE " + Utils.STUDENT_KEY_STUDYGROUP + " = " + StudyGroup, null);
+        if(cursor.moveToFirst()){
+            do{
                 Student sy = new Student(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6),Integer.parseInt(cursor.getString(7)) );
                 sys.add(sy);
             } while(cursor.moveToNext());
