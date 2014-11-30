@@ -8,6 +8,7 @@ package service;
 
 import Entity.Studygroup;
 import SessionBeans.TeachersSessionBeanLocal;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
@@ -34,7 +35,13 @@ public class StudygroupResource {
     @GET
     @Path("{login}/{password}")
     @Consumes({"application/xml", "application/json"})
-    public List<Studygroup> getSheduleItems(@PathParam("login") String login, @PathParam("password") String password){
-        return sb.getStudyGroups(login, password);
+    public List<servicesDTO.StudyGroup> getSheduleItems(@PathParam("login") String login, @PathParam("password") String password){
+        List<Studygroup> tmpList = sb.getStudyGroups(login, password);
+        List<servicesDTO.StudyGroup> items = new ArrayList<>();
+        for(Studygroup item : tmpList){
+            servicesDTO.StudyGroup tmp = new servicesDTO.StudyGroup(item.getIdStudyGroup(), item.getName());
+            items.add(tmp);
+        }
+        return items;
     }
 }

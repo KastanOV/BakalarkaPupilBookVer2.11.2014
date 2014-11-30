@@ -35,33 +35,33 @@ public class StudySubjectTable extends SQLiteOpenHelper {
 
         db.insert(TABLE_STUDYSUBJECT, null, values);
         db.close();
-    }
+        }
     public void recreateStudySubject(List<StudySubject> s){
-        
-    }
+
+        }
     public StudySubject getStudySubject(int id){
         SQLiteDatabase db = getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_STUDYSUBJECT, new String[] {KEY_ID, KEY_NAME, KEY_SHORTNAME}, KEY_ID + "=?", new String[] {String.valueOf(id) }, null,null, null, null);
 
         if(cursor != null){
-            cursor.moveToFirst();
+        cursor.moveToFirst();
         }
         StudySubject sy = new StudySubject(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2));
         return sy;
-    }
+        }
     public void deleteStudySubject(StudySubject s){
         SQLiteDatabase db = getWritableDatabase();
         db.delete(TABLE_STUDYSUBJECT, KEY_ID + "=?", new String[]{String.valueOf(s.getIdStudySubject()) });
         db.close();
-    }
+        }
     public int getStudySubjectCount(){
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_STUDYSUBJECT, null);
         int tmp = cursor.getCount();
         cursor.close();
         return tmp;
-    }
+        }
     public int updateStudySubject(StudySubject s){
         SQLiteDatabase db = getWritableDatabase();
 
@@ -72,7 +72,7 @@ public class StudySubjectTable extends SQLiteOpenHelper {
         values.put(KEY_SHORTNAME, s.getShortName());
 
         return db.update(TABLE_STUDYSUBJECT,values, KEY_ID + "=?", new String[] {String.valueOf(s.getIdStudySubject())});
-    }
+        }
     public List<StudySubject> getAllStudySubject(){
         List<StudySubject> sys = new ArrayList<StudySubject>();
 
@@ -80,22 +80,26 @@ public class StudySubjectTable extends SQLiteOpenHelper {
 
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_STUDYSUBJECT, null);
         if(cursor.moveToFirst()){
-            do{
-                StudySubject sy = new StudySubject(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2));
-                sys.add(sy);
-            } while(cursor.moveToNext());
+        do{
+        StudySubject sy = new StudySubject(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2));
+        sys.add(sy);
+        } while(cursor.moveToNext());
         }
         return sys;
-    }
+        }
+    public void deleteAllStudySubjects(){
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DELETE FROM " + TABLE_STUDYSUBJECT);
+}
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE IF NOT EXISTS" + TABLE_STUDYSUBJECT + "(" + KEY_ID + " INTEGER PRIMARY KEY, " + KEY_NAME + " TEXT, " + KEY_SHORTNAME + " TEXT)");
-    }
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_STUDYSUBJECT + "(" + KEY_ID + " INTEGER PRIMARY KEY, " + KEY_NAME + " TEXT, " + KEY_SHORTNAME + " TEXT)");
+        }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_STUDYSUBJECT);
         onCreate(db);
-    }
-}
+        }
+        }

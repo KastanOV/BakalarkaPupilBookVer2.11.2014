@@ -54,7 +54,7 @@ public class Login extends AsyncTask<String, Void, String> {
     // onPostExecute displays the results of the AsyncTask.
     @Override
     protected void onPostExecute(final String result) {
-        //dialog.cancel();
+        dialog.cancel();
     }
 
     private String downloadUrl(String myurl) throws IOException {

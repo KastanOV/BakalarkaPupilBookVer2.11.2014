@@ -82,9 +82,13 @@ public class StudyGroupTable extends SQLiteOpenHelper {
         }
         return sys;
     }
+    public void deleteAllStudyGrops(){
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DELETE FROM " + TABLE_STUDYGROUP);
+    }
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE IF NOT EXISTS" + TABLE_STUDYGROUP + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_STUDYGROUP + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT)");
     }
 
     @Override

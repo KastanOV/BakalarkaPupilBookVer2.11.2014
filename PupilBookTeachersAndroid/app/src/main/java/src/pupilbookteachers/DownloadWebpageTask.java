@@ -3,7 +3,6 @@ package src.pupilbookteachers;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.TextView;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,12 +18,12 @@ import java.net.URL;
 public class DownloadWebpageTask extends AsyncTask<String, Void, String> {
     private static final String DEBUG_TAG = "PupilBook";
     protected MainActivity context;
-    final TextView textViewToChange;
+    //final TextView textViewToChange;
     ProgressDialog dialog;
 
     public DownloadWebpageTask(MainActivity context) {
         this.context = context;
-        textViewToChange = (TextView) context.findViewById(R.id.textView2);
+        //textViewToChange = (TextView) context.findViewById(R.id.textView2);
         dialog = ProgressDialog.show(context, "Loading", "Please wait...", true);
     }
 
@@ -43,12 +42,12 @@ public class DownloadWebpageTask extends AsyncTask<String, Void, String> {
     protected void onPostExecute(final String result) {
         dialog.cancel();
 
-        context.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                textViewToChange.setText(result);
-            }
-        });
+        //context.runOnUiThread(new Runnable() {
+            //@Override
+           // public void run() {
+            //    textViewToChange.setText(result);
+           // }
+       // });
     }
     private String downloadUrl(String myurl) throws IOException {
         InputStream is = null;

@@ -7,6 +7,7 @@ package service;
 
 import Entity.Student;
 import SessionBeans.TeachersSessionBeanLocal;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ws.rs.core.Context;
@@ -34,8 +35,14 @@ public class StudentsResource {
     @GET
     @Path("{login}/{password}")
     @Consumes({"application/xml", "application/json"})
-    public List<Student> checkLogin(@PathParam("login") String login, @PathParam("password") String password) {
-        return sb.getStudents(login, password);
+    public List<servicesDTO.Student> checkLogin(@PathParam("login") String login, @PathParam("password") String password) {
+        List<Student> tmpList = sb.getStudents(login, password);
+        List<servicesDTO.Student> items = new ArrayList<>();
+        for(Student item : tmpList){
+            servicesDTO.Student tmp = new servicesDTO.Student(item.getFirstName(), item.getMiddleName(), item.getLastName(), item.getPhone(), item.getEmail(), item.getLogin(), item.getPassword(), item.getStudyGroupidStudyGroup().getIdStudyGroup());
+            items.add(tmp);
+        }
+        return  items;
     }
     
 }

@@ -7,6 +7,7 @@ package service;
 
 import Entity.Studysubject;
 import SessionBeans.TeachersSessionBeanLocal;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ws.rs.core.Context;
@@ -32,7 +33,15 @@ public class StudySubjectsResource {
 
     @GET
     @Consumes({"application/xml", "application/json"})
-    public List<Studysubject> getSheduleItems(){
-        return sb.getStudySubjects();
+    public List<servicesDTO.StudySubject> getSheduleItems(){
+        List<Studysubject> tmpList = sb.getStudySubjects();
+        List<servicesDTO.StudySubject> items = new ArrayList<>();
+        for(Studysubject item : tmpList){
+            servicesDTO.StudySubject tmp = new servicesDTO.StudySubject(item.getIdStudySubject(), item.getName(), item.getShortName());
+            items.add(tmp);
+        }
+        
+        return  items;
+        
     }
 }

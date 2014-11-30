@@ -7,5 +7,10 @@
     <string name="testButton">Test</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="SubmitButton">Přihlásit</string>
+    <string name="title_activity_clasification">ClasificationActivity</string>
+    <string name="ClasificationButton">Klasifikace</string>
+    <string name="notSigned">Nejste přihlášen</string>
+    <string name="Synchronization">Synchronizace</string>
+    <string name="AutoSync">Automatická synchronizace</string>
 
 </resources>

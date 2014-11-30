@@ -7,7 +7,7 @@
 
     <ui:composition>
 
-        <p:dialog id="SchoolyearEditDialog" widgetVar="SchoolyearEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.editSchoolYear}">
+        <p:dialog id="SchoolyearEditDialog" widgetVar="SchoolyearEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.editSchoolYear}" showEffect="fade" hideEffect="explode" >
             <h:form id="SchoolyearEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{adminmainController.edited != null}">

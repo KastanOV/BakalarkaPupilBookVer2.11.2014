@@ -9,7 +9,7 @@ import android.provider.BaseColumns;
  */
 
 public class Schoolyear {
-
+    private static final int DATABASE_VERSION = 1;
 
     private int _id;
     private String _name;

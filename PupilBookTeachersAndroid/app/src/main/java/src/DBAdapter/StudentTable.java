@@ -15,7 +15,7 @@ import java.util.List;
 public class StudentTable extends SQLiteOpenHelper{
     private static final int DATABASE_VERSION = 1;
 
-    private static final String DATABASE_NAME = "pupil_book",
+    /*private static final String DATABASE_NAME = "pupil_book",
             TABLE_STUDENT = "students",
             KEY_ID = "login",
             KEY_FIRSTNAME = "firstname",
@@ -24,7 +24,7 @@ public class StudentTable extends SQLiteOpenHelper{
             KEY_PHONE = "phone",
             KEY_EMAIL = "email",
             KEY_PASSWORD = "password",
-            KEY_STUDYGROUP = "studygroup";
+            KEY_STUDYGROUP = "studygroup";*/
 
     public StudentTable(Context context) {
         super(context, DATABASE_NAME,  null, DATABASE_VERSION);
@@ -32,7 +32,7 @@ public class StudentTable extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE IF NOT EXISTS" + TABLE_STUDENT + "(" + KEY_ID + " TEXT PRIMARY KEY,"
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_STUDENT + "(" + KEY_ID + " TEXT PRIMARY KEY,"
                 + KEY_FIRSTNAME + " TEXT, "
                 + KEY_MIDDLENAME + " TEXT, "
                 + KEY_LASTNAME + " TEXT, "

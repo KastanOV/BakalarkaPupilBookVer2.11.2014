@@ -28,6 +28,10 @@
             android:name="src.pupilbookteachers.LoginActivity"
             android:label="@string/title_activity_login" >
         </activity>
+        <activity
+            android:name="src.pupilbookteachers.ClasificationActivity"
+            android:label="@string/title_activity_clasification" >
+        </activity>
     </application>
 
 </manifest>

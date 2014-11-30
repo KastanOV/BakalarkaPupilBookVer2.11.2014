@@ -12,6 +12,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.List;
+
+import src.DBAdapter.StudySubject;
+import src.DBAdapter.StudySubjectTable;
+import src.restapi.downSynchonization;
+
 
 public class MainActivity extends Activity {
     TextView testText;
@@ -19,6 +25,7 @@ public class MainActivity extends Activity {
     protected final static String LOGIN = "login";
     protected final static String PASSWORD = "password";
     protected SharedPreferences sharedpreferences;
+    private String LOCAL_URL = "http://192.168.1.61:8080/PupilBookV11/webresources/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,23 +51,28 @@ public class MainActivity extends Activity {
         Intent in =  new Intent(this, LoginActivity.class);
         startActivity(in);
     }
-    public void myClickHandler(View view) {
-        final TextView textViewToChange = (TextView) findViewById(R.id.textView2);
-        textViewToChange.setText(
-                "The new text that I'd like to display now that the user has pushed a button.");
-        // Gets the URL from the UI's text field.
-        //String stringUrl = "http://192.168.1.61:8080/PupilBookV11/webresources/entity.schoolyear/2";
-        String stringUrl = "http://86.49.147.135:9001/PupilBookV11/webresources/entity.schoolyear/2";
-
+    public void goToClassification(View view){
+        Intent in =  new Intent(this,ClasificationActivity.class);
+        startActivity(in);
+    }
+    public void doSynchronization(View view){
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            new DownloadWebpageTask(this).execute(stringUrl);
-        } else {
-           testText.setText("No network connection available.");
+            new downSynchonization(this).execute(LOCAL_URL);
+        }else {
+            // TODO Connection Error Dialog
+            String error = "error";
         }
 
+    }
+    public void myClickHandler(View view) {
+
+        StudySubjectTable db = new StudySubjectTable(this);
+        //db.deleteAllStudySubjects();
+        List<StudySubject> llllllll = db.getAllStudySubject();
+        String bla = "bla";
     }
 
     @Override

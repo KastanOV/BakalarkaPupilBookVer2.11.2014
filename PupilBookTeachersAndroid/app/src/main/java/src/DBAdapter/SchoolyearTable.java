@@ -26,7 +26,7 @@ public class SchoolyearTable extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE IF NOT EXISTS" + TABLE_SCHOOLYEAR + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_SCHOOLYEAR + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT)");
     }
 
     @Override
