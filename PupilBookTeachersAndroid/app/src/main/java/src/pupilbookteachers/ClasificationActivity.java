@@ -4,14 +4,26 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import src.Controls.SpinnerObject;
+import src.Controls.onStudyGroupClickListener;
+import src.DBAdapter.StudyGroup;
+import src.DBAdapter.StudyGroupTable;
 
 
 public class ClasificationActivity extends Activity {
-
+    private Spinner spinerStudyGroup;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clasification);
+        spinerStudyGroup = (Spinner) findViewById(R.id.spinnerStudyGroup);
+        loadSpinnerDataHama();
     }
 
 
@@ -33,7 +45,28 @@ public class ClasificationActivity extends Activity {
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
+    }
+
+    /*private void studyGroupChange(){
+        Object tmp = spinerStudyGroup.getSelectedItem();
+        String nasrat = "Nasrat";
+    }*/
+    private void loadSpinnerDataHama() {
+        List < SpinnerObject > labels = new ArrayList< SpinnerObject >();
+        StudyGroupTable db = new StudyGroupTable(this);
+        List<StudyGroup> sg = db.getAllStudyGroup();
+        labels.add(new SpinnerObject(-1, "Vyberte třídu"));
+        for(StudyGroup item : sg){
+            labels.add(new SpinnerObject(item.getIdStudyGroup(), item.getName()));
+        }
+        db.close();
+        ArrayAdapter<SpinnerObject> dataAdapter = new ArrayAdapter<SpinnerObject>(this,
+                android.R.layout.simple_spinner_dropdown_item , labels);
+        // Drop down layout style - list view with radio button
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // attaching data adapter to spinner
+        spinerStudyGroup.setAdapter(dataAdapter);
+        spinerStudyGroup.setOnItemSelectedListener(new onStudyGroupClickListener());
     }
 }

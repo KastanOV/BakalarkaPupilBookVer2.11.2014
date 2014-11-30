@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:text="@string/ClasificationButton"
         android:id="@+id/buttonClasification"
-        android:onClick="doSynchronization"
+        android:onClick="goToClassification"
         android:layout_below="@+id/textCredentials"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
