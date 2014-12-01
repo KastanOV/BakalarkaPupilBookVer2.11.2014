@@ -1,6 +1,5 @@
 package src.restapi;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
@@ -15,6 +14,7 @@ import java.net.URL;
 
 import src.DBAdapter.SheduleItem;
 import src.DBAdapter.SheduleItemTable;
+import src.pupilbookteachers.MainActivity;
 
 /**
  * Created by Topr on 11/30/2014.
@@ -23,10 +23,10 @@ public class getSheduleItems {
     private XmlPullParserFactory xmlFactoryObject;
 
     private static final String DEBUG_TAG = "PupilBook";
-    private Context context;
+    private MainActivity context;
 
     private String targetURL;
-    public getSheduleItems(String URL, Context context) {
+    public getSheduleItems(String URL, MainActivity context) {
         SharedPreferences sharedpreferences = context.getSharedPreferences("PupilBook", context.MODE_PRIVATE);
         this.targetURL = URL + "sheduleitems/" + sharedpreferences.getString("login", "Error") + "/" + sharedpreferences.getString("password", "Something wrong");
         this.context = context;

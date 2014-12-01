@@ -42,6 +42,9 @@ public class MainActivity extends Activity {
         if(sharedpreferences.contains(LOGIN)){
             TextView cr =  (TextView) findViewById(R.id.textCredentials);
             cr.setText(sharedpreferences.getString("firstName", "Error") + " " + sharedpreferences.getString("lastName", "Something wrong"));
+            if(getIntent().getBooleanExtra("doSynchronization", false)){
+                new downSynchonization(this).execute(LOCAL_URL);
+            }
         } else {
             Intent in =  new Intent(this, LoginActivity.class);
             startActivity(in);

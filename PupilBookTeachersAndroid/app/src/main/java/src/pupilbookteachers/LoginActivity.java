@@ -49,7 +49,7 @@ public class LoginActivity extends Activity {
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
             String tmpUrl = stringUrl + login + "/" + Password;
-                new Login(getApplicationContext()).execute(tmpUrl);
+                new Login(this).execute(tmpUrl);
 
         } else {
 
