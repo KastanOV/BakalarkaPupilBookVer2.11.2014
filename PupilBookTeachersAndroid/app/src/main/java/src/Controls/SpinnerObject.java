@@ -14,7 +14,7 @@ public class SpinnerObject {
         this.databaseValue = databaseValue;
     }
     public SpinnerObject(String Login, String databaseValue) {
-        this.databaseId = databaseId;
+        this.Login = Login;
         this.databaseValue = databaseValue;
     }
     public String getDatabaseValue() {

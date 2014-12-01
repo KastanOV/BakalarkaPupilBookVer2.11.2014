@@ -31,7 +31,8 @@ public class MainActivity extends Activity {
     protected final static String LOGIN = "login";
     protected final static String PASSWORD = "password";
     protected SharedPreferences sharedpreferences;
-    private String LOCAL_URL = "http://192.168.1.61:8080/PupilBookV11/webresources/";
+    //private String LOCAL_URL = "http://192.168.1.61:8080/PupilBookV11/webresources/";
+    private String LOCAL_URL = "http://86.49.147.135:9001/PupilBookV11/webresources/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +59,7 @@ public class MainActivity extends Activity {
         startActivity(in);
     }
     public void goToClassification(View view){
-        Intent in =  new Intent(this,ClasificationActivity.class);
+        Intent in =  new Intent(this,StudentsActivity.class);
         startActivity(in);
     }
     public void doSynchronization(View view){

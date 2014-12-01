@@ -9,15 +9,15 @@ import java.util.List;
 
 import src.DBAdapter.Student;
 import src.DBAdapter.StudentTable;
-import src.pupilbookteachers.ClasificationActivity;
+import src.pupilbookteachers.StudentsActivity;
 
 /**
  * Created by Topr on 11/30/2014.
  */
 public class onStudyGroupClickListener implements AdapterView.OnItemSelectedListener {
-    private ClasificationActivity context;
+    private StudentsActivity context;
 
-    public onStudyGroupClickListener(ClasificationActivity context){
+    public onStudyGroupClickListener(StudentsActivity context){
         this.context = context;
     }
     @Override
@@ -25,16 +25,20 @@ public class onStudyGroupClickListener implements AdapterView.OnItemSelectedList
 
         SpinnerObject so = (SpinnerObject) parent.getItemAtPosition(position);
         String databaseValue = so.getDatabaseValue();
-        loadSpinnerStudents(so.getDatabaseId());
+        if(so.getDatabaseId() != -1){
+            loadSpinnerStudents(so.getDatabaseId());
+            context.spinnerStudent.setEnabled(true);
+        } else context.spinnerStudent.setEnabled(false);
+
     }
     private void loadSpinnerStudents(int StudyGroup) {
 
         List< SpinnerObject > labels = new ArrayList< SpinnerObject >();
         StudentTable db = new StudentTable(context);
         List<Student> sg = db.getStudentsAsStudyGroup(StudyGroup);
-        labels.add(new SpinnerObject(-1, "Vyberte studenta"));
+        labels.add(new SpinnerObject("-1", "Vyberte studenta"));
         for(Student item : sg){
-            labels.add(new SpinnerObject(item.getLogin(), item.getLastName() + " " + item.getFirstName()));
+            labels.add(new SpinnerObject(item.getLogin().toString(), item.getLastName() + " " + item.getFirstName()));
         }
         db.close();
         ArrayAdapter<SpinnerObject> dataAdapter = new ArrayAdapter<SpinnerObject>(context,

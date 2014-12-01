@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -16,18 +17,24 @@ import src.DBAdapter.StudyGroup;
 import src.DBAdapter.StudyGroupTable;
 
 
-public class ClasificationActivity extends Activity {
+public class StudentsActivity extends Activity {
     private Spinner spinerStudyGroup;
     public Spinner spinnerStudent;
-    public String SelectedStudent;
+    public Button buttonAttendance;
+    public Button buttonClassificatinStudent;
+    private String SelectedStudent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_clasification);
+        setContentView(R.layout.activity_students);
         spinerStudyGroup = (Spinner) findViewById(R.id.spinnerStudyGroup);
         spinnerStudent = (Spinner) findViewById(R.id.spinnerStudent);
-
+        buttonAttendance = (Button) findViewById(R.id.buttonAttendance);
+        buttonClassificatinStudent = (Button) findViewById(R.id.buttonClasificationStudent);
+        spinnerStudent.setEnabled(false);
+        buttonAttendance.setEnabled(false);
+        buttonClassificatinStudent.setEnabled(false);
         loadSpinnerStudyGroup();
     }
 
@@ -70,5 +77,12 @@ public class ClasificationActivity extends Activity {
         // attaching data adapter to spinner
         spinerStudyGroup.setAdapter(dataAdapter);
         spinerStudyGroup.setOnItemSelectedListener(new onStudyGroupClickListener(this));
+    }
+    public String getSelectedStudent() {
+        return SelectedStudent;
+    }
+
+    public void setSelectedStudent(String selectedStudent) {
+        SelectedStudent = selectedStudent;
     }
 }
