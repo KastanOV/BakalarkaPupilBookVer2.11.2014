@@ -9,20 +9,10 @@
     <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/spinnerStudyGroup"
+        android:id="@+id/spinnerStudySubject"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:spinnerMode="dialog"
-        style="@android:style/Widget.Spinner"
-        android:clickable="true" />
-
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinnerStudent"
-        android:layout_below="@+id/spinnerStudyGroup"
-        android:layout_centerHorizontal="true"
-        android:spinnerMode="dialog"
-        android:clickable="true"
-        style="@android:style/Widget.Spinner" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="false" />
 </RelativeLayout>

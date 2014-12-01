@@ -36,7 +36,8 @@
         android:layout_below="@+id/spinnerStudent"
         android:layout_centerHorizontal="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentRight="true"
+        android:onClick="goToClassification" />
 
     <Button
         android:layout_width="wrap_content"

@@ -1,9 +1,11 @@
 package src.pupilbookteachers;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -37,7 +39,10 @@ public class StudentsActivity extends Activity {
         buttonClassificatinStudent.setEnabled(false);
         loadSpinnerStudyGroup();
     }
-
+    public void goToClassification(View view){
+        Intent in = new Intent(this, ClasificationActivity.class);
+        startActivity(in);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

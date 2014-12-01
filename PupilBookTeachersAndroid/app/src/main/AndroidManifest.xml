@@ -29,7 +29,11 @@
             android:label="@string/title_activity_login" >
         </activity>
         <activity
-            android:name=".StudentsActivity"
+            android:name="src.pupilbookteachers.StudentsActivity"
+            android:label="@string/title_activity_clasification" >
+        </activity>
+        <activity
+            android:name=".ClasificationActivity"
             android:label="@string/title_activity_clasification" >
         </activity>
     </application>
