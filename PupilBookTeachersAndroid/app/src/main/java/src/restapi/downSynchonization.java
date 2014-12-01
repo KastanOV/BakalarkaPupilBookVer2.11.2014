@@ -1,19 +1,18 @@
 package src.restapi;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 
 import java.io.IOException;
-
-import src.pupilbookteachers.MainActivity;
 
 /**
  * Created by Topr on 11/29/2014.
  */
 public class downSynchonization extends AsyncTask <String, Void, String> {
-    private MainActivity context;
+    private Context context;
     ProgressDialog dialog;
-    public downSynchonization(MainActivity context) {
+    public downSynchonization(Context context) {
         this.context = context;
         dialog = ProgressDialog.show(context, "Loading", "Please wait...", true);
     }

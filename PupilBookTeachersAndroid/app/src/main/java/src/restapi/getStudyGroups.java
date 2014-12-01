@@ -1,5 +1,6 @@
 package src.restapi;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
@@ -14,7 +15,6 @@ import java.net.URL;
 
 import src.DBAdapter.StudyGroup;
 import src.DBAdapter.StudyGroupTable;
-import src.pupilbookteachers.MainActivity;
 
 /**
  * Created by Topr on 11/27/2014.
@@ -23,10 +23,10 @@ public class getStudyGroups {
     private XmlPullParserFactory xmlFactoryObject;
 
     private static final String DEBUG_TAG = "PupilBook";
-    private MainActivity context;
+    private Context context;
 
     private String targetURL;
-    public getStudyGroups(String URL, MainActivity context) {
+    public getStudyGroups(String URL, Context context) {
         SharedPreferences sharedpreferences = context.getSharedPreferences("PupilBook", context.MODE_PRIVATE);
         this.targetURL = URL + "studygroups/" + sharedpreferences.getString("login", "Error") + "/" + sharedpreferences.getString("password", "Something wrong");
         this.context = context;

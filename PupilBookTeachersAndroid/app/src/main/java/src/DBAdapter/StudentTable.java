@@ -36,8 +36,7 @@ public class StudentTable extends DBMain{
     public Student getStudent(String login){
         SQLiteDatabase db = getReadableDatabase();
 
-        Cursor cursor = db.query(Utils.TABLE_STUDENT, new String[] {Utils.STUDENT_KEY_ID, Utils.STUDENT_KEY_FIRSTNAME,Utils.STUDENT_KEY_MIDDLENAME,Utils.STUDENT_KEY_LASTNAME,Utils.STUDENT_KEY_PHONE,Utils.STUDENT_KEY_EMAIL,Utils.STUDENT_KEY_PASSWORD,Utils.STUDENT_KEY_STUDYGROUP}, Utils.STUDENT_KEY_ID + "=?", new String[] {login }, null,null, null, null);
-
+        Cursor cursor = db.rawQuery("SELECT * FROM " + Utils.TABLE_STUDENT + " WHERE " + Utils.STUDENT_KEY_ID + " = '" + login + "'", null);
         if(cursor != null){
             cursor.moveToFirst();
         }

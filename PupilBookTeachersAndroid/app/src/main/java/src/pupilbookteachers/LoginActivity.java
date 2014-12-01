@@ -38,9 +38,7 @@ public class LoginActivity extends Activity {
         TextView Login =  (TextView) findViewById(R.id.editUserName);
         TextView Password = (TextView) findViewById(R.id.editPassword);
         Button SubmitButton = (Button) findViewById(R.id.buttonSubmitLogin);
-        //Login.setEnabled(false);
-        //Password.setEnabled(false);
-        //SubmitButton.setEnabled(false);
+
         tryLogin(Login.getText().toString(), Password.getText().toString());
 
 
@@ -51,7 +49,7 @@ public class LoginActivity extends Activity {
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
             String tmpUrl = stringUrl + login + "/" + Password;
-                new Login(this).execute(tmpUrl);
+                new Login(getApplicationContext()).execute(tmpUrl);
 
         } else {
 

@@ -1,7 +1,6 @@
 package src.pupilbookteachers;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,25 +11,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import src.Controls.SpinnerObject;
-import src.Controls.onStudyGroupClickListener;
 import src.Controls.onStudySubjectClickListener;
 import src.DBAdapter.StudentTable;
-import src.DBAdapter.StudyGroup;
-import src.DBAdapter.StudyGroupTable;
 import src.DBAdapter.StudySubject;
 import src.DBAdapter.StudySubjectTable;
 
 public class ClasificationActivity extends Activity {
-    private String StudentLogin;
+    //private String StudentLogin;
     private Spinner spinnerStudySubjects;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clasification);
-
-        this.StudentLogin = getSelectedStudent();
         spinnerStudySubjects = (Spinner) findViewById(R.id.spinnerStudySubject);
+        String StudentLogin = getIntent().getStringExtra("selectecStudent");
+        loadSpinnerStudySubjects(StudentLogin);
     }
 
 
@@ -56,11 +52,12 @@ public class ClasificationActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void loadSpinnerStudySubjects() {
+    private void loadSpinnerStudySubjects(String StudentLogin) {
         List< SpinnerObject > labels = new ArrayList< SpinnerObject >();
         StudySubjectTable db = new StudySubjectTable(this);
         StudentTable student = new StudentTable(this);
-        List<StudySubject> ss = db.getStudySubjectsFromStudyGroup(student.getStudent(StudentLogin).getStudyGroupID());
+        int StudygroupID = student.getStudent(StudentLogin).getStudyGroupID();
+        List<StudySubject> ss = db.getStudySubjectsFromStudyGroup(StudygroupID);
         for(StudySubject item : ss){
             labels.add(new SpinnerObject(item.getIdStudySubject(), item.getName()));
         }

@@ -85,7 +85,7 @@ public class StudySubjectTable extends DBMain{
         join sheduleitem on sheduleitem.StudyGroup_idStudyGroup = StudyGroup.idStudyGroup
         join studysubject on sheduleitem.StudySubject_idStudySubject = studysubject.idStudySubject
         where Users_Login = 'JIR000'*/
-        String Query = "SELECT " + Utils.TABLE_STUDYSUBJECT + "." + Utils.STUDY_SUBJECT_KEY_ID + "," + Utils.TABLE_STUDYSUBJECT + "." + Utils.STUDY_GROUP_KEY_NAME + "," + Utils.TABLE_STUDYSUBJECT + "." + Utils.STUDY_SUBJECT_KEY_SHORT_NAME + " " +
+        String Query = "SELECT DISTINCT " + Utils.TABLE_STUDYSUBJECT + "." + Utils.STUDY_SUBJECT_KEY_ID + "," + Utils.TABLE_STUDYSUBJECT + "." + Utils.STUDY_GROUP_KEY_NAME + "," + Utils.TABLE_STUDYSUBJECT + "." + Utils.STUDY_SUBJECT_KEY_SHORT_NAME + " " +
                 " FROM " + Utils.TABLE_STUDYGROUP +
                 " JOIN " + Utils.TABLE_SHEDULEITEM + " ON " + Utils.TABLE_SHEDULEITEM + "." + Utils.SHEDULE_ITEM_KEY_ID_STUDY_GROUP + " = " + Utils.TABLE_STUDYGROUP + "." + Utils.STUDY_GROUP_KEY_ID +
                 " JOIN " + Utils.TABLE_STUDYSUBJECT + " ON " + Utils.TABLE_SHEDULEITEM + "." + Utils.SHEDULE_ITEM_KEY_ID_STUDY_SUBJECT + " = " + Utils.TABLE_STUDYSUBJECT + "." + Utils.STUDY_SUBJECT_KEY_ID +

@@ -40,7 +40,8 @@ public class StudentsActivity extends Activity {
         loadSpinnerStudyGroup();
     }
     public void goToClassification(View view){
-        Intent in = new Intent(this, ClasificationActivity.class);
+        Intent in = new Intent(getApplicationContext(), ClasificationActivity.class);
+        in.putExtra("selectecStudent", SelectedStudent);
         startActivity(in);
     }
 

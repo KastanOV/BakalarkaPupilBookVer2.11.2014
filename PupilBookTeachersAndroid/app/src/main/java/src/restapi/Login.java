@@ -19,7 +19,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import src.pupilbookteachers.LoginActivity;
 import src.pupilbookteachers.MainActivity;
 
 /**
@@ -32,12 +31,13 @@ public class Login extends AsyncTask<String, Void, String> {
     private static final String DEBUG_TAG = "PupilBook";
     private static final String TEACHER_LOGIN = "login";
     private static final String TEACHER_PASSWORD = "password";
-    private LoginActivity context;
+    private Context context;
     ProgressDialog dialog;
 
-    public Login(LoginActivity context) {
+    public Login(Context context) {
         this.context = context;
         dialog = ProgressDialog.show(context, "Loading", "Please wait...", true);
+
     }
 
     @Override
@@ -54,6 +54,7 @@ public class Login extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(final String result) {
         dialog.cancel();
+        downSynchonization sync = new downSynchonization(context);
     }
 
     private String downloadUrl(String myurl) throws IOException {
