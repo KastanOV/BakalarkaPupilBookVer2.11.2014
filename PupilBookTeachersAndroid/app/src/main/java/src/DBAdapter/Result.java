@@ -9,11 +9,11 @@ public class Result {
     private Integer id;
     private String desc;
     private int score;
-    private Date date;
+    private String date;
     private Integer ssId;
     private String sL;
 
-    public Result(Integer id, String desc, int score, Date date, Integer ssId, String sL) {
+    public Result(Integer id, String desc, int score, String date, Integer ssId, String sL) {
         this.id = id;
         this.desc = desc;
         this.score = score;
@@ -56,11 +56,11 @@ public class Result {
         this.score = score;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
