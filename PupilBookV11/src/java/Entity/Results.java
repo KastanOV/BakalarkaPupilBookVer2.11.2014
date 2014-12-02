@@ -52,6 +52,9 @@ public class Results implements Serializable {
     @Column(name = "Date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
+    @JoinColumn(name = "SchoolYear_idSchoolYear", referencedColumnName = "idSchoolYear")
+    @ManyToOne(optional = false)
+    private Schoolyear schoolYearidSchoolYear;
     @JoinColumn(name = "StudySubject_idStudySubject", referencedColumnName = "idStudySubject")
     @ManyToOne(optional = false)
     private Studysubject studySubjectidStudySubject;
@@ -73,7 +76,14 @@ public class Results implements Serializable {
         this.idResults = idResults;
         this.score = score;
     }
+    public Schoolyear getSchoolYearidSchoolYear() {
+        return schoolYearidSchoolYear;
+    }
 
+    public void setSchoolYearidSchoolYear(Schoolyear schoolYearidSchoolYear) {
+        this.schoolYearidSchoolYear = schoolYearidSchoolYear;
+    }
+    
     public Integer getIdResults() {
         return idResults;
     }

@@ -69,7 +69,9 @@ public class Schoolyear implements Serializable {
     private Date endDate;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "schoolYearidSchoolYear")
     private Collection<Studygroup> studygroupCollection;
-
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "schoolYearidSchoolYear")
+    private Collection<Results> resultsCollection;
+    
     public Schoolyear() {
     }
 
@@ -140,7 +142,15 @@ public class Schoolyear implements Serializable {
         hash += (idSchoolYear != null ? idSchoolYear.hashCode() : 0);
         return hash;
     }
+    @XmlTransient
+    public Collection<Results> getResultsCollection() {
+        return resultsCollection;
+    }
 
+    public void setResultsCollection(Collection<Results> resultsCollection) {
+        this.resultsCollection = resultsCollection;
+    }
+    
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set

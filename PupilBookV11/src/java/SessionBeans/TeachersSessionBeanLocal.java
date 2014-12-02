@@ -5,6 +5,7 @@
  */
 package SessionBeans;
 
+import Entity.Results;
 import Entity.Sheduleitem;
 import Entity.Student;
 import Entity.Studygroup;
@@ -24,5 +25,6 @@ public interface TeachersSessionBeanLocal {
    public List<Sheduleitem> getSheduleItems(String login, String password);
    public List<Studygroup> getStudyGroups(String login, String password);
    public List<Student> getStudents(String login, String password);
+   public List<Results> getResults(String login, String password);
    public List<Studysubject> getStudySubjects();
 }

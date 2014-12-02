@@ -5,6 +5,8 @@
  */
 package SessionBeans;
 
+import Entity.Results;
+import Entity.Schoolyear;
 import Entity.Sheduleitem;
 import Entity.Student;
 import Entity.Studygroup;
@@ -33,7 +35,17 @@ public class TeachersSessionBean implements TeachersSessionBeanLocal {
         }else return null;
         
     }
-    
+    @Override
+    public List<Results> getResults(String login, String password){
+        if(checkUser(login, password)){
+            return em.createNativeQuery("select * from results WHERE Teacher_Login = ?login AND SchoolYear_idSchoolYear = ?syId)", Results.class)
+                    .setParameter("login", login)
+                    .setParameter("syId", getActualSchoolYear())
+                    .getResultList();
+        }else {
+            return null;
+        }
+    }
     @Override
     public List<Sheduleitem> getSheduleItems(String login, String password) {
         
@@ -81,7 +93,11 @@ public class TeachersSessionBean implements TeachersSessionBeanLocal {
     public List<Studysubject> getStudySubjects(){
         return  em.createNativeQuery("SELECT * FROM studysubject", Studysubject.class).getResultList();
     }
-    
+    private int getActualSchoolYear(){
+        Schoolyear idActualYear = (Schoolyear) em.createNativeQuery("SELECT * FROM schoolyear WHERE schoolyear.isactualyear = true", Schoolyear.class)
+                .getSingleResult();
+        return idActualYear.getIdSchoolYear();
+    }
     private boolean checkTeacher(String login, String password){
         long tmp = (long)em.createNativeQuery("SELECT count(*) FROM Users u WHERE u.login = ?login AND u.password = ?password AND Role = 'T'")
                 .setParameter("login", login)
