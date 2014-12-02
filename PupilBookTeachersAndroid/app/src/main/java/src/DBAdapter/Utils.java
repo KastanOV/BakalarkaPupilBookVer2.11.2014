@@ -10,7 +10,8 @@ public class Utils {
             TABLE_STUDYGROUP = "study_group",
             TABLE_STUDYSUBJECT = "study_subject",
             TABLE_SHEDULEITEM = "shedule_item",
-            TABLE_STUDENT = "students";
+            TABLE_STUDENT = "students",
+            TABLE_RESULTS = "results";
     //SCHOOL_YEAR
     protected static final String
             SCHOOL_YEAR_KEY_ID = "id",
@@ -42,4 +43,14 @@ public class Utils {
             STUDY_SUBJECT_KEY_ID = "id",
             STUDY_SUBJECT_KEY_NAME = "name",
             STUDY_SUBJECT_KEY_SHORT_NAME = "short_name";
+    //RESULTS
+    protected static final String
+            RESULTS_KEY_ID = "id",
+            RESULTS_DESCRIPTION = "description",
+            RESULTS_SCORE = "score",
+            RESULTS_DATE = "date",
+            RESULTS_STUDY_SUBJECT_ID = "study_subject_id",
+            RESULTS_STUDENT_LOGIN = "student_login";
+
+    //public Results(Integer id, String desc, short score, Date date, Integer ssId, String sL)
 }
