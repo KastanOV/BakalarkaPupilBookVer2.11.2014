@@ -40,7 +40,7 @@ public class ResultsResource {
         List<Results> res = sb.getResults(login, password);
         List<servicesDTO.Results> items = new ArrayList<>();
         for(Results item : res){
-            servicesDTO.Results newItem = new servicesDTO.Results(item.getIdResults(),item.getDescription(),item.getScore(),item.getDate(),item.getStudySubjectidStudySubject().getIdStudySubject(),item.getStudentLogin().getLogin());
+            servicesDTO.Results newItem = new servicesDTO.Results(item.getIdResults(),item.getDescription(),(int)item.getScore(),item.getDate(),item.getStudySubjectidStudySubject().getIdStudySubject(),item.getStudentLogin().getLogin(), item.getTeacherLogin().getLogin(), null);
             items.add(newItem);
         }
         return items;

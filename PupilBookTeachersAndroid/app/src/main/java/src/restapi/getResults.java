@@ -14,8 +14,6 @@ import java.net.URL;
 
 import src.DBAdapter.Result;
 import src.DBAdapter.ResultsTable;
-import src.DBAdapter.SheduleItem;
-import src.DBAdapter.SheduleItemTable;
 import src.pupilbookteachers.MainActivity;
 
 /**
@@ -72,7 +70,7 @@ public class getResults {
         Integer id = null, score = null, ssId = null;
 
         String Login = null;
-        ResultsTable db = new ResultsTable(context,sharedpreferences.getString("login", "Error"));
+        ResultsTable db = new ResultsTable(context);
         db.deleteAllResult();
 
         try {

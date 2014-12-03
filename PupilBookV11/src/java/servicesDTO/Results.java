@@ -16,22 +16,43 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Results {
     private Integer id;
     private String desc;
-    private int score;
+    private Integer score;
     private Date date;
     private Integer ssId;
     private String sL;
+    private String tL;
+    private String password;
+
     
     public Results() {
         
     }
-    public Results(Integer id, String desc, short score, Date date, Integer ssId, String sL) {
+    public Results(Integer id, String desc, Integer score, Date date, Integer ssId, String sL, String tL, String password) {
         this.id = id;
         this.desc = desc;
         this.score = score;
         this.date = date;
         this.ssId = ssId;
         this.sL = sL;
+        this.tL = tL;
+        this.password = password;
     }
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
+    public String gettL() {
+        return tL;
+    }
+
+    public void settL(String tL) {
+        this.tL = tL;
+    }
+    
     public Integer getId() {
         return id;
     }

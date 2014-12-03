@@ -2,11 +2,9 @@ package src.DBAdapter;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,10 +12,10 @@ import java.util.List;
  * Created by KastanNotas on 2.12.2014.
  */
 public class ResultsTable extends DBMain {
-    private String TeacherLogin;
-    public ResultsTable(Context context, String TeacherLogin) {
+
+    public ResultsTable(Context context) {
         super(context);
-        this.TeacherLogin = TeacherLogin;
+
     }
 
     public void createResult(Result r){
@@ -30,6 +28,7 @@ public class ResultsTable extends DBMain {
         values.put(Utils.RESULTS_DATE, r.getDate().toString());
         values.put(Utils.RESULTS_STUDY_SUBJECT_ID, r.getSsId());
         values.put(Utils.RESULTS_STUDENT_LOGIN, r.getsL());
+        values.put(Utils.RESULTS_TEACHER_LOGIN, r.gettL());
 
         db.insert(Utils.TABLE_RESULTS, null, values);
         db.close();
@@ -41,7 +40,7 @@ public class ResultsTable extends DBMain {
         if(cursor != null){
             cursor.moveToFirst();
         }
-        Result sy = new Result(Integer.parseInt(cursor.getString(0)), cursor.getString(1), Integer.parseInt(cursor.getString(2)), cursor.getString(3), Integer.parseInt(cursor.getString(4)), cursor.getString(5),TeacherLogin);
+        Result sy = new Result(Integer.parseInt(cursor.getString(0)), cursor.getString(1), Integer.parseInt(cursor.getString(2)), cursor.getString(3), Integer.parseInt(cursor.getString(4)), cursor.getString(5),cursor.getString(6));
         return sy;
     }
     public void deleteResult(Result r){
@@ -75,9 +74,15 @@ public class ResultsTable extends DBMain {
         SQLiteDatabase db = getWritableDatabase();
 
         Cursor cursor = db.rawQuery("SELECT * FROM " + Utils.TABLE_RESULTS, null);
+        Integer resultId;
         if(cursor.moveToFirst()){
             do{
-                Result sy = new Result(Integer.parseInt(cursor.getString(0)), cursor.getString(1), Integer.parseInt(cursor.getString(2)), cursor.getString(3), Integer.parseInt(cursor.getString(4)), cursor.getString(5), TeacherLogin);
+                try{
+                    resultId = Integer.parseInt(cursor.getString(0));
+                } catch (Exception e){
+                    resultId = null;
+                }
+                Result sy = new Result(resultId, cursor.getString(1), Integer.parseInt(cursor.getString(2)), cursor.getString(3), Integer.parseInt(cursor.getString(4)), cursor.getString(5), cursor.getString(6));
 
                 sys.add(sy);
             } while(cursor.moveToNext());

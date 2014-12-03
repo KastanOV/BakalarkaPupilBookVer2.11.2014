@@ -3,11 +3,12 @@ package src.pupilbookteachers;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.format.Time;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.SeekBar;
@@ -19,6 +20,9 @@ import java.util.List;
 
 import src.Controls.SpinnerObject;
 import src.Controls.onStudySubjectClickListener;
+import src.DBAdapter.Result;
+import src.DBAdapter.ResultsTable;
+import src.DBAdapter.Student;
 import src.DBAdapter.StudentTable;
 import src.DBAdapter.StudySubject;
 import src.DBAdapter.StudySubjectTable;
@@ -32,6 +36,8 @@ public class ClasificationActivity extends Activity {
     private SeekBar score;
     private EditText description;
     private TextView scoreText;
+    private TextView studentNameText;
+    private Student editedStudent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,46 +45,66 @@ public class ClasificationActivity extends Activity {
         setContentView(R.layout.activity_clasification);
         spinnerStudySubjects = (Spinner) findViewById(R.id.spinnerStudySubject);
         description = (EditText) findViewById(R.id.editDescription);
+// Find Student
         StudentLogin = getIntent().getStringExtra("selectecStudent");
+        StudentTable stt = new StudentTable(this);
+        editedStudent = stt.getStudent(StudentLogin);
         sharedpreferences = getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
         loadSpinnerStudySubjects(StudentLogin);
         startSeekBar();
     }
+    public void onClassificationAction(View view){
+        Result res = new Result();
+        res.settL(sharedpreferences.getString("login", "error geting Sharedpreferences in ClassificationActivity onClassification method"));
+        res.setsL(editedStudent.getLogin());
+        Time time = new Time();   time.setToNow();
+        res.setDate(Long.toString(time.toMillis(false)));
+        res.setDesc(description.getText().toString());
+        res.setScore(score.getProgress());
+        res.setSsId(selectedStudySubject);
+        ResultsTable resTable = new ResultsTable(this);
+        resTable.createResult(res);
 
+        List<Result> xx = new ArrayList<Result>();
+        xx = resTable.getAllResult();
+        String nasrat = "nasrat";
+    }
     public void startSeekBar(){
         scoreText = (TextView) findViewById(R.id.textScore);
+        studentNameText = (TextView) findViewById(R.id.textStudentName);
+        studentNameText.setText(editedStudent.getLastName() + " " + editedStudent.getFirstName());
         scoreText.setTextColor(Color.BLACK);
         score = (SeekBar) findViewById(R.id.seekScore);
-        score.setMax(100);
+        score.setMax(10);
         score.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                if (i < 10){
+                if (i < 1){
                     scoreText.setText("5!");
                     scoreText.setTextColor(Color.rgb(204,0,0));
-                } else if(i >= 10 && i < 20) {
+                } else if(i >= 1 && i < 2) {
                     scoreText.setText("4-");
                     scoreText.setTextColor(Color.rgb(204,0,0));
 
-                } else if(i >= 20 && i < 30){
+                } else if(i >= 2 && i < 3){
                     scoreText.setText("4");
                     scoreText.setTextColor(Color.rgb(255,68,68));
-                } else if(i >= 30 && i < 40) {
+                } else if(i >= 3 && i < 4) {
                     scoreText.setText("3-");
                     scoreText.setTextColor(Color.rgb(255,68,68));
-                } else if(i >= 40 && i < 50) {
+                } else if(i >= 4 && i < 5) {
                     scoreText.setText("3");
                     scoreText.setTextColor(Color.rgb(255, 136, 00));
-                } else if(i >= 50 && i < 60) {
+                } else if(i >= 5 && i < 6) {
                     scoreText.setText("2-");
                     scoreText.setTextColor(Color.rgb(255, 136, 00));
-                } else if(i >= 60 && i < 70) {
+                } else if(i >= 6 && i < 7) {
                     scoreText.setText("2");
                     scoreText.setTextColor(Color.rgb(102, 153, 00));
-                } else if(i >= 70 && i < 80) {
+                } else if(i >= 7 && i < 8) {
                     scoreText.setText("1-");
                     scoreText.setTextColor(Color.rgb(102, 153, 00));
-                } else if(i >= 80 && i < 90) {
+                } else if(i >= 8 && i < 9) {
                     scoreText.setText("1");
                     scoreText.setTextColor(Color.rgb(153, 204, 00));
                 } else {

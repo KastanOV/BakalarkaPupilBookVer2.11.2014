@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created by Topr on 11/30/2014.
  */
 public abstract class DBMain extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 4;
 
     public DBMain(Context context) {
         super(context, Utils.DATABASE_NAME,  null, DATABASE_VERSION);
@@ -34,12 +34,13 @@ public abstract class DBMain extends SQLiteOpenHelper {
                 + Utils.STUDENT_KEY_STUDYGROUP + " INTEGER)");
         db.execSQL("CREATE TABLE IF NOT EXISTS " + Utils.TABLE_STUDYGROUP + "(" + Utils.STUDY_GROUP_KEY_ID + " INTEGER PRIMARY KEY," + Utils.STUDY_GROUP_KEY_NAME + " TEXT)");
         db.execSQL("CREATE TABLE IF NOT EXISTS " + Utils.TABLE_STUDYSUBJECT + "(" + Utils.STUDY_SUBJECT_KEY_ID + " INTEGER PRIMARY KEY, " + Utils.STUDY_SUBJECT_KEY_NAME + " TEXT, " + Utils.STUDY_SUBJECT_KEY_SHORT_NAME + " TEXT)");
-        db.execSQL("CREATE TABLE IF NOT EXISTS " + Utils.TABLE_RESULTS + "(" + Utils.RESULTS_KEY_ID + " INTEGER PRIMARY KEY, "
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + Utils.TABLE_RESULTS + "(" + Utils.RESULTS_KEY_ID + " INTEGER, "
                 + Utils.RESULTS_DESCRIPTION + " TEXT, "
                 + Utils.RESULTS_SCORE + " INTEGER, "
                 + Utils.RESULTS_DATE + " TEXT, "
                 + Utils.RESULTS_STUDY_SUBJECT_ID + " INTEGER, "
-                + Utils.RESULTS_STUDENT_LOGIN + " TEXT)");
+                + Utils.RESULTS_STUDENT_LOGIN + " TEXT,"
+                + Utils.RESULTS_TEACHER_LOGIN + " TEXT)");
 
     }
 

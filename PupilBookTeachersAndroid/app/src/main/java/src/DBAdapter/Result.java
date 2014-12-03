@@ -1,7 +1,5 @@
 package src.DBAdapter;
 
-import java.util.Date;
-
 /**
  * Created by KastanNotas on 2.12.2014.
  */

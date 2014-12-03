@@ -14,5 +14,6 @@
     <string name="AutoSync">Automatická synchronizace</string>
     <string name="ClesificationStudentButton">Klasifikovat studenta</string>
     <string name="AttendanceButton">Docházka studenta</string>
+    <string name="ClassificationAction">Klasifikovat studenta</string>
 
 </resources>
