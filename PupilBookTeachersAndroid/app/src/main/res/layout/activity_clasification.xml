@@ -14,6 +14,40 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="false" />
+        android:layout_alignParentBottom="false"
+        android:clickable="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editDescription"
+        android:layout_below="@+id/spinnerStudySubject"
+        android:layout_centerHorizontal="true"
+        android:autoText="true"
+        android:editable="true"
+        android:enabled="true"
+        android:inputType="textAutoComplete"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="20dp"/>
+    <TextView android:text="Známka" android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textScore"
+        android:layout_centerHorizontal="true"
+        android:textSize="50sp"
+        android:layout_below="@+id/editDescription"
+        android:layout_marginTop="20dp"
+        />
+    <SeekBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/seekScore"
+        android:layout_below="@+id/textScore"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="20dp"/>
+
+
 
 </RelativeLayout>

@@ -3,11 +3,16 @@ package src.pupilbookteachers;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.SeekBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,16 +29,75 @@ public class ClasificationActivity extends Activity {
     public final static String SHARED_PREFERENCES = "PupilBook";
     private Spinner spinnerStudySubjects;
     protected SharedPreferences sharedpreferences;
+    private SeekBar score;
+    private EditText description;
+    private TextView scoreText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clasification);
         spinnerStudySubjects = (Spinner) findViewById(R.id.spinnerStudySubject);
+        description = (EditText) findViewById(R.id.editDescription);
         StudentLogin = getIntent().getStringExtra("selectecStudent");
         sharedpreferences = getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
         loadSpinnerStudySubjects(StudentLogin);
+        startSeekBar();
+    }
 
+    public void startSeekBar(){
+        scoreText = (TextView) findViewById(R.id.textScore);
+        scoreText.setTextColor(Color.BLACK);
+        score = (SeekBar) findViewById(R.id.seekScore);
+        score.setMax(100);
+        score.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                if (i < 10){
+                    scoreText.setText("5!");
+                    scoreText.setTextColor(Color.rgb(204,0,0));
+                } else if(i >= 10 && i < 20) {
+                    scoreText.setText("4-");
+                    scoreText.setTextColor(Color.rgb(204,0,0));
+
+                } else if(i >= 20 && i < 30){
+                    scoreText.setText("4");
+                    scoreText.setTextColor(Color.rgb(255,68,68));
+                } else if(i >= 30 && i < 40) {
+                    scoreText.setText("3-");
+                    scoreText.setTextColor(Color.rgb(255,68,68));
+                } else if(i >= 40 && i < 50) {
+                    scoreText.setText("3");
+                    scoreText.setTextColor(Color.rgb(255, 136, 00));
+                } else if(i >= 50 && i < 60) {
+                    scoreText.setText("2-");
+                    scoreText.setTextColor(Color.rgb(255, 136, 00));
+                } else if(i >= 60 && i < 70) {
+                    scoreText.setText("2");
+                    scoreText.setTextColor(Color.rgb(102, 153, 00));
+                } else if(i >= 70 && i < 80) {
+                    scoreText.setText("1-");
+                    scoreText.setTextColor(Color.rgb(102, 153, 00));
+                } else if(i >= 80 && i < 90) {
+                    scoreText.setText("1");
+                    scoreText.setTextColor(Color.rgb(153, 204, 00));
+                } else {
+                    scoreText.setText("1*");
+                    scoreText.setTextColor(Color.rgb(153, 204, 00));
+                }
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
