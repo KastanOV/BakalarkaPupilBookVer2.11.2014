@@ -26,10 +26,11 @@ public class getResults {
 
     private static final String DEBUG_TAG = "PupilBook";
     private MainActivity context;
+    private SharedPreferences sharedpreferences;
 
     private String targetURL;
     public getResults(String URL, MainActivity context) {
-        SharedPreferences sharedpreferences = context.getSharedPreferences("PupilBook", context.MODE_PRIVATE);
+        sharedpreferences = context.getSharedPreferences("PupilBook", context.MODE_PRIVATE);
         this.targetURL = URL + "Results/" + sharedpreferences.getString("login", "Error") + "/" + sharedpreferences.getString("password", "Something wrong");
         this.context = context;
     }
@@ -67,11 +68,11 @@ public class getResults {
     }
     private void parseXMLAndStoreIt(XmlPullParser myParser) {
         int event;
-        String text=null, desc = null, date = null, sL = null;
+        String text=null, desc = null, date = null, sL = null, tL = null;
         Integer id = null, score = null, ssId = null;
 
         String Login = null;
-        ResultsTable db = new ResultsTable(context);
+        ResultsTable db = new ResultsTable(context,sharedpreferences.getString("login", "Error"));
         db.deleteAllResult();
 
         try {
@@ -102,7 +103,9 @@ public class getResults {
 
                         }else if(name.equals("sL")){
                             sL = text;
-                            Result si = new Result(id,desc,score,date,ssId,sL);
+                          }else if(name.equals("tL")){
+                            tL = text;
+                            Result si = new Result(id,desc,score,date,ssId,sL,tL);
                             db.createResult(si);
                         }
                         else{

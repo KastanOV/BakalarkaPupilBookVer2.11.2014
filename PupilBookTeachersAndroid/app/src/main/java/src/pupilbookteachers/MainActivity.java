@@ -27,7 +27,7 @@ import src.restapi.downSynchonization;
 
 public class MainActivity extends Activity {
     TextView testText;
-    protected final static String SHARED_PREFERENCES = "PupilBook";
+    public final static String SHARED_PREFERENCES = "PupilBook";
     protected final static String LOGIN = "login";
     protected final static String PASSWORD = "password";
     protected SharedPreferences sharedpreferences;

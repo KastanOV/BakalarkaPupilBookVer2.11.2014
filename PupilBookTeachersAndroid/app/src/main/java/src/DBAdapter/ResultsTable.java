@@ -2,6 +2,7 @@ package src.DBAdapter;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -13,9 +14,10 @@ import java.util.List;
  * Created by KastanNotas on 2.12.2014.
  */
 public class ResultsTable extends DBMain {
-
-    public ResultsTable(Context context) {
+    private String TeacherLogin;
+    public ResultsTable(Context context, String TeacherLogin) {
         super(context);
+        this.TeacherLogin = TeacherLogin;
     }
 
     public void createResult(Result r){
@@ -39,7 +41,7 @@ public class ResultsTable extends DBMain {
         if(cursor != null){
             cursor.moveToFirst();
         }
-        Result sy = new Result(Integer.parseInt(cursor.getString(0)), cursor.getString(1), Integer.parseInt(cursor.getString(2)), cursor.getString(3), Integer.parseInt(cursor.getString(4)), cursor.getString(5));
+        Result sy = new Result(Integer.parseInt(cursor.getString(0)), cursor.getString(1), Integer.parseInt(cursor.getString(2)), cursor.getString(3), Integer.parseInt(cursor.getString(4)), cursor.getString(5),TeacherLogin);
         return sy;
     }
     public void deleteResult(Result r){
@@ -75,7 +77,7 @@ public class ResultsTable extends DBMain {
         Cursor cursor = db.rawQuery("SELECT * FROM " + Utils.TABLE_RESULTS, null);
         if(cursor.moveToFirst()){
             do{
-                Result sy = new Result(Integer.parseInt(cursor.getString(0)), cursor.getString(1), Integer.parseInt(cursor.getString(2)), cursor.getString(3), Integer.parseInt(cursor.getString(4)), cursor.getString(5));
+                Result sy = new Result(Integer.parseInt(cursor.getString(0)), cursor.getString(1), Integer.parseInt(cursor.getString(2)), cursor.getString(3), Integer.parseInt(cursor.getString(4)), cursor.getString(5), TeacherLogin);
 
                 sys.add(sy);
             } while(cursor.moveToNext());

@@ -12,14 +12,16 @@ public class Result {
     private String date;
     private Integer ssId;
     private String sL;
+    private String tL;
 
-    public Result(Integer id, String desc, int score, String date, Integer ssId, String sL) {
+    public Result(Integer id, String desc, int score, String date, Integer ssId, String sL, String tL) {
         this.id = id;
         this.desc = desc;
         this.score = score;
         this.date = date;
         this.ssId = ssId;
         this.sL = sL;
+        this.tL = tL;
     }
 
     public Result() {
@@ -30,6 +32,14 @@ public class Result {
 
     public void setsL(String sL) {
         this.sL = sL;
+    }
+
+    public String gettL() {
+        return tL;
+    }
+
+    public void settL(String tL) {
+        this.tL = tL;
     }
 
     public Integer getId() {
@@ -71,4 +81,5 @@ public class Result {
     public void setSsId(Integer ssId) {
         this.ssId = ssId;
     }
+
 }

@@ -1,6 +1,8 @@
 package src.pupilbookteachers;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,26 +19,28 @@ import src.DBAdapter.StudySubject;
 import src.DBAdapter.StudySubjectTable;
 
 public class ClasificationActivity extends Activity {
-    //private String StudentLogin;
+    private String StudentLogin;
+    private Integer selectedStudySubject;
+    public final static String SHARED_PREFERENCES = "PupilBook";
     private Spinner spinnerStudySubjects;
+    protected SharedPreferences sharedpreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clasification);
         spinnerStudySubjects = (Spinner) findViewById(R.id.spinnerStudySubject);
-        String StudentLogin = getIntent().getStringExtra("selectecStudent");
+        StudentLogin = getIntent().getStringExtra("selectecStudent");
+        sharedpreferences = getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
         loadSpinnerStudySubjects(StudentLogin);
+
     }
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_clasification, menu);
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -51,7 +55,6 @@ public class ClasificationActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
-
     private void loadSpinnerStudySubjects(String StudentLogin) {
         List< SpinnerObject > labels = new ArrayList< SpinnerObject >();
         StudySubjectTable db = new StudySubjectTable(this);
@@ -68,6 +71,10 @@ public class ClasificationActivity extends Activity {
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // attaching data adapter to spinner
         spinnerStudySubjects.setAdapter(dataAdapter);
-        spinnerStudySubjects.setOnItemSelectedListener(new onStudySubjectClickListener());
+        spinnerStudySubjects.setOnItemSelectedListener(new onStudySubjectClickListener(this));
+    }
+
+    public void setSelectedStudySubject(Integer selectedStudySubject) {
+        this.selectedStudySubject = selectedStudySubject;
     }
 }
