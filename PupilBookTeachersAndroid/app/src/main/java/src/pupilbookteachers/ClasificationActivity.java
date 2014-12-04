@@ -65,9 +65,8 @@ public class ClasificationActivity extends Activity {
         ResultsTable resTable = new ResultsTable(this);
         resTable.createResult(res);
 
-        List<Result> xx = new ArrayList<Result>();
-        xx = resTable.getAllResult();
-        String nasrat = "nasrat";
+        finish();
+        startActivity(getIntent());
     }
     public void startSeekBar(){
         scoreText = (TextView) findViewById(R.id.textScore);
