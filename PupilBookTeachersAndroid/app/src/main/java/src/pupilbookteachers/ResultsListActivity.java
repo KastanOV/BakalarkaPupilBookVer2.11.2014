@@ -12,8 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import src.Controls.SpinnerObject;
-import src.Controls.onStudySubjectClickListener;
 import src.Controls.onStudySubjectClickListenerResultList;
+import src.Controls.resultsListAdapter;
+import src.DBAdapter.Result;
 import src.DBAdapter.ResultsTable;
 import src.DBAdapter.StudentTable;
 import src.DBAdapter.StudySubject;
@@ -56,10 +57,12 @@ public class ResultsListActivity extends Activity {
     private void fillListViewScores(int ss){
         listViewScores = (ListView) findViewById(R.id.listViewScores);
         ResultsTable res = new ResultsTable(this);
-        List<String> resItems = res.getResults(StudentLogin,ss);
-        //TODO dodelat seznam znamek at je to fajne a pak uz se na to vyjebat :)
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_2, android.R.id.text2, resItems);
+        List<Result> resItems = res.getResults(StudentLogin,ss);
+        Result[] resArray = new Result[resItems.size()];
+        resArray  = resItems.toArray(resArray);
+        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+         //       android.R.layout.simple_list_item_2, android.R.id.text2, resItems);
+        resultsListAdapter adapter = new resultsListAdapter(this, resArray);
 
         listViewScores.setAdapter(adapter);
 

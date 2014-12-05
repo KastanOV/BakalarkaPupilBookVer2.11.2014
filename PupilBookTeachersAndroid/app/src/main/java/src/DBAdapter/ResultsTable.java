@@ -8,8 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-import src.pupilbookteachers.UtilScores;
-
 /**
  * Created by KastanNotas on 2.12.2014.
  */
@@ -92,8 +90,8 @@ public class ResultsTable extends DBMain {
         }
         return sys;
     }
-    public List<String> getResults(String StudentLogin, int StudySubjectID){
-        List<String> sys = new ArrayList<String>();
+    public List<Result> getResults(String StudentLogin, int StudySubjectID){
+        List<Result> sys = new ArrayList<Result>();
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + Utils.TABLE_RESULTS
                 + " WHERE " + Utils.RESULTS_STUDENT_LOGIN + " = '" + StudentLogin
@@ -109,7 +107,7 @@ public class ResultsTable extends DBMain {
                 }
                 Result sy = new Result(resultId, cursor.getString(1), Integer.parseInt(cursor.getString(2)), cursor.getString(3), Integer.parseInt(cursor.getString(4)), cursor.getString(5), cursor.getString(6));
 
-                sys.add(sy.getDesc() + " " + UtilScores.getText(sy.getScore()));
+                sys.add(sy);
             } while(cursor.moveToNext());
         }
         return  sys;

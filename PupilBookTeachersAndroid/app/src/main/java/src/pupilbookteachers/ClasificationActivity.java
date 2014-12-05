@@ -2,7 +2,6 @@ package src.pupilbookteachers;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -11,8 +10,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -40,6 +39,7 @@ public class ClasificationActivity extends Activity {
     private TextView scoreText;
     private TextView studentNameText;
     private Student editedStudent;
+    private Button submitButton;
 
 
     @Override
@@ -48,6 +48,8 @@ public class ClasificationActivity extends Activity {
         setContentView(R.layout.activity_clasification);
         spinnerStudySubjects = (Spinner) findViewById(R.id.spinnerStudySubject);
         description = (EditText) findViewById(R.id.editDescription);
+        submitButton = (Button) findViewById(R.id.buttonActionClassification);
+        submitButton.setEnabled(false);
 // Find Student
         StudentLogin = getIntent().getStringExtra("selectecStudent");
         StudentTable stt = new StudentTable(this);
@@ -57,8 +59,6 @@ public class ClasificationActivity extends Activity {
         startSeekBar();
 
     }
-
-
     public void onClassificationAction(View view){
         Result res = new Result();
         res.settL(sharedpreferences.getString("login", "error geting Sharedpreferences in ClassificationActivity onClassification method"));
@@ -70,7 +70,7 @@ public class ClasificationActivity extends Activity {
         res.setSsId(selectedStudySubject);
         ResultsTable resTable = new ResultsTable(this);
         resTable.createResult(res);
-
+        finish();
     }
     public void startSeekBar(){
         scoreText = (TextView) findViewById(R.id.textScore);
@@ -93,7 +93,7 @@ public class ClasificationActivity extends Activity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-
+                submitButton.setEnabled(true);
             }
         });
     }

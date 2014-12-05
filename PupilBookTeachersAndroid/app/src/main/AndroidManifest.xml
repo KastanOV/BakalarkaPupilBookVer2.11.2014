@@ -41,7 +41,7 @@
             android:label="@string/title_activity_results" >
         </activity>
         <activity
-            android:name=".ResultsListActivity"
+            android:name="src.pupilbookteachers.ResultsListActivity"
             android:label="@string/title_activity_results_list" >
         </activity>
     </application>
