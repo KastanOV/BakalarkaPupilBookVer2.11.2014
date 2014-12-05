@@ -15,5 +15,7 @@
     <string name="ClesificationStudentButton">Klasifikovat studenta</string>
     <string name="AttendanceButton">Docházka studenta</string>
     <string name="ClassificationAction">Klasifikovat studenta</string>
+    <string name="title_activity_results">Results</string>
+    <string name="title_activity_results_list">ResultsList</string>
 
 </resources>

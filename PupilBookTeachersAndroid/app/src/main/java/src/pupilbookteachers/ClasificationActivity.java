@@ -2,6 +2,7 @@ package src.pupilbookteachers;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -39,6 +41,7 @@ public class ClasificationActivity extends Activity {
     private TextView studentNameText;
     private Student editedStudent;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +55,10 @@ public class ClasificationActivity extends Activity {
         sharedpreferences = getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
         loadSpinnerStudySubjects(StudentLogin);
         startSeekBar();
+
     }
+
+
     public void onClassificationAction(View view){
         Result res = new Result();
         res.settL(sharedpreferences.getString("login", "error geting Sharedpreferences in ClassificationActivity onClassification method"));
@@ -65,8 +71,6 @@ public class ClasificationActivity extends Activity {
         ResultsTable resTable = new ResultsTable(this);
         resTable.createResult(res);
 
-        finish();
-        startActivity(getIntent());
     }
     public void startSeekBar(){
         scoreText = (TextView) findViewById(R.id.textScore);
@@ -74,43 +78,12 @@ public class ClasificationActivity extends Activity {
         studentNameText.setText(editedStudent.getLastName() + " " + editedStudent.getFirstName());
         scoreText.setTextColor(Color.BLACK);
         score = (SeekBar) findViewById(R.id.seekScore);
-        score.setMax(10);
+        score.setMax(9);
         score.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                if (i < 1){
-                    scoreText.setText("5!");
-                    scoreText.setTextColor(Color.rgb(204,0,0));
-                } else if(i >= 1 && i < 2) {
-                    scoreText.setText("4-");
-                    scoreText.setTextColor(Color.rgb(204,0,0));
-
-                } else if(i >= 2 && i < 3){
-                    scoreText.setText("4");
-                    scoreText.setTextColor(Color.rgb(255,68,68));
-                } else if(i >= 3 && i < 4) {
-                    scoreText.setText("3-");
-                    scoreText.setTextColor(Color.rgb(255,68,68));
-                } else if(i >= 4 && i < 5) {
-                    scoreText.setText("3");
-                    scoreText.setTextColor(Color.rgb(255, 136, 00));
-                } else if(i >= 5 && i < 6) {
-                    scoreText.setText("2-");
-                    scoreText.setTextColor(Color.rgb(255, 136, 00));
-                } else if(i >= 6 && i < 7) {
-                    scoreText.setText("2");
-                    scoreText.setTextColor(Color.rgb(102, 153, 00));
-                } else if(i >= 7 && i < 8) {
-                    scoreText.setText("1-");
-                    scoreText.setTextColor(Color.rgb(102, 153, 00));
-                } else if(i >= 8 && i < 9) {
-                    scoreText.setText("1");
-                    scoreText.setTextColor(Color.rgb(153, 204, 00));
-                } else {
-                    scoreText.setText("1*");
-                    scoreText.setTextColor(Color.rgb(153, 204, 00));
-                }
-
+                scoreText.setText(UtilScores.getText(i));
+                scoreText.setTextColor(UtilScores.getColor(i));
             }
 
             @Override

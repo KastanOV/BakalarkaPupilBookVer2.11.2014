@@ -53,5 +53,5 @@ public class Utils {
             RESULTS_STUDENT_LOGIN = "student_login",
             RESULTS_TEACHER_LOGIN = "teacher_login";
 
-    //public Results(Integer id, String desc, short score, Date date, Integer ssId, String sL)
+    //public ResultsActivity(Integer id, String desc, short score, Date date, Integer ssId, String sL)
 }
