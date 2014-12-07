@@ -17,17 +17,17 @@ public class Results {
     private Integer id;
     private String desc;
     private Integer score;
-    private Date date;
+    private String date;
     private Integer ssId;
     private String sL;
     private String tL;
-    private String password;
+    private String ps;
 
     
     public Results() {
         
     }
-    public Results(Integer id, String desc, Integer score, Date date, Integer ssId, String sL, String tL, String password) {
+    public Results(Integer id, String desc, Integer score, String date, Integer ssId, String sL, String tL, String ps) {
         this.id = id;
         this.desc = desc;
         this.score = score;
@@ -35,14 +35,14 @@ public class Results {
         this.ssId = ssId;
         this.sL = sL;
         this.tL = tL;
-        this.password = password;
+        this.ps = ps;
     }
-    public String getPassword() {
-        return password;
+    public String getPs() {
+        return ps;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPs(String ps) {
+        this.ps = ps;
     }
     
     public String gettL() {
@@ -77,11 +77,11 @@ public class Results {
         this.score = score;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

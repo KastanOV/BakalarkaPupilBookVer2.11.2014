@@ -40,15 +40,25 @@ public class ResultsResource {
         List<Results> res = sb.getResults(login, password);
         List<servicesDTO.Results> items = new ArrayList<>();
         for(Results item : res){
-            servicesDTO.Results newItem = new servicesDTO.Results(item.getIdResults(),item.getDescription(),(int)item.getScore(),item.getDate(),item.getStudySubjectidStudySubject().getIdStudySubject(),item.getStudentLogin().getLogin(), item.getTeacherLogin().getLogin(), null);
+            servicesDTO.Results newItem = new servicesDTO.Results(item.getIdResults(),item.getDescription(),(int)item.getScore(),item.getDate().toString(),item.getStudySubjectidStudySubject().getIdStudySubject(),item.getStudentLogin().getLogin(), item.getTeacherLogin().getLogin(), null);
             items.add(newItem);
         }
         return items;
     }
+    /*@POST
+    @Consumes({"application/xml", "application/json"})
+    public void newResults(@PathParam("id") String id, @PathParam("date") String date){
+        String nasrta = id;
+        String da = date;
+    }*/
+    //http://localhost:8080/PupilBookV11/webresources/Results/CHL000/chlup
     @POST
     @Consumes({"application/xml", "application/json"})
-    public void create(servicesDTO.Results res) {
-        
+    public String create(servicesDTO.Results res) {
+        servicesDTO.Results Nasrat = res;
+        int bla;
+        bla = 1;
+        return "ok";
     }
 
 }

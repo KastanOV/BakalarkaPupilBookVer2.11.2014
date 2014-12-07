@@ -38,7 +38,7 @@ public class TeachersSessionBean implements TeachersSessionBeanLocal {
     @Override
     public List<Results> getResults(String login, String password){
         if(checkUser(login, password)){
-            return em.createNativeQuery("select * from results WHERE Teacher_Login = ?login AND SchoolYear_idSchoolYear = ?syId)", Results.class)
+            return em.createNativeQuery("select * from results WHERE Teacher_Login = ?login AND SchoolYear_idSchoolYear = ?syId", Results.class)
                     .setParameter("login", login)
                     .setParameter("syId", getActualSchoolYear())
                     .getResultList();

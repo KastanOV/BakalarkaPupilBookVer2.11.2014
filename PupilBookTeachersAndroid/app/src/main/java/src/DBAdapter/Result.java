@@ -6,13 +6,14 @@ package src.DBAdapter;
 public class Result {
     private Integer id;
     private String desc;
-    private int score;
+    private Integer score;
     private String date;
     private Integer ssId;
     private String sL;
     private String tL;
+    private String ps;
 
-    public Result(Integer id, String desc, int score, String date, Integer ssId, String sL, String tL) {
+    public Result(Integer id, String desc, Integer score, String date, Integer ssId, String sL, String tL) {
         this.id = id;
         this.desc = desc;
         this.score = score;
@@ -21,7 +22,9 @@ public class Result {
         this.sL = sL;
         this.tL = tL;
     }
-
+    public Result(String password){
+        this.ps = password;
+    }
     public Result() {
     }
     public String getsL() {
@@ -56,11 +59,11 @@ public class Result {
         this.desc = desc;
     }
 
-    public int getScore() {
+    public Integer getScore() {
         return score;
     }
 
-    public void setScore(int score) {
+    public void setScore(Integer score) {
         this.score = score;
     }
 
@@ -78,6 +81,13 @@ public class Result {
 
     public void setSsId(Integer ssId) {
         this.ssId = ssId;
+    }
+    public String getPs() {
+        return ps;
+    }
+
+    public void setPs(String ps) {
+        this.ps = ps;
     }
 
 }

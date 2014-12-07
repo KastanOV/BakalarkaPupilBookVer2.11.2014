@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import src.DBAdapter.Result;
+import src.DBAdapter.ResultsTable;
 import src.DBAdapter.SheduleItem;
 import src.DBAdapter.SheduleItemTable;
 import src.DBAdapter.Student;
@@ -28,9 +30,9 @@ import src.restapi.downSynchonization;
 public class MainActivity extends Activity {
     TextView testText;
     public final static String SHARED_PREFERENCES = "PupilBook";
-    protected final static String LOGIN = "login";
-    protected final static String PASSWORD = "password";
-    protected SharedPreferences sharedpreferences;
+    public final static String LOGIN = "login";
+    public final static String PASSWORD = "password";
+    public SharedPreferences sharedpreferences;
     //private String LOCAL_URL = "http://192.168.1.61:8080/PupilBookV11/webresources/";
     private String LOCAL_URL = "http://86.49.147.135:9001/PupilBookV11/webresources/";
 
@@ -83,11 +85,13 @@ public class MainActivity extends Activity {
         StudyGroupTable dbg = new StudyGroupTable(this);
         SheduleItemTable dbsi = new SheduleItemTable(this);
         StudentTable st = new StudentTable(this);
+        ResultsTable res = new ResultsTable(this);
         //db.deleteAllStudySubjects();
         List<StudySubject> llllllll = db.getAllStudySubject();
         List<StudyGroup> ppppppp = dbg.getAllStudyGroup();
         List<SheduleItem> sssssss= dbsi.getAllSheduleItem();
         List<Student> Students = st.getAllStudent();
+        List<Result> Results = res.getNewResultsForUpload();
         String bla = "bla";
     }
 

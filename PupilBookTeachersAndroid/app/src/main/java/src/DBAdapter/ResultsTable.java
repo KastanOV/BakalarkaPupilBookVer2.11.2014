@@ -72,7 +72,7 @@ public class ResultsTable extends DBMain {
     public List<Result> getAllResult(){
         List<Result> sys = new ArrayList<Result>();
 
-        SQLiteDatabase db = getWritableDatabase();
+        SQLiteDatabase db = getReadableDatabase();
 
         Cursor cursor = db.rawQuery("SELECT * FROM " + Utils.TABLE_RESULTS, null);
         Integer resultId;
@@ -90,9 +90,31 @@ public class ResultsTable extends DBMain {
         }
         return sys;
     }
+    public List<Result> getNewResultsForUpload(){
+        List<Result> sys = new ArrayList<Result>();
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + Utils.TABLE_RESULTS
+                + " WHERE " + Utils.RESULTS_KEY_ID + " IS NULL", null);
+        Integer resultId;
+        if(cursor.moveToFirst()){
+            do{
+                try{
+                    resultId = Integer.parseInt(cursor.getString(0));
+                } catch (Exception e){
+                    resultId = null;
+                }
+                Result sy = new Result(resultId, cursor.getString(1), Integer.parseInt(cursor.getString(2)), cursor.getString(3), Integer.parseInt(cursor.getString(4)), cursor.getString(5), cursor.getString(6));
+
+                sys.add(sy);
+            } while(cursor.moveToNext());
+        }
+        return sys;
+    }
     public List<Result> getResults(String StudentLogin, int StudySubjectID){
         List<Result> sys = new ArrayList<Result>();
-        SQLiteDatabase db = getWritableDatabase();
+        SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + Utils.TABLE_RESULTS
                 + " WHERE " + Utils.RESULTS_STUDENT_LOGIN + " = '" + StudentLogin
                 + "' AND " + Utils.RESULTS_STUDY_SUBJECT_ID + " = " + StudySubjectID, null);
