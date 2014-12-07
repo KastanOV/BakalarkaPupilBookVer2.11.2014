@@ -17,7 +17,6 @@ import org.xmlpull.v1.XmlSerializer;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.StringWriter;
-import java.util.ArrayList;
 import java.util.List;
 
 import src.DBAdapter.Result;
@@ -36,11 +35,11 @@ public class uploadResults {
         this.context = context;
         this.targetURL = URL;
         List<Result> res = prepareResults();
-        prepareToUpload(res);
+        prepareToUploadAndUpload(res);
     }
 
-    private boolean uploadData(String xml){
-        boolean transactionStatusOK = false;
+    private Integer uploadData(String xml){
+        Integer newID = null;
         OutputStream out = null;
         HttpClient httpclient = new DefaultHttpClient();
         HttpPost httppost = new HttpPost(targetURL + "Results");
@@ -51,26 +50,21 @@ public class uploadResults {
                     HttpResponse httpresponse = httpclient.execute(httppost);
                     HttpEntity resEntity = httpresponse.getEntity();
                     String tmp = EntityUtils.toString(resEntity);
-                    if(tmp == "ok"){
-                        transactionStatusOK = true;
-                    } else{
-                        transactionStatusOK = false;
-                    }
-                    int dasd = 123;
+                    newID = Integer.parseInt(tmp);
                 } catch (ClientProtocolException e) {
-                    transactionStatusOK = false;
+                    newID = null;
                     e.printStackTrace();
                 } catch (IOException e) {
-                    transactionStatusOK = false;
+                    newID = null;
                     e.printStackTrace();
                 } finally {
-                    return transactionStatusOK;
+                    return newID;
                 }
 
     }
 
-    private List<String> prepareToUpload(List<Result> results){
-        List<String> XmlStrings = new ArrayList<String>();
+    private void prepareToUploadAndUpload(List<Result> results){
+        //List<String> XmlStrings = new ArrayList<String>();
         try {
             for (Result item: results){
                 XmlSerializer serializer = Xml.newSerializer();
@@ -104,15 +98,21 @@ public class uploadResults {
                     serializer.endTag("", "ps");
                 serializer.endTag("", "results");
                 serializer.endDocument();
-                XmlStrings.add(writer.toString());
+                //XmlStrings.add(writer.toString());
+                Integer tmps = uploadData(writer.toString());
+                if(tmps != null){
+                   item.setId(tmps);
+                   updateUploadedResult(item);
+                }
             }
-            return XmlStrings;
-
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
-
+    private void updateUploadedResult(Result res){
+        ResultsTable tab = new ResultsTable(context);
+        tab.updateUploadedResult(res);
+    }
     private List<Result> prepareResults(){
         ResultsTable resTable = new ResultsTable(context);
         List<Result> resList = resTable.getNewResultsForUpload();

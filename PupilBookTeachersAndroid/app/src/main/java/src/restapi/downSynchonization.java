@@ -31,14 +31,14 @@ public class downSynchonization extends AsyncTask <String, Void, String> {
         getSheduleItems gsi = new getSheduleItems(params[0], context);
         getStudents gs = new getStudents(params[0],context);
         //TODO Tuhle funkci je spustit az se budou vysledky ukladat do DB
-        //getResults gr = new getResults(params[0], context);
+        getResults gr = new getResults(params[0], context);
         try {
 
             gss.downloadUrl();
             gsg.downloadUrl();
             gsi.downloadUrl();
             gs.downloadUrl();
-            //gr.downloadUrl();
+            gr.downloadUrl();
         } catch (IOException e) {
             e.printStackTrace();
         }

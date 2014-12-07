@@ -12,6 +12,8 @@ import Entity.Student;
 import Entity.Studygroup;
 import Entity.Studysubject;
 import Entity.Teacher;
+import java.sql.Date;
+
 import java.util.List;
 import javax.ejb.Singleton;
 import javax.persistence.EntityManager;
@@ -26,6 +28,7 @@ import javax.persistence.PersistenceContext;
 public class TeachersSessionBean implements TeachersSessionBeanLocal {
     @PersistenceContext
     private EntityManager em;
+    
     
     @Override
     public Teacher checkLogin(String login, String password){
@@ -124,5 +127,43 @@ public class TeachersSessionBean implements TeachersSessionBeanLocal {
         if(tmp > 0){
             return true;
         }else return false;
+    }
+
+    @Override
+    public servicesDTO.Results saveUploadedResult(servicesDTO.Results res) {
+        Date date = new Date(Long.parseLong(res.getDate()));
+        
+        int tmp = em.createNativeQuery("INSERT INTO results ( Description, Score, Date, Teacher_Login, Student_Login, StudySubject_idStudySubject, SchoolYear_idSchoolYear)"
+                + " VALUES (?desc, ?score, ?date, ?tl, ?sl, ?ssId, ?syId)")
+                .setParameter("desc", res.getDesc())
+                .setParameter("score", res.getScore())
+                .setParameter("date", date)
+                .setParameter("tl", res.gettL())
+                .setParameter("sl", res.getsL())
+                .setParameter("ssId", res.getSsId())
+                .setParameter("syId", getActualSchoolYear())
+                .executeUpdate();
+        int id = (int) em.createNativeQuery("select max(idResults) FROM Results").getSingleResult();
+        res.setId(id);
+        /*Schoolyear sy = em.find(Schoolyear.class, getActualSchoolYear());
+        Studysubject ss = em.find(Studysubject.class, res.getSsId());
+        Teacher tL = em.find(Teacher.class, res.gettL());
+        Student sL = em.find(Student.class, res.getsL());
+        Date date = new Date(Long.parseLong(res.getDate()));
+        Entity.Results newEntity = new Results();
+        if(res.getId() == 0) res.setId(null);
+        newEntity.setDate(date);
+        newEntity.setDescription(res.getDesc());
+        newEntity.setIdResults(res.getId());
+        newEntity.setSchoolYearidSchoolYear(sy);
+        newEntity.setScore(res.getScore().shortValue());
+        newEntity.setStudentLogin(sL);
+        newEntity.setStudySubjectidStudySubject(ss);
+        newEntity.setTeacherLogin(tL);
+
+        em.persist(newEntity);
+        int newID = newEntity.getIdResults();
+        res.setId(newID);*/
+        return res;
     }
 }

@@ -64,7 +64,7 @@ public class ClasificationActivity extends Activity {
         res.settL(sharedpreferences.getString("login", "error geting Sharedpreferences in ClassificationActivity onClassification method"));
         res.setsL(editedStudent.getLogin());
         Time time = new Time();   time.setToNow();
-        res.setDate(Long.toString(time.toMillis(false)));
+        res.setDate(Long.toString(time.toMillis(true)));
         res.setDesc(description.getText().toString());
         res.setScore(score.getProgress());
         res.setSsId(selectedStudySubject);

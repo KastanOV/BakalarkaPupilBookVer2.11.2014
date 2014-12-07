@@ -55,10 +55,9 @@ public class ResultsResource {
     @POST
     @Consumes({"application/xml", "application/json"})
     public String create(servicesDTO.Results res) {
-        servicesDTO.Results Nasrat = res;
-        int bla;
-        bla = 1;
-        return "ok";
+        res = sb.saveUploadedResult(res);
+
+        return String.valueOf(res.getId());
     }
 
 }

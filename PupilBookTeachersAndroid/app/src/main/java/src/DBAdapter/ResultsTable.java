@@ -136,6 +136,21 @@ public class ResultsTable extends DBMain {
     }
     public void deleteAllResult(){
         SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("DELETE FROM " + Utils.TABLE_RESULTS);
+        db.execSQL("DELETE FROM " + Utils.TABLE_RESULTS + " WHERE " + Utils.RESULTS_KEY_ID + " IS NOT NULL");
+    }
+    public void updateUploadedResult(Result res){
+        SQLiteDatabase db = getWritableDatabase();
+
+        db.execSQL("UPDATE " + Utils.TABLE_RESULTS
+        + " SET "
+                + Utils.RESULTS_KEY_ID + " = " + res.getId()
+        + " WHERE "
+                + Utils.RESULTS_DATE + " = '" + res.getDate() + "' AND "
+                + Utils.RESULTS_DESCRIPTION + " = '" + res.getDesc() + "' AND "
+                + Utils.RESULTS_SCORE  + " = " + res.getScore() + " AND "
+                + Utils.RESULTS_STUDENT_LOGIN +  " = '" + res.getsL() + "' AND "
+                + Utils.RESULTS_STUDY_SUBJECT_ID + " = " + res.getSsId());
+        db.close();
+
     }
 }

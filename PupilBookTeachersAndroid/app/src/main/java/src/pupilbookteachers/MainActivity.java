@@ -92,6 +92,7 @@ public class MainActivity extends Activity {
         List<SheduleItem> sssssss= dbsi.getAllSheduleItem();
         List<Student> Students = st.getAllStudent();
         List<Result> Results = res.getNewResultsForUpload();
+        List<Result> AllResults = res.getAllResult();
         String bla = "bla";
     }
 
