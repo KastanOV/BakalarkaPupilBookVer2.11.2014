@@ -71,9 +71,24 @@ public class SheduleItemTable extends DBMain {
     public List<SheduleItem> getAllSheduleItem(){
         List<SheduleItem> sys = new ArrayList<SheduleItem>();
 
-        SQLiteDatabase db = getWritableDatabase();
+        SQLiteDatabase db = getReadableDatabase();
 
         Cursor cursor = db.rawQuery("SELECT * FROM " + Utils.TABLE_SHEDULEITEM, null);
+        if(cursor.moveToFirst()){
+            do{
+                SheduleItem sy = new SheduleItem(Integer.parseInt(cursor.getString(0)), Integer.parseInt(cursor.getString(1)), Integer.parseInt(cursor.getString(2)), Integer.parseInt(cursor.getString(3)), Integer.parseInt(cursor.getString(4)), cursor.getString(5));
+
+                sys.add(sy);
+            } while(cursor.moveToNext());
+        }
+        return sys;
+    }
+    public List<SheduleItem> getSheduleitemsByDay(int day){
+        List<SheduleItem> sys = new ArrayList<SheduleItem>();
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + Utils.TABLE_SHEDULEITEM + " WHERE " + Utils.SHEDULE_ITEM_KEY_DAY + " = " + day , null);
         if(cursor.moveToFirst()){
             do{
                 SheduleItem sy = new SheduleItem(Integer.parseInt(cursor.getString(0)), Integer.parseInt(cursor.getString(1)), Integer.parseInt(cursor.getString(2)), Integer.parseInt(cursor.getString(3)), Integer.parseInt(cursor.getString(4)), cursor.getString(5));

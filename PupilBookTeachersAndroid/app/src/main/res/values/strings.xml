@@ -21,5 +21,6 @@
     <string name="title_activity_shedule_tabs">SheduleTabsActivity</string>
     <string name="SheduleButton">Rozvrh hodin</string>
     <string name="Logout">Odhlásit</string>
+    <string name="title_activity_shedule_day">SheduleDayActivity</string>
 
 </resources>

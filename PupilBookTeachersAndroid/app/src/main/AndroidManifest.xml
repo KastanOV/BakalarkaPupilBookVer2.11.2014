@@ -48,6 +48,10 @@
             android:name=".SheduleTabsActivity"
             android:label="@string/title_activity_shedule_tabs" >
         </activity>
+        <activity
+            android:name=".SheduleDayActivity"
+            android:label="@string/title_activity_shedule_day" >
+        </activity>
     </application>
 
 </manifest>
