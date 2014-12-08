@@ -4,30 +4,47 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 
 import java.util.List;
 
+import src.Controls.sheduleListAdapter;
 import src.DBAdapter.SheduleItem;
 import src.DBAdapter.SheduleItemTable;
 
 
 public class SheduleDayActivity extends Activity {
-
+    private ListView listSheduleItems;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shedule_day);
         int day = Integer.parseInt(getIntent().getStringExtra("selectecDay"));
+        fillForm(day);
     }
 
     private void fillForm(int day){
+        listSheduleItems = (ListView) findViewById(R.id.listViewSheduleItems);
+        SheduleItem[] tmpItems = new SheduleItem[8];
+
         SheduleItemTable siTable = new SheduleItemTable(this);
         List<SheduleItem> siList = siTable.getSheduleitemsByDay(day);
-        //TODO je treba vyplnit i prazdna mista v Sheduleitems
-        for(int i = 0; i < 8; i++){
 
+        for(int i = 0; i < 8; i++){
+            tmpItems[i] = new SheduleItem(null,day,i,-1,-1,null);
         }
+
+        for(int i = 0; i < 8; i++){
+            for(SheduleItem item : siList){
+                if(item.getHour() == i){
+                    tmpItems[i] = item;
+                }
+            }
+        }
+        sheduleListAdapter adapter = new sheduleListAdapter(this,tmpItems);
+        listSheduleItems.setAdapter(adapter);
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

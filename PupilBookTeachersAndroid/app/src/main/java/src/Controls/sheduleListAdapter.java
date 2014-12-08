@@ -41,7 +41,7 @@ public class sheduleListAdapter extends ArrayAdapter<SheduleItem>{
         StudySubjectTable ssTable = new StudySubjectTable(context);
         StudyGroupTable sgTable = new StudyGroupTable(context);
 
-        if(values[position].getIdStudySubject() != 1 && values[position].getIdStudyGroup() != -1){
+        if(values[position].getIdStudySubject() != -1 && values[position].getIdStudyGroup() != -1){
             StudySubject ss = ssTable.getStudySubject(values[position].getIdStudySubject());
             StudyGroup sg = sgTable.getStudygroup(values[position].getIdStudyGroup());
             textViewHourNumber.setText(String.valueOf(values[position].getHour()+1));
@@ -50,8 +50,14 @@ public class sheduleListAdapter extends ArrayAdapter<SheduleItem>{
             textViewStudyGroup.setTextColor(UtilScores.getColor(2));
             textViewStudySubject.setText(ss.getName());
             textViewStudySubject.setTextColor(UtilScores.getColor(2));
+        } else {
+            textViewHourNumber.setText(String.valueOf(values[position].getHour()+1));
+            textViewHourNumber.setTextColor(UtilScores.getColor(9));
+            textViewStudyGroup.setText("Volná");
+            textViewStudyGroup.setTextColor(UtilScores.getColor(9));
+            textViewStudySubject.setText("Hodina");
+            textViewStudySubject.setTextColor(UtilScores.getColor(9));
         }
-
 
         return rowView;
     }

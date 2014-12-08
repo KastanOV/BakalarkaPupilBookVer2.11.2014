@@ -23,7 +23,7 @@
         android:layout_alignParentRight="true"
         android:layout_toRightOf="@+id/sheduleHourNumber"
         android:text="1.B"
-        android:textSize="27sp" />
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/sheduleStudySubject"
@@ -34,7 +34,7 @@
         android:ellipsize="marquee"
         android:singleLine="true"
         android:text="Matematika"
-        android:textSize="27sp"
+        android:textSize="20sp"
         android:layout_below="@+id/sheduleStudyGroup" />
 
 </RelativeLayout>
