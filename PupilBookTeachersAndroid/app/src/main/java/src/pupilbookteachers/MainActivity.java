@@ -67,6 +67,10 @@ public class MainActivity extends Activity {
         Intent in =  new Intent(this,StudentsActivity.class);
         startActivity(in);
     }
+    public void goToShedule(View view){
+        Intent in = new Intent(this, SheduleTabsActivity.class);
+        startActivity(in);
+    }
     public void doSynchronization(View view){
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);

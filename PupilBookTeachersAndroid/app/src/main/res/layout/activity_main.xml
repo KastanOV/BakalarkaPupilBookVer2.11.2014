@@ -28,7 +28,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Odhlásit"
+        android:text="@string/Logout"
         android:id="@+id/button2"
         android:onClick="logout"
         android:layout_alignParentBottom="true"
@@ -62,5 +62,16 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/SheduleButton"
+        android:id="@+id/goToSheduleButton"
+        android:layout_below="@+id/buttonClasification"
+        android:layout_marginTop="30dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:onClick="goToShedule" />
 
 </RelativeLayout>
