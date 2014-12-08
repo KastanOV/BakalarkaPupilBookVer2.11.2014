@@ -24,6 +24,9 @@ public class SheduleDayActivity extends Activity {
         SheduleItemTable siTable = new SheduleItemTable(this);
         List<SheduleItem> siList = siTable.getSheduleitemsByDay(day);
         //TODO je treba vyplnit i prazdna mista v Sheduleitems
+        for(int i = 0; i < 8; i++){
+
+        }
     }
 
     @Override

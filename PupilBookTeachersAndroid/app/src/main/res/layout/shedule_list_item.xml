@@ -5,7 +5,7 @@
     android:background="@android:color/background_light"
     >
     <TextView
-        android:id="@+id/hourNumber"
+        android:id="@+id/sheduleHourNumber"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:layout_alignParentBottom="true"
@@ -17,24 +17,24 @@
         android:textSize="63sp"/>
 
     <TextView
-        android:id="@+id/studyGroup"
+        android:id="@+id/sheduleStudyGroup"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_toRightOf="@+id/hourNumber"
+        android:layout_toRightOf="@+id/sheduleHourNumber"
         android:text="1.B"
         android:textSize="27sp" />
 
     <TextView
-        android:id="@+id/studySubject"
+        android:id="@+id/sheduleStudySubject"
         android:layout_width="fill_parent"
         android:layout_height="26dip"
         android:layout_alignParentRight="true"
-        android:layout_toRightOf="@+id/hourNumber"
+        android:layout_toRightOf="@+id/sheduleHourNumber"
         android:ellipsize="marquee"
         android:singleLine="true"
         android:text="Matematika"
         android:textSize="27sp"
-        android:layout_below="@+id/studyGroup" />
+        android:layout_below="@+id/sheduleStudyGroup" />
 
 </RelativeLayout>
