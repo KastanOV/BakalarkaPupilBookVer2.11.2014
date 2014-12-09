@@ -15,7 +15,7 @@
                         <p:inputText id="name" value="#{adminmainController.editedStudygroup.name}" title="Název" required="true" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{adminmainController.saveStudyGroup}" value="#{bundle.save}" update="display,:AdminMainMenu:StudyGroupsOneMenu ,:growl" oncomplete="handleSubmit(args,'StudyGroupCreateDialog');"/>
-                    <p:commandButton value="#{bundle.cancel}" onclick="StudyGroupCreateDialog.hide()"/>
+                    <!--<p:commandButton value="#{bundle.cancel}" onclick="StudyGroupCreateDialog.hide()"/>-->
                 </h:panelGroup>
             </h:form>
         </p:dialog>

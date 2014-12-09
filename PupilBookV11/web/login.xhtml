@@ -1,0 +1,24 @@
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Login Popapu</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        
+        <h:form>
+            <h:panelGroup id="login">
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="Uživatelské jméno" for="Login" />
+                    <p:inputText id="Login" value="#{loginBean.user}" />
+                    <p:outputLabel value="Heslo" for="password"/>
+                    <p:password id="password" value="#{loginBean.password}" />
+                </p:panelGrid>
+                <p:commandButton actionListener="#{loginBean.login}" value="Přihlásit"/>
+            </h:panelGroup>
+            
+        </h:form>
+    </h:body>
+</html>

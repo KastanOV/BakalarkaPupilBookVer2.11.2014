@@ -145,25 +145,6 @@ public class TeachersSessionBean implements TeachersSessionBeanLocal {
                 .executeUpdate();
         int id = (int) em.createNativeQuery("select max(idResults) FROM Results").getSingleResult();
         res.setId(id);
-        /*Schoolyear sy = em.find(Schoolyear.class, getActualSchoolYear());
-        Studysubject ss = em.find(Studysubject.class, res.getSsId());
-        Teacher tL = em.find(Teacher.class, res.gettL());
-        Student sL = em.find(Student.class, res.getsL());
-        Date date = new Date(Long.parseLong(res.getDate()));
-        Entity.Results newEntity = new Results();
-        if(res.getId() == 0) res.setId(null);
-        newEntity.setDate(date);
-        newEntity.setDescription(res.getDesc());
-        newEntity.setIdResults(res.getId());
-        newEntity.setSchoolYearidSchoolYear(sy);
-        newEntity.setScore(res.getScore().shortValue());
-        newEntity.setStudentLogin(sL);
-        newEntity.setStudySubjectidStudySubject(ss);
-        newEntity.setTeacherLogin(tL);
-
-        em.persist(newEntity);
-        int newID = newEntity.getIdResults();
-        res.setId(newID);*/
         return res;
     }
 }

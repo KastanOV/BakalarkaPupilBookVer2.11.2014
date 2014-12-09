@@ -23,9 +23,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "Users")
 @DiscriminatorValue(value = "S")
 @NamedQueries({
+    //TODO je treba zaridit generovani novych useru !! stara verze napojena na tabulku Users
     @NamedQuery(name = "Student.findAll", query = "SELECT u FROM Student u"),
     @NamedQuery(name = "Student.byStudyGroupAndRole", query = "SELECT u FROM Student u WHERE u.studyGroupidStudyGroup = :studygroup" ),
-    @NamedQuery(name = "Student.findByLastName", query = "SELECT u FROM Student u WHERE u.lastName LIKE :lastName")})
+    @NamedQuery(name = "Student.findByLastName", query = "SELECT u FROM Student u WHERE u.lastName LIKE :lastName"),
+    @NamedQuery(name = "Student.doLogin", query = "SELECT u FROM Student u WHERE u.login = :login and u.password = :password")})
 public class Student extends Users{
     
 }

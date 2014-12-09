@@ -6,8 +6,10 @@
 package managedBeans;
 
 import Entity.Admin;
+import Entity.Teacher;
 import Entity.Users;
 import SessionBeans.loginSessionBeanLocal;
+import static com.sun.faces.facelets.util.Path.context;
 import java.io.IOException;
 import java.io.Serializable;
 import javax.ejb.EJB;
@@ -28,42 +30,60 @@ public class loginBean implements Serializable{
     @EJB
     private loginSessionBeanLocal sb;
     
-    private Users loggedUser = new Users();
-    private boolean loggedIn;
+    private Users User = new Users();
     private String user;
+    private String UserName;
 
     
     private String Password;
-    
+    private boolean AdminUser = false;
+    private boolean TeacherUser = false;
+    private boolean StudentUser = false;
     /**
      * Creates a new instance of loginBean
      */
     public loginBean() {
         
     }
-    public String login() throws IOException{
-        loggedUser.setLogin(user);
-        loggedUser.setPassword(Password);
+    public void logout() throws IOException{
+        User = new Users();
+        AdminUser = false;
+        TeacherUser = false;
+        StudentUser = false;
+        ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+        String path = context.getRequestContextPath();
+        context.redirect(path + "/faces/login.xhtml");
+    }
+    public void checkAdminLogin() throws IOException{
+        if(!(User instanceof Admin)) {
+            //TODO dodelat presmerovani pri logout
+            ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+            String path = context.getRequestContextPath();
+            context.redirect(path + "/faces/login.xhtml");
+        }
+    }
+    public void login() throws IOException{
+        User.setLogin(user);
+        User.setPassword(Password);
+        Users loggedUser = sb.doLogin(User);
+
+        if(loggedUser instanceof Admin) {
+            User = loggedUser;
+            AdminUser = true;
+            UserName = loggedUser.getLastName() + " " + loggedUser.getFirstName();
+            ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+            context.redirect("faces/Admin/index.xhtml");
+        } else if (loggedUser instanceof Teacher) {
+            User = loggedUser;
+            TeacherUser = true;
+            ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+            context.redirect("faces/teachers/index.xhtml");
+        } else{
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Chyba", "Sorry kámo, ale něco máš "));
+        }
         
-        loggedUser = sb.doLogin(loggedUser);
-        
-//        if (!(loggedUser instanceof Admin.class) {
-//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Chyba", "Sorry kámo, ale něco máš "));
-//        } elseclass){
-//        loggedIn = true;
-//        ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
-//        context.redirect("Admin/index.xhtml");
-//    } 
-            
-        
-        
-        return null;
     }
     
-    public boolean isLoggedIn() {
-        return loggedIn;
-    }
-
     public String getUser() {
         return user;
     }
@@ -78,5 +98,19 @@ public class loginBean implements Serializable{
 
     public void setPassword(String Password) {
         this.Password = Password;
+    }
+    public boolean isAdminUser() {
+        return AdminUser;
+    }
+
+    public boolean isTeacherUser() {
+        return TeacherUser;
+    }
+
+    public boolean isStudentUser() {
+        return StudentUser;
+    }
+    public String getUserName() {
+        return UserName;
     }
 }

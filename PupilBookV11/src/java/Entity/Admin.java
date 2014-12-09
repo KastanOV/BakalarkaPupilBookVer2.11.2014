@@ -7,6 +7,8 @@ package Entity;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -15,7 +17,9 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "Users")
-@DiscriminatorValue(value = "T")
+@DiscriminatorValue(value = "A")
+@NamedQueries({
+    @NamedQuery(name = "Admin.doLogin", query = "SELECT u FROM Admin u WHERE u.login = :login and u.password = :password")})
 public class Admin extends Users {
     
     

@@ -218,10 +218,10 @@ public class AdminmainSessionBean implements AdminmainSessionBeanLocal {
                 .substring(0,3)
                 .toUpperCase()
                 .trim());
-        s.setLogin(LoginPrefix + getPostFix(em.createNamedQuery("Users.loginCounter")
+        Long numberOfLogin = (Long) em.createNativeQuery("SELECT COUNT(*) FROM Users WHERE login LIKE ?createLogin")
                 .setParameter("createLogin", LoginPrefix + "%")
-                .getSingleResult()
-                .toString()));
+                .getSingleResult();
+        s.setLogin(LoginPrefix + getPostFix(String.valueOf(numberOfLogin)));
     }
     private String getPostFix(String Postfix){
         switch(Postfix.length()){
