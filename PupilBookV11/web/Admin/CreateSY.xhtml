@@ -21,7 +21,7 @@
                         <p:calendar id="endDate" pattern="MM/dd/yyyy" value="#{adminmainController.edited.endDate}" title="End" required="true" showOn="button"/>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{adminmainController.saveSchoolYears}" value="#{bundle.save}" update="display,:AdminMainMenu:SchoolYears,:growl" oncomplete="handleSubmit(args,'SchoolyearCreateDialog');"/>
-                    <p:commandButton value="#{bundle.cancel}" onclick="SchoolyearCreateDialog.hide()"/>
+                    
                 </h:panelGroup>
             </h:form>
         </p:dialog>
