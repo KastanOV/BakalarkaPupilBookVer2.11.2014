@@ -50,6 +50,15 @@ public class TeachersSessionBean implements TeachersSessionBeanLocal {
         }
     }
     @Override
+    public List<Results> getStudentResults(String login, int StudySubjectID){
+        return em.createNativeQuery("select * from results WHERE Student_Login = ?login AND SchoolYear_idSchoolYear = ?syId AND StudySubject_idStudySubject = ?StudySubjectID", Results.class)
+                    .setParameter("login", login)
+                    .setParameter("syId", getActualSchoolYear())
+                    .setParameter("StudySubjectID", StudySubjectID)
+                    .getResultList();
+    }
+    
+    @Override
     public List<Sheduleitem> getSheduleItems(String login, String password) {
         
         if(checkUser(login, password)){

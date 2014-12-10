@@ -5,6 +5,7 @@
  */
 package managedBeans;
 
+import Entity.Results;
 import Entity.Sheduleitem;
 import Entity.Student;
 import Entity.Studygroup;
@@ -15,9 +16,16 @@ import SessionBeans.TeachersSessionBeanLocal;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import org.primefaces.model.chart.Axis;
+import org.primefaces.model.chart.AxisType;
+import org.primefaces.model.chart.CartesianChartModel;
+import org.primefaces.model.chart.CategoryAxis;
+import org.primefaces.model.chart.ChartSeries;
+import org.primefaces.model.chart.LineChartModel;
 
 /**
  *
@@ -35,11 +43,36 @@ public class teachersController implements Serializable {
     private Users loggedUser;
     private Collection<Sheduleitem> selectedSheduleItems;
     private List<Student> selectedStudents;
+    private LineChartModel classificationModel;
 
     //TODO mozna budou problemy s odhlasenim, nebot by mohl zustat ulozeny Teacher v managedBeane, nutno otestovat
     /**
      * Creates a new instance of teachersController
      */
+    
+    private void createClassificationModel(){
+        classificationModel = initClassificationModel();
+        classificationModel.setTitle("Klasifikace");
+        classificationModel.setLegendPosition("e");
+        classificationModel.setShowPointLabels(true);
+        classificationModel.getAxes().put(AxisType.X, new CategoryAxis("Student " + editedStudent.getLastName() + " " + editedStudent.getFirstName()));
+        Axis yAxis = classificationModel.getAxis(AxisType.Y);
+        yAxis.setLabel("Známky");
+        
+        yAxis.setMin(0);
+        yAxis.setMax(10);
+    }
+    private LineChartModel initClassificationModel(){
+        LineChartModel model = new LineChartModel();
+        ChartSeries classification = new ChartSeries("Známky");
+            if(editedStudent != null && editedStudySubject != null){
+                for(Results item : sb.getStudentResults(editedStudent.getLogin(), editedStudySubject.getIdStudySubject())){
+                classification.set(item.getDescription(), item.getScore());
+            }
+            model.addSeries(classification);
+        }
+        return model;
+    } 
     public teachersController() {
         
     }
@@ -103,6 +136,10 @@ public class teachersController implements Serializable {
 
     public void setLoggedUser(Teacher loggedUser) {
         this.loggedUser = loggedUser;
+    }
+    public LineChartModel getClassificationModel() {
+        createClassificationModel();
+        return classificationModel;
     }
     
 }

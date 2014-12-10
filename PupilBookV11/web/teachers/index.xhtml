@@ -11,7 +11,7 @@
                 <h:form id="MainTab">
                     <p:tabView dynamic="true">
                         <p:tab title="Klasifikace" rendered="#{teachersController.editedStudent != null}">
-                            
+                            <ui:include src="classification.xhtml"/>
                         </p:tab>
                         <p:tab title="Docházka">
                             

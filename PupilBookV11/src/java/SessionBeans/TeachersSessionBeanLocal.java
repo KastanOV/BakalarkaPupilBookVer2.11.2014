@@ -27,6 +27,7 @@ public interface TeachersSessionBeanLocal {
    public List<Student> getStudents(String login, String password);
    public List<Student> getStudents(String login, String password, int StudyGroupId);
    public List<Results> getResults(String login, String password);
+   public List<Results> getStudentResults(String login, int StudySubjectID);
    public List<Studysubject> getStudySubjects();
    public List<Studysubject> getStudySubjects(Studygroup group, String login);
    
