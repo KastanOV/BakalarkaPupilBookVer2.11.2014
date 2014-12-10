@@ -10,7 +10,7 @@
             <ui:define name="body" >
                 <h:form id="MainTab">
                     <p:tabView dynamic="true">
-                        <p:tab title="Klasifikace">
+                        <p:tab title="Klasifikace" rendered="#{teachersController.editedStudent != null}">
                             
                         </p:tab>
                         <p:tab title="Docházka">
@@ -18,9 +18,6 @@
                         </p:tab>
                         <p:tab title="Rozvrhy hodin">
                             <ui:include src="shedule.xhtml"/>
-                        </p:tab>
-                        <p:tab title="Předměty">
-                            
                         </p:tab>
                     </p:tabView>
                 </h:form>

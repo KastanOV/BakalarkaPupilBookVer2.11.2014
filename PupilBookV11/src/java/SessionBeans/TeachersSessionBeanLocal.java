@@ -25,9 +25,10 @@ public interface TeachersSessionBeanLocal {
    public List<Sheduleitem> getSheduleItems(String login, String password);
    public List<Studygroup> getStudyGroups(String login, String password);
    public List<Student> getStudents(String login, String password);
+   public List<Student> getStudents(String login, String password, int StudyGroupId);
    public List<Results> getResults(String login, String password);
    public List<Studysubject> getStudySubjects();
-   public List<Studysubject> getStudySubjects(Studygroup group);
+   public List<Studysubject> getStudySubjects(Studygroup group, String login);
    
    public servicesDTO.Results saveUploadedResult(servicesDTO.Results res);
 }

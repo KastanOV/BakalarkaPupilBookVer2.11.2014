@@ -92,17 +92,34 @@ public class TeachersSessionBean implements TeachersSessionBeanLocal {
             return null;
         }
     }
+    @Override
+    public List<Student> getStudents(String login, String password, int StudyGroupId){
+        if(checkTeacher(login, password)){
+            return em.createNativeQuery("SELECT DISTINCT s.FirstName, s.MiddleName, s.LastName, s.Phone, s.Email, s.Login, s.BirthDate, s.StudyGroup_idStudyGroup FROM SheduleItem"
+                    + " left join studygroup on sheduleitem.StudyGroup_idStudyGroup = studygroup.idStudyGroup"
+                    + " join schoolyear on schoolyear.idSchoolYear = studygroup.SchoolYear_idSchoolYear "
+                    + " join Users s on studygroup.idStudyGroup = s.StudyGroup_idStudyGroup "
+                    + " WHERE Users_Login = ?login AND schoolyear.isactualyear = true AND s.Role = 'S' AND studygroup.idStudyGroup = ?StudyGroupID", Student.class)
+                    .setParameter("login", login)
+                    .setParameter("StudyGroupID", StudyGroupId)
+                    .getResultList();
+        }else {
+            return null;
+        }
+    }
     
     @Override
     public List<Studysubject> getStudySubjects(){
         return  em.createNativeQuery("SELECT * FROM studysubject", Studysubject.class).getResultList();
     }
     @Override
-    public List<Studysubject> getStudySubjects(Studygroup group){
+    public List<Studysubject> getStudySubjects(Studygroup group, String login){
         return em.createNativeQuery("select distinct studysubject.idStudySubject, studysubject.Name, studysubject.ShortName from sheduleitem "
 	+ " join studysubject on studysubject.idStudySubject = sheduleitem.StudySubject_idStudySubject "
-        + " where sheduleitem.StudySubject_idStudySubject = ?group", Studysubject.class)
+        + " join studygroup on sheduleitem.StudyGroup_idStudyGroup = studygroup.idStudyGroup "
+        + " where studygroup.idStudyGroup =  ?group and sheduleitem.Users_Login = ?login", Studysubject.class)
                 .setParameter("group", group.getIdStudyGroup())
+                .setParameter("login", login)
                 .getResultList();
         
     }

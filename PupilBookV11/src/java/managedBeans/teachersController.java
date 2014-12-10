@@ -34,6 +34,7 @@ public class teachersController implements Serializable {
     private Student editedStudent;
     private Users loggedUser;
     private Collection<Sheduleitem> selectedSheduleItems;
+    private List<Student> selectedStudents;
 
     //TODO mozna budou problemy s odhlasenim, nebot by mohl zustat ulozeny Teacher v managedBeane, nutno otestovat
     /**
@@ -43,18 +44,21 @@ public class teachersController implements Serializable {
         
     }
     public List<Studygroup> getStudyGroups(){
+        
         return sb.getStudyGroups(loggedUser.getLogin(), loggedUser.getPassword());
     }
     public List<Studysubject> getStudySubject(){
         if(editedStudyGroup != null){
-            return sb.getStudySubjects(editedStudyGroup);
+            List<Studysubject> tmp = sb.getStudySubjects(editedStudyGroup, loggedUser.getLogin());
+            return tmp;
         } else {
             return null;
         }
     }
     public List<Student> getStudents(){
-        if(editedStudyGroup != null && editedStudySubject != null){
-            return sb.getStudents(loggedUser.getLogin(), loggedUser.getPassword());
+        if(editedStudyGroup != null){
+            selectedStudents = sb.getStudents(loggedUser.getLogin(), loggedUser.getPassword(), editedStudyGroup.getIdStudyGroup());
+            return selectedStudents;
         }else return null;
     }
     public Studygroup getEditedStudyGroup() {
