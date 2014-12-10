@@ -7,9 +7,9 @@
       xmlns:p="http://primefaces.org/ui">
     <h:body>
     	<ui:composition template="/templates/teacher.xhtml">
-            <ui:define name="body">
+            <ui:define name="body" >
                 <h:form id="MainTab">
-                    <p:tabView>
+                    <p:tabView dynamic="true">
                         <p:tab title="Klasifikace">
                             
                         </p:tab>
@@ -17,7 +17,7 @@
                             
                         </p:tab>
                         <p:tab title="Rozvrhy hodin">
-                            
+                            <ui:include src="shedule.xhtml"/>
                         </p:tab>
                         <p:tab title="Předměty">
                             
