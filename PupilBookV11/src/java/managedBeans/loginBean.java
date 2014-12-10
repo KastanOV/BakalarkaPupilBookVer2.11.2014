@@ -9,7 +9,7 @@ import Entity.Admin;
 import Entity.Teacher;
 import Entity.Users;
 import SessionBeans.loginSessionBeanLocal;
-import static com.sun.faces.facelets.util.Path.context;
+
 import java.io.IOException;
 import java.io.Serializable;
 import javax.ejb.EJB;
@@ -30,7 +30,11 @@ public class loginBean implements Serializable{
     @EJB
     private loginSessionBeanLocal sb;
     
-    private Users User = new Users();
+    private Users UserObject = new Users();
+
+    public Users getUserObject() {
+        return UserObject;
+    }
     private String user;
     private String UserName;
 
@@ -46,7 +50,7 @@ public class loginBean implements Serializable{
         
     }
     public void logout() throws IOException{
-        User = new Users();
+        UserObject = new Users();
         AdminUser = false;
         TeacherUser = false;
         StudentUser = false;
@@ -55,7 +59,7 @@ public class loginBean implements Serializable{
         context.redirect(path + "/faces/login.xhtml");
     }
     public void checkAdminLogin() throws IOException{
-        if(!(User instanceof Admin)) {
+        if(!(UserObject instanceof Admin)) {
             //TODO dodelat presmerovani pri logout
             ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
             String path = context.getRequestContextPath();
@@ -63,18 +67,18 @@ public class loginBean implements Serializable{
         }
     }
     public void login() throws IOException{
-        User.setLogin(user);
-        User.setPassword(Password);
-        Users loggedUser = sb.doLogin(User);
+        UserObject.setLogin(user);
+        UserObject.setPassword(Password);
+        Users loggedUser = sb.doLogin(UserObject);
 
         if(loggedUser instanceof Admin) {
-            User = loggedUser;
+            UserObject = loggedUser;
             AdminUser = true;
             UserName = loggedUser.getLastName() + " " + loggedUser.getFirstName();
             ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
             context.redirect("faces/Admin/index.xhtml");
         } else if (loggedUser instanceof Teacher) {
-            User = loggedUser;
+            UserObject = loggedUser;
             TeacherUser = true;
             ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
             context.redirect("faces/teachers/index.xhtml");

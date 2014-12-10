@@ -39,7 +39,6 @@ public class AdminmainController implements Serializable{
     private Studygroup editedStudygroup;
     private Student editedStudent;
 
-    
     private Teacher editedTeacher;
     private List<Users> dropedStudents = new ArrayList<>();
     private Collection<Sheduleitem> selectedSheduleItems;

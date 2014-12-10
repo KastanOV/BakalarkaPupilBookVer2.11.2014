@@ -92,9 +92,19 @@ public class TeachersSessionBean implements TeachersSessionBeanLocal {
             return null;
         }
     }
+    
     @Override
     public List<Studysubject> getStudySubjects(){
         return  em.createNativeQuery("SELECT * FROM studysubject", Studysubject.class).getResultList();
+    }
+    @Override
+    public List<Studysubject> getStudySubjects(Studygroup group){
+        return em.createNativeQuery("select distinct studysubject.idStudySubject, studysubject.Name, studysubject.ShortName from sheduleitem "
+	+ " join studysubject on studysubject.idStudySubject = sheduleitem.StudySubject_idStudySubject "
+        + " where sheduleitem.StudySubject_idStudySubject = ?group", Studysubject.class)
+                .setParameter("group", group.getIdStudyGroup())
+                .getResultList();
+        
     }
     private int getActualSchoolYear(){
         Schoolyear idActualYear = (Schoolyear) em.createNativeQuery("SELECT * FROM schoolyear WHERE schoolyear.isactualyear = true", Schoolyear.class)

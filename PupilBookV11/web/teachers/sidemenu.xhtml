@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition>
+            <h:form id="TeacherSideMenu">
+                    <h:panelGrid columns="2" style="margin-bottom: 10px" cellpadding="5">
+                        <p:outputLabel for="studyGroup" value="Studíjní skupina"/>
+                        <p:selectOneMenu id="studyGroup" value="#{teachersController.editedStudyGroup}" onchange="submit()" converter="#{StudyGroupConverter}" effect="fold" >
+                            <f:selectItem itemLabel="#{bundle.dropdownStudyGroups}" itemValue="" />
+                            <f:selectItems value="#{teachersController.studyGroups}" var="item" itemLabel="#{item.name}" itemValue="#{item}" />
+                        </p:selectOneMenu>
+                        <p:outputLabel for="StudySubject" value="Předmět"/>
+                        <p:selectOneMenu id="StudySubject" value="#{teachersController.editedStudySubject}" onchange="submit()" converter="#{ConverterStudySubjects}" effect="fold">
+                            <f:selectItem itemLabel="Vyberte Předmět" itemValue="" />
+                            <f:selectItems value="#{teachersController.studySubject}" var="itemSG" itemLabel="#{itemSG.name}" itemValue="#{itemSG}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel for="Students" value="Studenti"/>
+                        <p:selectOneMenu id="Students" value="#{teachersController.editedStudent}" onchange="submit()" converter="#{ConverterStudent}" effect="fold">
+                            <f:selectItem itemLabel="Vyberte studenta" itemValue=""/>
+                            <f:selectItems value="#{teachersController.students}" var="itemStudent" itemLabel="#{itemStudent.lastName} #{itemStudent.firstName}" itemValue="#{itemStudent}"/>
+                        </p:selectOneMenu>
+                    </h:panelGrid>
+                    <hr />
+                    <p:commandButton id="testingButton" value="BIG TEST BUTTON" />
+                    
+                </h:form>
+    </ui:composition>
+</html>

@@ -27,5 +27,7 @@ public interface TeachersSessionBeanLocal {
    public List<Student> getStudents(String login, String password);
    public List<Results> getResults(String login, String password);
    public List<Studysubject> getStudySubjects();
+   public List<Studysubject> getStudySubjects(Studygroup group);
+   
    public servicesDTO.Results saveUploadedResult(servicesDTO.Results res);
 }
