@@ -26,14 +26,16 @@
                         </p:selectOneMenu>
                     </h:panelGrid>
                     <hr />
-                    
-                    <p:panelGrid columns="2" rendered="#{teachersController.editedStudent != null}">
-                        <p:outputLabel value="Popis hodnocení" for="name" />
-                        <p:inputText id="name" value="#{teachersController.editedClassification.description}" title="Popis hodnocení. Například Zlomky sčítání" required="true" />
-                        <h:outputText value="Hodnocení:" />  
-                        <p:rating value="#{teachersController.score}" />  
-                        <p:commandButton actionListener="#{teachersController.saveClassification()}" value="#{bundle.save}" update=":MainTab ,:growl" oncomplete="handleSubmit(args,'ClassificationCreateDialog');"/>
-                    </p:panelGrid> 
+
             </h:form>
+        <h:form>
+            <p:panelGrid columns="2" rendered="#{teachersController.editedStudent != null}">
+                        <p:outputLabel value="Popis hodnocení" for="name" />
+                        <p:inputText id="name" value="#{teachersController.classificationDescription}" title="Popis hodnocení. Například Zlomky sčítání" required="true" />
+                        <h:outputText value="Hodnocení:" />  
+                        <p:rating value="#{teachersController.score}" stars="10"/>  
+                    </p:panelGrid> 
+                    <p:commandButton actionListener="#{teachersController.saveClassification()}" rendered="#{teachersController.editedStudent != null}" value="#{bundle.save}" update=":MainTab" />
+        </h:form>
     </ui:composition>
 </html>

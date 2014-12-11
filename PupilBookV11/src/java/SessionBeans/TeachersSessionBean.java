@@ -29,7 +29,21 @@ public class TeachersSessionBean implements TeachersSessionBeanLocal {
     @PersistenceContext
     private EntityManager em;
     
-    
+    @Override
+    public void insertNewResult(Results res){
+        res.setDate(new java.util.Date());
+        
+        int tmp = em.createNativeQuery("INSERT INTO results ( Description, Score, Date, Teacher_Login, Student_Login, StudySubject_idStudySubject, SchoolYear_idSchoolYear)"
+                + " VALUES (?desc, ?score, ?date, ?tl, ?sl, ?ssId, ?syId)")
+                .setParameter("desc", res.getDescription())
+                .setParameter("score", res.getScore())
+                .setParameter("date", res.getDate())
+                .setParameter("tl", res.getTeacherLogin().getLogin())
+                .setParameter("sl", res.getStudentLogin().getLogin())
+                .setParameter("ssId", res.getStudySubjectidStudySubject().getIdStudySubject())
+                .setParameter("syId", getActualSchoolYear())
+                .executeUpdate();
+    }
     @Override
     public Teacher checkLogin(String login, String password){
         

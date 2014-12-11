@@ -30,6 +30,6 @@ public interface TeachersSessionBeanLocal {
    public List<Results> getStudentResults(String login, int StudySubjectID);
    public List<Studysubject> getStudySubjects();
    public List<Studysubject> getStudySubjects(Studygroup group, String login);
-   
+   public void insertNewResult(Results res);
    public servicesDTO.Results saveUploadedResult(servicesDTO.Results res);
 }

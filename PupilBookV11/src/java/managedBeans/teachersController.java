@@ -46,6 +46,15 @@ public class teachersController implements Serializable {
     private LineChartModel classificationModel;
     private Results editedClassification;
     private Integer score;
+    private String classificationDescription;
+
+    public String getClassificationDescription() {
+        return classificationDescription;
+    }
+
+    public void setClassificationDescription(String classificationDescription) {
+        this.classificationDescription = classificationDescription;
+    }
 
     public Integer getScore() {
         return score;
@@ -54,14 +63,16 @@ public class teachersController implements Serializable {
     public void setScore(Integer score) {
         this.score = score;
     }
-
-    
-    
-    
     /**
      * Creates a new instance of teachersController
      */
     public void saveClassification(){
+        editedClassification.setStudentLogin(editedStudent);
+        editedClassification.setScore(score.shortValue());
+        editedClassification.setTeacherLogin(loggedUser);
+        editedClassification.setStudySubjectidStudySubject(editedStudySubject);
+        editedClassification.setDescription(classificationDescription);
+        sb.insertNewResult(editedClassification);
         
     }
     private void createClassificationModel(){
@@ -72,16 +83,15 @@ public class teachersController implements Serializable {
         classificationModel.getAxes().put(AxisType.X, new CategoryAxis("Student " + editedStudent.getLastName() + " " + editedStudent.getFirstName()));
         Axis yAxis = classificationModel.getAxis(AxisType.Y);
         yAxis.setLabel("Známky");
-        
         yAxis.setMin(0);
-        yAxis.setMax(5);
+        yAxis.setMax(10);
     }
     private LineChartModel initClassificationModel(){
         LineChartModel model = new LineChartModel();
         ChartSeries classification = new ChartSeries("Známky");
             if(editedStudent != null && editedStudySubject != null){
                 for(Results item : sb.getStudentResults(editedStudent.getLogin(), editedStudySubject.getIdStudySubject())){
-                    double score = (double) (item.getScore() + 1)  / 2;
+                    double score = (double) (item.getScore());
                 classification.set(item.getDescription(), score);
                 
             }
@@ -142,6 +152,7 @@ public class teachersController implements Serializable {
     }
 
     public Student getEditedStudent() {
+        editedClassification = new Results();
         return editedStudent;
     }
 
