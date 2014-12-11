@@ -8,6 +8,5 @@
         <p:commandButton id="createButtonClassification" icon="ui-icon-plus" value="Klasifikovat Studenta" actionListener="#{teachersController.prepareNewClassification()}" update=":ClassificationCreateForm" oncomplete="PF('ClassificationCreateDialog').show()"/>
         <p:chart type="line" model="#{teachersController.classificationModel}"  style="height:300px;" />
         
-        <p:rating value="#{teachersController.editedScore}" stars="10"/>
     </ui:composition>
 </html>

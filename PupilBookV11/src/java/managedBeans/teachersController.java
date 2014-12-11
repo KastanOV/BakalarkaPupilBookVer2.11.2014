@@ -17,11 +17,10 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
-import org.primefaces.event.RateEvent;
+
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.CategoryAxis;
@@ -46,25 +45,18 @@ public class teachersController implements Serializable {
     private List<Student> selectedStudents;
     private LineChartModel classificationModel;
     private Results editedClassification;
-    private Integer editedScore = 5;
+    private Integer score;
 
-    public Integer getEditedScore() {
-        return editedScore;
+    public Integer getScore() {
+        return score;
     }
 
-    public void setEditedScore(Integer editedScore) {
-        this.editedScore = editedScore;
+    public void setScore(Integer score) {
+        this.score = score;
     }
-    public void onrate(RateEvent rateEvent) {
-        this.editedScore = (((Integer) rateEvent.getRating()).intValue());
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Rate Event", "You rated:" + ((Integer) rateEvent.getRating()).intValue());
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
-     
-    public void oncancel() {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cancel Event", "Rate Reset");
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
+
+    
+    
     
     /**
      * Creates a new instance of teachersController

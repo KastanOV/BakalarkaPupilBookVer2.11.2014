@@ -16,10 +16,10 @@
                         <p:inputText id="name" value="#{teachersController.editedClassification.description}" title="Popis hodnocení. Například Zlomky sčítání" required="true" />
                         
                     </p:panelGrid>
-                    <h:panelGrid columns="2">
-                        <h:outputText value="Callback:" />
-                        <p:rating value="#{teachersController.editedScore}" />
-                    </h:panelGrid>
+                    <h:panelGrid columns="2" cellpadding="5">  
+                            <h:outputText value="Rating 1:" />  
+                            <p:rating value="#{teachersController.score}" />  
+                    </h:panelGrid> 
                     <p:commandButton actionListener="#{teachersController.saveClassification()}" value="#{bundle.save}" update="display,:MainTab ,:growl" oncomplete="handleSubmit(args,'ClassificationCreateDialog');"/>
                 </h:panelGroup>
             </h:form>
