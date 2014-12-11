@@ -79,6 +79,8 @@ public class Results implements Serializable {
         this.idResults = idResults;
         this.score = score;
     }
+
+    
     public Schoolyear getSchoolYearidSchoolYear() {
         return schoolYearidSchoolYear;
     }

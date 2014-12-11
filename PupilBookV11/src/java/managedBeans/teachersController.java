@@ -16,13 +16,14 @@ import SessionBeans.TeachersSessionBeanLocal;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import org.primefaces.event.RateEvent;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
-import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.CategoryAxis;
 import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.LineChartModel;
@@ -44,12 +45,33 @@ public class teachersController implements Serializable {
     private Collection<Sheduleitem> selectedSheduleItems;
     private List<Student> selectedStudents;
     private LineChartModel classificationModel;
+    private Results editedClassification;
+    private Integer editedScore = 5;
 
-    //TODO mozna budou problemy s odhlasenim, nebot by mohl zustat ulozeny Teacher v managedBeane, nutno otestovat
+    public Integer getEditedScore() {
+        return editedScore;
+    }
+
+    public void setEditedScore(Integer editedScore) {
+        this.editedScore = editedScore;
+    }
+    public void onrate(RateEvent rateEvent) {
+        this.editedScore = (((Integer) rateEvent.getRating()).intValue());
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Rate Event", "You rated:" + ((Integer) rateEvent.getRating()).intValue());
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+     
+    public void oncancel() {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cancel Event", "Rate Reset");
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+    
     /**
      * Creates a new instance of teachersController
      */
-    
+    public void saveClassification(){
+        
+    }
     private void createClassificationModel(){
         classificationModel = initClassificationModel();
         classificationModel.setTitle("Klasifikace");
@@ -60,14 +82,16 @@ public class teachersController implements Serializable {
         yAxis.setLabel("Známky");
         
         yAxis.setMin(0);
-        yAxis.setMax(10);
+        yAxis.setMax(5);
     }
     private LineChartModel initClassificationModel(){
         LineChartModel model = new LineChartModel();
         ChartSeries classification = new ChartSeries("Známky");
             if(editedStudent != null && editedStudySubject != null){
                 for(Results item : sb.getStudentResults(editedStudent.getLogin(), editedStudySubject.getIdStudySubject())){
-                classification.set(item.getDescription(), item.getScore());
+                    double score = (double) (item.getScore() + 1)  / 2;
+                classification.set(item.getDescription(), score);
+                
             }
             model.addSeries(classification);
         }
@@ -110,7 +134,9 @@ public class teachersController implements Serializable {
         free.setStudySubjectidStudySubject(new Studysubject(null, "Volná hodina", null));
         return free;
     }
-
+    public void prepareNewClassification(){
+        editedClassification = new Results();
+    }
     public void setEditedStudyGroup(Studygroup editedStudyGroup) {
         this.editedStudyGroup = editedStudyGroup;
     }
@@ -141,5 +167,13 @@ public class teachersController implements Serializable {
         createClassificationModel();
         return classificationModel;
     }
+    public Results getEditedClassification() {
+        return editedClassification;
+    }
+
+    public void setEditedClassification(Results editedClassification) {
+        this.editedClassification = editedClassification;
+    }
     
+        
 }

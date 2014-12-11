@@ -7,6 +7,7 @@
       xmlns:p="http://primefaces.org/ui">
     <h:body>
     	<ui:composition template="/templates/teacher.xhtml">
+            
             <ui:define name="body" >
                 <h:form id="MainTab">
                     <p:tabView dynamic="true">
@@ -20,11 +21,15 @@
                             <ui:include src="shedule.xhtml"/>
                         </p:tab>
                     </p:tabView>
+                    
                 </h:form>
+                
             </ui:define>
             <ui:define name="west">
                 <ui:include src="sidemenu.xhtml"/>
+                <ui:include src="classificationDialog.xhtml"/>
             </ui:define>
+            
     	</ui:composition>
     	
     </h:body>
