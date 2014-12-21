@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition>
+        <ui:include src="dialogs/EditStudent.xhtml"/>
+        <h:form id="Students">
+            <script type="text/javascript">
+                function handleDrop(event, ui) {
+                var droppedStudent = ui.draggable;
+                droppedStudent.fadeOut('fast');
+                }
+            </script>
+            <p:commandButton id="createButtonStudent" icon="ui-icon-plus" value="Přidej studenta" actionListener="#{adminmainController.prepareNewStudent()}" update=":StudentCreateForm" oncomplete="PF('StudentCreateDialog').show()"/>
+                            
+                <p:panelGrid style="margin-top:20px">
+                <f:facet name="header">
+                    
+                    <p:row>
+                        <p:column colspan="1">
+                            Studenti ve třídě #{adminmainController.editedStudygroup.name} školní rok #{adminmainController.edited.name}
+                        </p:column>
+                        <p:column colspan="1">
+                            Všíchni studenti 
+                        </p:column>
+                    </p:row>
+                </f:facet>
+                    <p:row>
+                        <p:column colspan="1">
+                            STUDENTI VE VYBRANNE TRIDE
+                        </p:column>
+                        <p:column colspan="1">
+                            <p:fieldset legend="Vyhledávání" style="margin-top:20px">
+                                <p:inputText id="SearchByLastName" title="Vyhledávání podle příjmení" value="#{adminmainController.searchByLastname}" />
+                                <p:commandButton update="StudentsTable" value="hledej"/>
+                            </p:fieldset>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column colspan="1">
+                            <p:fieldset id="selectedStudentsField" legend="Selected Students" style="margin-top:20px">
+                                <p:outputPanel id="dropArea">
+                                    <h:outputText value="Zde přesuňte studenty" rendered="#{empty adminmainController.dropedStudents}" style="font-size: 24px" />
+                                    <p:dataTable id="selectedStudents" var="selStudents" value="#{adminmainController.dropedStudents}" rendered="#{not empty adminmainController.dropedStudents}" >
+                                        <p:column headerText="login" >
+                                            <h:outputText value="#{selStudents.login}" />
+                                        </p:column>
+                                        <p:column headerText="Příjmení" >
+                                            <h:outputText value="#{selStudents.lastName}" />
+                                        </p:column>
+                                        <p:column headerText="Jméno" >
+                                            <h:outputText value="#{selStudents.firstName}" />
+                                        </p:column>
+                                        <p:column headerText="Datum narození">
+                                            <h:outputText value="#{selStudents.birthDate}" />
+                                        </p:column>
+                                    </p:dataTable>
+                                </p:outputPanel>
+                            </p:fieldset>
+                        </p:column>
+                        <p:column colspan="1">
+                            <p:fieldset id="availableStudentsField" legend="Available Students">
+                                <p:dataTable id="StudentsTable" var="studentTable" value="#{adminmainController.students}">
+                                    <p:column style="width:20px">
+                                        <h:outputText id="dragIcon" styleClass="ui-icon ui-icon-arrow-4" />
+                                        <p:draggable for="dragIcon" revert="true" helper="clone"/>
+                                    </p:column>
+                                    
+                                    <p:column headerText="login">
+                                        <h:outputText value="#{studentTable.login}"/>
+                                    </p:column>
+                                    <p:column headerText="Třída">
+                                        <h:outputText value="#{studentTable.studyGroupidStudyGroup.name} #{studentTable.studyGroupidStudyGroup.schoolYearidSchoolYear.name}"/>
+                                    </p:column>
+                                    <p:column headerText="Příjmení">
+                                        <h:outputText value="#{studentTable.lastName}"/>
+                                    </p:column>
+                                    <p:column headerText="Jméno">
+                                        <h:outputText value="#{studentTable.firstName}"/>
+                                    </p:column>
+                                    <p:column headerText="Datum narození">
+                                        <h:outputText value="#{studentTable.birthDate}"/>
+                                    </p:column>
+                                    <p:column style="width:32px">
+                                        <p:commandButton update=":StudentCreateForm" oncomplete="PF('StudentCreateDialog').show()" icon="ui-icon-search">
+                                            <f:setPropertyActionListener value="#{studentTable}" target="#{adminmainController.editedStudent}" />
+                                        </p:commandButton>
+                                    </p:column>
+                                </p:dataTable>
+                            </p:fieldset>
+                        </p:column> 
+                    </p:row>
+                </p:panelGrid>
+                <p:droppable for="selectedStudentsField" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="StudentsTable" onDrop="handleDrop">
+                    <p:ajax listener="#{adminmainController.onStudentDrop}" update="dropArea StudentsTable" />
+                </p:droppable>
+            </h:form>
+    </ui:composition>
+</html>

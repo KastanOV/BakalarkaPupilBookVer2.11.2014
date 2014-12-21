@@ -76,7 +76,7 @@ public class loginBean implements Serializable{
             AdminUser = true;
             UserName = loggedUser.getLastName() + " " + loggedUser.getFirstName();
             ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
-            context.redirect("faces/Admin/index.xhtml");
+            context.redirect("faces/Administrator/students.xhtml");
         } else if (loggedUser instanceof Teacher) {
             UserObject = loggedUser;
             TeacherUser = true;

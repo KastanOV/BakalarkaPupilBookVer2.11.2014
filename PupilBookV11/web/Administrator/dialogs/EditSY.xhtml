@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SchoolyearEditDialog" widgetVar="SchoolyearEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.editSchoolYear}" showEffect="fade" hideEffect="explode" >
+            <h:form id="SchoolyearEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{adminmainController.edited != null}">
+                        <p:outputLabel value="#{bundle.SchoolYearname}" for="name" />
+                        <p:inputText id="name" value="#{adminmainController.edited.name}" title="#{bundle.SchoolYearname}" required="true" />
+                        <p:outputLabel value="#{bundle.SchoolyearIsActual}" for="isactualyear" />
+                        <p:selectBooleanCheckbox id="isactualyear" value="#{adminmainController.edited.isactualyear}" required="true" />
+                        <p:outputLabel value="#{bundle.SchoolYearStartDate}" for="startDate" />
+                        <p:calendar id="startDate" pattern="MM/dd/yyyy" value="#{adminmainController.edited.startDate}" title="Start" required="true" showOn="button"/>
+                        <p:outputLabel value="#{bundle.SchoolYearEndDate}" for="endDate" />
+                        <p:calendar id="endDate" pattern="MM/dd/yyyy" value="#{adminmainController.edited.endDate}" title="End" required="true" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{adminmainController.saveSchoolYears}" value="#{bundle.save}" update="display,:AdminMainMenu:SchoolYears,:growl" oncomplete="handleSubmit(args,'SchoolyearEditDialog');"/>
+                    <p:commandButton value="#{bundle.cancel}" onclick="SchoolyearEditForm.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+    </ui:composition>
+</html>

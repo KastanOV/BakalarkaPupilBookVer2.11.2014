@@ -21,7 +21,9 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 import org.primefaces.event.DragDropEvent;
 
 
@@ -187,6 +189,8 @@ public class AdminmainController implements Serializable{
     public void saveStudySubject(){
         try{
             sb.insertNewStudySubject(editedStudySubject);
+            ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+            ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());
         }catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, 
 					"Nepodařilo se uložit data do databáze.", 
