@@ -8,13 +8,11 @@ package managedBeans;
 import Entity.Schoolyear;
 import Entity.Studygroup;
 import Entity.Studysubject;
-import Entity.Users;
 import Entity.Sheduleitem;
 import Entity.Student;
 import Entity.Teacher;
 import SessionBeans.AdminmainSessionBeanLocal;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import javax.ejb.EJB;
@@ -34,18 +32,15 @@ import org.primefaces.event.DragDropEvent;
 @ManagedBean
 @SessionScoped
 public class AdminmainController implements Serializable{
+    
     @EJB
     private AdminmainSessionBeanLocal sb;
     
     private Schoolyear editedSchoolYear;
     private Studygroup editedStudygroup;
-    private Student editedStudent;
-
-    private Teacher editedTeacher;
-    private List<Users> dropedStudents = new ArrayList<>();
     private Collection<Sheduleitem> selectedSheduleItems;
     private Studysubject editedStudySubject;
-    private Sheduleitem editedSheduleItem;
+//    private Sheduleitem editedSheduleItem;
     private String searchByLastname;
 
     public String getSearchByLastname() {
@@ -56,38 +51,14 @@ public class AdminmainController implements Serializable{
         this.searchByLastname = SearchByLastname;
     }
     
-    public Sheduleitem getEditedSheduleItem() {
-        return editedSheduleItem;
-    }
+//    public Sheduleitem getEditedSheduleItem() {
+//        return editedSheduleItem;
+//    }
+//
+//    public void setEditedSheduleItem(Sheduleitem editedSheduleItem) {
+//        this.editedSheduleItem = editedSheduleItem;
+//    }
 
-    public void setEditedSheduleItem(Sheduleitem editedSheduleItem) {
-        this.editedSheduleItem = editedSheduleItem;
-    }
-
-    public void onStudentDrop(DragDropEvent ddEvent){
-        Student s = ((Student) ddEvent.getData());
-        try {
-            editedStudygroup.getUsersCollection().add(s);
-            s.setStudyGroupidStudyGroup(editedStudygroup);
-            saveStudent(s);
-        } catch(Exception e) {
-			FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-					"Zřejmě jste nevybral studíjní skupinu", 
-					"Nepodařilo se uložit data do databáze.. Příčina: " + e.getMessage()));
-        }
-    }
-    public void onTeacherDrop(DragDropEvent ddEvent){
-        Teacher s = ((Teacher) ddEvent.getData());
-        try {
-            editedStudygroup.getUsersCollection().add(s);
-            s.setStudyGroupidStudyGroup(editedStudygroup);
-            saveTeacher(s);
-        } catch(Exception e) {
-			FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-					"Zřejmě jste nevybral studíjní skupinu", 
-					"Nepodařilo se uložit data do databáze.. Příčina: " + e.getMessage()));
-        }
-    }
     public Collection<Student> getStudents() {
         if(searchByLastname == null || searchByLastname.equals("")){
             return sb.getAllStudents();
@@ -96,65 +67,7 @@ public class AdminmainController implements Serializable{
         }
         
     }
-    public Collection<Teacher> getTeachers(){
-        Collection<Teacher> u = sb.getAllTeachers() ;
-        return u;
-    }
-    
-    public void saveStudent(Student u){
-        try{
-            if(u.getLogin() != null){
-                sb.saveUser(u);    
-            }else sb.createNewUser(editedStudent);
-            
-        } catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-					"Nepodařilo se uložit data do databáze.", 
-					"Nepodařilo se uložit data do databáze.. Příčina: " + e.getMessage()));
-		}
-    }
-    public void saveTeacher(Teacher u){
-        try{
-            if(u.getLogin() != null){
-                sb.saveTeacher(u);    
-            }else sb.createNewTeacher(editedTeacher);
-            
-        } catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-					"Nepodařilo se uložit data do databáze.", 
-					"Nepodařilo se uložit data do databáze.. Příčina: " + e.getMessage()));
-		}
-    }
-    public void saveTeacher(){
-        try{
-            if(editedTeacher.getLogin() == null){
-                sb.createNewTeacher(editedTeacher);
-            }
-            else {
-                sb.saveTeacher(editedTeacher);
-            }
-            
-        } catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-					"Nepodařilo se uložit data do databáze.", 
-					"Nepodařilo se uložit data do databáze.. Příčina: " + e.getMessage()));
-		}
-    }
-    public void saveStudent(){
-        try{
-            if(editedStudent.getLogin() == null){
-                sb.createNewUser(editedStudent);
-            }
-            else {
-                sb.saveUser(editedStudent);
-            }
-            
-        } catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-					"Nepodařilo se uložit data do databáze.", 
-					"Nepodařilo se uložit data do databáze.. Příčina: " + e.getMessage()));
-		}
-    }
+
     public void saveSchoolYears(){
 		try {
 			sb.saveSchoolyear(editedSchoolYear);
@@ -198,29 +111,19 @@ public class AdminmainController implements Serializable{
 		}
     }
     //TODO save study subject
-    public void saveEditedSheduleItem(Teacher u, Studysubject s){
-        editedSheduleItem.setUsersLogin(u);
-        editedSheduleItem.setStudySubjectidStudySubject(s);
-        try{
-            sb.saveSheduleItem(editedSheduleItem);
-        
-        }catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-					"Nepodařilo se uložit data do databáze.", 
-					"Nepodařilo se uložit data do databáze.. Příčina: " + e.getMessage()));
-		}
-    }
-    
-    public Student prepareNewStudent(){
-        editedStudent = new Student();
-        
-        return editedStudent;
-    }
-    public Teacher prepareNewTeacher(){
-        editedTeacher = new Teacher();
-        return editedTeacher;
-    }
-    
+//    public void saveEditedSheduleItem(Teacher u, Studysubject s){
+//        editedSheduleItem.setUsersLogin(u);
+//        editedSheduleItem.setStudySubjectidStudySubject(s);
+//        try{
+//            sb.saveSheduleItem(editedSheduleItem);
+//        
+//        }catch (Exception e) {
+//			FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+//					"Nepodařilo se uložit data do databáze.", 
+//					"Nepodařilo se uložit data do databáze.. Příčina: " + e.getMessage()));
+//		}
+//    }
+
     public Schoolyear prepareNewSchoolYear(){
         editedSchoolYear = new Schoolyear();
         return editedSchoolYear;
@@ -256,41 +159,26 @@ public class AdminmainController implements Serializable{
         
     }
     
-    public Collection<Student> getDropedStudents() {
-        if(editedStudygroup != null){
-            return sb.getStudentByStudyGroup(editedStudygroup);
-        } else {
-            return null;
-        }
-    }
-    public Collection<Teacher> getDropedTeachers() {
-        if(editedStudygroup != null){
-            return sb.getTeachersByStudyGroup(editedStudygroup);
-        } else {
-            return null;
-        }
-    }
-    
-    public Sheduleitem getSheduleitem(short day, short hour){
-        if(selectedSheduleItems != null){
-            for (Sheduleitem item : selectedSheduleItems){
-                if(item.getDay() == day && item.getHour() == hour) return item;
-            }
-        }
-        return null;
-    }
-    public void setEditedSheduleItem(short day, short hour){
-        if(selectedSheduleItems != null){
-            for (Sheduleitem item : selectedSheduleItems){
-                if(item.getDay() == day && item.getHour() == hour){
-                    editedSheduleItem = item;
-                    editedTeacher = (Teacher) item.getUsersLogin();
-                    editedStudySubject = item.getStudySubjectidStudySubject();
-                    break;
-                }
-            }
-        }
-    }
+//    public Sheduleitem getSheduleitem(short day, short hour){
+//        if(selectedSheduleItems != null){
+//            for (Sheduleitem item : selectedSheduleItems){
+//                if(item.getDay() == day && item.getHour() == hour) return item;
+//            }
+//        }
+//        return null;
+//    }
+//    public void setEditedSheduleItem(short day, short hour){
+//        if(selectedSheduleItems != null){
+//            for (Sheduleitem item : selectedSheduleItems){
+//                if(item.getDay() == day && item.getHour() == hour){
+//                    editedSheduleItem = item;
+//                    editedTeacher = (Teacher) item.getUsersLogin();
+//                    editedStudySubject = item.getStudySubjectidStudySubject();
+//                    break;
+//                }
+//            }
+//        }
+//    }
     
     public Collection<Studysubject> getStudySubjects(){
         Collection<Studysubject> s = sb.getAllStudySubjects();
@@ -301,20 +189,5 @@ public class AdminmainController implements Serializable{
     }
     public void setEditedStudySubject(Studysubject editedStudySubject) {
         this.editedStudySubject = editedStudySubject;
-    }
-    public Student getEditedStudent() {
-        return editedStudent;
-    }
-
-    public void setEditedStudent(Student editedStudent) {
-        this.editedStudent = editedStudent;
-    }
-
-    public Teacher getEditedTeacher() {
-        return editedTeacher;
-    }
-
-    public void setEditedTeacher(Teacher editedTeacher) {
-        this.editedTeacher = editedTeacher;
     }
 }

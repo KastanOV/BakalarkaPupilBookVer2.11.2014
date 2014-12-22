@@ -7,6 +7,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:composition>
+        #{adminTeacherController.setMainControler(adminmainController)}
         <ui:include src="dialogs/EditTeacher.xhtml"/>
         <h:form id="Teachers">
             <script type="text/javascript">
@@ -33,15 +34,15 @@
                             Třídní učitel
                         </p:column>
                         <p:column colspan="1">
-                            <p:commandButton id="createNewTeacher" icon="ui-icon-plus" value="Přidat Učitele" actionListener="#{adminmainController.prepareNewTeacher}" update=":TeacherCreateForm" oncomplete="PF('TeacherCreateDialog').show()" />
+                            <p:commandButton id="createNewTeacher" icon="ui-icon-plus" value="Přidat Učitele" actionListener="#{adminTeacherController.prepareNewTeacher}" update=":TeacherCreateForm" oncomplete="PF('TeacherCreateDialog').show()" />
                         </p:column>
                     </p:row>
                     <p:row>
                         <p:column colspan="1">
                             <p:fieldset id="selectedTeachersField" legend="Selected Teachers" style="margin-top:20px">
                                 <p:outputPanel id="dropArea2">
-                                    <h:outputText value="Zde přesuňte třídního učitele" rendered="#{empty adminmainController.dropedTeachers}" style="font-size: 24px" />
-                                    <p:dataTable id="selectedStudents2" var="selStudents" value="#{adminmainController.dropedTeachers}" rendered="#{not empty adminmainController.dropedStudents}" >
+                                    <h:outputText value="Zde přesuňte třídního učitele" rendered="#{empty adminTeacherController.dropedTeachers}" style="font-size: 24px" />
+                                    <p:dataTable id="selectedStudents2" var="selStudents" value="#{adminTeacherController.dropedTeachers}" rendered="#{not empty adminTeacherController.dropedTeachers}" >
                                         <p:column headerText="login">
                                             <h:outputText value="#{selStudents.login}" />
                                         </p:column>
@@ -60,7 +61,7 @@
                         </p:column>
                         <p:column colspan="1">
                             <p:fieldset id="availableTeachersField" legend="Available Teachers">
-                                <p:dataTable id="teacheTable" var="teacher" value="#{adminmainController.teachers}">
+                                <p:dataTable id="teacheTable" var="teacher" value="#{adminTeacherController.teachers}">
                                     <p:column style="width:20px">
                                         <h:outputText id="dragIcon" styleClass="ui-icon ui-icon-arrow-4" />
                                         <p:draggable for="dragIcon" revert="true" helper="clone"/>
@@ -76,7 +77,7 @@
                                     </p:column>
                                     <p:column style="width:32px">
                                         <p:commandButton update=":TeacherCreateForm" oncomplete="PF('TeacherCreateDialog').show()" icon="ui-icon-search">
-                                            <f:setPropertyActionListener value="#{teacher}" target="#{adminmainController.editedTeacher}" />
+                                            <f:setPropertyActionListener value="#{teacher}" target="#{adminTeacherController.editedTeacher}" />
                                         </p:commandButton>
                                     </p:column>
                                 </p:dataTable>
@@ -85,7 +86,7 @@
                     </p:row>
                 </p:panelGrid>
                 <p:droppable for="selectedTeachersField" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="teacheTable" onDrop="handleDrop">
-                    <p:ajax listener="#{adminmainController.onTeacherDrop}" update="dropArea2 teacheTable" />
+                    <p:ajax listener="#{adminTeacherController.onTeacherDrop}" update="dropArea2 teacheTable" />
                 </p:droppable>
         </h:form>    
     </ui:composition>

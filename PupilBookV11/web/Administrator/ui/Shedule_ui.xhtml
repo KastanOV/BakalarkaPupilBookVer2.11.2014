@@ -7,6 +7,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html">
 
     <ui:composition>
+        #{adminSheduleController.setMainControler(adminmainController)}
+        
         <ui:include src="dialogs/EditSheduleItem.xhtml"/>
         <h:form id="ShedulePanel">
         <p:panelGrid style="margin-top: 20px">
@@ -18,216 +20,216 @@
             <p:row>
                 <p:column><p:spacer height="20"/>Pondělí<p:spacer height="20"/></p:column>
                 <p:column>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(0, 0).usersLogin.login}" style=" color: #990000"/></center>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(0, 0).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
-                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminmainController.setEditedSheduleItem(0,0)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(0, 0).usersLogin.login}" style=" color: #990000"/></center>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(0, 0).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
+                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminSheduleController.setEditedSheduleItem(0,0)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
                 </p:column>
                 <p:column style="">
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(0, 1).usersLogin.login}" style=" color: #990000"/></center>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(0, 1).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
-                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminmainController.setEditedSheduleItem(0,1)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(0, 1).usersLogin.login}" style=" color: #990000"/></center>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(0, 1).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
+                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminSheduleController.setEditedSheduleItem(0,1)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
                 </p:column>
                 <p:column>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(0, 2).usersLogin.login}" style=" color: #990000"/></center>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(0, 2).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
-                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminmainController.setEditedSheduleItem(0,2)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(0, 2).usersLogin.login}" style=" color: #990000"/></center>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(0, 2).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
+                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminSheduleController.setEditedSheduleItem(0,2)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
                 </p:column>
                 <p:column>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(0, 3).usersLogin.login}" style=" color: #990000"/></center>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(0, 3).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
-                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminmainController.setEditedSheduleItem(0,3)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(0, 3).usersLogin.login}" style=" color: #990000"/></center>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(0, 3).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
+                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminSheduleController.setEditedSheduleItem(0,3)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
                 </p:column>
                 <p:column>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(0, 4).usersLogin.login}" style=" color: #990000"/></center>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(0, 4).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
-                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminmainController.setEditedSheduleItem(0,4)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(0, 4).usersLogin.login}" style=" color: #990000"/></center>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(0, 4).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
+                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminSheduleController.setEditedSheduleItem(0,4)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
                 </p:column>
                 <p:column>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(0, 5).usersLogin.login}" style=" color: #990000"/></center>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(0, 5).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
-                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminmainController.setEditedSheduleItem(0,5)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(0, 5).usersLogin.login}" style=" color: #990000"/></center>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(0, 5).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
+                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminSheduleController.setEditedSheduleItem(0,5)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
                 </p:column>
                 <p:column>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(0, 6).usersLogin.login}" style=" color: #990000"/></center>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(0, 6).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
-                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminmainController.setEditedSheduleItem(0,6)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(0, 6).usersLogin.login}" style=" color: #990000"/></center>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(0, 6).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
+                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminSheduleController.setEditedSheduleItem(0,6)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
                 </p:column>
                 <p:column>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(0, 7).usersLogin.login}" style=" color: #990000"/></center>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(0, 7).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
-                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminmainController.setEditedSheduleItem(0,7)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(0, 7).usersLogin.login}" style=" color: #990000"/></center>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(0, 7).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
+                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminSheduleController.setEditedSheduleItem(0,7)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
                 </p:column>
             </p:row>
             
             <p:row>
                 <p:column><p:spacer height="20"/>Úterý<p:spacer height="20"/></p:column>
                 <p:column>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(1, 0).usersLogin.login}" style=" color: #990000"/></center>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(1, 0).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
-                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminmainController.setEditedSheduleItem(1,0)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(1, 0).usersLogin.login}" style=" color: #990000"/></center>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(1, 0).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
+                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminSheduleController.setEditedSheduleItem(1,0)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
                 </p:column>
                 <p:column style="">
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(1, 1).usersLogin.login}" style=" color: #990000"/></center>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(1, 1).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
-                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminmainController.setEditedSheduleItem(1,1)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(1, 1).usersLogin.login}" style=" color: #990000"/></center>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(1, 1).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
+                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminSheduleController.setEditedSheduleItem(1,1)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
                 </p:column>
                 <p:column>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(1, 2).usersLogin.login}" style=" color: #990000"/></center>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(1, 2).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
-                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminmainController.setEditedSheduleItem(1,2)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(1, 2).usersLogin.login}" style=" color: #990000"/></center>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(1, 2).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
+                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminSheduleController.setEditedSheduleItem(1,2)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
                 </p:column>
                 <p:column>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(1, 3).usersLogin.login}" style=" color: #990000"/></center>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(1, 3).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
-                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminmainController.setEditedSheduleItem(1,3)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(1, 3).usersLogin.login}" style=" color: #990000"/></center>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(1, 3).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
+                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminSheduleController.setEditedSheduleItem(1,3)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
                 </p:column>
                 <p:column>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(1, 4).usersLogin.login}" style=" color: #990000"/></center>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(1, 4).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
-                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminmainController.setEditedSheduleItem(1,4)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(1, 4).usersLogin.login}" style=" color: #990000"/></center>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(1, 4).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
+                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminSheduleController.setEditedSheduleItem(1,4)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
                 </p:column>
                 <p:column>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(1, 5).usersLogin.login}" style=" color: #990000"/></center>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(1, 5).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
-                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminmainController.setEditedSheduleItem(1,5)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(1, 5).usersLogin.login}" style=" color: #990000"/></center>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(1, 5).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
+                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminSheduleController.setEditedSheduleItem(1,5)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
                 </p:column>
                 <p:column>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(1, 6).usersLogin.login}" style=" color: #990000"/></center>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(1, 6).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
-                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminmainController.setEditedSheduleItem(1,6)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(1, 6).usersLogin.login}" style=" color: #990000"/></center>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(1, 6).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
+                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminSheduleController.setEditedSheduleItem(1,6)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
                 </p:column>
                 <p:column>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(1, 7).usersLogin.login}" style=" color: #990000"/></center>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(1, 7).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
-                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminmainController.setEditedSheduleItem(1,7)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(1, 7).usersLogin.login}" style=" color: #990000"/></center>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(1, 7).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
+                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminSheduleController.setEditedSheduleItem(1,7)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
                 </p:column>
             </p:row>
             <p:row>
                 <p:column><p:spacer height="20"/>Středa<p:spacer height="20"/></p:column>
                 <p:column>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(2, 0).usersLogin.login}" style=" color: #990000"/></center>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(2, 0).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
-                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminmainController.setEditedSheduleItem(2,0)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(2, 0).usersLogin.login}" style=" color: #990000"/></center>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(2, 0).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
+                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminSheduleController.setEditedSheduleItem(2,0)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
                 </p:column>
                 <p:column style="">
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(2, 1).usersLogin.login}" style=" color: #990000"/></center>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(2, 1).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
-                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminmainController.setEditedSheduleItem(2,1)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(2, 1).usersLogin.login}" style=" color: #990000"/></center>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(2, 1).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
+                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminSheduleController.setEditedSheduleItem(2,1)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
                 </p:column>
                 <p:column>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(2, 2).usersLogin.login}" style=" color: #990000"/></center>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(2, 2).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
-                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminmainController.setEditedSheduleItem(2,2)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(2, 2).usersLogin.login}" style=" color: #990000"/></center>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(2, 2).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
+                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminSheduleController.setEditedSheduleItem(2,2)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
                 </p:column>
                 <p:column>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(2, 3).usersLogin.login}" style=" color: #990000"/></center>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(2, 3).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
-                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminmainController.setEditedSheduleItem(2,3)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(2, 3).usersLogin.login}" style=" color: #990000"/></center>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(2, 3).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
+                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminSheduleController.setEditedSheduleItem(2,3)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
                 </p:column>
                 <p:column>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(2, 4).usersLogin.login}" style=" color: #990000"/></center>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(2, 4).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
-                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminmainController.setEditedSheduleItem(2,4)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(2, 4).usersLogin.login}" style=" color: #990000"/></center>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(2, 4).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
+                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminSheduleController.setEditedSheduleItem(2,4)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
                 </p:column>
                 <p:column>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(2, 5).usersLogin.login}" style=" color: #990000"/></center>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(2, 5).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
-                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminmainController.setEditedSheduleItem(2,5)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(2, 5).usersLogin.login}" style=" color: #990000"/></center>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(2, 5).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
+                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminSheduleController.setEditedSheduleItem(2,5)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
                 </p:column>
                 <p:column>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(2, 6).usersLogin.login}" style=" color: #990000"/></center>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(2, 6).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
-                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminmainController.setEditedSheduleItem(2,6)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(2, 6).usersLogin.login}" style=" color: #990000"/></center>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(2, 6).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
+                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminSheduleController.setEditedSheduleItem(2,6)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
                 </p:column>
                 <p:column>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(2, 7).usersLogin.login}" style=" color: #990000"/></center>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(2, 7).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
-                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminmainController.setEditedSheduleItem(2,7)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(2, 7).usersLogin.login}" style=" color: #990000"/></center>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(2, 7).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
+                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminSheduleController.setEditedSheduleItem(2,7)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
                 </p:column>
             </p:row>
             <p:row>
                 <p:column><p:spacer height="20"/>Čtvrtek<p:spacer height="20"/></p:column>
                 <p:column>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(3, 0).usersLogin.login}" style=" color: #990000"/></center>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(3, 0).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
-                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminmainController.setEditedSheduleItem(3,0)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(3, 0).usersLogin.login}" style=" color: #990000"/></center>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(3, 0).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
+                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminSheduleController.setEditedSheduleItem(3,0)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
                 </p:column>
                 <p:column style="">
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(3, 1).usersLogin.login}" style=" color: #990000"/></center>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(3, 1).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
-                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminmainController.setEditedSheduleItem(3,1)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(3, 1).usersLogin.login}" style=" color: #990000"/></center>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(3, 1).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
+                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminSheduleController.setEditedSheduleItem(3,1)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
                 </p:column>
                 <p:column>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(3, 2).usersLogin.login}" style=" color: #990000"/></center>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(3, 2).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
-                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminmainController.setEditedSheduleItem(3,2)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(3, 2).usersLogin.login}" style=" color: #990000"/></center>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(3, 2).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
+                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminSheduleController.setEditedSheduleItem(3,2)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
                 </p:column>
                 <p:column>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(3, 3).usersLogin.login}" style=" color: #990000"/></center>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(3, 3).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
-                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminmainController.setEditedSheduleItem(3,3)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(3, 3).usersLogin.login}" style=" color: #990000"/></center>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(3, 3).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
+                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminSheduleController.setEditedSheduleItem(3,3)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
                 </p:column>
                 <p:column>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(3, 4).usersLogin.login}" style=" color: #990000"/></center>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(3, 4).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
-                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminmainController.setEditedSheduleItem(3,4)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(3, 4).usersLogin.login}" style=" color: #990000"/></center>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(3, 4).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
+                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminSheduleController.setEditedSheduleItem(3,4)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
                 </p:column>
                 <p:column>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(3, 5).usersLogin.login}" style=" color: #990000"/></center>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(3, 5).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
-                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminmainController.setEditedSheduleItem(3,5)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(3, 5).usersLogin.login}" style=" color: #990000"/></center>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(3, 5).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
+                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminSheduleController.setEditedSheduleItem(3,5)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
                 </p:column>
                 <p:column>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(3, 6).usersLogin.login}" style=" color: #990000"/></center>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(3, 6).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
-                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminmainController.setEditedSheduleItem(3,6)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(3, 6).usersLogin.login}" style=" color: #990000"/></center>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(3, 6).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
+                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminSheduleController.setEditedSheduleItem(3,6)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
                 </p:column>
                 <p:column>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(3, 7).usersLogin.login}" style=" color: #990000"/></center>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(3, 7).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
-                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminmainController.setEditedSheduleItem(3,7)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(3, 7).usersLogin.login}" style=" color: #990000"/></center>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(3, 7).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
+                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminSheduleController.setEditedSheduleItem(3,7)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
                 </p:column>
             </p:row>
             <p:row><p:column><p:spacer height="20"/>Pátek<p:spacer height="20"/></p:column>                
                 <p:column>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(4, 0).usersLogin.login}" style=" color: #990000"/></center>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(4, 0).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
-                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminmainController.setEditedSheduleItem(4,0)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(4, 0).usersLogin.login}" style=" color: #990000"/></center>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(4, 0).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
+                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminSheduleController.setEditedSheduleItem(4,0)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
                 </p:column>
                 <p:column style="">
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(4, 1).usersLogin.login}" style=" color: #990000"/></center>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(4, 1).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
-                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminmainController.setEditedSheduleItem(4,1)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(4, 1).usersLogin.login}" style=" color: #990000"/></center>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(4, 1).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
+                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminSheduleController.setEditedSheduleItem(4,1)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
                 </p:column>
                 <p:column>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(4, 2).usersLogin.login}" style=" color: #990000"/></center>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(4, 2).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
-                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminmainController.setEditedSheduleItem(4,2)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(4, 2).usersLogin.login}" style=" color: #990000"/></center>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(4, 2).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
+                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminSheduleController.setEditedSheduleItem(4,2)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
                 </p:column>
                 <p:column>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(4, 3).usersLogin.login}" style=" color: #990000"/></center>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(4, 3).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
-                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminmainController.setEditedSheduleItem(4,3)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(4, 3).usersLogin.login}" style=" color: #990000"/></center>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(4, 3).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
+                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminSheduleController.setEditedSheduleItem(4,3)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
                 </p:column>
                 <p:column>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(4, 4).usersLogin.login}" style=" color: #990000"/></center>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(4, 4).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
-                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminmainController.setEditedSheduleItem(4,4)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(4, 4).usersLogin.login}" style=" color: #990000"/></center>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(4, 4).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
+                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminSheduleController.setEditedSheduleItem(4,4)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
                 </p:column>
                 <p:column>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(4, 5).usersLogin.login}" style=" color: #990000"/></center>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(4, 5).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
-                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminmainController.setEditedSheduleItem(4,5)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(4, 5).usersLogin.login}" style=" color: #990000"/></center>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(4, 5).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
+                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminSheduleController.setEditedSheduleItem(4,5)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
                 </p:column>
                 <p:column>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(4, 6).usersLogin.login}" style=" color: #990000"/></center>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(4, 6).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
-                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminmainController.setEditedSheduleItem(4,6)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(4, 6).usersLogin.login}" style=" color: #990000"/></center>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(4, 6).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
+                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminSheduleController.setEditedSheduleItem(4,6)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
                 </p:column>
                 <p:column>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(4, 7).usersLogin.login}" style=" color: #990000"/></center>
-                    <center><p:outputLabel value="#{adminmainController.getSheduleitem(4, 7).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
-                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminmainController.setEditedSheduleItem(4,7)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(4, 7).usersLogin.login}" style=" color: #990000"/></center>
+                    <center><p:outputLabel value="#{adminSheduleController.getSheduleitem(4, 7).studySubjectidStudySubject.shortName}" style="color: #009900"/></center>
+                    <p:commandButton icon="ui-icon-pencil" value="Upravit" update=":AdminMainMenu :SheduleitemEditForm" actionListener="#{adminSheduleController.setEditedSheduleItem(4,7)}" oncomplete="PF('SheduleitemEditDialog').show()"/>
                 </p:column>
             </p:row>
         </p:panelGrid>

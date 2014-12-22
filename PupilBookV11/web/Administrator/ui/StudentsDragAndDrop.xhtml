@@ -7,6 +7,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:composition>
+        #{adminStudentController.setMainControler(adminmainController)}
         <ui:include src="dialogs/EditStudent.xhtml"/>
         <h:form id="Students">
             <script type="text/javascript">
@@ -15,11 +16,9 @@
                 droppedStudent.fadeOut('fast');
                 }
             </script>
-            <p:commandButton id="createButtonStudent" icon="ui-icon-plus" value="Přidej studenta" actionListener="#{adminmainController.prepareNewStudent()}" update=":StudentCreateForm" oncomplete="PF('StudentCreateDialog').show()"/>
-                            
+            <p:commandButton id="createButtonStudent" icon="ui-icon-plus" value="Přidej studenta" actionListener="#{adminStudentController.prepareNewStudent()}" update=":StudentCreateForm" oncomplete="PF('StudentCreateDialog').show()"/>
                 <p:panelGrid style="margin-top:20px">
                 <f:facet name="header">
-                    
                     <p:row>
                         <p:column colspan="1">
                             Studenti ve třídě #{adminmainController.editedStudygroup.name} školní rok #{adminmainController.edited.name}
@@ -44,8 +43,8 @@
                         <p:column colspan="1">
                             <p:fieldset id="selectedStudentsField" legend="Selected Students" style="margin-top:20px">
                                 <p:outputPanel id="dropArea">
-                                    <h:outputText value="Zde přesuňte studenty" rendered="#{empty adminmainController.dropedStudents}" style="font-size: 24px" />
-                                    <p:dataTable id="selectedStudents" var="selStudents" value="#{adminmainController.dropedStudents}" rendered="#{not empty adminmainController.dropedStudents}" >
+                                    <h:outputText value="Zde přesuňte studenty" rendered="#{empty adminStudentController.dropedStudents}" style="font-size: 24px" />
+                                    <p:dataTable id="selectedStudents" var="selStudents" value="#{adminStudentController.dropedStudents}" rendered="#{not empty adminStudentController.dropedStudents}" >
                                         <p:column headerText="login" >
                                             <h:outputText value="#{selStudents.login}" />
                                         </p:column>
@@ -64,7 +63,7 @@
                         </p:column>
                         <p:column colspan="1">
                             <p:fieldset id="availableStudentsField" legend="Available Students">
-                                <p:dataTable id="StudentsTable" var="studentTable" value="#{adminmainController.students}">
+                                <p:dataTable id="StudentsTable" var="studentTable" value="#{adminStudentController.students}">
                                     <p:column style="width:20px">
                                         <h:outputText id="dragIcon" styleClass="ui-icon ui-icon-arrow-4" />
                                         <p:draggable for="dragIcon" revert="true" helper="clone"/>
@@ -87,7 +86,7 @@
                                     </p:column>
                                     <p:column style="width:32px">
                                         <p:commandButton update=":StudentCreateForm" oncomplete="PF('StudentCreateDialog').show()" icon="ui-icon-search">
-                                            <f:setPropertyActionListener value="#{studentTable}" target="#{adminmainController.editedStudent}" />
+                                            <f:setPropertyActionListener value="#{studentTable}" target="#{adminStudentController.editedStudent}" />
                                         </p:commandButton>
                                     </p:column>
                                 </p:dataTable>
@@ -96,7 +95,7 @@
                     </p:row>
                 </p:panelGrid>
                 <p:droppable for="selectedStudentsField" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="StudentsTable" onDrop="handleDrop">
-                    <p:ajax listener="#{adminmainController.onStudentDrop}" update="dropArea StudentsTable" />
+                    <p:ajax listener="#{adminStudentController.onStudentDrop}" update="dropArea StudentsTable" />
                 </p:droppable>
             </h:form>
     </ui:composition>

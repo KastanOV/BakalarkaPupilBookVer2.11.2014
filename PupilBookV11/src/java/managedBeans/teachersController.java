@@ -47,15 +47,13 @@ public class teachersController implements Serializable {
     private Results editedClassification;
     private Integer score;
     private String classificationDescription;
-
+    
     public String getClassificationDescription() {
         return classificationDescription;
     }
-
     public void setClassificationDescription(String classificationDescription) {
         this.classificationDescription = classificationDescription;
     }
-
     public Integer getScore() {
         return score;
     }

@@ -11,21 +11,21 @@
         <p:dialog id="SheduleitemEditDialog" widgetVar="SheduleitemEditDialog" modal="true" resizable="false" appendTo="@(body)" header="Upravit rozvrh">
             <h:form id="SheduleitemEditForm">
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{adminmainController.editedSheduleItem != null}">
+                    <p:panelGrid columns="2" rendered="#{adminSheduleController.editedSheduleItem != null}">
                         
                         <p:outputLabel value="Vyberte Učitele" for="selectUser" />
-                        <p:selectOneMenu id="selectUser" value="#{adminmainController.editedTeacher}" converter="#{ConverterTeacher}" effect="fold">
+                        <p:selectOneMenu id="selectUser" value="#{adminSheduleController.editedTeacher}" converter="#{ConverterTeacher}" effect="fold">
                             <f:selectItem itemLabel="Select One" itemValue="" />
-                            <f:selectItems value="#{adminmainController.teachers}" var="itemTeachers" itemLabel="#{itemTeachers.login} #{itemTeachers.lastName}" itemValue="#{itemTeachers}"/>
+                            <f:selectItems value="#{adminTeacherController.teachers}" var="itemTeachers" itemLabel="#{itemTeachers.login} #{itemTeachers.lastName}" itemValue="#{itemTeachers}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="Vyberte Predmet" for="selectSubject" />
-                        <p:selectOneMenu id="selectSubject" value="#{adminmainController.editedStudySubject}" converter="#{ConverterStudySubjects}" effect="fold">
+                        <p:selectOneMenu id="selectSubject" value="#{adminSheduleController.editedStudySubject}" converter="#{ConverterStudySubjects}" effect="fold">
                             <f:selectItem itemLabel="Select One" itemValue="" />
                             <f:selectItems var="itemStudySubject" value="#{adminmainController.studySubjects}" itemLabel="#{itemStudySubject.shortName}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
                     
-                    <p:commandButton actionListener="#{adminmainController.saveEditedSheduleItem(adminmainController.editedTeacher,adminmainController.editedStudySubject)}" value="#{bundle.save}" update="display,:ShedulePanel,:growl" oncomplete="handleSubmit(args,'SheduleitemEditDialog');"/>
+                    <p:commandButton actionListener="#{adminSheduleController.saveEditedSheduleItem(adminSheduleController.editedTeacher,adminSheduleController.editedStudySubject)}" value="#{bundle.save}" update="display,:ShedulePanel,:growl" oncomplete="handleSubmit(args,'SheduleitemEditDialog');"/>
                     <p:commandButton value="#{bundle.cancel}" onclick="SheduleitemEditDialog.hide()"/>
                 </h:panelGroup>
             </h:form>

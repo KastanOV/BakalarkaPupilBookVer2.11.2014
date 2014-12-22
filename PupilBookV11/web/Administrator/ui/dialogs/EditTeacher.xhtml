@@ -10,25 +10,25 @@
         <p:dialog id="TeacherCreateDialog" widgetVar="TeacherCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Přidat Učitele">
             <h:form id="TeacherCreateForm">
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{adminmainController.editedTeacher != null}">
-                        <p:outputLabel value="Login" for="login" rendered="#{adminmainController.editedTeacher.login != null}"/>
-                        <p:outputLabel id="login" value="#{adminmainController.editedTeacher.login}" for="name" rendered="#{adminmainController.editedTeacher.login != null}"/>
+                    <p:panelGrid columns="2" rendered="#{adminTeacherController.editedTeacher != null}">
+                        <p:outputLabel value="Login" for="login" rendered="#{adminTeacherController.editedTeacher.login != null}"/>
+                        <p:outputLabel id="login" value="#{adminTeacherController.editedTeacher.login}" for="name" rendered="#{adminTeacherController.editedTeacher.login != null}"/>
                         <p:outputLabel value="Jméno" for="name" />
-                        <p:inputText id="name" value="#{adminmainController.editedTeacher.firstName}" title="Jméno" required="true" />
+                        <p:inputText id="name" value="#{adminTeacherController.editedTeacher.firstName}" title="Jméno" required="true" />
                         <p:outputLabel value="Druhé jméno" for="middlename" />
-                        <p:inputText id="middlename" value="#{adminmainController.editedTeacher.middleName}" title="Druhé jméno" required="false" />
+                        <p:inputText id="middlename" value="#{adminTeacherController.editedTeacher.middleName}" title="Druhé jméno" required="false" />
                         <p:outputLabel value="Příjmení" for="lastname" />
-                        <p:inputText id="lastname" value="#{adminmainController.editedTeacher.lastName}" title="Příjmení" required="true" />
+                        <p:inputText id="lastname" value="#{adminTeacherController.editedTeacher.lastName}" title="Příjmení" required="true" />
                         <p:outputLabel value="Email" for="email" />
-                        <p:inputText id="email" value="#{adminmainController.editedTeacher.email}" required="false" />
+                        <p:inputText id="email" value="#{adminTeacherController.editedTeacher.email}" required="false" />
                         <p:outputLabel value="Phone" for="phone" />
-                        <p:inputText id="phone" value="#{adminmainController.editedTeacher.phone}" required="false" />
-                        <p:outputLabel value="Password" for="password" rendered="#{adminmainController.editedTeacher.password != null}"/>
-                        <p:inputText id="password" value="#{adminmainController.editedTeacher.password}" required="false" rendered="#{adminmainController.editedTeacher.password != null}"/>
+                        <p:inputText id="phone" value="#{adminTeacherController.editedTeacher.phone}" required="false" />
+                        <p:outputLabel value="Password" for="password" rendered="#{adminTeacherController.editedTeacher.password != null}"/>
+                        <p:inputText id="password" value="#{adminTeacherController.editedTeacher.password}" required="false" rendered="#{adminTeacherController.editedTeacher.password != null}"/>
                         <p:outputLabel value="Datum narození" for="startDate" />
-                        <p:calendar id="startDate" pattern="MM/dd/yyyy" value="#{adminmainController.editedTeacher.birthDate}" required="false" />
+                        <p:calendar id="startDate" pattern="MM/dd/yyyy" value="#{adminTeacherController.editedTeacher.birthDate}" required="false" />
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{adminmainController.saveTeacher}" value="#{bundle.save}" update="display,:AdminMainMenu :Teachers,:growl" oncomplete="handleSubmit(args,'TeacherCreateDialog');"/>
+                    <p:commandButton actionListener="#{adminTeacherController.saveTeacher}" value="#{bundle.save}" update="display,:AdminMainMenu :Teachers,:growl" oncomplete="handleSubmit(args,'TeacherCreateDialog');"/>
                     <p:commandButton value="#{bundle.cancel}" onclick="TeacherCreateDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
