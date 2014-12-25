@@ -7,15 +7,19 @@
         #{teacherClassificationChart.setEditedStudent(teacherMainController.editedStudent)}
         #{teacherClassificationChart.setEditedStudySubject(teacherMainController.editedStudySubject)}
         <h:form id="ClassificationChart" rendered="#{teacherMainController.editedStudent != null}">
+            <p:growl id="messages" showDetail="true"/> 
             <p:panelGrid columns="2" >
                         <p:outputLabel value="Popis hodnocení" for="name" />
-                        <p:inputText id="name" value="#{teacherMainController.classificationDescription}" title="Popis hodnocení. Například Zlomky sčítání" required="true" />
+                        <p:inputText id="name" value="#{teacherMainController.classificationDescription}" title="Popis hodnocení. Například Zlomky sčítání" required="true" >
+                            <p:ajax event="blur" />
+                        </p:inputText>
                         <h:outputText value="Hodnocení:" />  
-                        <p:rating value="#{teacherMainController.score}" stars="10"/>  
+                        <p:rating value="#{teacherMainController.score}" stars="10">
+                            <p:ajax event="rate" listener="#{teacherMainController.onRate}" update="messages"/>
+                        </p:rating>  
                     </p:panelGrid> 
                     <p:commandButton actionListener="#{teacherMainController.saveClassification()}" value="#{bundle.save}" update=":ClassificationChart" />
             <hr/>
-                    <p:growl id="growl" showDetail="true" />
                     <p:chart type="bar" model="#{teacherClassificationChart.classificationModel}"  style="height:500px;" />
         </h:form>
     </ui:composition>

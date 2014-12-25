@@ -11,14 +11,15 @@ import Entity.Users;
 import SessionBeans.TeachersSessionBeanLocal;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import org.primefaces.event.RateEvent;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.BarChartModel;
-import org.primefaces.model.chart.CategoryAxis;
 import org.primefaces.model.chart.ChartSeries;
-import org.primefaces.model.chart.LineChartModel;
+
 
 /**
  *
@@ -39,6 +40,7 @@ public class TeacherClassificationChart {
     public TeacherClassificationChart() {
     }
     
+    
     private void createClassificationModel(){
         barModel = initClassificationModel();
         barModel.setTitle("Klasifikace");
@@ -46,7 +48,6 @@ public class TeacherClassificationChart {
         barModel.setAnimate(true);
         Axis xAxis = barModel.getAxis(AxisType.X);
         xAxis.setTickAngle(-50);
-        xAxis.setLabel("Známky");
          
         Axis yAxis = barModel.getAxis(AxisType.Y);
         yAxis.setLabel("Hodnocení");
@@ -62,7 +63,6 @@ public class TeacherClassificationChart {
                     for(Results item : res){
                     double score = (double) (item.getScore());
                     classification.set(item.getDescription(), score);
-                    
                     } 
                 } else {
                     classification.set("Nejsou uloženy žádné výsledky", 0.0);

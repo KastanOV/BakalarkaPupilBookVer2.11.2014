@@ -16,8 +16,11 @@ import SessionBeans.TeachersSessionBeanLocal;
 import java.util.Collection;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import org.primefaces.event.RateEvent;
 
 /**
  *
@@ -41,6 +44,13 @@ public class TeacherMainController {
     
     public TeacherMainController() {
     }
+    
+    public void onRate(RateEvent rateEvent){
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, editedStudent.getLastName() + " " + editedStudent.getFirstName()
+                , editedStudySubject.getName() + ", " + classificationDescription + " " + UtilScores.getText(((Integer) rateEvent.getRating()).intValue() - 1));
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+    
     
     public void saveClassification(){
         editedClassification.setStudentLogin(editedStudent);
