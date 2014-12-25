@@ -9,13 +9,13 @@
         <p:dialog id="StudySubjectCreateDialog" widgetVar="StudySubjectCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Přidat předmět">
             <h:form id="StudySubjectCreateForm">
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{adminmainController.editedStudySubject != null}">
+                    <p:panelGrid columns="2" rendered="#{adminMainController.editedStudySubject != null}">
                         <p:outputLabel value="Název předmětu" for="name" />
-                        <p:inputText id="name" value="#{adminmainController.editedStudySubject.name}" title="Název" required="true" />
+                        <p:inputText id="name" value="#{adminMainController.editedStudySubject.name}" title="Název" required="true" />
                         <p:outputLabel value="Zkratka předmětu" for="shortname" />
-                        <p:inputText id="shortname" value="#{adminmainController.editedStudySubject.shortName}" required="true" />
+                        <p:inputText id="shortname" value="#{adminMainController.editedStudySubject.shortName}" required="true" />
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{adminmainController.saveStudySubject}" value="#{bundle.save}" update="display,:StudySubjects,:growl" oncomplete="handleSubmit(args,'StudySubjectCreateDialog');"/>
+                    <p:commandButton actionListener="#{adminMainController.saveStudySubject}" value="#{bundle.save}" update="display,:StudySubjects,:growl" oncomplete="handleSubmit(args,'StudySubjectCreateDialog');"/>
                     <!--<p:commandButton value="#{bundle.cancel}" onclick="StudySubjectCreateDialog.hide()"/>-->
                 </h:panelGroup>
             </h:form>

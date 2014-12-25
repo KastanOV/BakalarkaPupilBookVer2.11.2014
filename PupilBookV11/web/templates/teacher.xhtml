@@ -11,7 +11,7 @@
         <h:outputScript library="js" name="jsfcrud.js"/>
     </h:head>
     <h:body>
-        #{teachersController.setLoggedUser(loginBean.userObject)}
+        #{teacherMainController.setLoggedUser(loginBean.userObject)}
         <p:growl id="growl" life="3000" />
         <p:layout fullPage="true" >
             <p:layoutUnit position="north" size="65" header="Teachers Web app">

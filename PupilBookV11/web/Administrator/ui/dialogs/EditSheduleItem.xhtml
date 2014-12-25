@@ -12,7 +12,6 @@
             <h:form id="SheduleitemEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{adminSheduleController.editedSheduleItem != null}">
-                        
                         <p:outputLabel value="Vyberte Učitele" for="selectUser" />
                         <p:selectOneMenu id="selectUser" value="#{adminSheduleController.editedTeacher}" converter="#{ConverterTeacher}" effect="fold">
                             <f:selectItem itemLabel="Select One" itemValue="" />
@@ -21,7 +20,7 @@
                         <p:outputLabel value="Vyberte Predmet" for="selectSubject" />
                         <p:selectOneMenu id="selectSubject" value="#{adminSheduleController.editedStudySubject}" converter="#{ConverterStudySubjects}" effect="fold">
                             <f:selectItem itemLabel="Select One" itemValue="" />
-                            <f:selectItems var="itemStudySubject" value="#{adminmainController.studySubjects}" itemLabel="#{itemStudySubject.shortName}"/>
+                            <f:selectItems var="itemStudySubject" value="#{adminSheduleController.studySubjects}" itemLabel="#{itemStudySubject.shortName}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
                     

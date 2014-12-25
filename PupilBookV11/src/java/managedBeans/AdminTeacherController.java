@@ -23,8 +23,8 @@ import org.primefaces.event.DragDropEvent;
 @SessionScoped
 public class AdminTeacherController {
 
-    private AdminmainController adminMain;
-    public void setMainControler(AdminmainController AdminMain) {
+    private AdminMainController adminMain;
+    public void setMainControler(AdminMainController AdminMain) {
         this.adminMain = AdminMain;
     }
     

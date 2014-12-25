@@ -7,7 +7,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:composition>
-        #{adminStudentController.setMainControler(adminmainController)}
+        #{adminStudentController.setMainControler(adminMainController)}
         <ui:include src="dialogs/EditStudent.xhtml"/>
         <h:form id="Students">
             <script type="text/javascript">
@@ -21,7 +21,7 @@
                 <f:facet name="header">
                     <p:row>
                         <p:column colspan="1">
-                            Studenti ve třídě #{adminmainController.editedStudygroup.name} školní rok #{adminmainController.edited.name}
+                            Studenti ve třídě #{adminMainController.editedStudygroup.name} školní rok #{adminMainController.edited.name}
                         </p:column>
                         <p:column colspan="1">
                             Všíchni studenti 
@@ -34,7 +34,7 @@
                         </p:column>
                         <p:column colspan="1">
                             <p:fieldset legend="Vyhledávání" style="margin-top:20px">
-                                <p:inputText id="SearchByLastName" title="Vyhledávání podle příjmení" value="#{adminmainController.searchByLastname}" />
+                                <p:inputText id="SearchByLastName" title="Vyhledávání podle příjmení" value="#{adminMainController.searchByLastname}" />
                                 <p:commandButton update="StudentsTable" value="hledej"/>
                             </p:fieldset>
                         </p:column>

@@ -10,11 +10,11 @@
         <p:dialog id="StudyGroupCreateDialog" widgetVar="StudyGroupCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Přidat studíjní skupinu">
             <h:form id="StudyGroupCreateForm">
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{adminmainController.editedStudygroup != null}">
+                    <p:panelGrid columns="2" rendered="#{adminMainController.editedStudygroup != null}">
                         <p:outputLabel value="#{bundle.StudyGroupName}" for="name" />
-                        <p:inputText id="name" value="#{adminmainController.editedStudygroup.name}" title="Název" required="true" />
+                        <p:inputText id="name" value="#{adminMainController.editedStudygroup.name}" title="Název" required="true" />
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{adminmainController.saveStudyGroup}" value="#{bundle.save}" update="display,:AdminMainMenu:StudyGroupsOneMenu ,:growl" oncomplete="handleSubmit(args,'StudyGroupCreateDialog');"/>
+                    <p:commandButton actionListener="#{adminMainController.saveStudyGroup}" value="#{bundle.save}" update="display,:AdminMainMenu:StudyGroupsOneMenu ,:growl" oncomplete="handleSubmit(args,'StudyGroupCreateDialog');"/>
                     <!--<p:commandButton value="#{bundle.cancel}" onclick="StudyGroupCreateDialog.hide()"/>-->
                 </h:panelGroup>
             </h:form>

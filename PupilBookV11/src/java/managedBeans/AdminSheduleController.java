@@ -26,21 +26,17 @@ import javax.faces.context.FacesContext;
 @SessionScoped
 public class AdminSheduleController {
 
-    private AdminmainController adminMain;
+    private AdminMainController adminMain;
     private Teacher editedTeacher;
     private Collection<Sheduleitem> selectedSheduleItems;
     private Sheduleitem editedSheduleItem;
     private Studysubject editedStudySubject;
 
-    
-    
-    public void setMainControler(AdminmainController AdminMain) {
+    public void setMainControler(AdminMainController AdminMain) {
         this.adminMain = AdminMain;
+        selectedSheduleItems = adminMain.getEditedStudygroup().getSheduleitemCollection();
     }
-    public void setEditedTeacher(Teacher teacher){
-        this.editedTeacher = teacher;
-    }
-    
+        
     @EJB
     private AdminmainSessionBeanLocal sb;
 
@@ -61,7 +57,8 @@ public class AdminSheduleController {
                 if(item.getDay() == day && item.getHour() == hour){
                     editedSheduleItem = item;
                     editedTeacher = (Teacher) item.getUsersLogin();
-                    adminMain.setEditedStudySubject(item.getStudySubjectidStudySubject());
+                    setEditedStudySubject(item.getStudySubjectidStudySubject());
+                    
                     break;
                 }
             }
@@ -94,5 +91,16 @@ public class AdminSheduleController {
 
     public void setEditedStudySubject(Studysubject editedStudySubject) {
         this.editedStudySubject = editedStudySubject;
+    }
+    public Teacher getEditedTeacher() {
+        return editedTeacher;
+    }
+
+    public void setEditedTeacher(Teacher editedTeacher) {
+        this.editedTeacher = editedTeacher;
+    }
+    public Collection<Studysubject> getStudySubjects(){
+        Collection<Studysubject> s = sb.getAllStudySubjects();
+        return s;
     }
 }

@@ -9,25 +9,13 @@
     	<ui:composition template="/templates/teacher.xhtml">
             
             <ui:define name="body" >
-                <h:form id="MainTab">
-                    <p:tabView dynamic="true">
-                        <p:tab title="Klasifikace" rendered="#{teachersController.editedStudent != null}">
-                            <ui:include src="classification.xhtml"/>
-                        </p:tab>
-                        <p:tab title="Docházka">
-                            
-                        </p:tab>
-                        <p:tab title="Rozvrhy hodin">
-                            <ui:include src="shedule.xhtml"/>
-                        </p:tab>
-                    </p:tabView>
-                    
-                </h:form>
-                
+                <ui:include src="classification.xhtml" rendered="#{teacherMainController.editedStudent != null}"/>
+                <hr/>
+                <ui:include src="shedule.xhtml"/>
+
             </ui:define>
             <ui:define name="west">
                 <ui:include src="sidemenu.xhtml"/>
-                <ui:include src="classificationDialog.xhtml"/>
             </ui:define>
             
     	</ui:composition>

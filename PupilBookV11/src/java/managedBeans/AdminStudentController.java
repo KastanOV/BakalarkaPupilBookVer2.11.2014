@@ -22,8 +22,8 @@ import org.primefaces.event.DragDropEvent;
 @ManagedBean
 @SessionScoped
 public class AdminStudentController {
-    private AdminmainController adminMain;
-    public void setMainControler(AdminmainController AdminMain) {
+    private AdminMainController adminMain;
+    public void setMainControler(AdminMainController AdminMain) {
         this.adminMain = AdminMain;
     }
     @EJB

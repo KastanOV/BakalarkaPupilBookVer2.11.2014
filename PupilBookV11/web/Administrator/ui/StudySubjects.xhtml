@@ -8,8 +8,8 @@
     <ui:composition>
         <ui:include src="dialogs/CreateSS.xhtml"/>
         <h:form id="StudySubjects">
-            <p:commandButton id="createButtonStudysubject" icon="ui-icon-plus"   value="Přidat předmět" actionListener="#{adminmainController.prepareNewStudySubject}" update=":StudySubjectCreateForm" oncomplete="PF('StudySubjectCreateDialog').show()"/>
-            <p:dataTable id="StudySubjectTable" var="StudySubject" value="#{adminmainController.studySubjects}">
+            <p:commandButton id="createButtonStudysubject" icon="ui-icon-plus"   value="Přidat předmět" actionListener="#{adminMainController.prepareNewStudySubject}" update=":StudySubjectCreateForm" oncomplete="PF('StudySubjectCreateDialog').show()"/>
+            <p:dataTable id="StudySubjectTable" var="StudySubject" value="#{adminMainController.studySubjects}">
                 <p:column headerText="Název předmětu">
                     <h:outputText value="#{StudySubject.name}"/>
                 </p:column>
