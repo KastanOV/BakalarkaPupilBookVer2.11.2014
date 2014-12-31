@@ -63,7 +63,7 @@ public class TeacherClassificationChart {
                     for(Results item : res){
                     double score = (double) (item.getScore());
                     classification.set(item.getDescription(), score);
-                    classification.setLabel("Nasrat");
+                    
                     } 
                 } else {
                     classification.set("Nejsou uloženy žádné výsledky", 0.0);

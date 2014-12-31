@@ -6,7 +6,7 @@
 package Converters;
 
 import Entity.Schoolyear;
-import SessionBeans.AdminmainSessionBeanLocal;
+import SessionBeans.SchoolYearSBLocal;
 
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -27,7 +27,7 @@ import javax.faces.convert.ConverterException;
 public class SchoolYearConverter implements Converter{
 
     @EJB
-    private AdminmainSessionBeanLocal sb;
+    private SchoolYearSBLocal sb;
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component,
 			String value) {

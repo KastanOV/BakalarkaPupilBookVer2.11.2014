@@ -6,10 +6,10 @@
 package managedBeans;
 
 import Entity.Sheduleitem;
-import Entity.Studygroup;
 import Entity.Studysubject;
 import Entity.Teacher;
-import SessionBeans.AdminmainSessionBeanLocal;
+import SessionBeans.SheduleItemsSBLocal;
+import SessionBeans.StudySubjectsSBLocal;
 import java.util.Collection;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -26,6 +26,12 @@ import javax.faces.context.FacesContext;
 @SessionScoped
 public class AdminSheduleController {
 
+    
+    @EJB
+    private SheduleItemsSBLocal sheduleItemsSB;
+    @EJB
+    private StudySubjectsSBLocal studySubjectsSB;
+    
     private AdminMainController adminMain;
     private Teacher editedTeacher;
     private Collection<Sheduleitem> selectedSheduleItems;
@@ -37,9 +43,7 @@ public class AdminSheduleController {
         selectedSheduleItems = adminMain.getEditedStudygroup().getSheduleitemCollection();
     }
         
-    @EJB
-    private AdminmainSessionBeanLocal sb;
-
+    
     public AdminSheduleController() {
     }
     
@@ -76,7 +80,7 @@ public class AdminSheduleController {
         editedSheduleItem.setUsersLogin(u);
         editedSheduleItem.setStudySubjectidStudySubject(s);
         try{
-            sb.saveSheduleItem(editedSheduleItem);
+            sheduleItemsSB.saveSheduleItem(editedSheduleItem);
         
         }catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, 
@@ -100,7 +104,7 @@ public class AdminSheduleController {
         this.editedTeacher = editedTeacher;
     }
     public Collection<Studysubject> getStudySubjects(){
-        Collection<Studysubject> s = sb.getAllStudySubjects();
+        Collection<Studysubject> s = studySubjectsSB.getAllStudySubjects();
         return s;
     }
 }

@@ -5,9 +5,8 @@
  */
 package Converters;
 
-import Entity.Student;
 import Entity.Teacher;
-import SessionBeans.AdminmainSessionBeanLocal;
+import SessionBeans.TeachersSBLocal;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -25,7 +24,7 @@ import javax.faces.convert.ConverterException;
 @SessionScoped
 public class ConverterTeacher implements Converter{
     @EJB
-    private AdminmainSessionBeanLocal sb;
+    private TeachersSBLocal sb;
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component,
 			String value) {

@@ -1,0 +1,25 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package SessionBeans;
+
+import Entity.Studygroup;
+import Entity.Teacher;
+import java.util.Collection;
+import javax.ejb.Local;
+
+/**
+ *
+ * @author Topr
+ */
+@Local
+public interface TeachersSBLocal {
+    public Collection<Teacher> getAllTeachers();
+    public Teacher getTeacher(String UserId);
+    public Teacher saveTeacher(Teacher t);
+    public Teacher createNewTeacher(Teacher t);
+    public Collection<Teacher> getTeachersByStudyGroup(Studygroup s);
+    
+}

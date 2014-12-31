@@ -10,7 +10,11 @@ import Entity.Studygroup;
 import Entity.Studysubject;
 import Entity.Sheduleitem;
 import Entity.Student;
-import SessionBeans.AdminmainSessionBeanLocal;
+import SessionBeans.SchoolYearSBLocal;
+import SessionBeans.SheduleItemsSBLocal;
+import SessionBeans.StudentsSBLocal;
+import SessionBeans.StudyGroupsSBLocal;
+import SessionBeans.StudySubjectsSBLocal;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
@@ -31,12 +35,23 @@ import javax.servlet.http.HttpServletRequest;
 public class AdminMainController implements Serializable{
     
     @EJB
-    private AdminmainSessionBeanLocal sb;
+    private StudentsSBLocal studentsSB;
+    @EJB
+    private SchoolYearSBLocal schoolYearSB;
+    @EJB
+    private StudyGroupsSBLocal studyGroupSB;
+    @EJB
+    private SheduleItemsSBLocal sheduleItemsSB;
+    @EJB
+    private StudySubjectsSBLocal studySubjectsSB;
     
     private Schoolyear editedSchoolYear;
     private Studygroup editedStudygroup;
     private Collection<Sheduleitem> selectedSheduleItems;
     private Studysubject editedStudySubject;
+    private Collection<Studysubject> StudySubjects;
+
+    
     private String searchByLastname;
 
     public String getSearchByLastname() {
@@ -49,16 +64,16 @@ public class AdminMainController implements Serializable{
     
     public Collection<Student> getStudents() {
         if(searchByLastname == null || searchByLastname.equals("")){
-            return sb.getAllStudents();
+            return studentsSB.getAllStudents();
         } else {
-            return sb.getByLastName(searchByLastname);
+            return studentsSB.getByLastName(searchByLastname);
         }
         
     }
 
     public void saveSchoolYears(){
 		try {
-			sb.saveSchoolyear(editedSchoolYear);
+			schoolYearSB.saveSchoolyear(editedSchoolYear);
                         
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, 
@@ -71,14 +86,14 @@ public class AdminMainController implements Serializable{
             //editedSchoolYear.getStudygroupCollection().add(editedStudygroup);
             editedStudygroup.setSchoolYearidSchoolYear(editedSchoolYear);
             
-            sb.saveStudygroup(editedStudygroup);
+            studyGroupSB.saveStudygroup(editedStudygroup);
             for (short i = 0; i < 8; i++){
                 for (short j = 0; j < 5; j++){
                     Sheduleitem item = new Sheduleitem();
                     item.setStudyGroupidStudyGroup(editedStudygroup);
                     item.setDay(j);
                     item.setHour(i);
-                    sb.insertNewSheduleItem(item);
+                    sheduleItemsSB.insertNewSheduleItem(item);
                 }
             }
         }   catch (Exception e) {
@@ -89,7 +104,7 @@ public class AdminMainController implements Serializable{
     }
     public void saveStudySubject(){
         try{
-            sb.insertNewStudySubject(editedStudySubject);
+            studySubjectsSB.insertNewStudySubject(editedStudySubject);
             ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
             ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());
         }catch (Exception e) {
@@ -112,10 +127,10 @@ public class AdminMainController implements Serializable{
         return editedStudySubject;
     }
     public List<Schoolyear> getAllSchoolYears(){
-        return sb.getAllSchoolYears();
+        return schoolYearSB.getAllSchoolYears();
     }
     public List<Studygroup> getEditedStudyGroups(){
-        return sb.getEditedStudyGroup(editedSchoolYear);
+        return studyGroupSB.getEditedStudyGroup(editedSchoolYear);
     }
     public Studygroup getEditedStudygroup() {
         if(editedStudygroup != null) {
@@ -138,5 +153,17 @@ public class AdminMainController implements Serializable{
     }
     public void setEditedStudySubject(Studysubject editedStudySubject) {
         this.editedStudySubject = editedStudySubject;
+    }
+    
+    public Collection<Studysubject> getStudySubjects() {
+        return studySubjectsSB.getAllStudySubjects();
+    }
+
+    public void setStudySubjects(Collection<Studysubject> StudySubjects) {
+        this.StudySubjects = StudySubjects;
+    }
+
+    public Studysubject getEditedStudySubject() {
+        return editedStudySubject;
     }
 }

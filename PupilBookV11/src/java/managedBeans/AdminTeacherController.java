@@ -6,7 +6,7 @@
 package managedBeans;
 
 import Entity.Teacher;
-import SessionBeans.AdminmainSessionBeanLocal;
+import SessionBeans.TeachersSBLocal;
 import java.util.Collection;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -23,14 +23,14 @@ import org.primefaces.event.DragDropEvent;
 @SessionScoped
 public class AdminTeacherController {
 
+    @EJB
+    private TeachersSBLocal teachersSB;
+        
     private AdminMainController adminMain;
     public void setMainControler(AdminMainController AdminMain) {
         this.adminMain = AdminMain;
     }
-    
-    @EJB
-    private AdminmainSessionBeanLocal sb;
-    
+
     private Teacher editedTeacher;
     
     public AdminTeacherController() {
@@ -57,8 +57,8 @@ public class AdminTeacherController {
     public void saveTeacher(Teacher u){
         try{
             if(u.getLogin() != null){
-                sb.saveTeacher(u);    
-            }else sb.createNewTeacher(editedTeacher);
+                teachersSB.saveTeacher(u);    
+            }else teachersSB.createNewTeacher(editedTeacher);
             
         } catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, 
@@ -69,10 +69,10 @@ public class AdminTeacherController {
     public void saveTeacher(){
         try{
             if(editedTeacher.getLogin() == null){
-                sb.createNewTeacher(editedTeacher);
+                teachersSB.createNewTeacher(editedTeacher);
             }
             else {
-                sb.saveTeacher(editedTeacher);
+                teachersSB.saveTeacher(editedTeacher);
             }
             
         } catch (Exception e) {
@@ -84,13 +84,13 @@ public class AdminTeacherController {
     
     public Collection<Teacher> getDropedTeachers() {
         if(adminMain.getEditedStudygroup() != null){
-            return sb.getTeachersByStudyGroup(adminMain.getEditedStudygroup());
+            return teachersSB.getTeachersByStudyGroup(adminMain.getEditedStudygroup());
         } else {
             return null;
         }
     }
     public Collection<Teacher> getTeachers(){
-        Collection<Teacher> u = sb.getAllTeachers() ;
+        Collection<Teacher> u = teachersSB.getAllTeachers() ;
         return u;
     }
     public Teacher getEditedTeacher() {

@@ -6,7 +6,7 @@
 package managedBeans;
 
 import Entity.Student;
-import SessionBeans.AdminmainSessionBeanLocal;
+import SessionBeans.StudentsSBLocal;
 import java.util.Collection;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -22,12 +22,15 @@ import org.primefaces.event.DragDropEvent;
 @ManagedBean
 @SessionScoped
 public class AdminStudentController {
+    
+    @EJB
+    private StudentsSBLocal studentsSB;
+        
     private AdminMainController adminMain;
     public void setMainControler(AdminMainController AdminMain) {
         this.adminMain = AdminMain;
     }
-    @EJB
-    private AdminmainSessionBeanLocal sb;
+    
     private Student editedStudent;
     
     public AdminStudentController() {
@@ -42,8 +45,8 @@ public class AdminStudentController {
     public void saveStudent(Student u){
         try{
             if(u.getLogin() != null){
-                sb.saveUser(u);    
-            }else sb.createNewUser(editedStudent);
+                studentsSB.saveUser(u);    
+            }else studentsSB.createNewUser(editedStudent);
             
         } catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, 
@@ -68,10 +71,10 @@ public class AdminStudentController {
     public void saveStudent(){
         try{
             if(editedStudent.getLogin() == null){
-                sb.createNewUser(editedStudent);
+                studentsSB.createNewUser(editedStudent);
             }
             else {
-                sb.saveUser(editedStudent);
+                studentsSB.saveUser(editedStudent);
             }
             
         } catch (Exception e) {
@@ -83,7 +86,7 @@ public class AdminStudentController {
     
     public Collection<Student> getDropedStudents() {
         if(adminMain.getEditedStudygroup() != null){
-            return sb.getStudentByStudyGroup(adminMain.getEditedStudygroup());
+            return studentsSB.getStudentByStudyGroup(adminMain.getEditedStudygroup());
         } else {
             return null;
         }
@@ -91,7 +94,7 @@ public class AdminStudentController {
     
     public Collection<Student> getStudents() {
         //if(searchByLastname == null || searchByLastname.equals("")){
-            return sb.getAllStudents();
+            return studentsSB.getAllStudents();
         //} else {
             //return sb.getByLastName(searchByLastname);
         //}
