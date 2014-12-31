@@ -6,7 +6,7 @@
 package service;
 
 import Entity.Sheduleitem;
-import SessionBeans.TeachersSessionBeanLocal;
+import SessionBeans.SheduleItemsSBLocal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
@@ -28,7 +28,7 @@ import servicesDTO.SheduleItem;
 public class SheduleitemsResource {
 
     @EJB
-    TeachersSessionBeanLocal sb;
+    private SheduleItemsSBLocal sheduleItemsSB;
     
     @Context
     private UriInfo context;
@@ -37,7 +37,7 @@ public class SheduleitemsResource {
     @Path("{login}/{password}")
     @Consumes({"application/xml", "application/json"})
     public List<servicesDTO.SheduleItem> getSheduleItems(@PathParam("login") String login, @PathParam("password") String password){
-        List<Sheduleitem> tmpList = sb.getSheduleItems(login, password);
+        List<Sheduleitem> tmpList = sheduleItemsSB.getSheduleItems(login, password);
         List<servicesDTO.SheduleItem> items = new ArrayList<>();
         for(Sheduleitem item : tmpList){
             SheduleItem tmp = new servicesDTO.SheduleItem(item.getIdSheduleItem(), item.getDay(), item.getHour(), item.getStudyGroupidStudyGroup().getIdStudyGroup(), item.getStudySubjectidStudySubject().getIdStudySubject(), item.getUsersLogin().getLogin());

@@ -5,10 +5,13 @@
  */
 package SessionBeans;
 
+import Entity.Results;
+import Entity.Schoolyear;
 import Entity.Studygroup;
 import Entity.Teacher;
 import Entity.Users;
 import java.util.Collection;
+import java.util.List;
 import java.util.Random;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -22,6 +25,27 @@ import javax.persistence.PersistenceContext;
 public class TeachersSB implements TeachersSBLocal {
     @PersistenceContext
     private EntityManager em;
+    
+    @Override
+    public Teacher checkLogin(String login, String password){
+        
+        if(checkTeacher(login,password)){
+            return em.find(Teacher.class, login);
+        }else return null;
+        
+    }
+    
+    @Override
+    public List<Results> getResults(String login, String password){
+        if(checkTeacher(login, password)){
+            return em.createNativeQuery("select * from results WHERE Teacher_Login = ?login AND SchoolYear_idSchoolYear = ?syId", Results.class)
+                    .setParameter("login", login)
+                    .setParameter("syId", getActualSchoolYear())
+                    .getResultList();
+        }else {
+            return null;
+        }
+    }
     
     @Override
     public Collection<Teacher> getAllTeachers(){
@@ -101,4 +125,18 @@ public class TeachersSB implements TeachersSBLocal {
        }
        return retazecBD;
    }
+    private boolean checkTeacher(String login, String password){
+        long tmp = (long)em.createNativeQuery("SELECT count(*) FROM Users u WHERE u.login = ?login AND u.password = ?password AND Role = 'T'")
+                .setParameter("login", login)
+                .setParameter("password", password)
+                .getSingleResult();
+        if(tmp > 0){
+            return true;
+        }else return false;
+    }
+    private int getActualSchoolYear(){
+        Schoolyear idActualYear = (Schoolyear) em.createNativeQuery("SELECT * FROM schoolyear WHERE schoolyear.isactualyear = true", Schoolyear.class)
+                .getSingleResult();
+        return idActualYear.getIdSchoolYear();
+    }
 }

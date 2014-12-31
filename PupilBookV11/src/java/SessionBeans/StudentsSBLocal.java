@@ -8,6 +8,7 @@ package SessionBeans;
 import Entity.Student;
 import Entity.Studygroup;
 import java.util.Collection;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -22,5 +23,7 @@ public interface StudentsSBLocal {
     public Collection<Student> getByLastName(String lastName);
     public Student getStudent(String UserId);
     public Collection<Student> getStudentByStudyGroup(Studygroup s);
+    public List<Student> getStudents(String login, String password);
+    public List<Student> getStudents(String login, String password, int StudyGroupId);
     
 }

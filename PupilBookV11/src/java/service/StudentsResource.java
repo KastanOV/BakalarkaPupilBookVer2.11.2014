@@ -6,7 +6,7 @@
 package service;
 
 import Entity.Student;
-import SessionBeans.TeachersSessionBeanLocal;
+import SessionBeans.StudentsSBLocal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
@@ -26,7 +26,7 @@ import javax.ws.rs.Path;
 @Path("StudentsList")
 public class StudentsResource {
     @EJB
-    TeachersSessionBeanLocal sb;
+    private StudentsSBLocal studentsSB;
     
     @Context
     private UriInfo context;
@@ -36,7 +36,7 @@ public class StudentsResource {
     @Path("{login}/{password}")
     @Consumes({"application/xml", "application/json"})
     public List<servicesDTO.Student> checkLogin(@PathParam("login") String login, @PathParam("password") String password) {
-        List<Student> tmpList = sb.getStudents(login, password);
+        List<Student> tmpList = studentsSB.getStudents(login, password);
         List<servicesDTO.Student> items = new ArrayList<>();
         for(Student item : tmpList){
             servicesDTO.Student tmp = new servicesDTO.Student(item.getFirstName(), item.getMiddleName(), item.getLastName(), item.getPhone(), item.getEmail(), item.getLogin(), item.getPassword(), item.getStudyGroupidStudyGroup().getIdStudyGroup());

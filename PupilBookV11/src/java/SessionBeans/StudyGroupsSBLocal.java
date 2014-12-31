@@ -22,5 +22,6 @@ public interface StudyGroupsSBLocal {
     public Studygroup getStudygroup(int StudygroupId);
     public void deleteStudygroup(Studygroup p);
     public void deleteStudygroup(int StudygroupId);
+    public List<Studygroup> getStudyGroups(String login, String password);
     
 }

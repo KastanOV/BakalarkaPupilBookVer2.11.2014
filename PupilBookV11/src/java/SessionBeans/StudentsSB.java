@@ -9,6 +9,7 @@ import Entity.Student;
 import Entity.Studygroup;
 import Entity.Users;
 import java.util.Collection;
+import java.util.List;
 import java.util.Random;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -22,6 +23,7 @@ import javax.persistence.PersistenceContext;
 public class StudentsSB implements StudentsSBLocal {
     @PersistenceContext
     private EntityManager em;
+    
     
     @Override
     public Collection<Student> getByLastName(String lastName){
@@ -59,6 +61,36 @@ public class StudentsSB implements StudentsSBLocal {
     @Override
     public Student getStudent(String UserId){
         return em.find(Student.class, UserId);
+    }
+    
+    @Override
+    public List<Student> getStudents(String login, String password){
+        if(checkTeacher(login, password)){
+            return em.createNativeQuery("SELECT DISTINCT s.FirstName, s.MiddleName, s.LastName, s.Phone, s.Email, s.Login, s.BirthDate, s.StudyGroup_idStudyGroup FROM SheduleItem"
+                    + " left join studygroup on sheduleitem.StudyGroup_idStudyGroup = studygroup.idStudyGroup"
+                    + " join schoolyear on schoolyear.idSchoolYear = studygroup.SchoolYear_idSchoolYear "
+                    + " join Users s on studygroup.idStudyGroup = s.StudyGroup_idStudyGroup "
+                    + " WHERE Users_Login = ?login AND schoolyear.isactualyear = true AND s.Role = 'S'", Student.class)
+                    .setParameter("login", login)
+                    .getResultList();
+        }else {
+            return null;
+        }
+    }
+    @Override
+    public List<Student> getStudents(String login, String password, int StudyGroupId){
+        if(checkTeacher(login, password)){
+            return em.createNativeQuery("SELECT DISTINCT s.FirstName, s.MiddleName, s.LastName, s.Phone, s.Email, s.Login, s.BirthDate, s.StudyGroup_idStudyGroup FROM SheduleItem"
+                    + " left join studygroup on sheduleitem.StudyGroup_idStudyGroup = studygroup.idStudyGroup"
+                    + " join schoolyear on schoolyear.idSchoolYear = studygroup.SchoolYear_idSchoolYear "
+                    + " join Users s on studygroup.idStudyGroup = s.StudyGroup_idStudyGroup "
+                    + " WHERE Users_Login = ?login AND schoolyear.isactualyear = true AND s.Role = 'S' AND studygroup.idStudyGroup = ?StudyGroupID", Student.class)
+                    .setParameter("login", login)
+                    .setParameter("StudyGroupID", StudyGroupId)
+                    .getResultList();
+        }else {
+            return null;
+        }
     }
     
     private void createPassword(Users s){
@@ -108,4 +140,13 @@ public class StudentsSB implements StudentsSBLocal {
        }
        return retazecBD;
    }
+    private boolean checkTeacher(String login, String password){
+        long tmp = (long)em.createNativeQuery("SELECT count(*) FROM Users u WHERE u.login = ?login AND u.password = ?password AND Role = 'T'")
+                .setParameter("login", login)
+                .setParameter("password", password)
+                .getSingleResult();
+        if(tmp > 0){
+            return true;
+        }else return false;
+    }
 }

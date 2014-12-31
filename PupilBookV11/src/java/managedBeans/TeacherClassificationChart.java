@@ -8,13 +8,12 @@ package managedBeans;
 import Entity.Results;
 import Entity.Studysubject;
 import Entity.Users;
+import SessionBeans.ResultsSBLocal;
 import SessionBeans.TeachersSessionBeanLocal;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import org.primefaces.event.RateEvent;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.BarChartModel;
@@ -30,7 +29,7 @@ import org.primefaces.model.chart.ChartSeries;
 public class TeacherClassificationChart {
     
     @EJB
-    private TeachersSessionBeanLocal sb;
+    private ResultsSBLocal sb;
     
 //    private LineChartModel classificationModel;
     private BarChartModel barModel;

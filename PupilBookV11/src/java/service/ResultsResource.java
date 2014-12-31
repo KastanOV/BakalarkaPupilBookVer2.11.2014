@@ -6,19 +6,18 @@
 package service;
 
 import Entity.Results;
-import SessionBeans.TeachersSessionBeanLocal;
+import SessionBeans.ResultsSBLocal;
+import SessionBeans.TeachersSBLocal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PUT;
 
 /**
  * REST Web Service
@@ -28,7 +27,9 @@ import javax.ws.rs.PUT;
 @Path("Results")
 public class ResultsResource {
     @EJB
-    TeachersSessionBeanLocal sb;
+    TeachersSBLocal TeachersSB;
+    @EJB
+    ResultsSBLocal resultsSB;
     
     @Context
     private UriInfo context;
@@ -37,7 +38,7 @@ public class ResultsResource {
     @Path("{login}/{password}")
     @Consumes({"application/xml", "application/json"})
     public List<servicesDTO.Results> getResults(@PathParam("login") String login, @PathParam("password") String password){
-        List<Results> res = sb.getResults(login, password);
+        List<Results> res = TeachersSB.getResults(login, password);
         List<servicesDTO.Results> items = new ArrayList<>();
         for(Results item : res){
             servicesDTO.Results newItem = new servicesDTO.Results(item.getIdResults(),item.getDescription(),(int)item.getScore(),item.getDate().toString(),item.getStudySubjectidStudySubject().getIdStudySubject(),item.getStudentLogin().getLogin(), item.getTeacherLogin().getLogin(), null);
@@ -55,7 +56,7 @@ public class ResultsResource {
     @POST
     @Consumes({"application/xml", "application/json"})
     public String create(servicesDTO.Results res) {
-        res = sb.saveUploadedResult(res);
+        res = resultsSB.saveUploadedResult(res);
 
         return String.valueOf(res.getId());
     }

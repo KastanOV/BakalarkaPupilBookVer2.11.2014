@@ -6,7 +6,7 @@
 package service;
 
 import Entity.Teacher;
-import SessionBeans.TeachersSessionBeanLocal;
+import SessionBeans.TeachersSBLocal;
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.core.Context;
@@ -25,7 +25,7 @@ import javax.ws.rs.Path;
 @Path("teachers")
 public class TeacherReasource {
     @EJB
-    TeachersSessionBeanLocal sb;
+    TeachersSBLocal sb;
     
     @Context
     private UriInfo context;

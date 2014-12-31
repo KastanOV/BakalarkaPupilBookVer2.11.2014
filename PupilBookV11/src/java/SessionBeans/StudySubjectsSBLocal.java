@@ -5,8 +5,10 @@
  */
 package SessionBeans;
 
+import Entity.Studygroup;
 import Entity.Studysubject;
 import java.util.Collection;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -19,5 +21,7 @@ public interface StudySubjectsSBLocal {
     public Studysubject insertNewStudySubject(Studysubject s);
     public Studysubject saveStudySubject(Studysubject s);
     public Studysubject getStudysubject(int id);
+    public List<Studysubject> getStudySubjects();
+    public List<Studysubject> getStudySubjects(Studygroup group, String login);
     
 }

@@ -12,6 +12,10 @@ import Entity.Studygroup;
 import Entity.Studysubject;
 import Entity.Teacher;
 import Entity.Users;
+import SessionBeans.ResultsSBLocal;
+import SessionBeans.StudentsSBLocal;
+import SessionBeans.StudyGroupsSBLocal;
+import SessionBeans.StudySubjectsSBLocal;
 import SessionBeans.TeachersSessionBeanLocal;
 import java.util.Collection;
 import java.util.List;
@@ -30,7 +34,13 @@ import org.primefaces.event.RateEvent;
 @SessionScoped
 public class TeacherMainController {
     @EJB
-    private TeachersSessionBeanLocal sb;
+    private ResultsSBLocal ResultsSB;
+    @EJB
+    private StudyGroupsSBLocal studyGroupsSB;
+    @EJB
+    private StudentsSBLocal studentsSB;
+    @EJB
+    private StudySubjectsSBLocal studySubjectsSB;
     
     private Studygroup editedStudyGroup;
     private Studysubject editedStudySubject;
@@ -58,18 +68,18 @@ public class TeacherMainController {
         editedClassification.setTeacherLogin(loggedUser);
         editedClassification.setStudySubjectidStudySubject(editedStudySubject);
         editedClassification.setDescription(classificationDescription);
-        sb.insertNewResult(editedClassification);
+        ResultsSB.insertNewResult(editedClassification);
         
     }
     
     public List<Studygroup> getStudyGroups(){
         
-        return sb.getStudyGroups(loggedUser.getLogin(), loggedUser.getPassword());
+        return studyGroupsSB.getStudyGroups(loggedUser.getLogin(), loggedUser.getPassword());
     }
     
     public List<Studysubject> getStudySubject(){
         if(editedStudyGroup != null){
-            List<Studysubject> tmp = sb.getStudySubjects(editedStudyGroup, loggedUser.getLogin());
+            List<Studysubject> tmp = studySubjectsSB.getStudySubjects(editedStudyGroup, loggedUser.getLogin());
             return tmp;
         } else {
             return null;
@@ -78,7 +88,7 @@ public class TeacherMainController {
     
     public List<Student> getStudents(){
         if(editedStudyGroup != null){
-            selectedStudents = sb.getStudents(loggedUser.getLogin(), loggedUser.getPassword(), editedStudyGroup.getIdStudyGroup());
+            selectedStudents = studentsSB.getStudents(loggedUser.getLogin(), loggedUser.getPassword(), editedStudyGroup.getIdStudyGroup());
             return selectedStudents;
         }else return null;
     }

@@ -5,9 +5,11 @@
  */
 package SessionBeans;
 
+import Entity.Results;
 import Entity.Studygroup;
 import Entity.Teacher;
 import java.util.Collection;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -21,5 +23,7 @@ public interface TeachersSBLocal {
     public Teacher saveTeacher(Teacher t);
     public Teacher createNewTeacher(Teacher t);
     public Collection<Teacher> getTeachersByStudyGroup(Studygroup s);
+    public Teacher checkLogin(String login, String password);
+    public List<Results> getResults(String login, String password);
     
 }

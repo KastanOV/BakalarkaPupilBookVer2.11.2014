@@ -9,6 +9,7 @@ import Entity.Sheduleitem;
 import Entity.Studygroup;
 import Entity.Studysubject;
 import Entity.Users;
+import SessionBeans.SheduleItemsSBLocal;
 import SessionBeans.TeachersSessionBeanLocal;
 import java.util.List;
 import javax.ejb.EJB;
@@ -27,6 +28,8 @@ public class TeacherSheduleController {
     
     @EJB
     private TeachersSessionBeanLocal sb;
+    @EJB
+    private SheduleItemsSBLocal sheduleItemsSB;
     
     /**
      * Creates a new instance of TeacherSheduleController
@@ -36,7 +39,7 @@ public class TeacherSheduleController {
     
     public Sheduleitem getSheduleitem(short day, short hour){
         if(selectedSheduleItems == null){
-            selectedSheduleItems = sb.getSheduleItems(loggedUser.getLogin(), loggedUser.getPassword());
+            selectedSheduleItems = sheduleItemsSB.getSheduleItems(loggedUser.getLogin(), loggedUser.getPassword());
         } 
         for (Sheduleitem item : selectedSheduleItems){
             if(item.getDay() == day && item.getHour() == hour) 

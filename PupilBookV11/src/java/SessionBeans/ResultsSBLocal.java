@@ -5,7 +5,7 @@
  */
 package SessionBeans;
 
-import Entity.Sheduleitem;
+import Entity.Results;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -14,8 +14,8 @@ import javax.ejb.Local;
  * @author Topr
  */
 @Local
-public interface SheduleItemsSBLocal {
-    public void insertNewSheduleItem(Sheduleitem s);
-    public Sheduleitem saveSheduleItem(Sheduleitem s);
-    public List<Sheduleitem> getSheduleItems(String login, String password);
+public interface ResultsSBLocal {
+    public servicesDTO.Results saveUploadedResult(servicesDTO.Results res);
+    public List<Results> getStudentResults(String login, int StudySubjectID);
+    public void insertNewResult(Results res);
 }

@@ -6,7 +6,7 @@
 package service;
 
 import Entity.Studysubject;
-import SessionBeans.TeachersSessionBeanLocal;
+import SessionBeans.StudySubjectsSBLocal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
@@ -26,7 +26,7 @@ import javax.ws.rs.Path;
 public class StudySubjectsResource {
 
     @EJB
-    TeachersSessionBeanLocal sb;
+    StudySubjectsSBLocal sb;
     
     @Context
     private UriInfo context;

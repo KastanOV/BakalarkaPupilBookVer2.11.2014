@@ -7,7 +7,7 @@ package service;
 
 
 import Entity.Studygroup;
-import SessionBeans.TeachersSessionBeanLocal;
+import SessionBeans.StudyGroupsSBLocal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
@@ -27,7 +27,7 @@ import javax.ws.rs.core.UriInfo;
 public class StudygroupResource {
     
     @EJB
-    TeachersSessionBeanLocal sb;
+    private StudyGroupsSBLocal studyGroupsSB;
     
     @Context
     private UriInfo context;
@@ -36,7 +36,7 @@ public class StudygroupResource {
     @Path("{login}/{password}")
     @Consumes({"application/xml", "application/json"})
     public List<servicesDTO.StudyGroup> getSheduleItems(@PathParam("login") String login, @PathParam("password") String password){
-        List<Studygroup> tmpList = sb.getStudyGroups(login, password);
+        List<Studygroup> tmpList = studyGroupsSB.getStudyGroups(login, password);
         List<servicesDTO.StudyGroup> items = new ArrayList<>();
         for(Studygroup item : tmpList){
             servicesDTO.StudyGroup tmp = new servicesDTO.StudyGroup(item.getIdStudyGroup(), item.getName());
