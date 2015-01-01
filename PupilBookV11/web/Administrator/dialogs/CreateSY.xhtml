@@ -10,17 +10,17 @@
         <p:dialog id="SchoolyearCreateDlg" widgetVar="SchoolyearCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.welcomeHeading}">
             <h:form id="SchoolyearCreateForm">
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{adminmainController.edited != null}">
+                    <p:panelGrid columns="2" rendered="#{adminMainController.edited != null}">
                         <p:outputLabel value="#{bundle.SchoolYearname}" for="name" />
-                        <p:inputText id="name" value="#{adminmainController.edited.name}" title="Název" required="true" />
+                        <p:inputText id="name" value="#{adminMainController.edited.name}" title="Název" required="true" />
                         <p:outputLabel value="#{bundle.SchoolyearIsActual}" for="isactualyear" />
-                        <p:selectBooleanCheckbox id="isactualyear" value="#{adminmainController.edited.isactualyear}" required="true" />
+                        <p:selectBooleanCheckbox id="isactualyear" value="#{adminMainController.edited.isactualyear}" required="true" />
                         <p:outputLabel value="#{bundle.SchoolYearStartDate}" for="startDate" />
-                        <p:calendar id="startDate" pattern="MM/dd/yyyy" value="#{adminmainController.edited.startDate}" title="Start" required="true" showOn="button"/>
+                        <p:calendar id="startDate" pattern="MM/dd/yyyy" value="#{adminMainController.edited.startDate}" title="Start" required="true" showOn="button"/>
                         <p:outputLabel value="#{bundle.SchoolYearEndDate}" for="endDate" />
-                        <p:calendar id="endDate" pattern="MM/dd/yyyy" value="#{adminmainController.edited.endDate}" title="End" required="true" showOn="button"/>
+                        <p:calendar id="endDate" pattern="MM/dd/yyyy" value="#{adminMainController.edited.endDate}" title="End" required="true" showOn="button"/>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{adminmainController.saveSchoolYears}" value="#{bundle.save}" update="display,:AdminMainMenu:SchoolYears,:growl" oncomplete="handleSubmit(args,'SchoolyearCreateDialog');"/>
+                    <p:commandButton actionListener="#{adminMainController.saveSchoolYears}" value="#{bundle.save}" update="display,:AdminMainMenu,:growl" oncomplete="handleSubmit(args,'SchoolyearCreateDialog');"/>
                     
                 </h:panelGroup>
             </h:form>

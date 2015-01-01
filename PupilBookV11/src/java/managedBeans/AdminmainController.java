@@ -18,6 +18,7 @@ import SessionBeans.StudySubjectsSBLocal;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -51,25 +52,28 @@ public class AdminMainController implements Serializable{
     private Studysubject editedStudySubject;
     private Collection<Studysubject> StudySubjects;
 
-    
-    private String searchByLastname;
+    @PostConstruct
+    public void init(){
+         editedSchoolYear = schoolYearSB.getActualSchoolyear();
+    }
+//    private String searchByLastname;
 
-    public String getSearchByLastname() {
-        return searchByLastname;
-    }
-
-    public void setSearchByLastname(String SearchByLastname) {
-        this.searchByLastname = SearchByLastname;
-    }
+//    public String getSearchByLastname() {
+//        return searchByLastname;
+//    }
+//
+//    public void setSearchByLastname(String SearchByLastname) {
+//        this.searchByLastname = SearchByLastname;
+//    }
     
-    public Collection<Student> getStudents() {
-        if(searchByLastname == null || searchByLastname.equals("")){
-            return studentsSB.getAllStudents();
-        } else {
-            return studentsSB.getByLastName(searchByLastname);
-        }
-        
-    }
+//    public Collection<Student> getStudents() {
+//        if(searchByLastname == null || searchByLastname.equals("")){
+//            return studentsSB.getAllStudents();
+//        } else {
+//            return studentsSB.getByLastName(searchByLastname);
+//        }
+//        
+//    }
 
     public void saveSchoolYears(){
 		try {

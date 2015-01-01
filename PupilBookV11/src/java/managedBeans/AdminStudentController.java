@@ -32,6 +32,7 @@ public class AdminStudentController {
     }
     
     private Student editedStudent;
+    private String searchByLastname;
     
     public AdminStudentController() {
         
@@ -93,11 +94,11 @@ public class AdminStudentController {
     }
     
     public Collection<Student> getStudents() {
-        //if(searchByLastname == null || searchByLastname.equals("")){
+        if(searchByLastname == null || searchByLastname.equals("")){
             return studentsSB.getAllStudents();
-        //} else {
-            //return sb.getByLastName(searchByLastname);
-        //}
+        } else {
+            return studentsSB.getByLastName(searchByLastname);
+        }
         
     }
 
@@ -107,5 +108,13 @@ public class AdminStudentController {
 
     public void setEditedStudent(Student editedStudent) {
         this.editedStudent = editedStudent;
+    }
+    
+    public String getSearchByLastname() {
+        return searchByLastname;
+    }
+
+    public void setSearchByLastname(String SearchByLastname) {
+        this.searchByLastname = SearchByLastname;
     }
 }

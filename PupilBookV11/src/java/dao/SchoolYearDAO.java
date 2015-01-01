@@ -46,4 +46,10 @@ public class SchoolYearDAO {
     public void deleteSchooYear(int id) {
         em.remove(em.find(Schoolyear.class, id));
     }
+    
+    public Schoolyear getActualSchoolYear(){
+        Schoolyear idActualYear = (Schoolyear) em.createNativeQuery("SELECT * FROM schoolyear WHERE schoolyear.isactualyear = true", Schoolyear.class)
+                .getSingleResult();
+        return idActualYear;
+    }
 }

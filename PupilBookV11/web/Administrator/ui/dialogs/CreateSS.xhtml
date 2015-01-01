@@ -16,7 +16,7 @@
                         <p:inputText id="shortname" value="#{adminMainController.editedStudySubject.shortName}" required="true" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{adminMainController.saveStudySubject}" value="#{bundle.save}" update="display,:StudySubjects,:growl" oncomplete="handleSubmit(args,'StudySubjectCreateDialog');"/>
-                    <!--<p:commandButton value="#{bundle.cancel}" onclick="StudySubjectCreateDialog.hide()"/>-->
+                    
                 </h:panelGroup>
             </h:form>
         </p:dialog>

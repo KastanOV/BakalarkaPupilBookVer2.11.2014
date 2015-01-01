@@ -7,6 +7,8 @@ package SessionBeans;
 
 import Entity.Studygroup;
 import Entity.Studysubject;
+import dao.DAOFactory;
+import dao.DAOFactoryJPA;
 import java.util.Collection;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -22,39 +24,40 @@ public class StudySubjectsSB implements StudySubjectsSBLocal {
     @PersistenceContext
     private EntityManager em;
     
+    private DAOFactory factory;
+    
+    private DAOFactory getFactory(){
+        if(factory == null){
+            factory = new DAOFactoryJPA(em);
+        }
+        return factory;
+    }
+    
     @Override
     public Collection<Studysubject> getAllStudySubjects(){
-        return em.createNamedQuery("Studysubject.findAll").getResultList();
+        return getFactory().getStudySubjectsDAO().getAllStudySubjects();
     }
     @Override
     public Studysubject insertNewStudySubject(Studysubject s){
-        em.persist(s);
-        em.flush();
-        return s;
+        
+        return getFactory().getStudySubjectsDAO().insertNewStudySubject(s);
     }
     @Override
     public Studysubject saveStudySubject(Studysubject s){
-        em.merge(s);
-        em.flush();
-        return s;
+        
+        return getFactory().getStudySubjectsDAO().saveStudySubject(s);
     }
     @Override
     public Studysubject getStudysubject(int id) {
-        return em.find(Studysubject.class, id);
+        return getFactory().getStudySubjectsDAO().getStudysubject(id);
     }
     @Override
     public List<Studysubject> getStudySubjects(){
-        return  em.createNativeQuery("SELECT * FROM studysubject", Studysubject.class).getResultList();
+        return  getFactory().getStudySubjectsDAO().getStudySubjects();
     }
     @Override
     public List<Studysubject> getStudySubjects(Studygroup group, String login){
-        return em.createNativeQuery("select distinct studysubject.idStudySubject, studysubject.Name, studysubject.ShortName from sheduleitem "
-	+ " join studysubject on studysubject.idStudySubject = sheduleitem.StudySubject_idStudySubject "
-        + " join studygroup on sheduleitem.StudyGroup_idStudyGroup = studygroup.idStudyGroup "
-        + " where studygroup.idStudyGroup =  ?group and sheduleitem.Users_Login = ?login", Studysubject.class)
-                .setParameter("group", group.getIdStudyGroup())
-                .setParameter("login", login)
-                .getResultList();
+        return getFactory().getStudySubjectsDAO().getStudySubjects(group, login);
         
     }
     

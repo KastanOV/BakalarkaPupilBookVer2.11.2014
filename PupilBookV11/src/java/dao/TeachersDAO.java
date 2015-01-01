@@ -1,74 +1,89 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (C) 2015 Topr
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package SessionBeans;
+package dao;
 
 import Entity.Results;
 import Entity.Schoolyear;
 import Entity.Studygroup;
 import Entity.Teacher;
 import Entity.Users;
-import dao.DAOFactory;
-import dao.DAOFactoryJPA;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 /**
  *
  * @author Topr
  */
-@Stateless
-public class TeachersSB implements TeachersSBLocal {
-    @PersistenceContext
-    private EntityManager em;
-    
-    private DAOFactory factory;
-    
-    private DAOFactory getFactory(){
-        if(factory == null){
-            factory = new DAOFactoryJPA(em);
-        }
-        return factory;
+public class TeachersDAO {
+    private final EntityManager em;
+
+    public TeachersDAO(EntityManager em) {
+        super();
+        this.em = em;
     }
     
-    @Override
     public Teacher checkLogin(String login, String password){
-        return getFactory().getTeachersDAO().checkLogin(login, password);
+        
+        if(checkTeacher(login,password)){
+            return em.find(Teacher.class, login);
+        }else return null;
         
     }
     
-    @Override
     public List<Results> getResults(String login, String password){
-        return getFactory().getTeachersDAO().getResults(login, password);
+        if(checkTeacher(login, password)){
+            return em.createNativeQuery("select * from results WHERE Teacher_Login = ?login AND SchoolYear_idSchoolYear = ?syId", Results.class)
+                    .setParameter("login", login)
+                    .setParameter("syId", getActualSchoolYear())
+                    .getResultList();
+        }else {
+            return null;
+        }
     }
     
-    @Override
     public Collection<Teacher> getAllTeachers(){
-        return getFactory().getTeachersDAO().getAllTeachers();
+        return em.createNamedQuery("Teachers.findAll").getResultList();
     }
     
-    @Override
     public Collection<Teacher> getTeachersByStudyGroup(Studygroup s) {
-        return getFactory().getTeachersDAO().getTeachersByStudyGroup(s);
+        return em.createNamedQuery("Teacher.byStudyGroupAndRole")
+                .setParameter("studygroup", s)
+                .getResultList();
     }
     
-    @Override
     public Teacher getTeacher(String UserId){
-        return getFactory().getTeachersDAO().getTeacher(UserId);
+        return em.find(Teacher.class, UserId);
     }
-    @Override
+
     public Teacher saveTeacher(Teacher t){
-        return getFactory().getTeachersDAO().saveTeacher(t);
+        em.merge(t);
+        em.flush();
+        return t;
     }
-    @Override
+
     public Teacher createNewTeacher(Teacher t){
-        return getFactory().getTeachersDAO().createNewTeacher(t);
+        getFreeLogin(t);
+        if(t.getPassword() == null) createPassword(t);
+        em.persist(t);
+        em.flush();
+        return t;
     }
     
     private void createPassword(Users s){

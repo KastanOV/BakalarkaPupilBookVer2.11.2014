@@ -29,7 +29,7 @@
                         <p:calendar id="startDate" pattern="MM/dd/yyyy" value="#{adminTeacherController.editedTeacher.birthDate}" required="false" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{adminTeacherController.saveTeacher}" value="#{bundle.save}" update="display,:AdminMainMenu :Teachers,:growl" oncomplete="handleSubmit(args,'TeacherCreateDialog');"/>
-                    <p:commandButton value="#{bundle.cancel}" onclick="TeacherCreateDialog.hide()"/>
+                    
                 </h:panelGroup>
             </h:form>
         </p:dialog>

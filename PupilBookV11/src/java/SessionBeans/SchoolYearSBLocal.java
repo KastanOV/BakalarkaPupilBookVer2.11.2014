@@ -6,9 +6,6 @@
 package SessionBeans;
 
 import Entity.Schoolyear;
-import Entity.Studygroup;
-import Entity.Teacher;
-import java.util.Collection;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -22,7 +19,9 @@ public interface SchoolYearSBLocal {
     public Schoolyear saveSchoolyear(Schoolyear s);
     public List<Schoolyear> getAllSchoolYears();
     public Schoolyear getSchoolyear(int id);
+    public Schoolyear getActualSchoolyear();
     public void deleteSchooYear(Schoolyear s);
     public void deleteSchooYear(int id);
+    
     
 }

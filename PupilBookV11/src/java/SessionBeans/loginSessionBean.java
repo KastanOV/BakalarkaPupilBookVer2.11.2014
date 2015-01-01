@@ -5,8 +5,6 @@
  */
 package SessionBeans;
 
-import Entity.Admin;
-import Entity.Teacher;
 import Entity.Users;
 import dao.DAOFactory;
 import dao.DAOFactoryJPA;
@@ -34,23 +32,6 @@ public class loginSessionBean implements loginSessionBeanLocal {
     
     @Override
     public Users doLogin(Users u){
-        try{
-            Admin loaded = (Admin) em.createNamedQuery("Admin.doLogin")
-                .setParameter("login", u.getLogin())
-                .setParameter("password", u.getPassword())
-                .getSingleResult();
-            return loaded;
-        } catch (Exception e){
-            
-        }
-        try{
-            Teacher loaded = (Teacher) em.createNamedQuery("Teacher.doLogin")
-                .setParameter("login", u.getLogin())
-                .setParameter("password", u.getPassword())
-                .getSingleResult();
-            return loaded;
-        } catch (Exception e){
-            return u;
-        }
+        return getFactory().getLoginDAO().doLogin(u);
     }
 }

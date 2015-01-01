@@ -53,5 +53,10 @@ public class SchoolYearSB implements SchoolYearSBLocal {
         getFactory().getSchoolYearDAO().deleteSchooYear(id);
     }
 
+    @Override
+    public Schoolyear getActualSchoolyear() {
+        return getFactory().getSchoolYearDAO().getActualSchoolYear();
+    }
+    
     
 }

@@ -20,6 +20,9 @@ public class DAOFactoryJPA implements DAOFactory{
     private SheduleItemsDAO sheduleItemsDAO = null;
     private StudentsDAO studentsDAO = null;
     private StudyGroupsDAO studyGroupDAO = null;
+    private StudySubjectsDAO studySubjectsDAO = null;
+    private TeachersDAO teachersDAO = null;
+    private LoginDAO loginDAO = null;
     
     public DAOFactoryJPA(EntityManager em){
         super();
@@ -64,6 +67,28 @@ public class DAOFactoryJPA implements DAOFactory{
             studyGroupDAO = new StudyGroupsDAO(em);
         }
         return studyGroupDAO;
+    }
+
+    @Override
+    public StudySubjectsDAO getStudySubjectsDAO() {
+        if(studySubjectsDAO == null){
+            studySubjectsDAO = new StudySubjectsDAO(em);
+        }
+        return studySubjectsDAO;
+    }
+
+    @Override
+    public TeachersDAO getTeachersDAO() {
+        if(teachersDAO == null){
+            teachersDAO = new TeachersDAO(em);
+        }
+        return teachersDAO;
+    }
+    public LoginDAO getLoginDAO(){
+        if(loginDAO ==null){
+            loginDAO = new LoginDAO(em);
+        }
+        return loginDAO;
     }
     
 }
