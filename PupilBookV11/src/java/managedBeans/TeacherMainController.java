@@ -16,7 +16,6 @@ import SessionBeans.ResultsSBLocal;
 import SessionBeans.StudentsSBLocal;
 import SessionBeans.StudyGroupsSBLocal;
 import SessionBeans.StudySubjectsSBLocal;
-import SessionBeans.TeachersSessionBeanLocal;
 import java.util.Collection;
 import java.util.List;
 import javax.ejb.EJB;

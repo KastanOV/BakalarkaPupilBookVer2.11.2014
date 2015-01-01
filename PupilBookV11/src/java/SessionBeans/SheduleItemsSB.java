@@ -6,6 +6,8 @@
 package SessionBeans;
 
 import Entity.Sheduleitem;
+import dao.DAOFactory;
+import dao.DAOFactoryJPA;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -21,39 +23,27 @@ public class SheduleItemsSB implements SheduleItemsSBLocal {
     @PersistenceContext
     private EntityManager em;
     
+    private DAOFactory factory;
+    
+    private DAOFactory getFactory(){
+        if(factory == null){
+            factory = new DAOFactoryJPA(em);
+        }
+        return factory;
+    }
+    
     @Override
     public void insertNewSheduleItem(Sheduleitem s) {
-        em.persist(s);
+        getFactory().getSheduleItemsDAO().insertNewSheduleItem(s);
     }
 
     @Override
     public Sheduleitem saveSheduleItem(Sheduleitem s) {
-        em.merge(s);
-        return s;
+        
+        return getFactory().getSheduleItemsDAO().saveSheduleItem(s);
     }
     @Override
     public List<Sheduleitem> getSheduleItems(String login, String password) {
-        
-        if(checkUser(login, password)){
-            return em.createNativeQuery("SELECT * FROM SheduleItem"
-                    + " left join studygroup on sheduleitem.StudyGroup_idStudyGroup = studygroup.idStudyGroup"
-                    + " join schoolyear on schoolyear.idSchoolYear = studygroup.SchoolYear_idSchoolYear"
-                    + " WHERE Users_Login = ?login AND schoolyear.isactualyear = true", Sheduleitem.class)
-                    .setParameter("login", login)
-                    .getResultList();
-        }else {
-            return null;
-        }
+        return getFactory().getSheduleItemsDAO().getSheduleItems(login, password);
     }
-    
-    private boolean checkUser(String login, String password){
-        long tmp = (long)em.createNativeQuery("SELECT count(*) FROM Users u WHERE u.login = ?login AND u.password = ?password")
-                .setParameter("login", login)
-                .setParameter("password", password)
-                .getSingleResult();
-        if(tmp > 0){
-            return true;
-        }else return false;
-    }
-    
 }

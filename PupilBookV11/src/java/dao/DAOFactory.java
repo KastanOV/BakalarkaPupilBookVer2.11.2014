@@ -11,15 +11,11 @@ package dao;
  * @author KastanNotas
  */
 public interface DAOFactory {
+    public abstract ResultsDAO getResultsDAO();
+    public abstract SchoolYearDAO getSchoolYearDAO();
+    public abstract SheduleItemsDAO getSheduleItemsDAO();
+    public abstract StudentsDAO getStudentsDAO();
+    public abstract StudyGroupsDAO getStudyGroupDAO();
 
-    public abstract SchooyearDAOjpa getSchoolYearDAO();
-    
-    public abstract StudygroupDAOjpa getStudygroupDAO();
-    
-    /**
-     *
-     * @return
-     */
-    public abstract UsersDAOjpa getUsersDAO();
     
 }

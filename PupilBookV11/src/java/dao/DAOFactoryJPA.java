@@ -15,50 +15,55 @@ public class DAOFactoryJPA implements DAOFactory{
 
     private final EntityManager em;
     
-    private SchooyearDAOjpa schoolyearJpa = null;
-    private StudygroupDAOjpa studygroupJpa = null;
-    private UsersDAOjpa studentsJpa = null;
+    private ResultsDAO resultsDAO = null;
+    private SchoolYearDAO schoolYearDAO = null;
+    private SheduleItemsDAO sheduleItemsDAO = null;
+    private StudentsDAO studentsDAO = null;
+    private StudyGroupsDAO studyGroupDAO = null;
     
     public DAOFactoryJPA(EntityManager em){
         super();
         this.em = em;
     }
     
-    /**
-     *
-     * @return
-     */
-    
     @Override
-    public SchooyearDAOjpa getSchoolYearDAO() {
-        if(schoolyearJpa == null){
-            schoolyearJpa = new SchooyearDAOjpa(em);
+    public ResultsDAO getResultsDAO() {
+        if(resultsDAO == null){
+            resultsDAO = new ResultsDAO(em);
         }
-        return schoolyearJpa;
+        return resultsDAO;
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
-    public StudygroupDAOjpa getStudygroupDAO() {
-        if(studygroupJpa == null){
-            studygroupJpa = new StudygroupDAOjpa(em);
+    public SchoolYearDAO getSchoolYearDAO() {
+        if(schoolYearDAO == null){
+            schoolYearDAO = new SchoolYearDAO(em);
         }
-        return studygroupJpa;
+        return schoolYearDAO;
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
-    public UsersDAOjpa getUsersDAO() {
-        if(studentsJpa == null){
-            studentsJpa = new UsersDAOjpa(em);
+    public SheduleItemsDAO getSheduleItemsDAO() {
+        if(sheduleItemsDAO == null){
+            sheduleItemsDAO = new SheduleItemsDAO(em);
         }
-        return studentsJpa;
+        return sheduleItemsDAO;
+    }
+
+    @Override
+    public StudentsDAO getStudentsDAO() {
+        if(studentsDAO == null){
+            studentsDAO = new StudentsDAO(em);
+        }
+        return studentsDAO;
+    }
+
+    @Override
+    public StudyGroupsDAO getStudyGroupDAO() {
+        if(studyGroupDAO == null){
+            studyGroupDAO = new StudyGroupsDAO(em);
+        }
+        return studyGroupDAO;
     }
     
 }

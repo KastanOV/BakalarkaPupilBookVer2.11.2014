@@ -9,7 +9,6 @@ import Entity.Results;
 import Entity.Studysubject;
 import Entity.Users;
 import SessionBeans.ResultsSBLocal;
-import SessionBeans.TeachersSessionBeanLocal;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;

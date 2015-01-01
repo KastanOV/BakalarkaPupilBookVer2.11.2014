@@ -8,6 +8,8 @@ package SessionBeans;
 import Entity.Student;
 import Entity.Studygroup;
 import Entity.Users;
+import dao.DAOFactory;
+import dao.DAOFactoryJPA;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
@@ -24,129 +26,48 @@ public class StudentsSB implements StudentsSBLocal {
     @PersistenceContext
     private EntityManager em;
     
+    private DAOFactory factory;
+    
+    private DAOFactory getFactory(){
+        if(factory == null){
+            factory = new DAOFactoryJPA(em);
+        }
+        return factory;
+    }
     
     @Override
     public Collection<Student> getByLastName(String lastName){
-        lastName = lastName + "%";
-        return em.createNamedQuery("Student.findByLastName")
-                .setParameter("lastName", lastName)
-                .getResultList();
+        return getFactory().getStudentsDAO().getByLastName(lastName);
     }
     @Override
     public Student createNewUser(Student s) {
-        getFreeLogin(s);
-        if(s.getPassword() == null) createPassword(s);
-        em.persist(s);
-        em.flush();
-        return s;
+        return getFactory().getStudentsDAO().createNewUser(s);
     }
     
     @Override
     public Collection<Student> getAllStudents(){
-        return em.createNamedQuery("Student.findAll").getResultList();
+        return getFactory().getStudentsDAO().getAllStudents();
     }
     @Override
     public Student saveUser(Student s){
-        em.merge(s);
-        em.flush();
-        return s;
+        return getFactory().getStudentsDAO().saveUser(s);
     }
 
     @Override
     public Collection<Student> getStudentByStudyGroup(Studygroup s) {
-        return em.createNamedQuery("Student.byStudyGroupAndRole")
-                .setParameter("studygroup", s)
-                .getResultList();
+        return getFactory().getStudentsDAO().getStudentByStudyGroup(s);
     }
     @Override
     public Student getStudent(String UserId){
-        return em.find(Student.class, UserId);
+        return getFactory().getStudentsDAO().getStudent(UserId);
     }
     
     @Override
     public List<Student> getStudents(String login, String password){
-        if(checkTeacher(login, password)){
-            return em.createNativeQuery("SELECT DISTINCT s.FirstName, s.MiddleName, s.LastName, s.Phone, s.Email, s.Login, s.BirthDate, s.StudyGroup_idStudyGroup FROM SheduleItem"
-                    + " left join studygroup on sheduleitem.StudyGroup_idStudyGroup = studygroup.idStudyGroup"
-                    + " join schoolyear on schoolyear.idSchoolYear = studygroup.SchoolYear_idSchoolYear "
-                    + " join Users s on studygroup.idStudyGroup = s.StudyGroup_idStudyGroup "
-                    + " WHERE Users_Login = ?login AND schoolyear.isactualyear = true AND s.Role = 'S'", Student.class)
-                    .setParameter("login", login)
-                    .getResultList();
-        }else {
-            return null;
-        }
+        return getFactory().getStudentsDAO().getStudents(login, password);
     }
     @Override
     public List<Student> getStudents(String login, String password, int StudyGroupId){
-        if(checkTeacher(login, password)){
-            return em.createNativeQuery("SELECT DISTINCT s.FirstName, s.MiddleName, s.LastName, s.Phone, s.Email, s.Login, s.BirthDate, s.StudyGroup_idStudyGroup FROM SheduleItem"
-                    + " left join studygroup on sheduleitem.StudyGroup_idStudyGroup = studygroup.idStudyGroup"
-                    + " join schoolyear on schoolyear.idSchoolYear = studygroup.SchoolYear_idSchoolYear "
-                    + " join Users s on studygroup.idStudyGroup = s.StudyGroup_idStudyGroup "
-                    + " WHERE Users_Login = ?login AND schoolyear.isactualyear = true AND s.Role = 'S' AND studygroup.idStudyGroup = ?StudyGroupID", Student.class)
-                    .setParameter("login", login)
-                    .setParameter("StudyGroupID", StudyGroupId)
-                    .getResultList();
-        }else {
-            return null;
-        }
-    }
-    
-    private void createPassword(Users s){
-        char[] symbols;
-        StringBuilder tmp = new StringBuilder();
-        for (char ch = '0'; ch <= '9'; ++ch)
-            tmp.append(ch);
-        for (char ch = 'a'; ch <= 'z'; ++ch)
-            tmp.append(ch);
-        for (char ch = 'A'; ch <= 'Z'; ++ch)
-            tmp.append(ch);
-        symbols = tmp.toString().toCharArray();
-        Random random = new Random();
-        
-        StringBuilder value = new StringBuilder();
-
-        for (int idx = 0; idx < 10; ++idx) 
-            value.append(symbols[random.nextInt(symbols.length)]);
-        s.setPassword(value.toString());
-    }
-    private void getFreeLogin(Users s){
-        String LoginPrefix = removeDiak(s.getLastName()
-                .substring(0,3)
-                .toUpperCase()
-                .trim());
-        Long numberOfLogin = (Long) em.createNativeQuery("SELECT COUNT(*) FROM Users WHERE login LIKE ?createLogin")
-                .setParameter("createLogin", LoginPrefix + "%")
-                .getSingleResult();
-        s.setLogin(LoginPrefix + getPostFix(String.valueOf(numberOfLogin)));
-    }
-    private String getPostFix(String Postfix){
-        switch(Postfix.length()){
-            case 1 : return "00" + Postfix;
-            case 2 : return "0" + Postfix;
-            default : return Postfix;    
-        }
-    };
-    private String removeDiak(String retazec){
-       String retazecBD="";
-       String sdiak="áäčďěéíĺžňóöôŕřšťúüýžźÁÄČĎĚÉÍĹŇÓÖÔŔŘŤÚÜÝŠŽŐőÖöŰűÜü";
-       String bdiak="aacdeeillnooorrstuuyzzAACDEEILNOOORRTUUYSZOoOoUuUu";
-       for (int l=0;l<retazec.length();l++){
-           if (sdiak.indexOf(retazec.charAt(l))!=-1)
-               retazecBD+=bdiak.charAt(sdiak.indexOf(retazec.charAt(l)));
-           else
-               retazecBD+=retazec.charAt(l);
-       }
-       return retazecBD;
-   }
-    private boolean checkTeacher(String login, String password){
-        long tmp = (long)em.createNativeQuery("SELECT count(*) FROM Users u WHERE u.login = ?login AND u.password = ?password AND Role = 'T'")
-                .setParameter("login", login)
-                .setParameter("password", password)
-                .getSingleResult();
-        if(tmp > 0){
-            return true;
-        }else return false;
+        return getFactory().getStudentsDAO().getStudents(login, password, StudyGroupId);
     }
 }

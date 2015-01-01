@@ -10,7 +10,6 @@ import Entity.Studygroup;
 import Entity.Studysubject;
 import Entity.Users;
 import SessionBeans.SheduleItemsSBLocal;
-import SessionBeans.TeachersSessionBeanLocal;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -26,8 +25,7 @@ public class TeacherSheduleController {
     private List<Sheduleitem> selectedSheduleItems;
     private Users loggedUser;
     
-    @EJB
-    private TeachersSessionBeanLocal sb;
+    
     @EJB
     private SheduleItemsSBLocal sheduleItemsSB;
     
