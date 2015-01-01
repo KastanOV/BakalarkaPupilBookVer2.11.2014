@@ -66,7 +66,7 @@ public class ClasificationActivity extends Activity {
         Time time = new Time();   time.setToNow();
         res.setDate(Long.toString(time.toMillis(true)));
         res.setDesc(description.getText().toString());
-        res.setScore(score.getProgress());
+        res.setScore(score.getProgress()+1);
         res.setSsId(selectedStudySubject);
         ResultsTable resTable = new ResultsTable(this);
         resTable.createResult(res);

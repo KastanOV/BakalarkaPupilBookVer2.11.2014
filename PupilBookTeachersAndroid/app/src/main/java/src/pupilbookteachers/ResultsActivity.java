@@ -18,17 +18,15 @@ public class ResultsActivity extends TabActivity {
         SelectedStudent = getIntent().getStringExtra("selectecStudent");
         TabHost tabHost = getTabHost();
 
-        // Tab for Photos
         TabHost.TabSpec classification = tabHost.newTabSpec("Classification");
-        // setting Title and Icon for the Tab
+
         classification.setIndicator("Klasifikace");
         Intent in = new Intent(this, ClasificationActivity.class);
         in.putExtra("selectecStudent", SelectedStudent);
         classification.setContent(in);
 
-        // Tab for Photos
         TabHost.TabSpec resultsList = tabHost.newTabSpec("ResultsList");
-        // setting Title and Icon for the Tab
+
         resultsList.setIndicator("Výsledky");
         Intent inResultsList = new Intent(this, ResultsListActivity.class);
         inResultsList.putExtra("selectecStudent", SelectedStudent);
@@ -41,7 +39,7 @@ public class ResultsActivity extends TabActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+
         getMenuInflater().inflate(R.menu.menu_results, menu);
         return true;
     }
