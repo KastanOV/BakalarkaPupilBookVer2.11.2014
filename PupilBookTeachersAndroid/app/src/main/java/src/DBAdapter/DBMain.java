@@ -22,7 +22,7 @@ public abstract class DBMain extends SQLiteOpenHelper {
                 + Utils.SHEDULE_ITEM_KEY_DAY + " INTEGER, "
                 + Utils.SHEDULE_ITEM_KEY_HOUR + " INTEGER, "
                 + Utils.SHEDULE_ITEM_KEY_ID_STUDY_GROUP + " INTEGER, "
-                + Utils.SHEDULE_ITEM_KEY_ID_STUDY_SUBJECT + " INETEGER, "
+                + Utils.SHEDULE_ITEM_KEY_ID_STUDY_SUBJECT + " INTEGER, "
                 + Utils.SHEDULE_ITEM_KEY_LOGIN + " TEXT)");
         db.execSQL("CREATE TABLE IF NOT EXISTS " + Utils.TABLE_STUDENT + "(" + Utils.STUDENT_KEY_ID + " TEXT PRIMARY KEY,"
                 + Utils.STUDENT_KEY_FIRSTNAME + " TEXT, "
