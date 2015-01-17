@@ -22,6 +22,11 @@ public class SchoolYearDAO {
     }
     
     public Schoolyear saveSchoolyear(Schoolyear s) {
+        if(s.getIsactualyear() == true){
+            for(Schoolyear si : getAllSchoolYears()){
+                si.setIsactualyear(false);
+            }
+        }
         if(s.getIdSchoolYear() != null){
             em.merge(s);
         } else {
