@@ -10,7 +10,7 @@
         #{adminSheduleController.setMainControler(adminMainController)}
         
         <ui:include src="dialogs/EditSheduleItem.xhtml"/>
-        <h:form id="ShedulePanel">
+        <h:form id="ShedulePanel" rendered="#{adminMainController.editedStudygroup != null}">
         <p:panelGrid style="margin-top: 20px">
             <f:facet name="header">
                 <p:row>

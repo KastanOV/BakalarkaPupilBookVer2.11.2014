@@ -7,15 +7,15 @@
 
     <ui:composition>
 
-        <p:dialog id="StudyGroupCreateDialog" widgetVar="StudyGroupCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Přidat studíjní skupinu">
-            <h:form id="StudyGroupCreateForm">
+        <p:dialog id="StudyGroupEditDialog" widgetVar="StudyGroupEditDialog" modal="true" resizable="false" appendTo="@(body)" header="Editovat studíjní skupinu">
+            <h:form id="StudyGroupEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{adminMainController.editedStudygroup != null}">
                         <p:outputLabel value="#{bundle.StudyGroupName}" for="name" />
                         <p:inputText id="name" value="#{adminMainController.editedStudygroup.name}" title="Název" required="true" />
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{adminMainController.saveNewStudyGroup}" value="#{bundle.save}" update="display,:AdminMainMenu:StudyGroupsOneMenu ,:growl" oncomplete="handleSubmit(args,'StudyGroupCreateDialog');"/>
-                    
+                    <p:commandButton actionListener="#{adminMainController.saveEditedStudyGroup}" value="#{bundle.save}" update="display,:AdminMainMenu:StudyGroupsOneMenu ,:growl" oncomplete="handleSubmit(args,'StudyGroupEditDialog');"/>
+                    <p:commandButton actionListener="#{adminMainController.deleteStudyGroup}" value="Odstranit" update="display,:AdminMainMenu:StudyGroupsOneMenu ,:growl" oncomplete="handleSubmit(args,'StudyGroupEditDialog');"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

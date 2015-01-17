@@ -6,6 +6,7 @@
 package managedBeans;
 
 import Entity.Sheduleitem;
+import Entity.Studygroup;
 import Entity.Studysubject;
 import Entity.Teacher;
 import SessionBeans.SheduleItemsSBLocal;
@@ -16,6 +17,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+
 
 
 /**
@@ -37,10 +39,16 @@ public class AdminSheduleController {
     private Collection<Sheduleitem> selectedSheduleItems;
     private Sheduleitem editedSheduleItem;
     private Studysubject editedStudySubject;
+    private Studygroup editedStudyGroup;
 
     public void setMainControler(AdminMainController AdminMain) {
         this.adminMain = AdminMain;
-        selectedSheduleItems = adminMain.getEditedStudygroup().getSheduleitemCollection();
+        editedStudyGroup = adminMain.getEditedStudygroup();
+        if(editedStudyGroup != null){
+            selectedSheduleItems = sheduleItemsSB.getSheduleItems(editedStudyGroup);
+        } else {
+            selectedSheduleItems = null;
+        }
     }
         
     
@@ -56,13 +64,13 @@ public class AdminSheduleController {
         return null;
     }
     public void setEditedSheduleItem(short day, short hour){
+        
         if(selectedSheduleItems != null){
             for (Sheduleitem item : selectedSheduleItems){
                 if(item.getDay() == day && item.getHour() == hour){
                     editedSheduleItem = item;
                     editedTeacher = (Teacher) item.getUsersLogin();
                     setEditedStudySubject(item.getStudySubjectidStudySubject());
-                    
                     break;
                 }
             }

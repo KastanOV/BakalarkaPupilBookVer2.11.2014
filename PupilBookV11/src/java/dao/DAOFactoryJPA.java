@@ -13,7 +13,7 @@ import javax.persistence.EntityManager;
  */
 public class DAOFactoryJPA implements DAOFactory{
 
-    private final EntityManager em;
+    private final EntityManager em ;
     
     private ResultsDAO resultsDAO = null;
     private SchoolYearDAO schoolYearDAO = null;
@@ -84,11 +84,18 @@ public class DAOFactoryJPA implements DAOFactory{
         }
         return teachersDAO;
     }
+    
+    @Override
     public LoginDAO getLoginDAO(){
         if(loginDAO ==null){
             loginDAO = new LoginDAO(em);
         }
         return loginDAO;
+    }
+
+    @Override
+    public void refreshEntityManager() {
+        em.getEntityManagerFactory().getCache().evictAll();
     }
     
 }

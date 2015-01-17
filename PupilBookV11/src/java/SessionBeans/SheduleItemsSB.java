@@ -6,6 +6,7 @@
 package SessionBeans;
 
 import Entity.Sheduleitem;
+import Entity.Studygroup;
 import dao.DAOFactory;
 import dao.DAOFactoryJPA;
 import java.util.List;
@@ -45,5 +46,15 @@ public class SheduleItemsSB implements SheduleItemsSBLocal {
     @Override
     public List<Sheduleitem> getSheduleItems(String login, String password) {
         return getFactory().getSheduleItemsDAO().getSheduleItems(login, password);
+    }
+
+    @Override
+    public void refreshTable() {
+        getFactory().refreshEntityManager();
+    }
+
+    @Override
+    public List<Sheduleitem> getSheduleItems(Studygroup sg) {
+        return getFactory().getSheduleItemsDAO().getSheduleItems(sg);
     }
 }

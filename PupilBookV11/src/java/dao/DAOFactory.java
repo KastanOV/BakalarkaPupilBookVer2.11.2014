@@ -19,6 +19,7 @@ public interface DAOFactory {
     public abstract StudySubjectsDAO getStudySubjectsDAO();
     public abstract TeachersDAO getTeachersDAO();
     public abstract LoginDAO getLoginDAO();
+    public abstract void refreshEntityManager();
 
     
 }

@@ -9,7 +9,6 @@ import Entity.Schoolyear;
 import Entity.Studygroup;
 import Entity.Studysubject;
 import Entity.Sheduleitem;
-import Entity.Student;
 import SessionBeans.SchoolYearSBLocal;
 import SessionBeans.SheduleItemsSBLocal;
 import SessionBeans.StudentsSBLocal;
@@ -56,28 +55,12 @@ public class AdminMainController implements Serializable{
     public void init(){
          editedSchoolYear = schoolYearSB.getActualSchoolyear();
     }
-//    private String searchByLastname;
-
-//    public String getSearchByLastname() {
-//        return searchByLastname;
-//    }
-//
-//    public void setSearchByLastname(String SearchByLastname) {
-//        this.searchByLastname = SearchByLastname;
-//    }
-    
-//    public Collection<Student> getStudents() {
-//        if(searchByLastname == null || searchByLastname.equals("")){
-//            return studentsSB.getAllStudents();
-//        } else {
-//            return studentsSB.getByLastName(searchByLastname);
-//        }
-//        
-//    }
 
     public void saveSchoolYears(){
 		try {
 			schoolYearSB.saveSchoolyear(editedSchoolYear);
+                        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+                        ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());
                         
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, 
@@ -85,9 +68,8 @@ public class AdminMainController implements Serializable{
 					"Nepodařilo se uložit data do databáze.. Příčina: " + e.getMessage()));
 		}
 	}
-    public void saveStudyGroup(){
+    public void saveNewStudyGroup(){
         try{
-            //editedSchoolYear.getStudygroupCollection().add(editedStudygroup);
             editedStudygroup.setSchoolYearidSchoolYear(editedSchoolYear);
             
             studyGroupSB.saveStudygroup(editedStudygroup);
@@ -100,11 +82,34 @@ public class AdminMainController implements Serializable{
                     sheduleItemsSB.insertNewSheduleItem(item);
                 }
             }
+            ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+            ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());
         }   catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, 
 					"Nepodařilo se uložit data do databáze.", 
 					"Nepodařilo se uložit data do databáze.. Příčina: " + e.getMessage()));
 	}
+    }
+    public void saveEditedStudyGroup(){
+        try{
+            studyGroupSB.saveStudygroup(editedStudygroup);
+        } catch (Exception e){
+            FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+					"Nepodařilo se uložit data do databáze.", 
+					"Nepodařilo se uložit data do databáze.. Příčina: " + e.getMessage()));
+        }
+    }
+    public void deleteStudyGroup(){
+        try{
+            studyGroupSB.deleteStudygroup(editedStudygroup);
+            editedStudygroup = null;
+            ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+            ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());
+        } catch (Exception e){
+            FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+					"Nepodařilo se vymazat studíjní skupinu.", 
+					"Zřejmě jsou na tuto studíjní skupinu vázány nějaké data. " + e.getMessage()));
+        }
     }
     public void saveStudySubject(){
         try{

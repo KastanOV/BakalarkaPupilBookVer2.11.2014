@@ -4,6 +4,7 @@
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
     <jta-data-source>PupilBook</jta-data-source>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    
     <properties/>
   </persistence-unit>
 </persistence>

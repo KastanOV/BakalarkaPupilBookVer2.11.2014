@@ -6,6 +6,7 @@
 package dao;
 
 import Entity.Sheduleitem;
+import Entity.Studygroup;
 import java.util.List;
 import javax.persistence.EntityManager;
 
@@ -23,7 +24,10 @@ public class SheduleItemsDAO {
     
     public void insertNewSheduleItem(Sheduleitem s) {
         em.persist(s);
+        em.flush();
     }
+    
+    
 
     public Sheduleitem saveSheduleItem(Sheduleitem s) {
         em.merge(s);
@@ -42,6 +46,13 @@ public class SheduleItemsDAO {
         }else {
             return null;
         }
+    }
+    
+    public List<Sheduleitem> getSheduleItems(Studygroup sg) {
+        return em.createNativeQuery("SELECT * FROM SheduleItem"
+             + " WHERE StudyGroup_idStudyGroup = ?sg", Sheduleitem.class)
+            .setParameter("sg", sg.getIdStudyGroup())
+            .getResultList();
     }
     
     private boolean checkUser(String login, String password){

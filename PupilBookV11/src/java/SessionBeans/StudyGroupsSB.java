@@ -63,4 +63,9 @@ public class StudyGroupsSB implements StudyGroupsSBLocal {
     public List<Studygroup> getStudyGroups(String login, String password){
         return getFactory().getStudyGroupDAO().getStudyGroups(login, password);
     }
+
+    @Override
+    public void refreshTable() {
+        getFactory().refreshEntityManager();
+    }
 }

@@ -6,6 +6,7 @@
 package SessionBeans;
 
 import Entity.Sheduleitem;
+import Entity.Studygroup;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -16,6 +17,8 @@ import javax.ejb.Local;
 @Local
 public interface SheduleItemsSBLocal {
     public void insertNewSheduleItem(Sheduleitem s);
+    public void refreshTable();
     public Sheduleitem saveSheduleItem(Sheduleitem s);
     public List<Sheduleitem> getSheduleItems(String login, String password);
+    public List<Sheduleitem> getSheduleItems(Studygroup sg);
 }

@@ -10,6 +10,7 @@
             <ui:include src="dialogs/CreateSY.xhtml"/>
             <ui:include src="dialogs/EditSY.xhtml"/>
             <ui:include src="dialogs/CreateSG.xhtml"/>
+            <ui:include src="dialogs/EditSG.xhtml"/>
             <h:form id="AdminMainMenu">
                     <h:panelGrid columns="2" style="margin-bottom: 10px" cellpadding="5">
                         <p:outputLabel for="SchoolYears" value="#{bundle.dropdownSchoolYear}"/>
@@ -26,7 +27,7 @@
                             <f:selectItems value="#{adminMainController.editedStudyGroups}" var="itemSG" itemLabel="#{itemSG.name}" itemValue="#{itemSG}"/>
                         </p:selectOneMenu>
                         <p:commandButton id="createButtonSG" icon="ui-icon-plus"   value="#{bundle.createStudyGroup}" actionListener="#{adminMainController.prepareNewStudyGroup}" update=":StudyGroupCreateForm" oncomplete="PF('StudyGroupCreateDialog').show()"/>
-                        <!--<p:commandButton id="editButton"   icon="ui-icon-pencil" value="Edit" update=":StudyGroupEditForm" oncomplete="PF('StudyGroupEditDialog').show()" disabled="#{empty adminMainController.edited}"/>-->
+                        <p:commandButton id="editButtonSG" rendered="#{adminMainController.editedStudygroup != null}" icon="ui-icon-pencil" value="Editovat studijní Skupinu" update=":StudyGroupEditForm" oncomplete="PF('StudyGroupEditDialog').show()"/>
                     </h:panelGrid>
                     <hr />
                     <p:commandButton id="testingButton" value="BIG TEST BUTTON" />

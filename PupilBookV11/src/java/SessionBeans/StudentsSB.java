@@ -7,12 +7,10 @@ package SessionBeans;
 
 import Entity.Student;
 import Entity.Studygroup;
-import Entity.Users;
 import dao.DAOFactory;
 import dao.DAOFactoryJPA;
 import java.util.Collection;
 import java.util.List;
-import java.util.Random;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

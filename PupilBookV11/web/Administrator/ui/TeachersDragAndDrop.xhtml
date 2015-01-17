@@ -9,7 +9,7 @@
     <ui:composition>
         #{adminTeacherController.setMainControler(adminMainController)}
         <ui:include src="dialogs/EditTeacher.xhtml"/>
-        <h:form id="Teachers">
+        <h:form id="Teachers" rendered="#{adminMainController.editedStudygroup != null}">
             <script type="text/javascript">
                 function handleDrop(event, ui) {
                 var droppedStudent = ui.draggable;
