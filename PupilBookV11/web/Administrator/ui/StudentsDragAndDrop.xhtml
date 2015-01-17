@@ -3,12 +3,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      >
 
     <ui:composition>
         #{adminStudentController.setMainControler(adminMainController)}
         <ui:include src="dialogs/EditStudent.xhtml"/>
+        <ui:include src="dialogs/ViewStudent.xhtml"/>
         <h:form id="Students" rendered="#{adminMainController.editedStudygroup != null}">
             <script type="text/javascript">
                 function handleDrop(event, ui) {
@@ -16,7 +18,7 @@
                 droppedStudent.fadeOut('fast');
                 }
             </script>
-            <p:commandButton id="createButtonStudent" icon="ui-icon-plus" value="Přidej studenta" actionListener="#{adminStudentController.prepareNewStudent()}" update=":StudentCreateForm" oncomplete="PF('StudentCreateDialog').show()"/>
+            
                 <p:panelGrid style="margin-top:20px">
                 <f:facet name="header">
                     <p:row>
@@ -34,17 +36,44 @@
                         </p:column>
                         <p:column colspan="1">
                             <p:fieldset legend="Vyhledávání" style="margin-top:20px">
-                                <p:inputText id="SearchByLastName" title="Vyhledávání podle příjmení" value="#{adminStudentController.searchByLastname}" />
-                                <p:commandButton update="StudentsTable" value="hledej"/>
+                                <p:panelGrid>
+                                    
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel for="start" value=" Datum narození začátek " />
+                                        </p:column>
+                                        <p:column>
+                                            <p:calendar id="start" value="#{adminStudentController.birthDateStart}" navigator="true" pattern="MMM-dd-yyyy" />
+                                        </p:column>
+                                        <p:column>
+                                            <p:outputLabel for="end" value=" Datum narození konec " />
+                                        </p:column>
+                                        <p:column>
+                                            <p:calendar id="end" value="#{adminStudentController.birthDateEnd}"  navigator="true" pattern="MMM-dd-yyyy" />
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="Příjmení " />
+                                        </p:column>
+                                        <p:column>
+                                            <p:inputText id="SearchByLastName" title="Vyhledávání podle příjmení" value="#{adminStudentController.searchByLastname}" />
+                                        </p:column>
+                                        <p:column colspan="2">
+                                            <p:commandButton update="StudentsTable" value="hledej"/>
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+                                
                             </p:fieldset>
                         </p:column>
                     </p:row>
                     <p:row>
-                        <p:column colspan="1">
+                        <p:column colspan="1" >
                             <p:fieldset id="selectedStudentsField" legend="Selected Students" style="margin-top:20px">
                                 <p:outputPanel id="dropArea">
                                     <h:outputText value="Zde přesuňte studenty" rendered="#{empty adminStudentController.dropedStudents}" style="font-size: 24px" />
-                                    <p:dataTable id="selectedStudents" var="selStudents" value="#{adminStudentController.dropedStudents}" rendered="#{not empty adminStudentController.dropedStudents}" >
+                                    <p:dataTable id="selectedStudents" var="selStudents" value="#{adminStudentController.dropedStudents}" rendered="#{not empty adminStudentController.dropedStudents}"  >
                                         <p:column headerText="login" >
                                             <h:outputText value="#{selStudents.login}" />
                                         </p:column>
@@ -63,7 +92,15 @@
                         </p:column>
                         <p:column colspan="1">
                             <p:fieldset id="availableStudentsField" legend="Available Students">
-                                <p:dataTable id="StudentsTable" var="studentTable" value="#{adminStudentController.students}">
+                                <p:dataTable id="StudentsTable" var="studentTable" value="#{adminStudentController.students}"
+                                                paginator="true"
+                                                paginatorPosition="bottom"
+                                                rowKey="#{item.login}"
+                                                rows="10"
+                                                rowsPerPageTemplate="10,20,30,40,50">
+                                    <f:facet name="header">
+                                        <p:commandButton id="createButtonStudent" icon="ui-icon-plus"   value="Přidat Studenta" actionListener="#{adminStudentController.prepareNewStudent()}" update=":StudentCreateForm" oncomplete="PF('StudentCreateDialog').show()"/>
+                                    </f:facet>
                                     <p:column style="width:20px">
                                         <h:outputText id="dragIcon" styleClass="ui-icon ui-icon-arrow-4" />
                                         <p:draggable for="dragIcon" revert="true" helper="clone"/>
@@ -89,6 +126,10 @@
                                             <f:setPropertyActionListener value="#{studentTable}" target="#{adminStudentController.editedStudent}" />
                                         </p:commandButton>
                                     </p:column>
+                                    <!--<p:column>
+                                        <p:commandButton id="viewButtonStudent"   icon="ui-icon-search" value="Zobrazit" update=":StudentViewForm" oncomplete="PF('StudentViewDialog').show()" disabled="#{empty adminStudentController.editedStudent}"/>
+                                    </p:column>-->
+                                    
                                 </p:dataTable>
                             </p:fieldset>
                         </p:column> 

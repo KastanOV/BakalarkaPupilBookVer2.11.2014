@@ -10,6 +10,7 @@ import Entity.Studygroup;
 import dao.DAOFactory;
 import dao.DAOFactoryJPA;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -67,5 +68,10 @@ public class StudentsSB implements StudentsSBLocal {
     @Override
     public List<Student> getStudents(String login, String password, int StudyGroupId){
         return getFactory().getStudentsDAO().getStudents(login, password, StudyGroupId);
+    }
+
+    @Override
+    public Collection<Student> getByParameters(String lastName, Date start, Date end) {
+        return getFactory().getStudentsDAO().getByParameters(lastName, start, end);
     }
 }

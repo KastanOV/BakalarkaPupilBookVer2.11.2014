@@ -21,6 +21,7 @@ import Entity.Student;
 import Entity.Studygroup;
 import Entity.Users;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import javax.persistence.EntityManager;
@@ -42,6 +43,15 @@ public class StudentsDAO {
         lastName = lastName + "%";
         return em.createNamedQuery("Student.findByLastName")
                 .setParameter("lastName", lastName)
+                .getResultList();
+    }
+    public Collection<Student> getByParameters(String lastName, Date start, Date end){
+        lastName = lastName + "%";
+        return em.createNativeQuery("SELECT * FROM Users u WHERE u.lastName LIKE ?lastName AND u.birthDate BETWEEN ?start AND ?end AND u.Role = ?s", Student.class)
+                .setParameter("lastName", lastName)
+                .setParameter("start", start)
+                .setParameter("end", end)
+                .setParameter("s", 'S')
                 .getResultList();
     }
 

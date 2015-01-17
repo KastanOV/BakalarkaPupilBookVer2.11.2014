@@ -7,7 +7,9 @@ package managedBeans;
 
 import Entity.Student;
 import SessionBeans.StudentsSBLocal;
+import java.io.Serializable;
 import java.util.Collection;
+import java.util.Date;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -15,13 +17,14 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.event.DragDropEvent;
 
+
 /**
  *
  * @author Topr
  */
 @ManagedBean
 @SessionScoped
-public class AdminStudentController {
+public class AdminStudentController implements Serializable{
     
     @EJB
     private StudentsSBLocal studentsSB;
@@ -33,9 +36,12 @@ public class AdminStudentController {
     
     private Student editedStudent;
     private String searchByLastname;
-    
+    private Date birthDateStart;
+    private Date birthDateEnd;
+
+
     public AdminStudentController() {
-        
+
     }
     
     public Student prepareNewStudent(){
@@ -94,9 +100,11 @@ public class AdminStudentController {
     }
     
     public Collection<Student> getStudents() {
-        if(searchByLastname == null || searchByLastname.equals("")){
+        if (birthDateStart != null && birthDateEnd != null){
+            return studentsSB.getByParameters(searchByLastname, birthDateStart, birthDateEnd);
+        } else if(searchByLastname == null || searchByLastname.equals("")){
             return studentsSB.getAllStudents();
-        } else {
+        }  else {
             return studentsSB.getByLastName(searchByLastname);
         }
         
@@ -117,4 +125,20 @@ public class AdminStudentController {
     public void setSearchByLastname(String SearchByLastname) {
         this.searchByLastname = SearchByLastname;
     }
+    public Date getBirthDateStart() {
+        return birthDateStart;
+    }
+
+    public void setBirthDateStart(Date birthDateStart) {
+        this.birthDateStart = birthDateStart;
+    }
+
+    public Date getBirthDateEnd() {
+        return birthDateEnd;
+    }
+
+    public void setBirthDateEnd(Date birthDateEnd) {
+        this.birthDateEnd = birthDateEnd;
+    }
+
 }
