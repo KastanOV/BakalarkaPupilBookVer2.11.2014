@@ -6,10 +6,11 @@
 package SessionBeans;
 
 import Entity.Results;
-import Entity.Schoolyear;
+import Entity.Studygroup;
+import Entity.Studysubject;
+import Entity.Teacher;
 import dao.DAOFactory;
 import dao.DAOFactoryJPA;
-import java.sql.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -47,5 +48,16 @@ public class ResultsSB implements ResultsSBLocal {
     @Override
     public void insertNewResult(Results res){
         getFactory().getResultsDAO().insertNewResult(res);
+    }
+
+    @Override
+    public List<String> getAutoCompleteStrings(Studysubject sg, Teacher te) {
+        int YearID = getFactory().getSchoolYearDAO().getActualSchoolYear().getIdSchoolYear();
+        List<String> tmp = (List<String>) em.createNativeQuery("select distinct Description from results where StudySubject_idStudySubject = ?studySubject AND Teacher_Login = ?Teacher_login AND SchoolYear_idSchoolYear = ?SchoolYear")
+                .setParameter("studySubject", sg.getIdStudySubject())
+                .setParameter("Teacher_login", te.getLogin())
+                .setParameter("SchoolYear", YearID)
+                .getResultList();
+        return tmp;
     }
 }

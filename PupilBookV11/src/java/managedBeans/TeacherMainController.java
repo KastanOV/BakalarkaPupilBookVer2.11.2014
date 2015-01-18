@@ -50,6 +50,11 @@ public class TeacherMainController {
     private String classificationDescription;
     private Integer score;
     private Results editedClassification;
+    private List<String> AutoCompleteClassification;
+
+    public List<String> getAutoCompleteClassification() {
+        return AutoCompleteClassification;
+    }
     
     public TeacherMainController() {
     }

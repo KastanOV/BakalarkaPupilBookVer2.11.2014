@@ -10,9 +10,10 @@
             <p:growl id="messages" showDetail="true"/> 
             <p:panelGrid columns="2" >
                         <p:outputLabel value="Popis hodnocení" for="name" />
-                        <p:inputText id="name" value="#{teacherMainController.classificationDescription}" title="Popis hodnocení. Například Zlomky sčítání" required="true" >
+                        
+                        <p:autoComplete id="name" value="#{teacherMainController.classificationDescription}" dropdown="true" completeMethod="#{autoCompleteView.completeText}" title="Popis hodnocení. Například Zlomky sčítání" required="true" >
                             <p:ajax event="blur" />
-                        </p:inputText>
+                        </p:autoComplete>
                         <h:outputText value="Hodnocení:" />  
                         <p:rating value="#{teacherMainController.score}" stars="10">
                             <p:ajax event="rate" listener="#{teacherMainController.onRate}" update="messages"/>

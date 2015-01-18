@@ -6,6 +6,9 @@
 package SessionBeans;
 
 import Entity.Results;
+import Entity.Studygroup;
+import Entity.Studysubject;
+import Entity.Teacher;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -18,4 +21,5 @@ public interface ResultsSBLocal {
     public servicesDTO.Results saveUploadedResult(servicesDTO.Results res);
     public List<Results> getStudentResults(String login, int StudySubjectID);
     public void insertNewResult(Results res);
+    public List<String> getAutoCompleteStrings(Studysubject sg, Teacher te);
 }
