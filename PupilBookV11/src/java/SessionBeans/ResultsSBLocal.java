@@ -6,7 +6,7 @@
 package SessionBeans;
 
 import Entity.Results;
-import Entity.Studygroup;
+import Entity.ResultsExtended;
 import Entity.Studysubject;
 import Entity.Teacher;
 import java.util.List;
@@ -21,5 +21,8 @@ public interface ResultsSBLocal {
     public servicesDTO.Results saveUploadedResult(servicesDTO.Results res);
     public List<Results> getStudentResults(String login, int StudySubjectID);
     public void insertNewResult(Results res);
-    public List<String> getAutoCompleteStrings(Studysubject sg, Teacher te);
+    public void saveResult(Results res);
+    public void deleteResult(Results res);
+    public List<String> getAutoCompleteStrings(Studysubject sg, String input, Teacher t);
+    public List<ResultsExtended> getStudentExtendResults(String TeacherLogin, String StudentLogin, int StudySubjectID);
 }

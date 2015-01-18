@@ -37,8 +37,6 @@ public class TeacherClassificationChart {
 
     public TeacherClassificationChart() {
     }
-    
-    
     private void createClassificationModel(){
         barModel = initClassificationModel();
         barModel.setTitle("Klasifikace");
@@ -71,7 +69,6 @@ public class TeacherClassificationChart {
         }
         return model;
     } 
-    
     public BarChartModel getClassificationModel() {
         createClassificationModel();
         return barModel;
@@ -79,16 +76,12 @@ public class TeacherClassificationChart {
     public Studysubject getEditedStudySubject() {
         return editedStudySubject;
     }
-
     public void setEditedStudySubject(Studysubject editedStudySubject) {
         this.editedStudySubject = editedStudySubject;
     }
-    
-
     public Users getEditedStudent() {
         return editedStudent;
     }
-
     public void setEditedStudent(Users editedStudent) {
         this.editedStudent = editedStudent;
     }

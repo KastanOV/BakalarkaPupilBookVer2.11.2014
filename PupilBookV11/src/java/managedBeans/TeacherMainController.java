@@ -52,8 +52,12 @@ public class TeacherMainController {
     private Results editedClassification;
     private List<String> AutoCompleteClassification;
 
-    public List<String> getAutoCompleteClassification() {
-        return AutoCompleteClassification;
+    public void setAutoCompleteClassification(List<String> AutoCompleteClassification) {
+        this.AutoCompleteClassification = AutoCompleteClassification;
+    }
+
+    public List<String> autoComplete(String input) {
+        return ResultsSB.getAutoCompleteStrings(editedStudySubject, input, (Teacher) loggedUser);
     }
     
     public TeacherMainController() {
@@ -73,11 +77,10 @@ public class TeacherMainController {
         editedClassification.setStudySubjectidStudySubject(editedStudySubject);
         editedClassification.setDescription(classificationDescription);
         ResultsSB.insertNewResult(editedClassification);
-        
     }
     
+    
     public List<Studygroup> getStudyGroups(){
-        
         return studyGroupsSB.getStudyGroups(loggedUser.getLogin(), loggedUser.getPassword());
     }
     
