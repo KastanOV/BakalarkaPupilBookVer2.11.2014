@@ -49,7 +49,8 @@
                     </p:column>
                     <p:column style="width:32px">
                         <p:commandButton update=":ClasificationEditForm" oncomplete="PF('ClasificationEditDialog').show()" icon="ui-icon-search" disabled="#{item.score == -1}">
-                            <f:setPropertyActionListener value="#{item}" target="#{teacherClassificationTable.editedResult}" />
+                            
+                            <p:ajax listener="#{teacherClassificationTable.setEditedResult(item)}"/>
                         </p:commandButton>
                     </p:column>
                 </p:dataTable>

@@ -27,7 +27,6 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 
 /**
  *
@@ -39,9 +38,8 @@ public class TeacherClassificationTable {
     
     @EJB
     private ResultsSBLocal ResultsSB;
+    
     private ResultsExtended editedResult;
-
-        
     private List<Results> Results;
     private Studysubject editedStudySubject;
     private Users loggedUser;
@@ -80,7 +78,6 @@ public class TeacherClassificationTable {
     public ResultsExtended getEditedResult() {
         return editedResult;
     }
-
     public void setEditedResult(ResultsExtended editedResult) {
         this.editedResult = editedResult;
     }
