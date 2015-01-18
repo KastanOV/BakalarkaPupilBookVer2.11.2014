@@ -111,6 +111,7 @@ public class ResultsSB implements ResultsSBLocal {
                     extResTmp.setStudentLogin(resItems.getStudentLogin());
                     extResTmp.setStudySubjectidStudySubject(resItems.getStudySubjectidStudySubject());
                     extResTmp.setTeacherLogin(resItems.getTeacherLogin());
+                    
                     exRes.add(extResTmp);
                 }    
             }
@@ -121,11 +122,17 @@ public class ResultsSB implements ResultsSBLocal {
 
     @Override
     public void saveResult(Results res) {
+        short scTmp = res.getScore();
+        String descTmp = res.getDescription();
+        res = em.find(Results.class, res.getIdResults());
+        res.setScore(scTmp);
+        res.setDescription(descTmp);
         em.merge(res);
         em.flush();
     }
     @Override
     public void deleteResult(Results res) {
+        res = em.find(Results.class, res.getIdResults());
         em.remove(res);
         em.flush();
     }
