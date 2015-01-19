@@ -75,7 +75,9 @@ public class TeacherMainController {
         editedClassification.setScore(score.shortValue());
         editedClassification.setTeacherLogin(loggedUser);
         editedClassification.setStudySubjectidStudySubject(editedStudySubject);
-        editedClassification.setDescription(classificationDescription);
+        if(classificationDescription != null){
+            editedClassification.setDescription(classificationDescription);
+        }
         ResultsSB.insertNewResult(editedClassification);
     }
     
@@ -151,5 +153,9 @@ public class TeacherMainController {
     }
     public void prepareNewClassification(){
         editedClassification = new Results();
+    }
+    public void prepareNewClassification(Results desc){
+        editedClassification = new Results();
+        editedClassification.setDescription(desc.getDescription());
     }
 }

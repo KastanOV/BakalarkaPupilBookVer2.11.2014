@@ -19,12 +19,27 @@
                             <f:selectItem itemLabel="Vyberte Předmět" itemValue="" />
                             <f:selectItems value="#{teacherMainController.studySubject}" var="itemSG" itemLabel="#{itemSG.name}" itemValue="#{itemSG}"/>
                         </p:selectOneMenu>
-                        <p:outputLabel for="Students" value="Studenti"/>
-                        <p:selectOneMenu id="Students" value="#{teacherMainController.editedStudent}" onchange="submit()" converter="#{ConverterStudent}" effect="fold">
-                            <f:selectItem itemLabel="Vyberte studenta" itemValue=""/>
-                            <f:selectItems value="#{teacherMainController.students}" var="itemStudent" itemLabel="#{itemStudent.lastName} #{itemStudent.firstName}" itemValue="#{itemStudent}"/>
-                        </p:selectOneMenu>
+                        
+                        
                     </h:panelGrid>
+                        <p:dataTable id="StudentsTab" var="itemTab" value="#{teacherMainController.students}"
+                                                paginator="true"
+                                                paginatorPosition="bottom"
+                                                rows="10"
+                                                rowsPerPageTemplate="10,20,30,40,50"
+                                                style="width: 300px">
+                            <p:column headerText="Příjmení" >
+                                <h:outputText value="#{itemTab.lastName}" />
+                            </p:column>
+                            <p:column headerText="Jméno" >
+                                <h:outputText value="#{itemTab.firstName}" />
+                            </p:column>
+                            <p:column>
+                                <p:commandButton value="Vybrat" onclick="submit()">
+                                    <p:ajax listener="#{teacherMainController.setEditedStudent(itemTab)}"/>
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
                     <hr />
                 
             </h:form>
