@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import src.restapi.Login;
+import src.restapi.MD5Hash;
 
 
 public class LoginActivity extends Activity {
@@ -44,6 +45,7 @@ public class LoginActivity extends Activity {
 
     }
     public void tryLogin(String login, String Password){
+        Password = MD5Hash.md5Hash(Password);
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
