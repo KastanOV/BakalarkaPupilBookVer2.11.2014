@@ -8,6 +8,7 @@ package managedBeans;
 import Entity.Teacher;
 import SessionBeans.TeachersSBLocal;
 import SessionBeans.UsersSBLocal;
+import java.io.Serializable;
 import java.util.Collection;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -22,7 +23,7 @@ import org.primefaces.event.DragDropEvent;
  */
 @ManagedBean
 @SessionScoped
-public class AdminTeacherController {
+public class AdminTeacherController implements Serializable{
 
     @EJB
     private TeachersSBLocal teachersSB;

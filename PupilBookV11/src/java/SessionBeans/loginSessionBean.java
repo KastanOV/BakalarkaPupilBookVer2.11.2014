@@ -8,8 +8,6 @@ package SessionBeans;
 import Entity.Admin;
 import Entity.Teacher;
 import Entity.Users;
-import dao.DAOFactory;
-import dao.DAOFactoryJPA;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

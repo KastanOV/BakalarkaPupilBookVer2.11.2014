@@ -10,9 +10,10 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2">
                         <p:outputLabel value="Popis" for="name" />
-                        <p:inputText id="name" value="#{teacherMainController.editedClassification.description}"   readonly="true" title="Název"/>
-                        <p:outputLabel value="Známka" for="classification"/>
-                        <p:rating id="classification" value="#{teacherMainController.score}" stars="10"/>
+                        <p:inputText id="name" value="#{teacherInformations.editedInformation.description}" title="Název"/>
+                        <p:outputLabel value="Informace" for="infoEdit"/>
+                        <p:inputTextarea id="infoEdit" value="#{teacherInformations.editedInformation.idinformations}" title="Samotné informace"/>
+                        
                     </p:panelGrid>
                     <p:commandButton actionListener="#{teacherMainController.saveClassification()}" value="#{bundle.save}" update="display,:ClassificationChart ,:growl" oncomplete="handleSubmit(args,'ClasificationCreateDialog');"/>
                     </h:panelGroup>

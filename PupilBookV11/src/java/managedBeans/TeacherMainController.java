@@ -16,6 +16,7 @@ import SessionBeans.ResultsSBLocal;
 import SessionBeans.StudentsSBLocal;
 import SessionBeans.StudyGroupsSBLocal;
 import SessionBeans.StudySubjectsSBLocal;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 import javax.ejb.EJB;
@@ -31,7 +32,7 @@ import org.primefaces.event.RateEvent;
  */
 @ManagedBean
 @SessionScoped
-public class TeacherMainController {
+public class TeacherMainController implements Serializable{
     @EJB
     private ResultsSBLocal ResultsSB;
     @EJB

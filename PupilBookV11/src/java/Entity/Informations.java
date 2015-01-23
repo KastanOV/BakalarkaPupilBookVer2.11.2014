@@ -10,6 +10,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -39,8 +41,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Informations implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "idinformations")
     private Integer idinformations;
     @Basic(optional = false)
@@ -68,6 +70,10 @@ public class Informations implements Serializable {
     @JoinColumn(name = "Users_Login", referencedColumnName = "Login")
     @ManyToOne
     private Users usersLogin;
+    @JoinColumn(name = "Teacher_Login", referencedColumnName = "Login")
+    @ManyToOne(optional = false)
+    private Users teacherLogin;
+    
 
     public Informations() {
     }
@@ -138,6 +144,14 @@ public class Informations implements Serializable {
 
     public void setUsersLogin(Users usersLogin) {
         this.usersLogin = usersLogin;
+    }
+    
+    public Users getTeacherLogin() {
+        return teacherLogin;
+    }
+
+    public void setTeacherLogin(Users teacherLogin) {
+        this.teacherLogin = teacherLogin;
     }
 
     @Override

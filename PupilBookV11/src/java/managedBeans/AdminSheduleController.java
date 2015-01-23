@@ -11,6 +11,7 @@ import Entity.Studysubject;
 import Entity.Teacher;
 import SessionBeans.SheduleItemsSBLocal;
 import SessionBeans.StudySubjectsSBLocal;
+import java.io.Serializable;
 import java.util.Collection;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -26,7 +27,7 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean
 @SessionScoped
-public class AdminSheduleController {
+public class AdminSheduleController implements Serializable{
 
     
     @EJB

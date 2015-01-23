@@ -6,8 +6,6 @@
 package SessionBeans;
 
 import Entity.Schoolyear;
-import dao.DAOFactory;
-import dao.DAOFactoryJPA;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;

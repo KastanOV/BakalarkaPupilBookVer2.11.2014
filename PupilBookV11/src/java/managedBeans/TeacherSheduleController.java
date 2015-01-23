@@ -10,6 +10,7 @@ import Entity.Studygroup;
 import Entity.Studysubject;
 import Entity.Users;
 import SessionBeans.SheduleItemsSBLocal;
+import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -21,7 +22,7 @@ import javax.faces.bean.RequestScoped;
  */
 @ManagedBean
 @RequestScoped
-public class TeacherSheduleController {
+public class TeacherSheduleController implements Serializable{
     private List<Sheduleitem> selectedSheduleItems;
     private Users loggedUser;
     

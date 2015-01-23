@@ -9,6 +9,7 @@ import Entity.Results;
 import Entity.Studysubject;
 import Entity.Users;
 import SessionBeans.ResultsSBLocal;
+import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -25,7 +26,7 @@ import org.primefaces.model.chart.ChartSeries;
  */
 @ManagedBean
 @ViewScoped
-public class TeacherClassificationChart {
+public class TeacherClassificationChart implements Serializable{
     
     @EJB
     private ResultsSBLocal sb;

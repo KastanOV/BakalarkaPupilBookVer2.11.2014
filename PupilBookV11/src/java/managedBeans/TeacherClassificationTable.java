@@ -23,6 +23,7 @@ import Entity.Student;
 import Entity.Studysubject;
 import Entity.Users;
 import SessionBeans.ResultsSBLocal;
+import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -34,7 +35,7 @@ import javax.faces.bean.SessionScoped;
  */
 @ManagedBean
 @SessionScoped
-public class TeacherClassificationTable {
+public class TeacherClassificationTable implements Serializable{
     
     @EJB
     private ResultsSBLocal ResultsSB;
