@@ -22,40 +22,44 @@ public class SchoolYearSB implements SchoolYearSBLocal {
 
     @PersistenceContext
     private EntityManager em;
-    
-    private DAOFactory factory;
-    
-    private DAOFactory getFactory(){
-        if(factory == null){
-            factory = new DAOFactoryJPA(em);
-        }
-        return factory;
-    }
-    
+        
     @Override
     public Schoolyear saveSchoolyear(Schoolyear s) {
-        return getFactory().getSchoolYearDAO().saveSchoolyear(s);
+        if(s.getIsactualyear() == true){
+            for(Schoolyear si : getAllSchoolYears()){
+                si.setIsactualyear(false);
+            }
+        }
+        if(s.getIdSchoolYear() != null){
+            em.merge(s);
+        } else {
+            em.persist(s);
+        }
+        em.flush();
+        return s;
     }
     @Override
     public List<Schoolyear> getAllSchoolYears() {
-        return getFactory().getSchoolYearDAO().getAllSchoolYears();
+        return em.createNamedQuery("Schoolyear.findAll").getResultList();
     }
     @Override
     public Schoolyear getSchoolyear(int id) {
-        return getFactory().getSchoolYearDAO().getSchoolyear(id);
+        return em.find(Schoolyear.class, id);
     }
     @Override
     public void deleteSchooYear(Schoolyear s) {
-        getFactory().getSchoolYearDAO().deleteSchooYear(s);
+        em.remove(em.find(Schoolyear.class, s.getIdSchoolYear()));
     }
     @Override
     public void deleteSchooYear(int id) {
-        getFactory().getSchoolYearDAO().deleteSchooYear(id);
+        em.remove(em.find(Schoolyear.class, id));
     }
 
     @Override
     public Schoolyear getActualSchoolyear() {
-        return getFactory().getSchoolYearDAO().getActualSchoolYear();
+        Schoolyear idActualYear = (Schoolyear) em.createNativeQuery("SELECT * FROM schoolyear WHERE schoolyear.isactualyear = true", Schoolyear.class)
+                .getSingleResult();
+        return idActualYear;
     }
     
     

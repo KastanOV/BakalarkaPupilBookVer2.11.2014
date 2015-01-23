@@ -21,8 +21,7 @@ public interface StudentsSBLocal {
     public Student createNewUser(Student s);
     public Student saveUser(Student s);
     public Collection<Student> getAllStudents();
-    public Collection<Student> getByLastName(String lastName);
-    public Collection<Student> getByParameters(String lastName, Date start, Date end);
+    public Collection<Student> getByParameters(String lastName, Date start, Date end, Boolean deleted);
     public Student getStudent(String UserId);
     public Collection<Student> getStudentByStudyGroup(Studygroup s);
     public List<Student> getStudents(String login, String password);

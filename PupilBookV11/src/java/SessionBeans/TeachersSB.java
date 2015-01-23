@@ -10,8 +10,6 @@ import Entity.Schoolyear;
 import Entity.Studygroup;
 import Entity.Teacher;
 import Entity.Users;
-import dao.DAOFactory;
-import dao.DAOFactoryJPA;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
@@ -28,47 +26,56 @@ public class TeachersSB implements TeachersSBLocal {
     @PersistenceContext
     private EntityManager em;
     
-    private DAOFactory factory;
-    
-    private DAOFactory getFactory(){
-        if(factory == null){
-            factory = new DAOFactoryJPA(em);
-        }
-        return factory;
-    }
-    
     @Override
     public Teacher checkLogin(String login, String password){
-        return getFactory().getTeachersDAO().checkLogin(login, password);
+        if(checkTeacher(login,password)){
+            return em.find(Teacher.class, login);
+        }else return null;
+        
         
     }
     
     @Override
     public List<Results> getResults(String login, String password){
-        return getFactory().getTeachersDAO().getResults(login, password);
+        if(checkTeacher(login, password)){
+            return em.createNativeQuery("select * from results WHERE Teacher_Login = ?login AND SchoolYear_idSchoolYear = ?syId", Results.class)
+                    .setParameter("login", login)
+                    .setParameter("syId", getActualSchoolYear())
+                    .getResultList();
+        }else {
+            return null;
+        }
     }
     
     @Override
     public Collection<Teacher> getAllTeachers(){
-        return getFactory().getTeachersDAO().getAllTeachers();
+        return em.createNamedQuery("Teachers.findAll").getResultList();
     }
     
     @Override
     public Collection<Teacher> getTeachersByStudyGroup(Studygroup s) {
-        return getFactory().getTeachersDAO().getTeachersByStudyGroup(s);
+        return em.createNamedQuery("Teacher.byStudyGroupAndRole")
+                .setParameter("studygroup", s)
+                .getResultList();
     }
     
     @Override
     public Teacher getTeacher(String UserId){
-        return getFactory().getTeachersDAO().getTeacher(UserId);
+        return em.find(Teacher.class, UserId);
     }
     @Override
     public Teacher saveTeacher(Teacher t){
-        return getFactory().getTeachersDAO().saveTeacher(t);
+        em.merge(t);
+        em.flush();
+        return t;
     }
     @Override
     public Teacher createNewTeacher(Teacher t){
-        return getFactory().getTeachersDAO().createNewTeacher(t);
+        getFreeLogin(t);
+        if(t.getPassword() == null) createPassword(t);
+        em.persist(t);
+        em.flush();
+        return t;
     }
     
     private void createPassword(Users s){

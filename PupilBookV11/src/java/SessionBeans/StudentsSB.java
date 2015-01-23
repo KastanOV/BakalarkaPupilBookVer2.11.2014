@@ -5,13 +5,15 @@
  */
 package SessionBeans;
 
+import Entity.Parent;
+import Entity.Parrentstudent;
 import Entity.Student;
 import Entity.Studygroup;
-import dao.DAOFactory;
-import dao.DAOFactoryJPA;
+import Entity.Users;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -25,53 +27,165 @@ public class StudentsSB implements StudentsSBLocal {
     @PersistenceContext
     private EntityManager em;
     
-    private DAOFactory factory;
-    
-    private DAOFactory getFactory(){
-        if(factory == null){
-            factory = new DAOFactoryJPA(em);
-        }
-        return factory;
-    }
-    
-    @Override
-    public Collection<Student> getByLastName(String lastName){
-        return getFactory().getStudentsDAO().getByLastName(lastName);
-    }
     @Override
     public Student createNewUser(Student s) {
-        return getFactory().getStudentsDAO().createNewUser(s);
+        getFreeLogin(s);
+        Parent par = createNewParent(s);
+        Parrentstudent ps = new Parrentstudent();
+        ps.setStudentLogin(s);
+        ps.setParentLogin(par);
+        if(s.getPassword() == null) createPassword(s);
+        em.persist(par);
+        em.persist(s);
+        em.persist(ps);
+        em.flush();
+        return s;
     }
     
     @Override
     public Collection<Student> getAllStudents(){
-        return getFactory().getStudentsDAO().getAllStudents();
+        return em.createNamedQuery("Student.findAll").getResultList();
     }
     @Override
     public Student saveUser(Student s){
-        return getFactory().getStudentsDAO().saveUser(s);
+        em.merge(s);
+        em.flush();
+        return s;
     }
 
     @Override
     public Collection<Student> getStudentByStudyGroup(Studygroup s) {
-        return getFactory().getStudentsDAO().getStudentByStudyGroup(s);
+        return em.createNamedQuery("Student.byStudyGroupAndRole")
+                .setParameter("studygroup", s)
+                .getResultList();
     }
     @Override
     public Student getStudent(String UserId){
-        return getFactory().getStudentsDAO().getStudent(UserId);
+        return em.find(Student.class, UserId);
     }
     
     @Override
     public List<Student> getStudents(String login, String password){
-        return getFactory().getStudentsDAO().getStudents(login, password);
+        if(checkTeacher(login, password)){
+            return em.createNativeQuery("SELECT DISTINCT s.FirstName, s.MiddleName, s.LastName, s.Phone, s.Email, s.Login, s.BirthDate, s.StudyGroup_idStudyGroup FROM SheduleItem"
+                    + " left join studygroup on sheduleitem.StudyGroup_idStudyGroup = studygroup.idStudyGroup"
+                    + " join schoolyear on schoolyear.idSchoolYear = studygroup.SchoolYear_idSchoolYear "
+                    + " join Users s on studygroup.idStudyGroup = s.StudyGroup_idStudyGroup "
+                    + " WHERE Users_Login = ?login AND schoolyear.isactualyear = true AND s.Role = 'S'", Student.class)
+                    .setParameter("login", login)
+                    .getResultList();
+        }else {
+            return null;
+        }
     }
     @Override
     public List<Student> getStudents(String login, String password, int StudyGroupId){
-        return getFactory().getStudentsDAO().getStudents(login, password, StudyGroupId);
+        if(checkTeacher(login, password)){
+            return em.createNativeQuery("SELECT DISTINCT s.FirstName, s.MiddleName, s.LastName, s.Phone, s.Email, s.Login, s.BirthDate, s.StudyGroup_idStudyGroup FROM SheduleItem"
+                    + " left join studygroup on sheduleitem.StudyGroup_idStudyGroup = studygroup.idStudyGroup"
+                    + " join schoolyear on schoolyear.idSchoolYear = studygroup.SchoolYear_idSchoolYear "
+                    + " join Users s on studygroup.idStudyGroup = s.StudyGroup_idStudyGroup "
+                    + " WHERE Users_Login = ?login AND schoolyear.isactualyear = true AND s.Role = 'S' AND studygroup.idStudyGroup = ?StudyGroupID", Student.class)
+                    .setParameter("login", login)
+                    .setParameter("StudyGroupID", StudyGroupId)
+                    .getResultList();
+        }else {
+            return null;
+        }
     }
 
     @Override
-    public Collection<Student> getByParameters(String lastName, Date start, Date end) {
-        return getFactory().getStudentsDAO().getByParameters(lastName, start, end);
+    public Collection<Student> getByParameters(String lastName, Date start, Date end, Boolean deleted) {
+        StringBuilder query = new StringBuilder();
+        query.append("SELECT * FROM Users u WHERE u.Role = ?s ");
+        if(!lastName.equals("")){
+            lastName = lastName + "%";
+            query.append(" AND u.lastName LIKE ?lastName ");
+        }
+        if(start != null && end != null){
+            query.append(" AND u.birthDate BETWEEN ?start AND ?end ");
+        }
+        if(deleted == null){
+            deleted = false;
+        }
+        query.append(" AND deleted = ?del ");
+        
+        List<Student> listTmp = em.createNativeQuery(query.toString(), Student.class)
+                .setParameter("lastName", lastName)
+                .setParameter("start", start)
+                .setParameter("end", end)
+                .setParameter("s", 'S')
+                .setParameter("del", deleted)
+                .getResultList();
+        return listTmp;
+    }
+    
+    private Parent createNewParent(Student s){
+        Parent p = new Parent();
+        p.setLogin("p" + s.getLogin());
+        p.setBirthDate(s.getBirthDate());
+        p.setEmail(s.getEmail());
+        p.setFirstName(s.getFirstName());
+        p.setLastName(s.getLastName());
+        p.setMiddleName(s.getMiddleName());
+        createPassword(p);
+        p.setPhone(s.getPhone());
+        return p;
+    }
+    private void createPassword(Users s){
+        char[] symbols;
+        StringBuilder tmp = new StringBuilder();
+        for (char ch = '0'; ch <= '9'; ++ch)
+            tmp.append(ch);
+        for (char ch = 'a'; ch <= 'z'; ++ch)
+            tmp.append(ch);
+        for (char ch = 'A'; ch <= 'Z'; ++ch)
+            tmp.append(ch);
+        symbols = tmp.toString().toCharArray();
+        Random random = new Random();
+        
+        StringBuilder value = new StringBuilder();
+
+        for (int idx = 0; idx < 10; ++idx) 
+            value.append(symbols[random.nextInt(symbols.length)]);
+        s.setPassword(value.toString());
+    }
+    private void getFreeLogin(Users s){
+        String LoginPrefix = removeDiak(s.getLastName()
+                .substring(0,3)
+                .toUpperCase()
+                .trim());
+        Long numberOfLogin = (Long) em.createNativeQuery("SELECT COUNT(*) FROM Users WHERE login LIKE ?createLogin")
+                .setParameter("createLogin", LoginPrefix + "%")
+                .getSingleResult();
+        s.setLogin(LoginPrefix + getPostFix(String.valueOf(numberOfLogin)));
+    }
+    private String getPostFix(String Postfix){
+        switch(Postfix.length()){
+            case 1 : return "00" + Postfix;
+            case 2 : return "0" + Postfix;
+            default : return Postfix;    
+        }
+    };
+    private String removeDiak(String retazec){
+       String retazecBD="";
+       String sdiak="áäčďěéíĺžňóöôŕřšťúüýžźÁÄČĎĚÉÍĹŇÓÖÔŔŘŤÚÜÝŠŽŐőÖöŰűÜü";
+       String bdiak="aacdeeillnooorrstuuyzzAACDEEILNOOORRTUUYSZOoOoUuUu";
+       for (int l=0;l<retazec.length();l++){
+           if (sdiak.indexOf(retazec.charAt(l))!=-1)
+               retazecBD+=bdiak.charAt(sdiak.indexOf(retazec.charAt(l)));
+           else
+               retazecBD+=retazec.charAt(l);
+       }
+       return retazecBD;
+   }
+    private boolean checkTeacher(String login, String password){
+        long tmp = (long)em.createNativeQuery("SELECT count(*) FROM Users u WHERE u.login = ?login AND u.password = ?password AND Role = 'T'")
+                .setParameter("login", login)
+                .setParameter("password", password)
+                .getSingleResult();
+        if(tmp > 0){
+            return true;
+        }else return false;
     }
 }

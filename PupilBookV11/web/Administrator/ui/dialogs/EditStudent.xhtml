@@ -7,7 +7,7 @@
 
     <ui:composition>
 
-        <p:dialog id="StudentCreateDialog" widgetVar="StudentCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Přidat Student">
+        <p:dialog id="StudentCreateDialog" widgetVar="StudentCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Editace Student">
             <h:form id="StudentCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{adminStudentController.editedStudent != null}">
@@ -29,10 +29,9 @@
                         <p:calendar id="startDate" pattern="MM/dd/yyyy" value="#{adminStudentController.editedStudent.birthDate}" required="false" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{adminStudentController.saveStudent}" value="#{bundle.save}" update="display, :Students,:growl" oncomplete="handleSubmit(args,'StudentCreateDialog');"/>
-                    
+                    <p:commandButton actionListener="#{adminStudentController.deleteStudent()}" value="Smazat" update="display, :Students,:growl" oncomplete="handleSubmit(args,'StudentCreateDialog');"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>
-
     </ui:composition>
 </html>

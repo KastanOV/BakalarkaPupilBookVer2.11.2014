@@ -5,6 +5,8 @@
  */
 package SessionBeans;
 
+import Entity.Admin;
+import Entity.Teacher;
 import Entity.Users;
 import dao.DAOFactory;
 import dao.DAOFactoryJPA;
@@ -20,18 +22,26 @@ import javax.persistence.PersistenceContext;
 public class loginSessionBean implements loginSessionBeanLocal {
     @PersistenceContext
     private EntityManager em;
-    
-    private DAOFactory factory;
-    
-    private DAOFactory getFactory(){
-        if(factory == null){
-            factory = new DAOFactoryJPA(em);
-        }
-        return factory;
-    }
-    
+        
     @Override
     public Users doLogin(Users u){
-        return getFactory().getLoginDAO().doLogin(u);
+        try{
+            Admin loaded = (Admin) em.createNamedQuery("Admin.doLogin")
+                .setParameter("login", u.getLogin())
+                .setParameter("password", u.getPassword())
+                .getSingleResult();
+            return loaded;
+        } catch (Exception e){
+            
+        }
+        try{
+            Teacher loaded = (Teacher) em.createNamedQuery("Teacher.doLogin")
+                .setParameter("login", u.getLogin())
+                .setParameter("password", u.getPassword())
+                .getSingleResult();
+            return loaded;
+        } catch (Exception e){
+            return u;
+        }
     }
 }

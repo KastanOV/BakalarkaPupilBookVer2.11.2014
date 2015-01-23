@@ -51,6 +51,9 @@ public class TeacherMainController {
     private Integer score;
     private Results editedClassification;
     private List<String> AutoCompleteClassification;
+    private boolean showDeletedUsers;
+
+    
 
     public void setAutoCompleteClassification(List<String> AutoCompleteClassification) {
         this.AutoCompleteClassification = AutoCompleteClassification;
@@ -61,6 +64,7 @@ public class TeacherMainController {
     }
     
     public TeacherMainController() {
+        showDeletedUsers = false;
     }
     
     public void onRate(RateEvent rateEvent){
@@ -157,5 +161,13 @@ public class TeacherMainController {
     public void prepareNewClassification(Results desc){
         editedClassification = new Results();
         editedClassification.setDescription(desc.getDescription());
+    }
+    
+    public boolean isShowDeletedUsers() {
+        return showDeletedUsers;
+    }
+
+    public void setShowDeletedUsers(boolean showDeletedUsers) {
+        this.showDeletedUsers = showDeletedUsers;
     }
 }

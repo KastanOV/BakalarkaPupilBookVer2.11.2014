@@ -7,6 +7,7 @@ package managedBeans;
 
 import Entity.Student;
 import SessionBeans.StudentsSBLocal;
+import SessionBeans.UsersSBLocal;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -28,6 +29,8 @@ public class AdminStudentController implements Serializable{
     
     @EJB
     private StudentsSBLocal studentsSB;
+    @EJB
+    private UsersSBLocal UsersSB;
         
     private AdminMainController adminMain;
     public void setMainControler(AdminMainController AdminMain) {
@@ -38,10 +41,10 @@ public class AdminStudentController implements Serializable{
     private String searchByLastname;
     private Date birthDateStart;
     private Date birthDateEnd;
-
+    private boolean showDeletedUsers;
 
     public AdminStudentController() {
-
+        showDeletedUsers = false;
     }
     
     public Student prepareNewStudent(){
@@ -61,7 +64,9 @@ public class AdminStudentController implements Serializable{
 					"Nepodařilo se uložit data do databáze.. Příčina: " + e.getMessage()));
 		}
     }
-    
+    public void deleteStudent(){
+        UsersSB.deleteUser(editedStudent);
+    }
     public void onStudentDrop(DragDropEvent ddEvent){
         Student s = ((Student) ddEvent.getData());
         try {
@@ -100,14 +105,10 @@ public class AdminStudentController implements Serializable{
     }
     
     public Collection<Student> getStudents() {
-        if (birthDateStart != null && birthDateEnd != null){
-            return studentsSB.getByParameters(searchByLastname, birthDateStart, birthDateEnd);
-        } else if(searchByLastname == null || searchByLastname.equals("")){
-            return studentsSB.getAllStudents();
-        }  else {
-            return studentsSB.getByLastName(searchByLastname);
+        if(searchByLastname == null){
+            searchByLastname = "";
         }
-        
+        return studentsSB.getByParameters(searchByLastname, birthDateStart, birthDateEnd, showDeletedUsers);
     }
 
     public Student getEditedStudent() {
@@ -140,5 +141,12 @@ public class AdminStudentController implements Serializable{
     public void setBirthDateEnd(Date birthDateEnd) {
         this.birthDateEnd = birthDateEnd;
     }
+    
+    public boolean isShowDeletedUsers() {
+        return showDeletedUsers;
+    }
 
+    public void setShowDeletedUsers(boolean showDeletedUsers) {
+        this.showDeletedUsers = showDeletedUsers;
+    }
 }

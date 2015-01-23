@@ -7,7 +7,7 @@
 
     <ui:composition>
 
-        <p:dialog id="TeacherCreateDialog" widgetVar="TeacherCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Přidat Učitele">
+        <p:dialog id="TeacherCreateDialog" widgetVar="TeacherCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Editace Učitele">
             <h:form id="TeacherCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{adminTeacherController.editedTeacher != null}">
@@ -31,7 +31,7 @@
                         <p:commandButton id="Class" value="Zrusit zarazeni" onclick="#{adminTeacherController.editedTeacher.studyGroupidStudyGroup = null}"/>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{adminTeacherController.saveTeacher}" value="#{bundle.save}" update="display,:AdminMainMenu :Teachers,:growl" oncomplete="handleSubmit(args,'TeacherCreateDialog');"/>
-                    
+                    <p:commandButton actionListener="#{adminTeacherController.deleteTeacher()}" value="Smazat" update="display,:AdminMainMenu :Teachers,:growl" oncomplete="handleSubmit(args,'TeacherCreateDialog');"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

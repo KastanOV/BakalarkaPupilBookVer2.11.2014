@@ -31,13 +31,9 @@
                     </p:row>
                 </f:facet>
                     <p:row>
-                        <p:column colspan="1">
-                            STUDENTI VE VYBRANNE TRIDE
-                        </p:column>
-                        <p:column colspan="1">
+                        <p:column colspan="2">
                             <p:fieldset legend="Vyhledávání" style="margin-top:20px">
                                 <p:panelGrid>
-                                    
                                     <p:row>
                                         <p:column>
                                             <p:outputLabel for="start" value=" Datum narození začátek " />
@@ -51,18 +47,24 @@
                                         <p:column>
                                             <p:calendar id="end" value="#{adminStudentController.birthDateEnd}"  navigator="true" pattern="MMM-dd-yyyy" />
                                         </p:column>
-                                    </p:row>
-                                    <p:row>
+                                    
+                                   
                                         <p:column>
                                             <p:outputLabel value="Příjmení " />
                                         </p:column>
                                         <p:column>
                                             <p:inputText id="SearchByLastName" title="Vyhledávání podle příjmení" value="#{adminStudentController.searchByLastname}" />
                                         </p:column>
-                                        <p:column colspan="2">
+                                        <p:column>
+                                            <p:outputLabel value="Zobrazit smazané" />
+                                        </p:column>
+                                        <p:column>
+                                            <p:selectBooleanCheckbox id="ViewDeletedStudents"  value="#{adminStudentController.showDeletedUsers}" />
+                                        </p:column>
+                                        <p:column>
                                             <p:commandButton update="StudentsTable" value="hledej"/>
                                         </p:column>
-                                    </p:row>
+                                    </p:row>    
                                 </p:panelGrid>
                                 
                             </p:fieldset>

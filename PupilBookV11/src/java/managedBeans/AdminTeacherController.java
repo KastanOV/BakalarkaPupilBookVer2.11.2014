@@ -7,6 +7,7 @@ package managedBeans;
 
 import Entity.Teacher;
 import SessionBeans.TeachersSBLocal;
+import SessionBeans.UsersSBLocal;
 import java.util.Collection;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -25,6 +26,8 @@ public class AdminTeacherController {
 
     @EJB
     private TeachersSBLocal teachersSB;
+    @EJB
+    private UsersSBLocal UsersSB;
         
     private AdminMainController adminMain;
     public void setMainControler(AdminMainController AdminMain) {
@@ -81,7 +84,9 @@ public class AdminTeacherController {
 					"Nepodařilo se uložit data do databáze.. Příčina: " + e.getMessage()));
 		}
     }
-    
+    public void deleteTeacher(){
+        UsersSB.deleteUser(editedTeacher);
+    }
     public Collection<Teacher> getDropedTeachers() {
         if(adminMain.getEditedStudygroup() != null){
             return teachersSB.getTeachersByStudyGroup(adminMain.getEditedStudygroup());

@@ -93,6 +93,8 @@ public class Users implements Serializable {
     @Column(name = "BirthDate")
     @Temporal(TemporalType.DATE)
     private Date birthDate;
+    @Column(name = "deleted")
+    private Boolean deleted;
             
     @OneToMany(mappedBy = "usersLogin")
     private Collection<Sheduleitem> sheduleitemCollection;
@@ -279,6 +281,14 @@ public class Users implements Serializable {
         this.informationsCollection = informationsCollection;
     }
 
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

@@ -17,6 +17,8 @@
  */
 package dao;
 
+import Entity.Parent;
+import Entity.Parrentstudent;
 import Entity.Student;
 import Entity.Studygroup;
 import Entity.Users;
@@ -45,20 +47,27 @@ public class StudentsDAO {
                 .setParameter("lastName", lastName)
                 .getResultList();
     }
-    public Collection<Student> getByParameters(String lastName, Date start, Date end){
+    public Collection<Student> getByParameters(String lastName, Date start, Date end, boolean deleted){
         lastName = lastName + "%";
-        return em.createNativeQuery("SELECT * FROM Users u WHERE u.lastName LIKE ?lastName AND u.birthDate BETWEEN ?start AND ?end AND u.Role = ?s", Student.class)
+        return em.createNativeQuery("SELECT * FROM Users u WHERE u.lastName LIKE ?lastName AND u.birthDate BETWEEN ?start AND ?end AND u.Role = ?s deleted = ?del", Student.class)
                 .setParameter("lastName", lastName)
                 .setParameter("start", start)
                 .setParameter("end", end)
                 .setParameter("s", 'S')
+                .setParameter("deleted", deleted)
                 .getResultList();
     }
 
     public Student createNewUser(Student s) {
         getFreeLogin(s);
+        Parent par = createNewParent(s);
+        Parrentstudent ps = new Parrentstudent();
+        ps.setStudentLogin(s);
+        ps.setParentLogin(par);
         if(s.getPassword() == null) createPassword(s);
+        em.persist(par);
         em.persist(s);
+        em.persist(ps);
         em.flush();
         return s;
     }
@@ -96,7 +105,6 @@ public class StudentsDAO {
             return null;
         }
     }
-
     public List<Student> getStudents(String login, String password, int StudyGroupId){
         if(checkTeacher(login, password)){
             return em.createNativeQuery("SELECT DISTINCT s.FirstName, s.MiddleName, s.LastName, s.Phone, s.Email, s.Login, s.BirthDate, s.StudyGroup_idStudyGroup FROM SheduleItem"
@@ -112,6 +120,18 @@ public class StudentsDAO {
         }
     }
     
+    private Parent createNewParent(Student s){
+        Parent p = new Parent();
+        p.setLogin("p" + s.getLogin());
+        p.setBirthDate(s.getBirthDate());
+        p.setEmail(s.getEmail());
+        p.setFirstName(s.getFirstName());
+        p.setLastName(s.getLastName());
+        p.setMiddleName(s.getMiddleName());
+        createPassword(p);
+        p.setPhone(s.getPhone());
+        return p;
+    }
     private void createPassword(Users s){
         char[] symbols;
         StringBuilder tmp = new StringBuilder();
