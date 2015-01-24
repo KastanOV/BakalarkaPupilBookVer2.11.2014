@@ -21,7 +21,6 @@ import Entity.Informations;
 import Entity.Student;
 import Entity.Studygroup;
 import Entity.Teacher;
-import Entity.Users;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -40,34 +39,27 @@ public class InformationSB implements InformationSBLocal {
      */
     @Override
     public Informations saveInformation(Informations i){
-        
-                em.createNativeQuery("INSERT INTO informations (Description, " +
-                   " SomeMessage, CreateDate, InfoForParrents," +
-                   "StudyGroup_idStudyGroup,  Teacher_Login) " +
-                   "VALUES (?Description, ?SomeMessage, " +
-                   "?CreateDate, ?InfoForParrents, ?StudyGroup_idStudyGroup, ?Teacher_Login)")
-                    .setParameter("Description", "Picus2")
-                    .setParameter("SomeMessage", "Co je kurva")
-                    .setParameter("CreateDate", "2015-01-24 10:29:22")
-                    .setParameter("InfoForParrents", false)
-                    .setParameter("StudyGroup_idStudyGroup", 1)
-                    .setParameter("Teacher_Login", "CHL000")
-                    .executeUpdate();
-//            em.createNativeQuery("INSERT INTO informations (Description, " +
-//                   "InfoForParrents, SomeMessage, CreateDate, " +
+        if(i.getIdinformations() == null){
+//            em.createNativeQuery("INSERT INTO informations (Description" +
+//                   "InfoForParrents, SomeMessage, CreateDate " +
 //                   "StudyGroup_idStudyGroup, Users_Login, Teacher_Login) " +
 //                   "VALUES (?Description, ?InfoForParrents, ?SomeMessage, " +
-//                   "?CreateDate, ?StudyGroup_idStudyGroup, ?Users_Login, ?Teacher_Login)")
+//                   "?CreateDate, ?StudyGroup_idStudyGroup, ?Users_Login, ?Teacher_Login")
 //                    .setParameter("Description", i.getDescription())
 //                    .setParameter("InfoForParrents", i.getInfoForParrents())
 //                    .setParameter("SomeMessage", i.getSomeMessage())
 //                    .setParameter("CreateDate", i.getCreateDate())
-//                    .setParameter("StudyGroup_idStudyGroup", studygroup)
+//                    .setParameter("StudyGroup_idStudyGroup", i.getStudyGroupidStudyGroup().getIdStudyGroup())
 //                    .setParameter("Users_Login", i.getUsersLogin())
 //                    .setParameter("Teacher_Login", i.getTeacherLogin())
 //                    .executeUpdate();
-//            em.persist(i);
-    return null;
+//            return null;
+            em.persist(i);
+        } else {
+            em.merge(i);
+        }
+        em.flush();
+        return i;
     }
 
     @Override
@@ -78,11 +70,10 @@ public class InformationSB implements InformationSBLocal {
     @Override
     public List<Informations> getInformations(Teacher t) {
         try{
-//            List<Informations> tmp = em.createNativeQuery("SELECT * FROM informations WHERE Teacher_Login = ?tl ORDER BY CreateDate DESC")
-//                .setParameter("tl", t.getLogin())
-//                .getResultList();
-//            return em.createNativeQuery("SELECT * FROM informations", Informations.class).getResultList();
-            return em.createNamedQuery("Informations.findAll", Informations.class).getResultList();
+            List<Informations> tmp = em.createNativeQuery("SELECT * FROM informations WHERE Teacher_Login = ?tl ORDER BY CreateDate DESC")
+                .setParameter("tl", t.getLogin())
+                .getResultList();
+            return tmp;
         } catch(Exception e) {
             return null;
         }
