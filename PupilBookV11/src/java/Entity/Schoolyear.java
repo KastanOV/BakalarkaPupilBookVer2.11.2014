@@ -39,7 +39,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Schoolyear.findByName", query = "SELECT s FROM Schoolyear s WHERE s.name = :name"),
     @NamedQuery(name = "Schoolyear.findByIsactualyear", query = "SELECT s FROM Schoolyear s WHERE s.isactualyear = :isactualyear"),
     @NamedQuery(name = "Schoolyear.findByStartDate", query = "SELECT s FROM Schoolyear s WHERE s.startDate = :startDate"),
-    @NamedQuery(name = "Schoolyear.findByEndDate", query = "SELECT s FROM Schoolyear s WHERE s.endDate = :endDate")})
+    @NamedQuery(name = "Schoolyear.findByEndDate", query = "SELECT s FROM Schoolyear s WHERE s.endDate = :endDate"),
+    @NamedQuery(name = "Studygroup.findBySchoolyear", query = "SELECT s FROM Studygroup s WHERE s.schoolYearidSchoolYear = :SchoolYearID")})
 public class Schoolyear implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

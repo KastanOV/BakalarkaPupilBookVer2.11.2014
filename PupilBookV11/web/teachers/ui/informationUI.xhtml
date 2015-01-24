@@ -36,27 +36,32 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                      rows="10"
                      rowsPerPageTemplate="10,20,30,40,50">
                 <f:facet name="header">
-                    <p:commandButton id="createButtoninformationStudent" icon="ui-icon-plus" style="background-color: #009900"  value="přidat informaci pro #{teacherMainController.editedStudent.lastName} #{teacherMainController.editedStudent.firstName}" actionListener="#{teacherInformations.prepareInformation(teacherMainController.editedStudent, false)}" disabled="#{teacherMainController.editedStudent == null}" update=":InformationsCreateForm" oncomplete="PF('InformationsCreateDialog').show()"/>
-                    <p:commandButton id="createButtoninformationParent" icon="ui-icon-plus" style="background-color: orangered"   value="přidat informaci pro rodiče #{teacherMainController.editedStudent.lastName} #{teacherMainController.editedStudent.firstName}" actionListener="#{teacherInformations.prepareInformation(teacherMainController.editedStudent, true)}" disabled="#{teacherMainController.editedStudent == null}" update=":InformationsCreateForm" oncomplete="PF('InformationsCreateDialog').show()"/>
-                    <p:commandButton id="createButtoninformationStudygroup" icon="ui-icon-plus"   value="přidat informaci pro třídu #{teacherMainController.editedStudyGroup.name}" actionListener="#{teacherInformations.prepareInformation(teacherMainController.editedStudyGroup)}" disabled="#{teacherMainController.editedStudyGroup == null}" update=":InformationsCreateForm" oncomplete="PF('InformationsCreateDialog').show()"/>
-                    
+                    <p:commandButton id="createButtoninformationStudent" icon="ui-icon-plus" style="background-color: #009900"  value="přidat informaci pro #{teacherMainController.editedStudent.lastName} #{teacherMainController.editedStudent.firstName}" disabled="#{teacherMainController.editedStudent == null}" update=":InformationsCreateForm" oncomplete="PF('InformationsCreateDialog').show()">
+                        <p:ajax listener="#{teacherInformations.prepareInformation(false)}"/>
+                    </p:commandButton>
+                    <p:commandButton id="createButtoninformationParent" icon="ui-icon-plus" style="background-color: orangered"   value="přidat informaci pro rodiče #{teacherMainController.editedStudent.lastName} #{teacherMainController.editedStudent.firstName}" actionListener="#{teacherInformations.prepareInformation(true)}" disabled="#{teacherMainController.editedStudent == null}" update=":InformationsCreateForm" oncomplete="PF('InformationsCreateDialog').show()">
+                        <p:ajax listener="#{teacherInformations.prepareInformation(true)}"/>
+                    </p:commandButton>
+                    <p:commandButton id="createButtoninformationStudygroup" icon="ui-icon-plus" value="přidat informaci pro třídu #{teacherMainController.editedStudyGroup.name}" actionListener="#{teacherInformations.prepareInformation(true)}" disabled="#{teacherMainController.editedStudyGroup == null}" update=":InformationsCreateForm" oncomplete="PF('InformationsCreateDialog').show()">
+                        <p:ajax listener="#{teacherInformations.prepareInformation()}"/>
+                    </p:commandButton>
                 </f:facet>
-                <p:column headerText="Popis">
+                <p:column headerText="Popis" width="10%">
                     <h:outputText value="#{ListItem.description}"/>
                 </p:column>
-                <p:column headerText="Samotná informace">
+                <p:column headerText="Samotná informace" width="50%">
                     <h:outputText value="#{ListItem.someMessage}"/>
                 </p:column>
-                <p:column headerText="Zpráva pro" rendered="#{ListItem.usersLogin != null}">
+                <p:column headerText="Zpráva pro" width="10%">
                     <h:outputText value="#{ListItem.usersLogin.lastName}"/>
                 </p:column>
-                <p:column headerText="Pouze rodičům" rendered="#{ListItem.usersLogin != null}">
-                    <h:selectBooleanCheckbox value="#{ListItem.infoForParrents}"/>
+                <p:column headerText="Zpráva třídě" width="10%">
+                    <h:outputText value="#{ListItem.studyGroupidStudyGroup.name}" />
                 </p:column>
-                <p:column headerText="Zpráva třídě" rendered="#{ListItem.studyGroupidStudyGroup != null}">
-                    <h:selectBooleanCheckbox value="#{ListItem.studyGroupidStudyGroup.name}"/>
+                <p:column headerText="Pouze rodičům" width="10%">
+                    <h:selectBooleanCheckbox value="#{ListItem.infoForParrents}" disabled="true"/>
                 </p:column>
-                <p:column headerText="Editovací tlačítko">
+                <p:column headerText="Editovací tlačítko" width="10%" style="text-align: center">
                     <p:commandButton actionListener="#{teacherInformations.setEditedInformation(ListItem)}" icon="ui-icon-edit" value="upravit" />
                 </p:column>
             </p:dataTable>

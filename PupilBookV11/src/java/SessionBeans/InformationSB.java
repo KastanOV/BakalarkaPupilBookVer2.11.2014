@@ -18,18 +18,18 @@
 package SessionBeans;
 
 import Entity.Informations;
-import Entity.Student;
-import Entity.Studygroup;
 import Entity.Teacher;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 /**
  *
  * @author Topr
  */
 @Stateless
 public class InformationSB implements InformationSBLocal {
+    @PersistenceContext
     private EntityManager em;
     
     /**
@@ -40,20 +40,6 @@ public class InformationSB implements InformationSBLocal {
     @Override
     public Informations saveInformation(Informations i){
         if(i.getIdinformations() == null){
-//            em.createNativeQuery("INSERT INTO informations (Description" +
-//                   "InfoForParrents, SomeMessage, CreateDate " +
-//                   "StudyGroup_idStudyGroup, Users_Login, Teacher_Login) " +
-//                   "VALUES (?Description, ?InfoForParrents, ?SomeMessage, " +
-//                   "?CreateDate, ?StudyGroup_idStudyGroup, ?Users_Login, ?Teacher_Login")
-//                    .setParameter("Description", i.getDescription())
-//                    .setParameter("InfoForParrents", i.getInfoForParrents())
-//                    .setParameter("SomeMessage", i.getSomeMessage())
-//                    .setParameter("CreateDate", i.getCreateDate())
-//                    .setParameter("StudyGroup_idStudyGroup", i.getStudyGroupidStudyGroup().getIdStudyGroup())
-//                    .setParameter("Users_Login", i.getUsersLogin())
-//                    .setParameter("Teacher_Login", i.getTeacherLogin())
-//                    .executeUpdate();
-//            return null;
             em.persist(i);
         } else {
             em.merge(i);
@@ -69,13 +55,9 @@ public class InformationSB implements InformationSBLocal {
     
     @Override
     public List<Informations> getInformations(Teacher t) {
-        try{
-            List<Informations> tmp = em.createNamedQuery("Informations.findAll", Informations.class)
+        return em.createNativeQuery("SELECT * FROM informations WHERE Teacher_Login = ?tl order by CreateDate desc", Informations.class)
+                .setParameter("tl", t.getLogin())
                 .getResultList();
-            return tmp;
-        } catch(Exception e) {
-            return null;
-        }
     }
     
     
