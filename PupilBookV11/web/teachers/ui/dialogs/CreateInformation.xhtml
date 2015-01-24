@@ -21,17 +21,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui">
-    <ui:composition>
+    
+      <ui:composition>
         <p:dialog id="InformationsCreateDialog" widgetVar="InformationsCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Přídat informaci">
             <h:form id="InformationsCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2">
                         <p:outputLabel value="Popis" for="name" />
-                        <p:inputText id="name" value="#{teacherInformations.editedInformation.description}" title="Název"/>
+                        <p:inputText id="name" value="#{teacherInformations.editedInformation.description}" title="Název" required="true"/>
                         <p:outputLabel value="Známka" for="infoEdit"/>
-                        <p:inputTextarea id="infoEdit" value="#{teacherInformations.editedInformation.someMessage}" title="Samotná informace"/>
+                        <p:inputTextarea id="infoEdit" value="#{teacherInformations.editedInformation.someMessage}" title="Samotná informace" required="true"/>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{teacherInformations.saveInformation()}" value="#{bundle.save}" update="display,:InformationsTableForm ,:growl" oncomplete="handleSubmit(args,'InformationsCreateDialog');"/>
+                    <p:commandButton actionListener="#{teacherInformations.saveInformation}" value="#{bundle.save}" update="display,:InformationsTableForm ,:growl" oncomplete="handleSubmit(args,'InformationsCreateDialog');"/>
                     </h:panelGroup>
             </h:form>
         </p:dialog>

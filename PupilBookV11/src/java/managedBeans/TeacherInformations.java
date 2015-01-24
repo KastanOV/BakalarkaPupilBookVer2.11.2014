@@ -21,6 +21,7 @@ import Entity.Informations;
 import Entity.Student;
 import Entity.Studygroup;
 import Entity.Teacher;
+import Entity.Users;
 import SessionBeans.InformationSBLocal;
 import java.io.Serializable;
 import java.util.Date;
@@ -28,7 +29,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 /**
@@ -36,30 +37,14 @@ import javax.faces.context.FacesContext;
  * @author Topr
  */
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class TeacherInformations implements Serializable{
     
     @EJB
     private InformationSBLocal informationSB;
     private Teacher loggedUser;
-    private Informations ei;
+    private Informations editedInformation;
     private Student selectedStudent;
-
-    public Student getSelectedStudent() {
-        return selectedStudent;
-    }
-
-    public void setSelectedStudent(Student selectedStudent) {
-        this.selectedStudent = selectedStudent;
-    }
-
-    public Studygroup getSelectedStudygroup() {
-        return selectedStudygroup;
-    }
-
-    public void setSelectedStudygroup(Studygroup selectedStudygroup) {
-        this.selectedStudygroup = selectedStudygroup;
-    }
     private Studygroup selectedStudygroup;
     
 
@@ -70,28 +55,27 @@ public class TeacherInformations implements Serializable{
     }
     
     public List<Informations> getInformations(){
-        return informationSB.getInformations(loggedUser);
+        return informationSB.getInformations( loggedUser);
     }
     public Informations prepareInformation(boolean b){
-        ei = new Informations();
-        ei.setUsersLogin(selectedStudent);
-        ei.setInfoForParrents(b);
-        ei.setTeacherLogin(loggedUser);
-        ei.setCreateDate(new Date());
+        editedInformation = new Informations();
+        editedInformation.setUsersLogin(selectedStudent);
+        editedInformation.setInfoForParrents(b);
+        editedInformation.setTeacherLogin(loggedUser);
+        editedInformation.setCreateDate(new Date());
         
-        return ei;
+        return editedInformation;
     }
     public Informations prepareInformation(){
-        ei = new Informations();
-        ei.setStudyGroupidStudyGroup(selectedStudygroup);
-        ei.setTeacherLogin(loggedUser);
-        ei.setCreateDate(new Date());
-        return ei;
+        editedInformation = new Informations();
+        editedInformation.setStudyGroupidStudyGroup(selectedStudygroup);
+        editedInformation.setTeacherLogin(loggedUser);
+        editedInformation.setCreateDate(new Date());
+        return editedInformation;
     }
     public void saveInformation(){
         try{
-            
-            informationSB.saveInformation(ei);
+            informationSB.saveInformation(editedInformation);
         } catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, 
 					"Nepodařilo se uložit data do databáze.", 
@@ -107,13 +91,28 @@ public class TeacherInformations implements Serializable{
     public void setLoggedUser(Teacher loggedUser) {
         this.loggedUser = loggedUser;
     }
-    
+
     public Informations getEditedInformation() {
-        return ei;
+        return editedInformation;
+    }
+    public void setEditedInformation(Informations editedInformation) {
+        this.editedInformation = editedInformation;
+    }
+    public Student getSelectedStudent() {
+        return selectedStudent;
     }
 
-    public void setEditedInformation(Informations editedInformation) {
-        this.ei = editedInformation;
+    public void setSelectedStudent(Student selectedStudent) {
+        this.selectedStudent = selectedStudent;
     }
+
+    public Studygroup getSelectedStudygroup() {
+        return selectedStudygroup;
+    }
+
+    public void setSelectedStudygroup(Studygroup selectedStudygroup) {
+        this.selectedStudygroup = selectedStudygroup;
+    }
+    
     
 }
