@@ -21,7 +21,6 @@ import Entity.Informations;
 import Entity.Student;
 import Entity.Studygroup;
 import Entity.Teacher;
-import Entity.Users;
 import SessionBeans.InformationSBLocal;
 import java.io.Serializable;
 import java.util.Date;
@@ -29,7 +28,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 /**
@@ -37,67 +36,15 @@ import javax.faces.context.FacesContext;
  * @author Topr
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class TeacherInformations implements Serializable{
     
     @EJB
     private InformationSBLocal informationSB;
     private Teacher loggedUser;
-    private Informations editedInformation;
+    private Informations ei;
     private Student selectedStudent;
-    private Studygroup selectedStudygroup;
-    
 
-    /**
-     * Creates a new instance of TeacherInformations
-     */
-    public TeacherInformations() {
-    }
-    
-    public List<Informations> getInformations(){
-        return informationSB.getInformations( loggedUser);
-    }
-    public Informations prepareInformation(boolean b){
-        editedInformation = new Informations();
-        editedInformation.setUsersLogin(selectedStudent);
-        editedInformation.setInfoForParrents(b);
-        editedInformation.setTeacherLogin(loggedUser);
-        editedInformation.setCreateDate(new Date());
-        
-        return editedInformation;
-    }
-    public Informations prepareInformation(){
-        editedInformation = new Informations();
-        editedInformation.setStudyGroupidStudyGroup(selectedStudygroup);
-        editedInformation.setTeacherLogin(loggedUser);
-        editedInformation.setCreateDate(new Date());
-        return editedInformation;
-    }
-    public void saveInformation(){
-        try{
-            informationSB.saveInformation(editedInformation);
-        } catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-					"Nepodařilo se uložit data do databáze.", 
-					"Nepodařilo se uložit data do databáze.. Příčina: " + e.getMessage()));
-		}
-        
-    }
-    
-    public Teacher getLoggedUser() {
-        return loggedUser;
-    }
-
-    public void setLoggedUser(Teacher loggedUser) {
-        this.loggedUser = loggedUser;
-    }
-
-    public Informations getEditedInformation() {
-        return editedInformation;
-    }
-    public void setEditedInformation(Informations editedInformation) {
-        this.editedInformation = editedInformation;
-    }
     public Student getSelectedStudent() {
         return selectedStudent;
     }
@@ -113,6 +60,60 @@ public class TeacherInformations implements Serializable{
     public void setSelectedStudygroup(Studygroup selectedStudygroup) {
         this.selectedStudygroup = selectedStudygroup;
     }
+    private Studygroup selectedStudygroup;
     
+
+    /**
+     * Creates a new instance of TeacherInformations
+     */
+    public TeacherInformations() {
+    }
+    
+    public List<Informations> getInformations(){
+        return informationSB.getInformations(loggedUser);
+    }
+    public Informations prepareInformation(boolean b){
+        ei = new Informations();
+        ei.setUsersLogin(selectedStudent);
+        ei.setInfoForParrents(b);
+        ei.setTeacherLogin(loggedUser);
+        ei.setCreateDate(new Date());
+        
+        return ei;
+    }
+    public Informations prepareInformation(){
+        ei = new Informations();
+        ei.setStudyGroupidStudyGroup(selectedStudygroup);
+        ei.setTeacherLogin(loggedUser);
+        ei.setCreateDate(new Date());
+        return ei;
+    }
+    public void saveInformation(){
+        try{
+            
+            informationSB.saveInformation(ei);
+        } catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+					"Nepodařilo se uložit data do databáze.", 
+					"Nepodařilo se uložit data do databáze.. Příčina: " + e.getMessage()));
+		}
+        
+    }
+    
+    public Teacher getLoggedUser() {
+        return loggedUser;
+    }
+
+    public void setLoggedUser(Teacher loggedUser) {
+        this.loggedUser = loggedUser;
+    }
+    
+    public Informations getEditedInformation() {
+        return ei;
+    }
+
+    public void setEditedInformation(Informations editedInformation) {
+        this.ei = editedInformation;
+    }
     
 }

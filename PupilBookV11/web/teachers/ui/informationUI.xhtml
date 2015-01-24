@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
         <ui:include src="dialogs/CreateInformation.xhtml"/>
         #{teacherInformations.setLoggedUser(teacherMainController.loggedUser)}
         #{teacherInformations.setSelectedStudent(teacherMainController.editedStudent)}
-        #{ teacherInformations.setSelectedStudygroup(teacherMainController.editedStudyGroup)}
+        #{teacherInformations.setSelectedStudygroup(teacherMainController.editedStudyGroup)}
         <h:form id="InformationsTableForm">
             <p:dataTable id="InformationsTable" var="ListItem" value="#{teacherInformations.informations}"
                      paginator="true"
@@ -36,9 +36,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                      rows="10"
                      rowsPerPageTemplate="10,20,30,40,50">
                 <f:facet name="header">
-                    <p:commandButton id="createButtoninformationStudent" icon="ui-icon-plus" style="background-color: #009900"  value="přidat informaci pro #{teacherMainController.editedStudent.lastName} #{teacherMainController.editedStudent.firstName}" actionListener="#{teacherInformations.prepareInformation(false)}" disabled="#{teacherMainController.editedStudent == null}" update=":InformationsCreateForm" oncomplete="PF('InformationsCreateDialog').show()"/>
-                    <p:commandButton id="createButtoninformationParent" icon="ui-icon-plus" style="background-color: orangered"   value="přidat informaci pro rodiče #{teacherMainController.editedStudent.lastName} #{teacherMainController.editedStudent.firstName}" actionListener="#{teacherInformations.prepareInformation(true)}" disabled="#{teacherMainController.editedStudent == null}" update=":InformationsCreateForm" oncomplete="PF('InformationsCreateDialog').show()"/>
-                    <p:commandButton id="createButtoninformationStudygroup" icon="ui-icon-plus"   value="přidat informaci pro třídu #{teacherMainController.editedStudyGroup.name}" actionListener="#{teacherInformations.prepareInformation()}" disabled="#{teacherMainController.editedStudyGroup == null}" update=":InformationsCreateForm" oncomplete="PF('InformationsCreateDialog').show()"/>
+                    <p:commandButton id="createButtoninformationStudent" icon="ui-icon-plus" style="background-color: #009900"  value="přidat informaci pro #{teacherMainController.editedStudent.lastName} #{teacherMainController.editedStudent.firstName}" actionListener="#{teacherInformations.prepareInformation(teacherMainController.editedStudent, false)}" disabled="#{teacherMainController.editedStudent == null}" update=":InformationsCreateForm" oncomplete="PF('InformationsCreateDialog').show()"/>
+                    <p:commandButton id="createButtoninformationParent" icon="ui-icon-plus" style="background-color: orangered"   value="přidat informaci pro rodiče #{teacherMainController.editedStudent.lastName} #{teacherMainController.editedStudent.firstName}" actionListener="#{teacherInformations.prepareInformation(teacherMainController.editedStudent, true)}" disabled="#{teacherMainController.editedStudent == null}" update=":InformationsCreateForm" oncomplete="PF('InformationsCreateDialog').show()"/>
+                    <p:commandButton id="createButtoninformationStudygroup" icon="ui-icon-plus"   value="přidat informaci pro třídu #{teacherMainController.editedStudyGroup.name}" actionListener="#{teacherInformations.prepareInformation(teacherMainController.editedStudyGroup)}" disabled="#{teacherMainController.editedStudyGroup == null}" update=":InformationsCreateForm" oncomplete="PF('InformationsCreateDialog').show()"/>
                     
                 </f:facet>
                 <p:column headerText="Popis">
