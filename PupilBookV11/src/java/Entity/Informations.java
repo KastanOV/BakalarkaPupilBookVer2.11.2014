@@ -1,10 +1,23 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (C) 2015 Topr
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 package Entity;
 
+import Entity.Studygroup;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -73,7 +86,6 @@ public class Informations implements Serializable {
     @JoinColumn(name = "Teacher_Login", referencedColumnName = "Login")
     @ManyToOne(optional = false)
     private Users teacherLogin;
-    
 
     public Informations() {
     }
@@ -145,7 +157,7 @@ public class Informations implements Serializable {
     public void setUsersLogin(Users usersLogin) {
         this.usersLogin = usersLogin;
     }
-    
+
     public Users getTeacherLogin() {
         return teacherLogin;
     }
@@ -176,7 +188,7 @@ public class Informations implements Serializable {
 
     @Override
     public String toString() {
-        return "Entity.Informations[ idinformations=" + idinformations + " ]";
+        return "Entity2.Informations[ idinformations=" + idinformations + " ]";
     }
     
 }

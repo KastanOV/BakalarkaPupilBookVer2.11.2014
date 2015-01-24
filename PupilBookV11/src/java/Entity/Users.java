@@ -116,6 +116,8 @@ public class Users implements Serializable {
     private Studygroup studyGroupidStudyGroup;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usersLogin")
     private Collection<Informations> informationsCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "teacherLogin")
+    private Collection<Informations> informationsCollection1;
 
     public Users() {
     }
@@ -280,7 +282,16 @@ public class Users implements Serializable {
     public void setInformationsCollection(Collection<Informations> informationsCollection) {
         this.informationsCollection = informationsCollection;
     }
+    
+    @XmlTransient
+    public Collection<Informations> getInformationsCollection1() {
+        return informationsCollection1;
+    }
 
+    public void setInformationsCollection1(Collection<Informations> informationsCollection1) {
+        this.informationsCollection1 = informationsCollection1;
+    }
+    
     public Boolean getDeleted() {
         return deleted;
     }

@@ -1,10 +1,23 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (C) 2015 Topr
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 package Entity;
 
+import Entity.Studygroup;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -28,7 +41,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author KastanNotas
+ * @author Topr
  */
 @Entity
 @Table(name = "schoolyear")
@@ -39,8 +52,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Schoolyear.findByName", query = "SELECT s FROM Schoolyear s WHERE s.name = :name"),
     @NamedQuery(name = "Schoolyear.findByIsactualyear", query = "SELECT s FROM Schoolyear s WHERE s.isactualyear = :isactualyear"),
     @NamedQuery(name = "Schoolyear.findByStartDate", query = "SELECT s FROM Schoolyear s WHERE s.startDate = :startDate"),
-    @NamedQuery(name = "Schoolyear.findByEndDate", query = "SELECT s FROM Schoolyear s WHERE s.endDate = :endDate"),
-    @NamedQuery(name = "Studygroup.findBySchoolyear", query = "SELECT s FROM Studygroup s WHERE s.schoolYearidSchoolYear = :SchoolYearID")})
+    @NamedQuery(name = "Schoolyear.findByEndDate", query = "SELECT s FROM Schoolyear s WHERE s.endDate = :endDate")})
 public class Schoolyear implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -69,9 +81,7 @@ public class Schoolyear implements Serializable {
     private Date endDate;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "schoolYearidSchoolYear")
     private Collection<Studygroup> studygroupCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "schoolYearidSchoolYear")
-    private Collection<Results> resultsCollection;
-    
+
     public Schoolyear() {
     }
 
@@ -142,15 +152,7 @@ public class Schoolyear implements Serializable {
         hash += (idSchoolYear != null ? idSchoolYear.hashCode() : 0);
         return hash;
     }
-    @XmlTransient
-    public Collection<Results> getResultsCollection() {
-        return resultsCollection;
-    }
 
-    public void setResultsCollection(Collection<Results> resultsCollection) {
-        this.resultsCollection = resultsCollection;
-    }
-    
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
@@ -166,7 +168,7 @@ public class Schoolyear implements Serializable {
 
     @Override
     public String toString() {
-        return "Entity.Schoolyear[ idSchoolYear=" + idSchoolYear + " ]";
+        return "Entity2.Schoolyear[ idSchoolYear=" + idSchoolYear + " ]";
     }
     
 }
