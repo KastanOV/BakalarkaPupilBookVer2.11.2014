@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author KastanNotas
+ * @author Topr
  */
 @Entity
 @Table(name = "results")
@@ -40,9 +40,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Results implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
+    @Basic(optional = false)
     @Column(name = "idResults")
     private Integer idResults;
     @Size(max = 255)
@@ -80,15 +79,6 @@ public class Results implements Serializable {
         this.score = score;
     }
 
-    
-    public Schoolyear getSchoolYearidSchoolYear() {
-        return schoolYearidSchoolYear;
-    }
-
-    public void setSchoolYearidSchoolYear(Schoolyear schoolYearidSchoolYear) {
-        this.schoolYearidSchoolYear = schoolYearidSchoolYear;
-    }
-    
     public Integer getIdResults() {
         return idResults;
     }
@@ -119,6 +109,14 @@ public class Results implements Serializable {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public Schoolyear getSchoolYearidSchoolYear() {
+        return schoolYearidSchoolYear;
+    }
+
+    public void setSchoolYearidSchoolYear(Schoolyear schoolYearidSchoolYear) {
+        this.schoolYearidSchoolYear = schoolYearidSchoolYear;
     }
 
     public Studysubject getStudySubjectidStudySubject() {

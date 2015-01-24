@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author KastanNotas
+ * @author Topr
  */
 @Entity
 @Table(name = "studysubject")
@@ -33,7 +33,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Studysubject.findAll", query = "SELECT s FROM Studysubject s"),
     @NamedQuery(name = "Studysubject.findByIdStudySubject", query = "SELECT s FROM Studysubject s WHERE s.idStudySubject = :idStudySubject"),
-    @NamedQuery(name = "Studysubject.findByName", query = "SELECT s FROM Studysubject s WHERE s.name = :name")})
+    @NamedQuery(name = "Studysubject.findByName", query = "SELECT s FROM Studysubject s WHERE s.name = :name"),
+    @NamedQuery(name = "Studysubject.findByShortName", query = "SELECT s FROM Studysubject s WHERE s.shortName = :shortName")})
 public class Studysubject implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -48,18 +49,9 @@ public class Studysubject implements Serializable {
     private String name;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 5)
     @Column(name = "ShortName")
-    private String ShortName;
-
-    public String getShortName() {
-        return ShortName;
-    }
-
-    public void setShortName(String ShortName) {
-        this.ShortName = ShortName;
-    }
-    
+    private String shortName;
     @OneToMany(mappedBy = "studySubjectidStudySubject")
     private Collection<Sheduleitem> sheduleitemCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "studySubjectidStudySubject")
@@ -74,10 +66,10 @@ public class Studysubject implements Serializable {
         this.idStudySubject = idStudySubject;
     }
 
-    public Studysubject(Integer idStudySubject, String name, String ShortName) {
+    public Studysubject(Integer idStudySubject, String name, String shortName) {
         this.idStudySubject = idStudySubject;
         this.name = name;
-        this.ShortName = ShortName;
+        this.shortName = shortName;
     }
 
     public Integer getIdStudySubject() {
@@ -94,6 +86,14 @@ public class Studysubject implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getShortName() {
+        return shortName;
+    }
+
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
     }
 
     @XmlTransient

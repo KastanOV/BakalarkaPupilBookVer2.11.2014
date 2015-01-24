@@ -19,18 +19,19 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author KastanNotas
+ * @author Topr
  */
 @Entity
 @Table(name = "sheduleitem")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Sheduleitem.findAll", query = "SELECT s FROM Sheduleitem s"),
-    @NamedQuery(name = "Sheduleitem.findByUser", query = "SELECT s FROM Sheduleitem s WHERE s.usersLogin = :login")})
+    @NamedQuery(name = "Sheduleitem.findByIdSheduleItem", query = "SELECT s FROM Sheduleitem s WHERE s.idSheduleItem = :idSheduleItem"),
+    @NamedQuery(name = "Sheduleitem.findByDay", query = "SELECT s FROM Sheduleitem s WHERE s.day = :day"),
+    @NamedQuery(name = "Sheduleitem.findByHour", query = "SELECT s FROM Sheduleitem s WHERE s.hour = :hour")})
 public class Sheduleitem implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -55,10 +56,8 @@ public class Sheduleitem implements Serializable {
     @JoinColumn(name = "Users_Login", referencedColumnName = "Login")
     @ManyToOne
     private Users usersLogin;
-    
 
-
-        public Sheduleitem() {
+    public Sheduleitem() {
     }
 
     public Sheduleitem(Integer idSheduleItem) {
@@ -94,7 +93,7 @@ public class Sheduleitem implements Serializable {
     public void setHour(short hour) {
         this.hour = hour;
     }
-    @XmlTransient
+
     public Studygroup getStudyGroupidStudyGroup() {
         return studyGroupidStudyGroup;
     }
@@ -102,7 +101,7 @@ public class Sheduleitem implements Serializable {
     public void setStudyGroupidStudyGroup(Studygroup studyGroupidStudyGroup) {
         this.studyGroupidStudyGroup = studyGroupidStudyGroup;
     }
-    @XmlTransient
+
     public Studysubject getStudySubjectidStudySubject() {
         return studySubjectidStudySubject;
     }
@@ -110,7 +109,7 @@ public class Sheduleitem implements Serializable {
     public void setStudySubjectidStudySubject(Studysubject studySubjectidStudySubject) {
         this.studySubjectidStudySubject = studySubjectidStudySubject;
     }
-    @XmlTransient
+
     public Users getUsersLogin() {
         return usersLogin;
     }

@@ -70,8 +70,7 @@ public class InformationSB implements InformationSBLocal {
     @Override
     public List<Informations> getInformations(Teacher t) {
         try{
-            List<Informations> tmp = em.createNativeQuery("SELECT * FROM informations WHERE Teacher_Login = ?tl ORDER BY CreateDate DESC")
-                .setParameter("tl", t.getLogin())
+            List<Informations> tmp = em.createNamedQuery("Informations.findAll", Informations.class)
                 .getResultList();
             return tmp;
         } catch(Exception e) {
