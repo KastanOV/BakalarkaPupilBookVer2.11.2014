@@ -12,7 +12,7 @@
         #{teacherClassificationTable.setLoggedUser(loginBean.userObject)}
         #{teacherClassificationTable.setEditedStudySubject(teacherMainController.editedStudySubject)}
         #{teacherClassificationTable.setStudent(teacherMainController.editedStudent)}
-        <h:form id="ClassificationChart" rendered="#{teacherMainController.editedStudent != null}">
+        <h:form id="ClassificationChart" rendered="#{teacherClassificationTable.render}">
             <p:growl id="messages" showDetail="true"/> 
             <h:panelGrid columns="2" cellpadding="5">
                 <p:outputLabel value="Popis hodnocení" for="name" />

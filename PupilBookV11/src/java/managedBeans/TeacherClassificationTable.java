@@ -45,6 +45,17 @@ public class TeacherClassificationTable implements Serializable{
     private Studysubject editedStudySubject;
     private Users loggedUser;
     private Student student;
+    private Boolean render;
+
+    public Boolean getRender() {
+        if(editedStudySubject != null && student != null ) render = true;
+        else render = false;
+        return render;
+    }
+
+    public void setRender(Boolean render) {
+        this.render = render;
+    }
 
     public TeacherClassificationTable() {
     }

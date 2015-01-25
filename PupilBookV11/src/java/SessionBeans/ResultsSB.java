@@ -128,11 +128,9 @@ public class ResultsSB implements ResultsSBLocal {
                     extResTmp.setStudentLogin(resItems.getStudentLogin());
                     extResTmp.setStudySubjectidStudySubject(resItems.getStudySubjectidStudySubject());
                     extResTmp.setTeacherLogin(resItems.getTeacherLogin());
-                    
                     exRes.add(extResTmp);
                 }    
             }
-            
         }
         return exRes;
     }
