@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
     <ui:composition>
         
         <ui:include src="dialogs/CreateInformation.xhtml"/>
+        <ui:include src="dialogs/EditInformation.xhtml"/>
         #{teacherInformations.setLoggedUser(teacherMainController.loggedUser)}
         #{teacherInformations.setSelectedStudent(teacherMainController.editedStudent)}
         #{teacherInformations.setSelectedStudygroup(teacherMainController.editedStudyGroup)}
@@ -62,7 +63,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                     <h:selectBooleanCheckbox value="#{ListItem.infoForParrents}" disabled="true"/>
                 </p:column>
                 <p:column headerText="Editovací tlačítko" width="10%" style="text-align: center">
-                    <p:commandButton actionListener="#{teacherInformations.setEditedInformation(ListItem)}" icon="ui-icon-edit" value="upravit" />
+                    <p:commandButton actionListener="#{teacherInformations.setEditedInformation(ListItem)}" icon="ui-icon-edit" value="upravit" update=":InformationsEditForm" oncomplete="PF('InformationsEditDialog').show()"/>
                 </p:column>
             </p:dataTable>
         </h:form>

@@ -1,0 +1,66 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <ui:composition>
+        <ui:include src="dialogs/EditClasification.xhtml"/>
+        <ui:include src="dialogs/CreateClasification.xhtml"/>
+        #{teacherClassificationChart.setEditedStudent(teacherMainController.editedStudent)}
+        #{teacherClassificationChart.setEditedStudySubject(teacherMainController.editedStudySubject)}
+        #{teacherMainController.setLoggedUser(loginBean.userObject)}
+        #{teacherClassificationTable.setLoggedUser(loginBean.userObject)}
+        #{teacherClassificationTable.setEditedStudySubject(teacherMainController.editedStudySubject)}
+        #{teacherClassificationTable.setStudent(teacherMainController.editedStudent)}
+        <h:form id="ClassificationChart" rendered="#{teacherMainController.editedStudent != null}">
+            <p:growl id="messages" showDetail="true"/> 
+            <h:panelGrid columns="2" cellpadding="5">
+                <p:outputLabel value="Popis hodnocení" for="name" />
+                <p:autoComplete id="name" value="#{teacherMainController.classificationDescription}" completeMethod="#{teacherMainController.autoComplete}"  required="true" >
+                        <p:ajax event="blur" />
+                    </p:autoComplete>
+                <h:outputText value="Hodnocení:" />  
+                    <p:rating value="#{teacherMainController.score}" stars="10">
+                        <p:ajax event="rate" listener="#{teacherMainController.onRate}" update="messages"/>
+                    </p:rating> 
+                
+            </h:panelGrid> 
+                    <p:commandButton actionListener="#{teacherMainController.saveClassification()}" value="#{bundle.save}" update=":ClassificationChart" />
+            <hr/>
+       
+                <h:outputText value="#{teacherMainController.editedStudent.lastName} #{teacherMainController.editedStudent.firstName}" style="font-size: xx-large"/>
+                <p:dataTable id="datalist" value="#{teacherClassificationTable.studentExtendResults}" var="item" >
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Popis"/>
+                        </f:facet>
+                        <h:outputText value="#{item.description}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Známka"/>
+                        </f:facet>
+                        <p:rating value="#{item.score}" readonly="true" rendered="#{item.score != -1}" stars="10"/>
+                        <h:outputText value="bez Hodnocení" rendered="#{item.score == -1}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Průměr"/>
+                        </f:facet>
+                        <h:outputText value="#{item.prumer}"/>
+                    </p:column>
+                    <p:column style="width:80px">
+                        <p:commandButton update=":ClasificationEditForm" value="Upravit" oncomplete="PF('ClasificationEditDialog').show()" icon="ui-icon-search" rendered="#{item.score != -1}">
+                            <p:ajax listener="#{teacherClassificationTable.setEditedResult(item)}"/>
+                        </p:commandButton>
+                        <p:commandButton update=":ClasificationCreateForm" oncomplete="PF('ClasificationCreateDialog').show()" value="hodnotit" icon="ui-icon-plus" rendered="#{item.score == -1}">
+                            <p:ajax listener="#{teacherMainController.prepareNewClassification(item)}"/>
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+            <hr/>
+                <p:chart type="bar" model="#{teacherClassificationChart.classificationModel}" widgetVar="item"   style="height:600px;" />
+            
+        </h:form>
+    </ui:composition>
+</html>

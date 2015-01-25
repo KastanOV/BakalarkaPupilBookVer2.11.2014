@@ -82,7 +82,15 @@ public class TeacherInformations implements Serializable{
 		}
         
     }
-    
+    public void deleteInformation(){
+        try{
+            informationSB.delete(editedInformation);
+        } catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+					"Nepodařilo se vynmazat data z databáze.", 
+					"Nepodařilo se uložit data do databáze.. Příčina: " + e.getMessage()));
+		}
+    }
     public Teacher getLoggedUser() {
         return loggedUser;
     }

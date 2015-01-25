@@ -17,48 +17,40 @@
  */
 package SessionBeans;
 
-import Entity.Informations;
-import Entity.Teacher;
+import Entity.Attendance;
+import Entity.Student;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
 /**
  *
  * @author Topr
  */
 @Stateless
-public class InformationSB implements InformationSBLocal {
+public class AttendanceSB implements AttendanceSBLocal {
     @PersistenceContext
     private EntityManager em;
     
-    /**
-     *
-     * @param i
-     * @return
-     */
     @Override
-    public Informations saveInformation(Informations i){
-        if(i.getIdinformations() == null){
-            em.persist(i);
-        } else {
-            em.merge(i);
+    public Attendance saveInformation(Attendance a){
+        if(a.getIdAttendance() == null){
+            em.persist(a);
+        } else{
+            em.merge(a);
         }
         em.flush();
-        return i;
+       return a;
     }
-
     @Override
-    public void delete(Informations i) {
-        em.remove(em.find(Informations.class, i.getIdinformations()));
+    public void delete(Attendance a){
+        em.remove(em.find(Attendance.class, a.getIdAttendance()));
     }
-    
     @Override
-    public List<Informations> getInformations(Teacher t) {
-        return em.createNativeQuery("SELECT * FROM informations WHERE Teacher_Login = ?tl order by CreateDate desc", Informations.class)
-                .setParameter("tl", t.getLogin())
+    public List<Attendance> getInformations(Student t){
+        return em.createNativeQuery("SELECT * FROM attendance where Users_Login = ?ul", Attendance.class)
+                .setParameter("ul", t.getLogin())
                 .getResultList();
     }
-    
-    
 }
