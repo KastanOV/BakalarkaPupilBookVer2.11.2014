@@ -15,7 +15,7 @@ window.app = window.app || {} ;         // there should only be one of these...
 
 // Set to "true" if you want the console.log messages to appear.
 
-app.LOG = true ;
+app.LOG = false ;
 
 app.consoleLog = function() {           // only emits console.log messages if app.LOG != false
     if( app.LOG ) {
@@ -36,9 +36,9 @@ app.initEvents = function() {
     "use strict" ;
     var fName = "app.initEvents():" ;
     app.consoleLog(fName, "entry") ;
-    debugger;
+
     // NOTE: initialize your third-party libraries and event handlers
-    initTables();
+
     // initThirdPartyLibraryNumberOne() ;
     // initThirdPartyLibraryNumberTwo() ;
     // initThirdPartyLibraryNumberEtc() ;
@@ -54,15 +54,16 @@ app.initEvents = function() {
     // TODO: configure following to work with both touch and click events (mouse + touch)
     // see http://msopentech.com/blog/2013/09/16/add-pinch-pointer-events-apache-cordova-phonegap-app/
 
-    var el, evt ;
-
-    if( navigator.msPointerEnabled || !('ontouchend' in window))    // if on Win 8 machine or no touch
-        evt = "click" ;                                             // let touch become a click event
-    else                                                            // else, assume touch events available
-        evt = "touchend" ;                                          // not optimum, but works
-
-    el = document.getElementById("id_btnHello") ;
-    el.addEventListener(evt, myEventHandler, false) ;
+//...overly simple example...
+//    var el, evt ;
+//
+//    if( navigator.msPointerEnabled || !('ontouchend' in window))    // if on Win 8 machine or no touch
+//        evt = "click" ;                                             // let touch become a click event
+//    else                                                            // else, assume touch events available
+//        evt = "touchend" ;                                          // not optimum, but works
+//
+//    el = document.getElementById("id_btnHello") ;
+//    el.addEventListener(evt, myEventHandler, false) ;
 
     // NOTE: ...you can put other miscellaneous init stuff in this function...
     // NOTE: ...and add whatever else you want to do now that the app has started...

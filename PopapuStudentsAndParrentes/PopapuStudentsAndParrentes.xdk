@@ -5,23 +5,15 @@
       "type": "App Designer",
       "projectTypeName": "com.intel.xdk.projecttype.jsapp",
       "src": "appDesigner",
-      "projectGuid": "b74bd197-33b0-4571-baf2-4f0ec583b97d",
-      "lastModifiedDate": 1422390604398,
-      "creationDate": 1422199633951
+      "projectGuid": "c5ea71da-8c4b-49c3-a345-59fee2871a2e",
+      "lastModifiedDate": 1422392136808,
+      "creationDate": 1422392136762
     },
     "XDK-app-designer": "true",
     "sourceDirectory": "www",
     "startFile": "index.html",
     "projectFiles": {},
-    "projectDirectories": {
-      "xdk/services/iodocs": {
-        "settings": {
-          "project": {
-            "XDK-generated": "true"
-          }
-        }
-      }
-    },
+    "projectDirectories": {},
     "libraries": [
       {
         "name": "Cordova",
@@ -67,8 +59,8 @@
           "android-installLocation": "auto"
         },
         "isActive_": true,
-        "appName_": "PopapuMobile",
-        "appID_": "xdk.intel.cordova.template",
+        "appName_": "PopapuStudentsAndParrentes",
+        "appID_": "xdk.intel.ad.template",
         "appAccess_": "*",
         "icons_": [],
         "splashes_": [],
@@ -78,7 +70,7 @@
         "cordovaCLIVersion_": "3.5",
         "crosswalkVersion_": "stable",
         "appVersion_": "0.0.1",
-        "appDescription_": "Universal init code for Intel XDK and Cordova device ready detection, as well as within browser.",
+        "appDescription_": "Template to develop a cross-platform mobile app using the App Designer UI editor.",
         "appAuthor_": "",
         "appVersionCode_": "1"
       },
@@ -92,8 +84,8 @@
           "android-installLocation": "auto"
         },
         "isActive_": true,
-        "appName_": "PopapuMobile",
-        "appID_": "xdk.intel.cordova.template",
+        "appName_": "PopapuStudentsAndParrentes",
+        "appID_": "xdk.intel.ad.template",
         "appAccess_": "*",
         "icons_": [],
         "splashes_": [],
@@ -103,7 +95,7 @@
         "cordovaCLIVersion_": "3.5",
         "crosswalkVersion_": "stable",
         "appVersion_": "0.0.1",
-        "appDescription_": "Universal init code for Intel XDK and Cordova device ready detection, as well as within browser.",
+        "appDescription_": "Template to develop a cross-platform mobile app using the App Designer UI editor.",
         "appAuthor_": "",
         "appVersionCode_": "1"
       },
@@ -116,8 +108,8 @@
           "ios-configuration": "adhoc"
         },
         "isActive_": true,
-        "appName_": "PopapuMobile",
-        "appID_": "xdk.intel.cordova.template",
+        "appName_": "PopapuStudentsAndParrentes",
+        "appID_": "xdk.intel.ad.template",
         "appAccess_": "*",
         "icons_": [],
         "splashes_": [],
@@ -127,7 +119,7 @@
         "cordovaCLIVersion_": "3.5",
         "crosswalkVersion_": "stable",
         "appVersion_": "0.0.1",
-        "appDescription_": "Universal init code for Intel XDK and Cordova device ready detection, as well as within browser."
+        "appDescription_": "Template to develop a cross-platform mobile app using the App Designer UI editor."
       },
       "Windows8": {
         "platform_": "windows8",
@@ -138,8 +130,8 @@
           "windows-publisher-id": ""
         },
         "isActive_": true,
-        "appName_": "PopapuMobile",
-        "appID_": "xdk.intel.cordova.template",
+        "appName_": "PopapuStudentsAndParrentes",
+        "appID_": "xdk.intel.ad.template",
         "appAccess_": "*",
         "icons_": [],
         "splashes_": [],
@@ -149,7 +141,7 @@
         "cordovaCLIVersion_": "3.5",
         "crosswalkVersion_": "stable",
         "appVersion_": "0.0.0.1",
-        "appDescription_": "Universal init code for Intel XDK and Cordova device ready detection, as well as within browser."
+        "appDescription_": "Template to develop a cross-platform mobile app using the App Designer UI editor."
       },
       "WindowsPhone8": {
         "platform_": "wp8",
@@ -157,8 +149,8 @@
         "name_": "WindowsPhone8",
         "preferences_": {},
         "isActive_": true,
-        "appName_": "PopapuMobile",
-        "appID_": "xdk.intel.cordova.template",
+        "appName_": "PopapuStudentsAndParrentes",
+        "appID_": "xdk.intel.ad.template",
         "appAccess_": "*",
         "icons_": [],
         "splashes_": [],
@@ -168,7 +160,7 @@
         "cordovaCLIVersion_": "3.5",
         "crosswalkVersion_": "stable",
         "appVersion_": "0.0.0.1",
-        "appDescription_": "Universal init code for Intel XDK and Cordova device ready detection, as well as within browser."
+        "appDescription_": "Template to develop a cross-platform mobile app using the App Designer UI editor."
       }
     },
     "gameAssetDirectory": "asset",
