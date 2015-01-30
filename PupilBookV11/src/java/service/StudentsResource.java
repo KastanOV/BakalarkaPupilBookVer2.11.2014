@@ -16,6 +16,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 
 /**
@@ -23,7 +25,7 @@ import javax.ws.rs.Path;
  *
  * @author Topr
  */
-@Path("StudentsList")
+@Path("Students")
 public class StudentsResource {
     @EJB
     private StudentsSBLocal studentsSB;
@@ -34,15 +36,18 @@ public class StudentsResource {
     
     @GET
     @Path("{login}/{password}")
-    @Consumes({"application/xml", "application/json"})
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public List<servicesDTO.Student> checkLogin(@PathParam("login") String login, @PathParam("password") String password) {
-        List<Student> tmpList = studentsSB.getStudents(login, password);
-        List<servicesDTO.Student> items = new ArrayList<>();
-        for(Student item : tmpList){
-            servicesDTO.Student tmp = new servicesDTO.Student(item.getFirstName(), item.getMiddleName(), item.getLastName(), item.getPhone(), item.getEmail(), item.getLogin(), item.getPassword(), item.getStudyGroupidStudyGroup().getIdStudyGroup());
-            items.add(tmp);
+        Student tmpstudent = studentsSB.studentLogin(login, password);
+        List<servicesDTO.Student> tmpList = new ArrayList<>();
+        if(tmpstudent != null){
+            servicesDTO.Student tmp = new servicesDTO.Student(tmpstudent.getFirstName(), tmpstudent.getMiddleName(), tmpstudent.getLastName(), tmpstudent.getPhone(), tmpstudent.getEmail(), tmpstudent.getLogin(), tmpstudent.getPassword(), tmpstudent.getStudyGroupidStudyGroup().getIdStudyGroup());
+            tmpList.add(tmp);
+            
+            return tmpList;
         }
-        return  items;
+        return null;
     }
     
 }

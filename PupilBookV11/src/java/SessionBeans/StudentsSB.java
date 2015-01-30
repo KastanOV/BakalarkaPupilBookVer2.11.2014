@@ -9,6 +9,7 @@ import Entity.Parent;
 import Entity.Parrentstudent;
 import Entity.Student;
 import Entity.Studygroup;
+import Entity.Teacher;
 import Entity.Users;
 import java.util.Collection;
 import java.util.Date;
@@ -40,6 +41,15 @@ public class StudentsSB implements StudentsSBLocal {
         em.persist(ps);
         em.flush();
         return s;
+    }
+    
+    @Override
+    public Student studentLogin(String login, String password){
+        if(checkStudent(login,password)){
+            return em.find(Student.class, login);
+        }else return null;
+        
+        
     }
     
     @Override
@@ -181,6 +191,15 @@ public class StudentsSB implements StudentsSBLocal {
    }
     private boolean checkTeacher(String login, String password){
         long tmp = (long)em.createNativeQuery("SELECT count(*) FROM Users u WHERE u.login = ?login AND u.password = ?password AND Role = 'T'")
+                .setParameter("login", login)
+                .setParameter("password", password)
+                .getSingleResult();
+        if(tmp > 0){
+            return true;
+        }else return false;
+    }
+    private boolean checkStudent(String login, String password){
+        long tmp = (long)em.createNativeQuery("SELECT count(*) FROM Users u WHERE u.login = ?login AND u.password = ?password AND Role = 'S'")
                 .setParameter("login", login)
                 .setParameter("password", password)
                 .getSingleResult();

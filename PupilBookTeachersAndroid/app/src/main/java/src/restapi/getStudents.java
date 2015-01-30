@@ -28,7 +28,7 @@ public class getStudents {
     private String targetURL;
     public getStudents(String URL, MainActivity context) {
         SharedPreferences sharedpreferences = context.getSharedPreferences("PupilBook", context.MODE_PRIVATE);
-        this.targetURL = URL + "StudentsList/" + sharedpreferences.getString("login", "Error") + "/" + sharedpreferences.getString("password", "Something wrong");
+        this.targetURL = URL + "teachers/studentlist/" + sharedpreferences.getString("login", "Error") + "/" + sharedpreferences.getString("password", "Something wrong");
         this.context = context;
     }
     public String downloadUrl() throws IOException {

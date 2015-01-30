@@ -18,6 +18,7 @@ import javax.ejb.Local;
  */
 @Local
 public interface StudentsSBLocal {
+    public Student studentLogin(String login, String password);
     public Student createNewUser(Student s);
     public Student saveUser(Student s);
     public Collection<Student> getAllStudents();
