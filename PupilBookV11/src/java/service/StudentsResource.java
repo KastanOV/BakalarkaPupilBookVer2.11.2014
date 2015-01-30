@@ -38,14 +38,14 @@ public class StudentsResource {
     @Path("{login}/{password}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public List<servicesDTO.Student> checkLogin(@PathParam("login") String login, @PathParam("password") String password) {
+    public servicesDTO.Student checkLogin(@PathParam("login") String login, @PathParam("password") String password) {
         Student tmpstudent = studentsSB.studentLogin(login, password);
-        List<servicesDTO.Student> tmpList = new ArrayList<>();
+        //List<servicesDTO.Student> tmpList = new ArrayList<>();
         if(tmpstudent != null){
             servicesDTO.Student tmp = new servicesDTO.Student(tmpstudent.getFirstName(), tmpstudent.getMiddleName(), tmpstudent.getLastName(), tmpstudent.getPhone(), tmpstudent.getEmail(), tmpstudent.getLogin(), tmpstudent.getPassword(), tmpstudent.getStudyGroupidStudyGroup().getIdStudyGroup());
-            tmpList.add(tmp);
+            //tmpList.add(tmp);
             
-            return tmpList;
+            return tmp;
         }
         return null;
     }
