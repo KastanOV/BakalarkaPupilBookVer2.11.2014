@@ -24,11 +24,19 @@
         /* button  #loginButton */
     $(document).on("click", "#loginButton", function(evt)
     {
+        $.mobile.loading( 'show', {
+	       text: 'Přihlašuji',
+	       textVisible: true,
+	       html: ""
+            });
+        
         var URL = "http://192.168.1.61:8080/PupilBookV11/webresources/Students/";
         
         var login = document.getElementById("loginText").value;
         var password = document.getElementById("passwordText").value;
+        
         password = calcMD5(password);
+        
         $.get(URL + login + "/" + password,function(data,status){
             if(data !== null){
                 localStorage.setItem("login", data.login);
@@ -41,7 +49,7 @@
                 uib_sb.open_sidebar($(".uib_w_6"));
             }
         });
-        
+        $.mobile.loading('hide');
     });
     
         /* button  Odhlásit */
