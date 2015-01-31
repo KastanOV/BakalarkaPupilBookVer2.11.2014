@@ -5,14 +5,12 @@
  */
 package SessionBeans;
 
-import Entity.Results;
 import Entity.Student;
 import Entity.Studygroup;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
-import servicesDTO.ResultsStudentMobile;
 
 /**
  *
@@ -29,6 +27,7 @@ public interface StudentsSBLocal {
     public Collection<Student> getStudentByStudyGroup(Studygroup s);
     public List<Student> getStudents(String login, String password);
     public List<Student> getStudents(String login, String password, int StudyGroupId);
-    public List<ResultsStudentMobile> getResultsForStudentMobileApp(String login, String password);
+    public List<servicesDTO.StudySubject> getStudySubjects(String login);
+    public List<servicesDTO.Results> getResultsByStudent(String login, String password);
     
 }

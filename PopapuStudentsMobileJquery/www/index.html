@@ -84,6 +84,8 @@
                             </li>
                             <li class="widget uib_w_12" data-uib="jquery_mobile/listitem" data-ver="0"><span>Docházka</span>
                             </li>
+                            <li class="widget uib_w_13" data-uib="jquery_mobile/listitem" data-ver="0"><span>TEST BUTTON</span>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -118,39 +120,13 @@
             <!--FOOTER-->
             <div class="upage-outer">
                 <div class="upage-content content-area vertical-col left" id="page_17_29">
-                    <div data-role="collapsible-set" class="no_wrap widget uib_w_15 d-margins" data-uib="jquery_mobile/accordion" data-ver="0" data-collapsed-icon="plus" data-expanded-icon="minus" id="results">
-                        <div class="my-collaspible" data-role="collapsible" data-collapsed="true" ng-app="" ng-controller="customersController">
-                            <h1>Matematika</h1>
-                            <table>
-                                <tr ng-repeat="x in names">
-                                    <td>{{ x.Name }}</td>
-                                    <td>{{ x.Country }}</td>
-                                </tr>
-                            </table>
+                    <div data-role="collapsible-set" class="no_wrap widget uib_w_15 d-margins" data-uib="jquery_mobile/accordion" data-ver="0" data-collapsed-icon="plus" data-expanded-icon="minus" ng-app="" ng-controller="customersController">
+                        
+                        <div class="my-collaspible" data-role="collapsible" data-collapsed="true" ng-repeat="x in names">
+                            <h1>{{ x.name }}</h1>
+                            
                         </div>
-                        <div class="my-collaspible" data-role="collapsible" data-collapsed="true">
-                            <h1>Český Jazyk</h1>
-                            <table>
-                                
-                                    <tr>
-                                        <th>Popis</th>
-                                        <th>Známka</th>
-                                    </tr>
-                                    <tr>
-                                        <td>Zlomky</td>
-                                        <td>2</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Zlomky2</td>
-                                        <td>1</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Zlomky3</td>
-                                        <td>3</td>
-                                    </tr>
-                                
-                            </table>
-                        </div>
+                        
                     </div>
 
                 </div>

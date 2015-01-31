@@ -19,7 +19,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
-import servicesDTO.ResultsStudentMobile;
+
 
 
 /**
@@ -50,10 +50,18 @@ public class StudentsResource {
     }
     
     @GET
-    @Path("{login}/{password}/{options}")
+    @Path("{login}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<ResultsStudentMobile> getResultsStudentmobile(@PathParam("login") String login, @PathParam("password") String password, @PathParam("options") String options){
-        return null;
+    public List<servicesDTO.StudySubject> getResultsStudentmobile(@PathParam("login") String login){
+        return studentsSB.getStudySubjects(login);
     }
     
+    @GET
+    @Path("{login}/{password}/{options}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<servicesDTO.Results> getResultsByStudent(@PathParam("login") String login, @PathParam("password") String password, @PathParam("options") String options){
+        return studentsSB.getResultsByStudent(login, password);
+        
+    } 
 }

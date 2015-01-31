@@ -66,6 +66,18 @@
         $("#mainMenu").hide();
     });
     
+        /* listitem  TEST BUTTON */
+    $(document).on("click", ".uib_w_13", function(evt)
+    {
+        var URL = "http://192.168.1.61:8080/PupilBookV11/webresources/Students/buk000/bf48f8277f8b8c8de85f27890d76cf99/picus";
+        $.get(URL,function(data,status){
+            if(data !== null){
+                
+            }
+            debugger;
+        });
+    });
+    
     }
  document.addEventListener("app.Ready", register_event_handlers, false);
 })();

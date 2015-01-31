@@ -19,6 +19,13 @@ function collapsableAccordeon(){
 }
 
 function customersController($scope,$http) {
-  $http.get("http://www.w3schools.com/website/Customers_JSON.php")
-  .success(function(response) {$scope.names = response;});
+    debugger; 
+    var URL = "http://192.168.1.61:8080/PupilBookV11/webresources/Students/buk000/bf48f8277f8b8c8de85f27890d76cf99/picus";
+    
+    $http.get("http://192.168.1.61:8080/PupilBookV11/webresources/Students/buk000")
+        .success(function(response) {$scope.names = response;});
+    /*$.get(URL,function(data,status){
+            $scope.results = data;
+        });*/
+ 
 }

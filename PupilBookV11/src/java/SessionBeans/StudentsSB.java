@@ -13,6 +13,7 @@ import Entity.Student;
 import Entity.Studygroup;
 import Entity.Studysubject;
 import Entity.Users;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -20,7 +21,6 @@ import java.util.Random;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import servicesDTO.ResultsStudentMobile;
 
 /**
  *
@@ -31,31 +31,41 @@ public class StudentsSB implements StudentsSBLocal {
     @PersistenceContext
     private EntityManager em;
     
-    
     @Override
-    public List<ResultsStudentMobile> getResultsForStudentMobileApp(String login, String password) {
-        if(checkStudent(login, password)){
-            List<Studysubject> studySubjectTMP = em.createNativeQuery(
+    public List<servicesDTO.StudySubject> getStudySubjects(String login){
+        List<Studysubject> tmp = em.createNativeQuery(
                     "select Distinct studysubject.Name, studysubject.idStudySubject, studysubject.ShortName from results " +
                     "LEFT JOIN studysubject on studysubject.idStudySubject = results.StudySubject_idStudySubject " +
-                    "WHERE Student_Login = ?login AND SchoolYear_idSchoolYear = ?syId" +
+                    "WHERE Student_Login = ?login AND SchoolYear_idSchoolYear = ?syId " +
                     "order by Date Desc", Studysubject.class)
                     .setParameter("login", login)
                     .setParameter("syId", getActualSchoolYear())
                     .getResultList();
-            
-            
-            return null;
-        }else{
-            return null;
-        }
+        
+        List<servicesDTO.StudySubject> ret = new ArrayList<>();
+        for(Studysubject item : tmp){
+                servicesDTO.StudySubject StudySubjectNew = new servicesDTO.StudySubject(item.getIdStudySubject(), item.getName(), item.getShortName());
+                ret.add(StudySubjectNew);
+            }
+        return ret;
     }
     
-    private List<Results> getResultsStudent(String login, String password, int StudySubjectID){
-        return em.createNativeQuery("select * from results WHERE Student_Login = ?login AND SchoolYear_idSchoolYear = ?syId", Results.class)
+    @Override
+    public List<servicesDTO.Results> getResultsByStudent(String login, String password){
+        if(checkStudent(login, password)){
+            List<Results> tmp = em.createNativeQuery("select * from results WHERE Student_Login = ?login AND SchoolYear_idSchoolYear = ?syId order by Date Desc", Results.class)
                 .setParameter("login", login)
                 .setParameter("syId", getActualSchoolYear())
                 .getResultList();
+        List<servicesDTO.Results> resultsEntity = new ArrayList<>();
+        for(Results item : tmp){
+            int inttmp = (int) (item.getScore());
+            servicesDTO.Results tmpr = new servicesDTO.Results(item.getIdResults(), item.getDescription(), inttmp, item.getDate().toString(), item.getStudySubjectidStudySubject().getIdStudySubject(), null, null, null);
+            resultsEntity.add(tmpr);
+        }
+        return resultsEntity;
+        } else return null;
+        
     }
     
     @Override
