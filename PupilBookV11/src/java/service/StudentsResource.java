@@ -19,6 +19,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
+import servicesDTO.ResultsStudentsMobile;
 
 
 
@@ -55,13 +56,19 @@ public class StudentsResource {
     public List<servicesDTO.StudySubject> getResultsStudentmobile(@PathParam("login") String login){
         return studentsSB.getStudySubjects(login);
     }
-    
+
     @GET
     @Path("{login}/{password}/{options}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public List<servicesDTO.Results> getResultsByStudent(@PathParam("login") String login, @PathParam("password") String password, @PathParam("options") String options){
-        return studentsSB.getResultsByStudent(login, password);
-        
-    } 
+    public List<servicesDTO.ResultsStudentsMobile> getResultsByStudent(@PathParam("login") String login, @PathParam("password") String password, @PathParam("options") String options){
+        List<servicesDTO.ResultsStudentsMobile> retlist = new ArrayList<>();
+        for(servicesDTO.StudySubject item : studentsSB.getStudySubjects(login)){
+            servicesDTO.ResultsStudentsMobile newItem = new ResultsStudentsMobile();
+            newItem.setName(item.getName());
+            newItem.setResults(studentsSB.getResultsByStudentStudySubject(login, password,item.getId()));
+            retlist.add(newItem);
+        }
+        return retlist;
+    }
 }

@@ -18,14 +18,18 @@ function collapsableAccordeon(){
         });
 }
 
-function customersController($scope,$http) {
-    debugger; 
-    var URL = "http://192.168.1.61:8080/PupilBookV11/webresources/Students/buk000/bf48f8277f8b8c8de85f27890d76cf99/picus";
-    
-    $http.get("http://192.168.1.61:8080/PupilBookV11/webresources/Students/buk000")
-        .success(function(response) {$scope.names = response;});
-    /*$.get(URL,function(data,status){
-            $scope.results = data;
-        });*/
- 
+function resultsController($scope,$http) {
+    var login = localStorage.getItem("login");
+    var password = localStorage.getItem("password");
+    var url = "http://192.168.1.61:8080/PupilBookV11/webresources/Students/" + login + "/" + password + "/info";
+    $scope.loadData = function () {
+        for(;;){
+         setTimeout(function() {
+        $http.get(url)
+        .success(function(response) {$scope.subjects = response;});
+             }, 1000);  
+        }
+    }
 }
+
+

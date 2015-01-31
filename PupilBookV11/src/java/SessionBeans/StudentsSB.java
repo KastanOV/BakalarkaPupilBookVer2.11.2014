@@ -65,7 +65,23 @@ public class StudentsSB implements StudentsSBLocal {
         }
         return resultsEntity;
         } else return null;
-        
+    }
+    @Override
+    public List<servicesDTO.Results> getResultsByStudentStudySubject(String login, String password, int StudySubject){
+        if(checkStudent(login, password)){
+            List<Results> tmp = em.createNativeQuery("select * from results WHERE Student_Login = ?login AND SchoolYear_idSchoolYear = ?syId and StudySubject_idStudySubject = ?ss order by Date Desc", Results.class)
+                .setParameter("login", login)
+                .setParameter("syId", getActualSchoolYear())
+                .setParameter("ss", StudySubject)
+                .getResultList();
+        List<servicesDTO.Results> resultsEntity = new ArrayList<>();
+        for(Results item : tmp){
+            int inttmp = (int) (item.getScore());
+            servicesDTO.Results tmpr = new servicesDTO.Results(item.getIdResults(), item.getDescription(), inttmp, item.getDate().toString(), item.getStudySubjectidStudySubject().getIdStudySubject(), null, null, null);
+            resultsEntity.add(tmpr);
+        }
+        return resultsEntity;
+        } else return null;
     }
     
     @Override

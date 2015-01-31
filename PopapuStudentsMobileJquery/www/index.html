@@ -65,17 +65,17 @@
         <script type="application/javascript" src="js/index_user_scripts.js"></script>
     </head>
 
-    <body>
+    <body ng-app="" ng-controller="resultsController" data-ng-init="loadData()">
         <!-- IMPORTANT: Do not include your weinre script tag as part of your release builds! -->
         <!-- Place your remote debugging (weinre) script URL from the Test tab here, if it does not work above -->
         <!-- <script src="http://debug-software.intel.com/target/target-script-min.js#insertabiglongfunkynumberfromthexdkstesttab"></script> -->
         <div class="upage" id="mainpage" data-role="page">
             <div class="upage-outer">
                 <!--LISTVIEW MAIN PADE-->
-                <div class="upage-content content-area vertical-col left" id="page_76_44">
+                <div class="upage-content content-area vertical-col left" id="page_76_44" >
                     <div class="widget uib_w_8 ui-content no_wrap outset-margin d-margins" data-uib="jquery_mobile/listview" data-ver="0" id="mainMenu">
                         <ul data-role="listview">
-                            <li class="widget uib_w_9" data-uib="jquery_mobile/listitem" data-ver="0"><a href="#classification" data-transition="slidefade"><span>Klasifikace</span>
+                            <li class="widget uib_w_9" data-uib="jquery_mobile/listitem" data-ver="0" ><a href="#classification" data-transition="slidefade" ><span>Klasifikace</span>
                             </a>
                             </li>
                             <li class="widget uib_w_10" data-uib="jquery_mobile/listitem" data-ver="0"><span>Rozvrh hodin</span>
@@ -120,11 +120,21 @@
             <!--FOOTER-->
             <div class="upage-outer">
                 <div class="upage-content content-area vertical-col left" id="page_17_29">
-                    <div data-role="collapsible-set" class="no_wrap widget uib_w_15 d-margins" data-uib="jquery_mobile/accordion" data-ver="0" data-collapsed-icon="plus" data-expanded-icon="minus" ng-app="" ng-controller="customersController">
+                    <div data-role="collapsible-set" class="no_wrap widget uib_w_15 d-margins" data-uib="jquery_mobile/accordion" data-ver="0" data-collapsed-icon="plus" data-expanded-icon="minus" >
                         
-                        <div class="my-collaspible" data-role="collapsible" data-collapsed="true" ng-repeat="x in names">
+                        <div class="my-collaspible" data-role="collapsible" data-collapsed="true" ng-repeat="x in subjects" >
                             <h1>{{ x.name }}</h1>
                             
+                            <table>
+                                <tr>
+                                    <th>Popis hodnocení</th>
+                                    <th>Zmámka</th>
+                                </tr>
+                                <tr ng-repeat="y in x.results" >
+                                    <td>{{y.desc}}</td>
+                                    <td>{{y.score}}</td>
+                                </tr>
+                            </table>
                         </div>
                         
                     </div>

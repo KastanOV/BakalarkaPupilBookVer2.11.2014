@@ -24,12 +24,6 @@
         /* button  #loginButton */
     $(document).on("click", "#loginButton", function(evt)
     {
-        $.mobile.loading( 'show', {
-	       text: 'Přihlašuji',
-	       textVisible: true,
-	       html: ""
-            });
-        
         var URL = "http://192.168.1.61:8080/PupilBookV11/webresources/Students/";
         
         var login = document.getElementById("loginText").value;
@@ -47,10 +41,11 @@
                 
                 uib_sb.close_sidebar($(".uib_w_1"));
                 uib_sb.open_sidebar($(".uib_w_6"));
+                
                 $("#mainMenu").show();
+                
             }
         });
-        $.mobile.loading('hide');
     });
     
         /* button  Odhlásit */
@@ -63,6 +58,7 @@
         localStorage.setItem("email", null);
         uib_sb.open_sidebar($(".uib_w_1"));
         uib_sb.close_sidebar($(".uib_w_6"));
+        
         $("#mainMenu").hide();
     });
     

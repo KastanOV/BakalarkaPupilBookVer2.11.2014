@@ -29,5 +29,5 @@ public interface StudentsSBLocal {
     public List<Student> getStudents(String login, String password, int StudyGroupId);
     public List<servicesDTO.StudySubject> getStudySubjects(String login);
     public List<servicesDTO.Results> getResultsByStudent(String login, String password);
-    
+    public List<servicesDTO.Results> getResultsByStudentStudySubject(String login, String password, int StudySubject);
 }
