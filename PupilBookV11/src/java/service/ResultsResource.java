@@ -38,7 +38,7 @@ public class ResultsResource {
     @Path("{login}/{password}")
     @Consumes({"application/xml", "application/json"})
     public List<servicesDTO.Results> getResults(@PathParam("login") String login, @PathParam("password") String password){
-        List<Results> res = TeachersSB.getResults(login, password);
+        List<Results> res = TeachersSB.getResultsTeacher(login, password);
         List<servicesDTO.Results> items = new ArrayList<>();
         for(Results item : res){
             servicesDTO.Results newItem = new servicesDTO.Results(item.getIdResults(),item.getDescription(),(int)item.getScore(),item.getDate().toString(),item.getStudySubjectidStudySubject().getIdStudySubject(),item.getStudentLogin().getLogin(), item.getTeacherLogin().getLogin(), null);

@@ -36,7 +36,7 @@ public class TeachersSB implements TeachersSBLocal {
     }
     
     @Override
-    public List<Results> getResults(String login, String password){
+    public List<Results> getResultsTeacher(String login, String password){
         if(checkTeacher(login, password)){
             return em.createNativeQuery("select * from results WHERE Teacher_Login = ?login AND SchoolYear_idSchoolYear = ?syId", Results.class)
                     .setParameter("login", login)
@@ -46,6 +46,8 @@ public class TeachersSB implements TeachersSBLocal {
             return null;
         }
     }
+    
+    
     
     @Override
     public Collection<Teacher> getAllTeachers(){

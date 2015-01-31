@@ -24,6 +24,7 @@ public interface TeachersSBLocal {
     public Teacher createNewTeacher(Teacher t);
     public Collection<Teacher> getTeachersByStudyGroup(Studygroup s);
     public Teacher checkLogin(String login, String password);
-    public List<Results> getResults(String login, String password);
+    public List<Results> getResultsTeacher(String login, String password);
+    
     
 }

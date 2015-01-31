@@ -1,22 +1,24 @@
-/*
- * Please see the included README.md file for license terms and conditions.
- */
+function loginInit(){
+    var login = localStorage.getItem("login");
+    var password = localStorage.getItem("password");
+    
+    if(login === null || password === null){
+        $("#mainMenu").hide();
+        uib_sb.open_sidebar($(".uib_w_1"));
+    } else {
+        $("#mainMenu").show();
+        uib_sb.close_sidebar($(".uib_w_1"));
+    }   
+}
+function collapsableAccordeon(){
+     $('.my-collaspible').bind('expand', function () {
+    $(this).children().slideDown(2000);
+        }).bind('collapse', function () {
+    $(this).children().next().slideUp(2000);
+        });
+}
 
-
-/*jslint browser:true, devel:true, white:true, vars:true */
-/*global $:false, intel:false app:false, dev:false, cordova:false */
-
-
-
-// This file contains your event handlers, the center of your application.
-// NOTE: see app.initEvents() in init-app.js for event handler initialization code.
-
-// function myEventHandler() {
-//     "use strict" ;
-// // ...event handler code here...
-// }
-
-
-// ...additional event handlers here...
-
-
+function customersController($scope,$http) {
+  $http.get("http://www.w3schools.com/website/Customers_JSON.php")
+  .success(function(response) {$scope.names = response;});
+}

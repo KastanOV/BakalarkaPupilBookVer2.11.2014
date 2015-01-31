@@ -37,46 +37,10 @@ app.initEvents = function() {
     var fName = "app.initEvents():" ;
     app.consoleLog(fName, "entry") ;
 
-    // NOTE: initialize your third-party libraries and event handlers
-
-    // initThirdPartyLibraryNumberOne() ;
-    // initThirdPartyLibraryNumberTwo() ;
-    // initThirdPartyLibraryNumberEtc() ;
-
-    // NOTE: initialize your application code
-
-    // initMyAppCodeNumberOne() ;
-    // initMyAppCodeNumberTwo() ;
-    // initMyAppCodeNumberEtc() ;
-
-    // NOTE: initialize your app event handlers, see app.js for a simple event handler example
-
-    // TODO: configure following to work with both touch and click events (mouse + touch)
-    // see http://msopentech.com/blog/2013/09/16/add-pinch-pointer-events-apache-cordova-phonegap-app/
-    var login = localStorage.getItem("login");
-    var password = localStorage.getItem("password");
+    loginInit();
+    collapsableAccordeon();
     
-    if(login === null || password === null){
-        $("#mainMenu").hide();
-        uib_sb.open_sidebar($(".uib_w_1"));
-    } else {
-        $("#mainMenu").show();
-        uib_sb.close_sidebar($(".uib_w_1"));
-    }
 
-//...overly simple example...
-//    var el, evt ;
-//
-//    if( navigator.msPointerEnabled || !('ontouchend' in window))    // if on Win 8 machine or no touch
-//        evt = "click" ;                                             // let touch become a click event
-//    else                                                            // else, assume touch events available
-//        evt = "touchend" ;                                          // not optimum, but works
-//
-//    el = document.getElementById("id_btnHello") ;
-//    el.addEventListener(evt, myEventHandler, false) ;
-
-    // NOTE: ...you can put other miscellaneous init stuff in this function...
-    // NOTE: ...and add whatever else you want to do now that the app has started...
 
     app.initDebug() ;           // just for debug, not required; keep it if you want it or get rid of it
     app.hideSplashScreen() ;    // after init is good time to remove splash screen; using a splash screen is optional

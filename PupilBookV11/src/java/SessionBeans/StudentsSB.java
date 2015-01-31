@@ -7,9 +7,11 @@ package SessionBeans;
 
 import Entity.Parent;
 import Entity.Parrentstudent;
+import Entity.Results;
+import Entity.Schoolyear;
 import Entity.Student;
 import Entity.Studygroup;
-import Entity.Teacher;
+import Entity.Studysubject;
 import Entity.Users;
 import java.util.Collection;
 import java.util.Date;
@@ -18,6 +20,7 @@ import java.util.Random;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import servicesDTO.ResultsStudentMobile;
 
 /**
  *
@@ -27,6 +30,33 @@ import javax.persistence.PersistenceContext;
 public class StudentsSB implements StudentsSBLocal {
     @PersistenceContext
     private EntityManager em;
+    
+    
+    @Override
+    public List<ResultsStudentMobile> getResultsForStudentMobileApp(String login, String password) {
+        if(checkStudent(login, password)){
+            List<Studysubject> studySubjectTMP = em.createNativeQuery(
+                    "select Distinct studysubject.Name, studysubject.idStudySubject, studysubject.ShortName from results " +
+                    "LEFT JOIN studysubject on studysubject.idStudySubject = results.StudySubject_idStudySubject " +
+                    "WHERE Student_Login = ?login AND SchoolYear_idSchoolYear = ?syId" +
+                    "order by Date Desc", Studysubject.class)
+                    .setParameter("login", login)
+                    .setParameter("syId", getActualSchoolYear())
+                    .getResultList();
+            
+            
+            return null;
+        }else{
+            return null;
+        }
+    }
+    
+    private List<Results> getResultsStudent(String login, String password, int StudySubjectID){
+        return em.createNativeQuery("select * from results WHERE Student_Login = ?login AND SchoolYear_idSchoolYear = ?syId", Results.class)
+                .setParameter("login", login)
+                .setParameter("syId", getActualSchoolYear())
+                .getResultList();
+    }
     
     @Override
     public Student createNewUser(Student s) {
@@ -207,4 +237,12 @@ public class StudentsSB implements StudentsSBLocal {
             return true;
         }else return false;
     }
+    
+    private int getActualSchoolYear(){
+        Schoolyear idActualYear = (Schoolyear) em.createNativeQuery("SELECT * FROM schoolyear WHERE schoolyear.isactualyear = true", Schoolyear.class)
+                .getSingleResult();
+        return idActualYear.getIdSchoolYear();
+    }
+
+    
 }

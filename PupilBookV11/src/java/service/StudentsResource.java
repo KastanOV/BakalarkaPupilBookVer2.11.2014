@@ -17,7 +17,9 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
+import servicesDTO.ResultsStudentMobile;
 
 
 /**
@@ -40,13 +42,17 @@ public class StudentsResource {
     @Produces(MediaType.APPLICATION_JSON)
     public servicesDTO.Student checkLogin(@PathParam("login") String login, @PathParam("password") String password) {
         Student tmpstudent = studentsSB.studentLogin(login, password);
-        //List<servicesDTO.Student> tmpList = new ArrayList<>();
         if(tmpstudent != null){
             servicesDTO.Student tmp = new servicesDTO.Student(tmpstudent.getFirstName(), tmpstudent.getMiddleName(), tmpstudent.getLastName(), tmpstudent.getPhone(), tmpstudent.getEmail(), tmpstudent.getLogin(), tmpstudent.getPassword(), tmpstudent.getStudyGroupidStudyGroup().getIdStudyGroup());
-            //tmpList.add(tmp);
-            
             return tmp;
         }
+        return null;
+    }
+    
+    @GET
+    @Path("{login}/{password}/{options}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<ResultsStudentMobile> getResultsStudentmobile(@PathParam("login") String login, @PathParam("password") String password, @PathParam("options") String options){
         return null;
     }
     
