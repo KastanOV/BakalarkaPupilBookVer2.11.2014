@@ -57,8 +57,10 @@ app.initEvents = function() {
     var password = localStorage.getItem("password");
     
     if(login === null || password === null){
+        $("#mainMenu").hide();
         uib_sb.open_sidebar($(".uib_w_1"));
     } else {
+        $("#mainMenu").show();
         uib_sb.close_sidebar($(".uib_w_1"));
     }
 

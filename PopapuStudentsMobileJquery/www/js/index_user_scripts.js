@@ -47,6 +47,7 @@
                 
                 uib_sb.close_sidebar($(".uib_w_1"));
                 uib_sb.open_sidebar($(".uib_w_6"));
+                $("#mainMenu").show();
             }
         });
         $.mobile.loading('hide');
@@ -62,6 +63,7 @@
         localStorage.setItem("email", null);
         uib_sb.open_sidebar($(".uib_w_1"));
         uib_sb.close_sidebar($(".uib_w_6"));
+        $("#mainMenu").hide();
     });
     
     }

@@ -381,3 +381,10 @@ label.narrow-control:empty + .wide-control {
 .ui-footer > .single-centered > *.ui-radio input {
   display: none;
 }
+.ui-collapsible-content {
+  overflow: hidden;
+}
+.ui-collapsible-content .outset-margin:first-child {
+  margin: -10px -15px;
+  box-sizing: content-box;
+}
