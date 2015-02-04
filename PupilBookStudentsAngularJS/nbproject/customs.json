@@ -1,0 +1,10 @@
+{
+    "elements": {
+        "login-dir": {}
+    },
+    "attributes": {
+        "ng-controller": {},
+        "aria-expanded": {},
+        "ng-hide": {}
+    }
+}
