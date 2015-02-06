@@ -54,6 +54,14 @@ public class SheduleItemsSB implements SheduleItemsSBLocal {
             .setParameter("sg", sg.getIdStudyGroup())
             .getResultList();
     }
+    @Override
+    public List<Sheduleitem> getSheduleItems(Integer sg){
+        return em.createNativeQuery("select * from sheduleitem " +
+                " left join studysubject on StudySubject_idStudySubject = studysubject.idStudySubject " +
+                " where StudyGroup_idStudyGroup = ?id", Sheduleitem.class)
+                .setParameter("id", sg)
+                .getResultList();
+    }
     
     private boolean checkUser(String login, String password){
         long tmp = (long)em.createNativeQuery("SELECT count(*) FROM Users u WHERE u.login = ?login AND u.password = ?password")

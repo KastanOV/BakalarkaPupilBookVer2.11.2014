@@ -16,6 +16,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import servicesDTO.SheduleItem;
 
 
@@ -45,5 +47,32 @@ public class SheduleitemsResource {
         }
         return  items;
     }
+    
+    @GET
+    @Path("{studygroup}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<servicesDTO.SheduleItemForStudents> getSheduleItems(@PathParam("studygroup") Integer studygroupid){
+        List<Sheduleitem> tmpList = sheduleItemsSB.getSheduleItems(studygroupid);
+        List<servicesDTO.SheduleItemForStudents> items = new ArrayList<>();
+        for(Sheduleitem item : tmpList){
+            Integer sstmp = null;
+            String ssNameTmp = null;
+            String lgtmp = null;
+            String teacherNameTmp = null;
+            if(item.getStudySubjectidStudySubject() != null){
+                sstmp = item.getStudySubjectidStudySubject().getIdStudySubject();
+                ssNameTmp = item.getStudySubjectidStudySubject().getName();
+            }
+            if(item.getUsersLogin() != null){
+                lgtmp = item.getUsersLogin().getLogin();
+                teacherNameTmp = item.getUsersLogin().getLastName();
+            }
+            servicesDTO.SheduleItemForStudents tmp = new servicesDTO.SheduleItemForStudents(ssNameTmp,teacherNameTmp,item.getIdSheduleItem(), item.getDay(), item.getHour(), item.getStudyGroupidStudyGroup().getIdStudyGroup(), sstmp, lgtmp);
+            items.add(tmp);
+        }
+        return  items;
+    }
+    
     
 }

@@ -1,10 +1,23 @@
 (function(){
+    var URL = "http://192.168.1.61:8080/PupilBookV11/webresources/";
     var home = angular.module('home',[]);
 
     home.controller('homeController',function($scope){
         console.log("controller initialized");
         $scope.loggedUser = false;
         $scope.loggeduserName = "";
+        $scope.showShedule = false;
+        $scope.showMainPage = false;
+        
+        this.showShedule = function(){
+            $scope.showShedule = true;
+            $scope.showMainPage = false;
+
+        };
+        this.mainPage = function(){
+            $scope.showMainPage = true;
+            $scope.showShedule = false;
+        };
         
         var initPage = function(){
             var login = localStorage.getItem("login");
@@ -38,16 +51,32 @@
           templateUrl: 'navbar.html'
        } ;
     });
-    
+    home.directive('shedule', function(){
+       return {
+           restrist: 'E',
+           templateUrl: 'shedule.html',
+           controller: function($scope,$http){
+               var studyGroup = localStorage.getItem("studyGroup");
+               $scope.shedule = {};
+               $http.get(URL + "sheduleitems/" + studyGroup)
+                       .success(function(data){
+                           $scope.shedule = data;
+
+               }).error(function(){
+                   alert("připojení k serveru se nezdařilo");
+               });
+           },
+           controllerAs: 'sheduleCtrl'
+       };
+    });
     home.controller('loginController', ['$scope','$http', function($scope,$http){
        console.log("LoginController INITIALIZED");
             this.login;
             this.password;
             this.HashedPassword;
             this.loggIn = function(){
-                var URL = "http://192.168.1.61:8080/PupilBookV11/webresources/Students/";
                 this.HashedPassword = calcMD5(this.password);
-                $http.get(URL + this.login + "/" + this.HashedPassword)
+                $http.get(URL + "Students/" + this.login + "/" + this.HashedPassword)
                         .success(function(data){
                             if(data !== ""){
                                 localStorage.setItem("login", data.login);

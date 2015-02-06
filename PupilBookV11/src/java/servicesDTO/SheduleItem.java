@@ -23,11 +23,11 @@ public class SheduleItem {
     private Integer id;
     private short day;
     private short hour;
-    private int idStudyGroup;
-    private int idStudySubject;
+    private Integer idStudyGroup;
+    private Integer idStudySubject;
     private String Login;
 
-    public SheduleItem(Integer id, short day, short hour, int idStudyGroup, int idStudySubject, String Login) {
+    public SheduleItem(Integer id, short day, short hour, Integer idStudyGroup, Integer idStudySubject, String Login) {
         this.id = id;
         this.day = day;
         this.hour = hour;
@@ -48,11 +48,11 @@ public class SheduleItem {
         this.hour = hour;
     }
 
-    public void setIdStudyGroup(int idStudyGroup) {
+    public void setIdStudyGroup(Integer idStudyGroup) {
         this.idStudyGroup = idStudyGroup;
     }
 
-    public void setIdStudySubject(int idStudySubject) {
+    public void setIdStudySubject(Integer idStudySubject) {
         this.idStudySubject = idStudySubject;
     }
 
@@ -72,11 +72,11 @@ public class SheduleItem {
         return hour;
     }
 
-    public int getIdStudyGroup() {
+    public Integer getIdStudyGroup() {
         return idStudyGroup;
     }
 
-    public int getIdStudySubject() {
+    public Integer getIdStudySubject() {
         return idStudySubject;
     }
 

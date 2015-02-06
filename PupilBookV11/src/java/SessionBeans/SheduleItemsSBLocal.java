@@ -20,4 +20,5 @@ public interface SheduleItemsSBLocal {
     public Sheduleitem saveSheduleItem(Sheduleitem s);
     public List<Sheduleitem> getSheduleItems(String login, String password);
     public List<Sheduleitem> getSheduleItems(Studygroup sg);
+    public List<Sheduleitem> getSheduleItems(Integer sg);
 }
