@@ -1,34 +1,86 @@
 (function(){
-    var URL = "http://192.168.1.61:8080/PupilBookV11/webresources/";
-    var home = angular.module('home',[]);
-
-    home.controller('homeController',function($scope){
+    //var URL = "http://192.168.1.61:8080/PupilBookV11/webresources/";
+    var URL = "http://86.49.147.135:9001/PupilBookV11/webresources/";
+    var home = angular.module('home',['ui.bootstrap']);
+    
+    home.controller('homeController',function($scope,$http){
         console.log("controller initialized");
         $scope.loggedUser = false;
+        $scope.loggedUserIsParrent = false;
         $scope.loggeduserName = "";
         $scope.showShedule = false;
         $scope.showMainPage = false;
+        $scope.showResults = false;
         
+        this.showResults = function(){
+            $scope.showShedule = false;
+            $scope.showMainPage = false;
+            $scope.showResults = true;
+        }
         this.showShedule = function(){
             $scope.showShedule = true;
             $scope.showMainPage = false;
-
+            $scope.showResults = false;
         };
         this.mainPage = function(){
             $scope.showMainPage = true;
             $scope.showShedule = false;
+            $scope.showResults = false;
         };
         
         var initPage = function(){
             var login = localStorage.getItem("login");
             var password = localStorage.getItem("password");
-
-            if(login === "undefined" || password === "undefined"){
+            var role = localStorage.getItem("role");
+            if(role === "P") $scope.loggedUserIsParrent = true;
+            else $scope.loggedUserIsParrent = false;
+            
+            if((login === "undefined" || password === "undefined") || login === null){
                 //Uzivatel NENÍ přihlášen 
                 $scope.loggedUser = false;
+                $scope.showShedule = false;
+                $scope.showMainPage = false;
+                $scope.showResults = false;
             } else {
                 loggeduserName = localStorage.getItem("name");
                 $scope.loggedUser = true;
+                //INITIALIZATION SHEDULE
+                var studyGroup = localStorage.getItem("studyGroup");
+                $scope.shedule = {};
+                    $http.get(URL + "sheduleitems/" + studyGroup)
+                       .success(function(data){
+                           $scope.shedule = data;
+                           $scope.monday = [];
+                           $scope.tuesday = [];
+                           $scope.wednesday = [];
+                           $scope.thursday = [];
+                           $scope.friday = [];
+                           for(i = 0;i < data.length; i++){
+                               if(data[i].day === 0){
+                                   $scope.monday[data[i].hour] = data[i];
+                               } else if(data[i].day === 1){
+                                   $scope.tuesday[data[i].hour] = data[i];
+                               } else if(data[i].day === 2){
+                                   $scope.wednesday[data[i].hour] = data[i];
+                               } else if(data[i].day === 3){
+                                   $scope.thursday[data[i].hour] = data[i];
+                               } else if(data[i].day === 4){
+                                   $scope.friday[data[i].hour] = data[i];
+                               } 
+                           }
+
+                    }).error(function(){
+                        alert("připojení k serveru se nezdařilo");
+                        debugger;
+                    });
+                $scope.results ={};
+                    $http.get(URL + "Students/" + login + "/" + password + "/results")
+                            .success(function(data){
+                               $scope.results = data; 
+                    }).error(function(){
+                        alert("připojení k serveru se nezdařilo");
+                        debugger;
+                    });
             } 
         };
         initPage();
@@ -55,19 +107,18 @@
        return {
            restrist: 'E',
            templateUrl: 'shedule.html',
-           controller: function($scope,$http){
-               var studyGroup = localStorage.getItem("studyGroup");
-               $scope.shedule = {};
-               $http.get(URL + "sheduleitems/" + studyGroup)
-                       .success(function(data){
-                           $scope.shedule = data;
-
-               }).error(function(){
-                   alert("připojení k serveru se nezdařilo");
-               });
+           controller: function($scope){
+               
+               
            },
            controllerAs: 'sheduleCtrl'
        };
+    });
+    home.directive('results', function(){
+        return {
+            restrict: 'E',
+            templateUrl: 'results.html'
+        };
     });
     home.controller('loginController', ['$scope','$http', function($scope,$http){
        console.log("LoginController INITIALIZED");
@@ -76,14 +127,21 @@
             this.HashedPassword;
             this.loggIn = function(){
                 this.HashedPassword = calcMD5(this.password);
-                $http.get(URL + "Students/" + this.login + "/" + this.HashedPassword)
+                $http.get(URL + "Login/" + this.login + "/" + this.HashedPassword)
                         .success(function(data){
                             if(data !== ""){
-                                localStorage.setItem("login", data.login);
+                                if(data.role === "P") {
+                                    var tmp = data.login.substring(1,data.login.length);
+                                    localStorage.setItem("login", tmp);
+                                } else {
+                                    localStorage.setItem("login", data.login);
+                                }
+                                
                                 localStorage.setItem("name", data.firstName + " " + data.lastName);
                                 localStorage.setItem("password", data.password);
                                 localStorage.setItem("studyGroup", data.studyGroupID);
                                 localStorage.setItem("email", data.email);
+                                localStorage.setItem("role", data.role);
                                 $scope.$emit('reloadPage', null);
                             }   else {
                                 alert("Přihlášení se nepodařilo :( asi na <> heslo");
@@ -98,7 +156,9 @@
                 localStorage.setItem("password", "undefined");
                 localStorage.setItem("studyGroup", "undefined");
                 localStorage.setItem("email", "undefined");
+                localStorage.setItem("role", "undefined");
                 $scope.$emit('reloadPage', null);
+                $scope.loggedUserIsParrent = false;
             };
     }]);
     

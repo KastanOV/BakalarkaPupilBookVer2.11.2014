@@ -31,6 +31,8 @@ public class ApplicationConfig extends Application {
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(filter.RESTCorsRequestFilter.class);
         resources.add(filter.RESTCorsResponseFilter.class);
+        resources.add(service.InformationsResource.class);
+        resources.add(service.LoginResource.class);
         resources.add(service.ResultsResource.class);
         resources.add(service.SchoolyearFacadeREST.class);
         resources.add(service.SheduleitemsResource.class);

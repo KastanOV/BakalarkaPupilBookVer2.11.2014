@@ -6,14 +6,72 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>Popapu rozvrh hodin</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="css/styles.css">
+        
         <script src="js/app.js"></script>
     </head>
     <div>
-        <h1>SHEDULE HERE</h1>
+        <h1>Rozvrh hodin</h1>
+        <accordion>
+            <accordion-group heading="Pondělí">
+                <table class="table table-striped">
+                    <tr><th>Hodina</th><th>Předmět</th><th>Učitel</th></tr>
+                    <tr ng-repeat="i in monday">
+                        
+                        <td>{{i.hour + 1}}.</td>
+                        <td>{{i.subjectName}}</td>
+                        <td>{{i.teacherName}}</td>
+                    </tr>
+                </table>
+            </accordion-group>
+            <accordion-group heading="Úterý">
+                <table class="table table-striped">
+                    <tr><th>Hodina</th><th>Předmět</th><th>Učitel</th></tr>
+                    <tr ng-repeat="i in tuesday">
+                        <td >{{i.hour + 1}}.</td>
+                        <td>{{i.subjectName}}</td>
+                        <td>{{i.teacherName}}</td>
+                    </tr>
+                </table>
+            </accordion-group>
+            <accordion-group heading="Středa">
+                <table class="table table-striped">
+                    <tr><th>Hodina</th><th>Předmět</th><th>Učitel</th></tr>
+                    <tr ng-repeat="i in wednesday">
+                        
+                        <td>{{i.hour + 1}}.</td>
+                        <td>{{i.subjectName}}</td>
+                        <td>{{i.teacherName}}</td>
+                    </tr>
+                </table>
+            </accordion-group>
+            <accordion-group heading="Čtvrtek">
+                <table class="table table-striped">
+                    <tr><th>Hodina</th><th>Předmět</th><th>Učitel</th></tr>
+                    <tr ng-repeat="i in thursday">
+                        
+                        <td>{{i.hour + 1}}.</td>
+                        <td >{{i.subjectName}}</td>
+                        <td>{{i.teacherName}}</td>
+                    </tr>
+                </table>
+            </accordion-group>
+            <accordion-group heading="Pátek">
+                <table class="table table-striped">
+                    <tr><th>Hodina</th><th>Předmět</th><th>Učitel</th></tr>
+                    <tr ng-repeat="i in friday">
+                        
+                        <td>{{i.hour + 1}}.</td>
+                        <td>{{i.subjectName}}</td>
+                        <td>{{i.teacherName}}</td>
+                    </tr>
+                </table>
+            </accordion-group>
+        </accordion>
+        
     </div>
         
     

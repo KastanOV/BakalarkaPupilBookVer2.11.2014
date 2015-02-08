@@ -57,9 +57,9 @@ public class SheduleitemsResource {
         List<servicesDTO.SheduleItemForStudents> items = new ArrayList<>();
         for(Sheduleitem item : tmpList){
             Integer sstmp = null;
-            String ssNameTmp = null;
+            String ssNameTmp = "volná hodina";
             String lgtmp = null;
-            String teacherNameTmp = null;
+            String teacherNameTmp = "";
             if(item.getStudySubjectidStudySubject() != null){
                 sstmp = item.getStudySubjectidStudySubject().getIdStudySubject();
                 ssNameTmp = item.getStudySubjectidStudySubject().getName();

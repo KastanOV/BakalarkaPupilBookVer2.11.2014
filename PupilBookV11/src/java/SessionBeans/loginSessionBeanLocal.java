@@ -15,5 +15,5 @@ import javax.ejb.Local;
 @Local
 public interface loginSessionBeanLocal {
     public Users doLogin(Users u);
-    
+    public Users doLogin(String login, String password);
 }

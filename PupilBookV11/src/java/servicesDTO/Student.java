@@ -15,11 +15,20 @@ public class Student {
     private String email;
     private String login;
     private String password;
+    private String role;
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
     
     public Student() {
     }
 
-    public Student(String firstName, String middleName,String lastName,String phone,String email,String login,String password,int studyGroupID){
+    public Student(String firstName, String middleName,String lastName,String phone,String email,String login,String password,Integer studyGroupID){
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
@@ -58,9 +67,9 @@ public class Student {
         this.password = password;
     }
 
-    private int studyGroupID;
+    private Integer studyGroupID;
 
-    public void setStudyGroupID(int studyGroupID) {
+    public void setStudyGroupID(Integer  studyGroupID) {
         this.studyGroupID = studyGroupID;
     }
 
@@ -96,7 +105,7 @@ public class Student {
 
 
 
-    public int getStudyGroupID() {
+    public Integer  getStudyGroupID() {
         return studyGroupID;
     }
 }
