@@ -34,10 +34,13 @@ public class AdminTeacherController implements Serializable{
     public void setMainControler(AdminMainController AdminMain) {
         this.adminMain = AdminMain;
     }
-
     private Teacher editedTeacher;
+    private String searchByLastname;
+    private Boolean showDeletedUsers;
     
     public AdminTeacherController() {
+        searchByLastname = "";
+        showDeletedUsers = false;
     }
     
     public Teacher prepareNewTeacher(){
@@ -86,7 +89,15 @@ public class AdminTeacherController implements Serializable{
 		}
     }
     public void deleteTeacher(){
-        UsersSB.deleteUser(editedTeacher);
+        try{
+            UsersSB.deleteUser(editedTeacher);
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+                            "Nepodařilo se uložit data do databáze.", 
+                            "Nepodařilo se uložit data do databáze.. Příčina: " + e.getMessage()));
+        }
+        
+        
     }
     public Collection<Teacher> getDropedTeachers() {
         if(adminMain.getEditedStudygroup() != null){
@@ -96,7 +107,7 @@ public class AdminTeacherController implements Serializable{
         }
     }
     public Collection<Teacher> getTeachers(){
-        Collection<Teacher> u = teachersSB.getAllTeachers() ;
+        Collection<Teacher> u = teachersSB.getTeachersByAtributes(showDeletedUsers, searchByLastname);
         return u;
     }
     public Teacher getEditedTeacher() {
@@ -105,5 +116,20 @@ public class AdminTeacherController implements Serializable{
 
     public void setEditedTeacher(Teacher editedTeacher) {
         this.editedTeacher = editedTeacher;
+    }
+    public String getSearchByLastname() {
+        return searchByLastname;
+    }
+
+    public void setSearchByLastname(String searchByLastname) {
+        this.searchByLastname = searchByLastname;
+    }
+
+    public boolean isShowDeletedUsers() {
+        return showDeletedUsers;
+    }
+
+    public void setShowDeletedUsers(boolean showDeletedUsers) {
+        this.showDeletedUsers = showDeletedUsers;
     }
 }

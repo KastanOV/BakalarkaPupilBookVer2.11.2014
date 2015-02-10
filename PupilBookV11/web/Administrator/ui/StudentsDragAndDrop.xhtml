@@ -71,29 +71,9 @@
                         </p:column>
                     </p:row>
                     <p:row>
+                        
                         <p:column colspan="1">
-                            <p:fieldset id="selectedStudentsField" legend="Selected Students" style="margin-top:20px">
-                                <p:outputPanel id="dropArea">
-                                    <h:outputText value="Zde přesuňte studenty" rendered="#{empty adminStudentController.dropedStudents}" style="font-size: 24px" />
-                                    <p:dataTable id="selectedStudents" var="selStudents" value="#{adminStudentController.dropedStudents}" rendered="#{not empty adminStudentController.dropedStudents}"  >
-                                        <p:column headerText="login" >
-                                            <h:outputText value="#{selStudents.login}" />
-                                        </p:column>
-                                        <p:column headerText="Příjmení" >
-                                            <h:outputText value="#{selStudents.lastName}" />
-                                        </p:column>
-                                        <p:column headerText="Jméno" >
-                                            <h:outputText value="#{selStudents.firstName}" />
-                                        </p:column>
-                                        <p:column headerText="Datum narození">
-                                            <h:outputText value="#{selStudents.birthDate}" />
-                                        </p:column>
-                                    </p:dataTable>
-                                </p:outputPanel>
-                            </p:fieldset>
-                        </p:column>
-                        <p:column colspan="1">
-                            <p:fieldset id="availableStudentsField" legend="Available Students">
+                            <p:fieldset id="availableStudentsField" legend="Seznam studentů">
                                 <p:dataTable id="StudentsTable" var="studentTable" value="#{adminStudentController.students}"
                                                 paginator="true"
                                                 paginatorPosition="bottom"
@@ -135,6 +115,27 @@
                                 </p:dataTable>
                             </p:fieldset>
                         </p:column> 
+                        <p:column colspan="1">
+                            <p:fieldset id="selectedStudentsField" legend="Studenti ve vybrané třídě" style="margin-top:20px">
+                                <p:outputPanel id="dropArea">
+                                    <h:outputText value="Zde přesuňte studenty" rendered="#{empty adminStudentController.dropedStudents}" style="font-size: 24px" />
+                                    <p:dataTable id="selectedStudents" var="selStudents" value="#{adminStudentController.dropedStudents}" rendered="#{not empty adminStudentController.dropedStudents}"  >
+                                        <p:column headerText="login" >
+                                            <h:outputText value="#{selStudents.login}" />
+                                        </p:column>
+                                        <p:column headerText="Příjmení" >
+                                            <h:outputText value="#{selStudents.lastName}" />
+                                        </p:column>
+                                        <p:column headerText="Jméno" >
+                                            <h:outputText value="#{selStudents.firstName}" />
+                                        </p:column>
+                                        <p:column headerText="Datum narození">
+                                            <h:outputText value="#{selStudents.birthDate}" />
+                                        </p:column>
+                                    </p:dataTable>
+                                </p:outputPanel>
+                            </p:fieldset>
+                        </p:column>
                     </p:row>
                 </p:panelGrid>
                 <p:droppable for="selectedStudentsField" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="StudentsTable" onDrop="handleDrop">

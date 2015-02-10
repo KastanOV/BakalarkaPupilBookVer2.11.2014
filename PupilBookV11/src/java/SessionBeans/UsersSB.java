@@ -35,10 +35,11 @@ public class UsersSB implements UsersSBLocal {
     @Override
     public void deleteUser(Users u){
         try{
-            em.remove(u);
+            
+            em.remove(em.find(Users.class, u.getLogin()));
         } catch (Exception e){
-            u.setDeleted(Boolean.TRUE);
-            em.merge(u);
+            u.setDeleted(true);
+            em.merge(em.find(Users.class, u.getLogin()));
         }
         em.flush();
         

@@ -80,6 +80,28 @@ public class TeachersSB implements TeachersSBLocal {
         return t;
     }
     
+    @Override
+    public Collection<Teacher> getTeachersByAtributes(Boolean isDeleted, String lastName) {
+        StringBuilder query = new StringBuilder();
+        query.append("SELECT * FROM Users u WHERE u.Role = ?s ");
+        if(!lastName.equals("")){
+            lastName = lastName + "%";
+            query.append(" AND u.lastName LIKE ?lastName ");
+        }
+        
+        if(isDeleted == null){
+            isDeleted = false;
+        }
+        query.append(" AND deleted = ?del ");
+        
+        List<Teacher> listTmp = em.createNativeQuery(query.toString(), Teacher.class)
+                .setParameter("lastName", lastName)
+                .setParameter("s", 'T')
+                .setParameter("del", isDeleted)
+                .getResultList();
+        return listTmp;
+    }
+    
     private void createPassword(Users s){
         char[] symbols;
         StringBuilder tmp = new StringBuilder();
@@ -141,4 +163,6 @@ public class TeachersSB implements TeachersSBLocal {
                 .getSingleResult();
         return idActualYear.getIdSchoolYear();
     }
+
+    
 }

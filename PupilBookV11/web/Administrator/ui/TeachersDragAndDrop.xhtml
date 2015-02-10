@@ -19,7 +19,6 @@
             
                 <p:panelGrid style="margin-top:20px">
                 <f:facet name="header">
-                    
                     <p:row>
                         <p:column colspan="1">
                             Třídní učitel ve třídě #{adminMainController.editedStudygroup.name} školní rok #{adminMainController.edited.name}
@@ -30,38 +29,45 @@
                     </p:row>
                 </f:facet>
                     <p:row>
-                        <p:column colspan="1">
-                            Třídní učitel
-                        </p:column>
-                        <p:column colspan="1">
-                            <p:commandButton id="createNewTeacher" icon="ui-icon-plus" value="Přidat Učitele" actionListener="#{adminTeacherController.prepareNewTeacher}" update=":TeacherCreateForm" oncomplete="PF('TeacherCreateDialog').show()" />
+                        <p:column colspan="2">
+                            <p:fieldset legend="Vyhledávání" style="margin-top:20px">
+                                <p:panelGrid>
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="Příjmení " />
+                                        </p:column>
+                                        <p:column>
+                                            <p:inputText id="SearchByLastName" title="Vyhledávání podle příjmení" value="#{adminTeacherController.searchByLastname}" />
+                                        </p:column>
+                                        <p:column>
+                                            <p:outputLabel value="Zobrazit smazané" />
+                                        </p:column>
+                                        <p:column>
+                                            <p:selectBooleanCheckbox id="ViewDeletedStudents"  value="#{adminTeacherController.showDeletedUsers}" />
+                                        </p:column>
+                                        <p:column>
+                                            <p:commandButton update="teacheTable" value="hledej"/>
+                                        </p:column>
+                                    </p:row>    
+                                </p:panelGrid>
+                                
+                            </p:fieldset>
                         </p:column>
                     </p:row>
                     <p:row>
+                        
                         <p:column colspan="1">
-                            <p:fieldset id="selectedTeachersField" legend="Selected Teachers" style="margin-top:20px">
-                                <p:outputPanel id="dropArea2">
-                                    <h:outputText value="Zde přesuňte třídního učitele" rendered="#{empty adminTeacherController.dropedTeachers}" style="font-size: 24px" />
-                                    <p:dataTable id="selectedStudents2" var="selStudents" value="#{adminTeacherController.dropedTeachers}" rendered="#{not empty adminTeacherController.dropedTeachers}" >
-                                        <p:column headerText="login">
-                                            <h:outputText value="#{selStudents.login}" />
-                                        </p:column>
-                                        <p:column headerText="Příjmení">
-                                            <h:outputText value="#{selStudents.lastName}" />
-                                        </p:column>
-                                        <p:column headerText="Jméno">
-                                            <h:outputText value="#{selStudents.firstName}" />
-                                        </p:column>
-                                        <p:column headerText="Datum narození">
-                                            <h:outputText value="#{selStudents.birthDate}" />
-                                        </p:column>
-                                    </p:dataTable>
-                                </p:outputPanel>
-                            </p:fieldset>
-                        </p:column>
-                        <p:column colspan="1">
-                            <p:fieldset id="availableTeachersField" legend="Available Teachers">
-                                <p:dataTable id="teacheTable" var="teacher" value="#{adminTeacherController.teachers}">
+                            <p:fieldset id="availableTeachersField" legend="Seznam učitelů">
+                                <p:dataTable id="teacheTable" var="teacher" value="#{adminTeacherController.teachers}"
+                                            paginator="true"
+                                            paginatorPosition="bottom"
+                                            rowKey="#{item.login}"
+                                            rows="10"
+                                            rowsPerPageTemplate="10,20,30,40,50">
+                                    <f:facet name="header">
+                                            <p:commandButton id="createNewTeacher" icon="ui-icon-plus" value="Přidat Učitele" actionListener="#{adminTeacherController.prepareNewTeacher}" update=":TeacherCreateForm" oncomplete="PF('TeacherCreateDialog').show()" />
+
+                                    </f:facet>
                                     <p:column style="width:20px">
                                         <h:outputText id="dragIcon" styleClass="ui-icon ui-icon-arrow-4" />
                                         <p:draggable for="dragIcon" revert="true" helper="clone"/>
@@ -83,6 +89,28 @@
                                 </p:dataTable>
                             </p:fieldset>
                         </p:column> 
+                        <p:column colspan="1">
+                            <p:fieldset id="selectedTeachersField" legend="Třídní učitel ve vybrané třídě" style="margin-top:20px">
+                                <p:outputPanel id="dropArea2">
+                                    <h:outputText value="Zde přesuňte třídního učitele" rendered="#{empty adminTeacherController.dropedTeachers}" style="font-size: 24px" />
+                                    <p:dataTable id="selectedStudents2" var="selStudents" value="#{adminTeacherController.dropedTeachers}" rendered="#{not empty adminTeacherController.dropedTeachers}" >
+                                        
+                                        <p:column headerText="login">
+                                            <h:outputText value="#{selStudents.login}" />
+                                        </p:column>
+                                        <p:column headerText="Příjmení">
+                                            <h:outputText value="#{selStudents.lastName}" />
+                                        </p:column>
+                                        <p:column headerText="Jméno">
+                                            <h:outputText value="#{selStudents.firstName}" />
+                                        </p:column>
+                                        <p:column headerText="Datum narození">
+                                            <h:outputText value="#{selStudents.birthDate}" />
+                                        </p:column>
+                                    </p:dataTable>
+                                </p:outputPanel>
+                            </p:fieldset>
+                        </p:column>
                     </p:row>
                 </p:panelGrid>
                 <p:droppable for="selectedTeachersField" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="teacheTable" onDrop="handleDrop">

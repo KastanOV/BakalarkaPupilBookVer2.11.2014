@@ -92,6 +92,8 @@ public class StudentsSB implements StudentsSBLocal {
         ps.setStudentLogin(s);
         ps.setParentLogin(par);
         if(s.getPassword() == null) createPassword(s);
+        s.setDeleted(false);
+        par.setDeleted(false);
         em.persist(par);
         em.persist(s);
         em.persist(ps);

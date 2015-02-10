@@ -19,12 +19,13 @@ import javax.ejb.Local;
 @Local
 public interface TeachersSBLocal {
     public Collection<Teacher> getAllTeachers();
+    
     public Teacher getTeacher(String UserId);
     public Teacher saveTeacher(Teacher t);
     public Teacher createNewTeacher(Teacher t);
     public Collection<Teacher> getTeachersByStudyGroup(Studygroup s);
     public Teacher checkLogin(String login, String password);
     public List<Results> getResultsTeacher(String login, String password);
-    
+    public Collection<Teacher> getTeachersByAtributes(Boolean isDeleted, String lastName);
     
 }
