@@ -20,6 +20,7 @@ public interface StudySubjectsSBLocal {
     public Collection<Studysubject> getAllStudySubjects();
     public Studysubject insertNewStudySubject(Studysubject s);
     public Studysubject saveStudySubject(Studysubject s);
+    public void deleteStudySubject(Studysubject s);
     public Studysubject getStudysubject(int id);
     public List<Studysubject> getStudySubjects();
     public List<Studysubject> getStudySubjects(Studygroup group, String login);

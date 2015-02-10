@@ -111,9 +111,24 @@ public class AdminMainController implements Serializable{
 					"Zřejmě jsou na tuto studíjní skupinu vázány nějaké data. " + e.getMessage()));
         }
     }
+    public void deleteStudySubject(){
+        try{
+            studySubjectsSB.deleteStudySubject(editedStudySubject);
+
+        } catch (Exception e){
+            FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+					"Nepodařilo se vymazat studíjní skupinu.", 
+					"Zřejmě jsou na tuto studíjní skupinu vázány nějaké data. " + e.getMessage()));
+        }
+    }
     public void saveStudySubject(){
         try{
-            studySubjectsSB.insertNewStudySubject(editedStudySubject);
+            if(editedStudySubject.getIdStudySubject() == null){
+                studySubjectsSB.insertNewStudySubject(editedStudySubject);
+            } else {
+                studySubjectsSB.saveStudySubject(editedStudySubject);
+            }
+            
             ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
             ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());
         }catch (Exception e) {

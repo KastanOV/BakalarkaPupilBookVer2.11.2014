@@ -57,5 +57,10 @@ public class StudySubjectsSB implements StudySubjectsSBLocal {
                 .getResultList();
         
     }
+
+    @Override
+    public void deleteStudySubject(Studysubject s) {
+        em.remove(em.find(Studysubject.class, s.getIdStudySubject()));
+    }
     
 }

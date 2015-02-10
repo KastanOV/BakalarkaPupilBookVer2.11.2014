@@ -16,6 +16,10 @@
                 <p:column headerText="Zkratka předmětu">
                     <h:outputText value="#{StudySubject.shortName}"/>
                 </p:column>
+                <p:column>
+                    <p:commandButton actionListener="#{adminMainController.setEditedStudySubject(StudySubject)}" value="Upravit" update=":StudySubjectCreateForm" oncomplete="PF('StudySubjectCreateDialog').show()" icon="ui-icon-search"/>
+                </p:column>
+                
             </p:dataTable>
         </h:form>
     </ui:composition>
