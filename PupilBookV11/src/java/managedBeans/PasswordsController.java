@@ -39,6 +39,25 @@ public class PasswordsController {
     
     private Boolean onlyDeleted;
 
+    private String searchLastName;
+    private Users editedUser;
+    
+
+    
+    /**
+     * Creates a new instance of PasswordsController
+     */
+    public PasswordsController() {
+        onlyDeleted = false;
+        onlyTeachers = false;
+        searchLastName = "";
+    }
+    
+    public Collection<Users> getUsers(){
+        return usersSB.getUsers(onlyTeachers, onlyDeleted, searchLastName);
+    }
+    
+    
     public Boolean getOnlyDeleted() {
         return onlyDeleted;
     }
@@ -62,19 +81,15 @@ public class PasswordsController {
     public void setSearchLastName(String searchLastName) {
         this.searchLastName = searchLastName;
     }
-    private String searchLastName;
-    /**
-     * Creates a new instance of PasswordsController
-     */
-    public PasswordsController() {
-        onlyDeleted = false;
-        onlyTeachers = false;
+    public Users getEditedUser() {
+        return editedUser;
     }
-    
-    public Collection<Users> getUsers(){
-        return usersSB.getUsers(onlyTeachers, onlyDeleted, searchLastName);
+
+    public void setEditedUser(Users editedUser) {
+        this.editedUser = editedUser;
     }
-    
-    
-    
+    public String getLegend(){
+        if(onlyTeachers) return "Vybraní učitelé";
+        else return "Vybraní studenti";
+    }
 }
