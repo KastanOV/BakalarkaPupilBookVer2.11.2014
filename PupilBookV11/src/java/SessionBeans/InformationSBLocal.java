@@ -32,5 +32,6 @@ public interface InformationSBLocal {
     public Informations saveInformation(Informations i);
     public void delete(Informations i);
     public List<Informations> getInformations(Teacher t);
+    public List<servicesDTO.InformationsDTO> getStudentsInformations(String login, Integer studyGroupID, String role);
     
 }

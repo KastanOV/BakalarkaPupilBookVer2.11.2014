@@ -1,6 +1,6 @@
 (function(){
-    //var URL = "http://192.168.1.61:8080/PupilBookV11/webresources/";
-    var URL = "http://86.49.147.135:9001/PupilBookV11/webresources/";
+    var URL = "http://192.168.1.61:8080/PupilBookV11/webresources/";
+    //var URL = "http://86.49.147.135:9001/PupilBookV11/webresources/";
     var home = angular.module('home',['ui.bootstrap']);
     
     home.controller('homeController',function($scope,$http){
@@ -11,21 +11,31 @@
         $scope.showShedule = false;
         $scope.showMainPage = false;
         $scope.showResults = false;
+        $scope.showInformations = false;
         
         this.showResults = function(){
             $scope.showShedule = false;
             $scope.showMainPage = false;
             $scope.showResults = true;
-        }
+            $scope.showInformations = false;
+        };
         this.showShedule = function(){
             $scope.showShedule = true;
             $scope.showMainPage = false;
             $scope.showResults = false;
+            $scope.showInformations = false;
         };
         this.mainPage = function(){
             $scope.showMainPage = true;
             $scope.showShedule = false;
             $scope.showResults = false;
+            $scope.showInformations = false;
+        };
+        this.informations = function(){
+            $scope.showMainPage = false;
+            $scope.showShedule = false;
+            $scope.showResults = false;
+            $scope.showInformations = true;
         };
         
         var initPage = function(){
@@ -41,6 +51,7 @@
                 $scope.showShedule = false;
                 $scope.showMainPage = false;
                 $scope.showResults = false;
+                $scope.showInformations = false;
             } else {
                 loggeduserName = localStorage.getItem("name");
                 $scope.loggedUser = true;
@@ -58,14 +69,39 @@
                            for(i = 0;i < data.length; i++){
                                if(data[i].day === 0){
                                    $scope.monday[data[i].hour] = data[i];
+                                   if(data[i].teacherName === ''){
+                                       $scope.monday[data[i].hour].BackgroundClass = "success"; 
+                                   } else {
+                                       $scope.monday[data[i].hour].BackgroundClass = "danger";
+                                   }
                                } else if(data[i].day === 1){
                                    $scope.tuesday[data[i].hour] = data[i];
+                                   if(data[i].teacherName === ''){
+                                       $scope.monday[data[i].hour].BackgroundClass = "success"; 
+                                   } else {
+                                       $scope.monday[data[i].hour].BackgroundClass = "danger";
+                                   }
                                } else if(data[i].day === 2){
                                    $scope.wednesday[data[i].hour] = data[i];
+                                   if(data[i].teacherName === ''){
+                                       $scope.monday[data[i].hour].BackgroundClass = "success"; 
+                                   } else {
+                                       $scope.monday[data[i].hour].BackgroundClass = "danger";
+                                   }
                                } else if(data[i].day === 3){
                                    $scope.thursday[data[i].hour] = data[i];
+                                   if(data[i].teacherName === ''){
+                                       $scope.monday[data[i].hour].BackgroundClass = "success"; 
+                                   } else {
+                                       $scope.monday[data[i].hour].BackgroundClass = "danger";
+                                   }
                                } else if(data[i].day === 4){
                                    $scope.friday[data[i].hour] = data[i];
+                                   if(data[i].teacherName === ''){
+                                       $scope.monday[data[i].hour].BackgroundClass = "success"; 
+                                   } else {
+                                       $scope.monday[data[i].hour].BackgroundClass = "danger";
+                                   }
                                } 
                            }
 
@@ -118,6 +154,28 @@
         return {
             restrict: 'E',
             templateUrl: 'results.html'
+        };
+    });
+    home.directive('informations',  function(){
+        return{
+            restrict: 'E',
+            templateUrl: 'information.html',
+            controller: function($scope,$http){
+                $scope.informations;
+                var login = localStorage.getItem('login');
+                var sg = localStorage.getItem('studyGroup');
+                var role = localStorage.getItem('role');
+                var tmp = URL + 'informations/' + login + "/" + sg + "/" + role;
+                debugger;
+                $http.get(URL + 'informations/' + login + "/" + sg + "/" + role)
+                        .success(function(data){
+                        $scope.informations = data;
+                        debugger;
+                        }).error(function(){
+                            alert("Přihlášení se nepodařilo :( asi na <> heslo");
+                        });
+            },
+            controllerAs: 'infoCtrl'
         };
     });
     home.controller('loginController', ['$scope','$http', function($scope,$http){

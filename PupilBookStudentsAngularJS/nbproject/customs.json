@@ -1,6 +1,7 @@
 {
     "elements": {
-        "login-dir": {}
+        "login-dir": {},
+        "informations": {}
     },
     "attributes": {
         "ng-controller": {},

@@ -19,6 +19,8 @@ package SessionBeans;
 
 import Entity.Informations;
 import Entity.Teacher;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -58,6 +60,40 @@ public class InformationSB implements InformationSBLocal {
         return em.createNativeQuery("SELECT * FROM informations WHERE Teacher_Login = ?tl order by CreateDate desc", Informations.class)
                 .setParameter("tl", t.getLogin())
                 .getResultList();
+    }
+
+    @Override
+    public List<servicesDTO.InformationsDTO> getStudentsInformations(String login, Integer studyGroupID, String role) {
+        Boolean infoForParents = false;
+        if(role.equals("P")) infoForParents = true;
+        List<Object[]> tmp ;
+        if(!infoForParents){
+           tmp = em.createNativeQuery("select Description, SomeMessage, CreateDate, LastName, FirstName from informations " +
+                        " join users on Teacher_Login = Login " +
+                        " where informations.InfoForParrents = ?infoParents and (informations.StudyGroup_idStudyGroup = ?idStudyGroup or informations.Users_Login = ?Users_Login)")
+                   .setParameter("infoParents", infoForParents)
+                   .setParameter("idStudyGroup", studyGroupID)
+                   .setParameter("Users_Login", login)
+                   .getResultList();
+        } else {
+            tmp = em.createNativeQuery("select Description, SomeMessage, CreateDate, LastName, FirstName from informations " +
+                        " join users on Teacher_Login = Login " +
+                        " where (informations.StudyGroup_idStudyGroup = ?idStudyGroup or informations.Users_Login = ?Users_Login)")
+                   
+                   .setParameter("idStudyGroup", studyGroupID)
+                   .setParameter("Users_Login", login)
+                   .getResultList();
+        }
+           List<servicesDTO.InformationsDTO> retTmp = new ArrayList<>();
+           for(Object[] item : tmp){
+              servicesDTO.InformationsDTO newTmp = new servicesDTO.InformationsDTO();
+              newTmp.setDescription((String) item[0]);
+              newTmp.setSomeMessage((String) item[1]);
+              newTmp.setCreateDate((Date) item[2]);
+              newTmp.setTeacherName((String) item[3] + " " + (String) item[4]);
+              retTmp.add(newTmp);
+           }
+        return retTmp;
     }
     
     

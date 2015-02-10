@@ -13,9 +13,9 @@ and open the template in the editor.
         
         <script src="js/app.js"></script>
     </head>
-    <div>
+    <div class="visible-xs visible-sm hidden-lg hidden-md">
         <h1>Rozvrh hodin</h1>
-        <accordion>
+        <accordion >
             <accordion-group heading="Pondělí">
                 <table class="table table-striped">
                     <tr><th>Hodina</th><th>Předmět</th><th>Učitel</th></tr>
@@ -52,9 +52,8 @@ and open the template in the editor.
                 <table class="table table-striped">
                     <tr><th>Hodina</th><th>Předmět</th><th>Učitel</th></tr>
                     <tr ng-repeat="i in thursday">
-                        
-                        <td>{{i.hour + 1}}.</td>
-                        <td >{{i.subjectName}}</td>
+                        <td>{{i.hour + 1}}</td>
+                        <td>{{i.subjectName}}</td>
                         <td>{{i.teacherName}}</td>
                     </tr>
                 </table>
@@ -62,16 +61,39 @@ and open the template in the editor.
             <accordion-group heading="Pátek">
                 <table class="table table-striped">
                     <tr><th>Hodina</th><th>Předmět</th><th>Učitel</th></tr>
-                    <tr ng-repeat="i in friday">
+                    <tr ng-repeat="i in friday" >
                         
-                        <td>{{i.hour + 1}}.</td>
-                        <td>{{i.subjectName}}</td>
+                        <td >{{i.hour + 1}}.</td>
+                        <td >  {{i.subjectName}}</td>
                         <td>{{i.teacherName}}</td>
                     </tr>
                 </table>
             </accordion-group>
         </accordion>
-        
+    </div>
+    <div class="hidden-xs hidden-sm visible-lg visible-md">
+        <table class="table table-bordered">
+            <tr>
+                <th></th><th ng-repeat="i in monday"> {{i.hour + 1}} </th>
+            </tr>
+            <tr>
+                <td>Pondělí</td><td ng-repeat="i in monday" class="{{i.BackgroundClass}}">{{i.subjectName}}<hr> {{i.teacherName}}</td>
+            </tr>
+            <tr>
+                <td>Úterý</td><td ng-repeat="i in monday" class="{{i.BackgroundClass}}">{{i.subjectName}}<hr> {{i.teacherName}}</td>
+            </tr>
+            <tr>
+                <td>Středa</td><td ng-repeat="i in monday" class="{{i.BackgroundClass}}">{{i.subjectName}}<hr> {{i.teacherName}}</td>
+            </tr>
+            <tr>
+                <td>Čtvrtek</td><td ng-repeat="i in monday" class="{{i.BackgroundClass}}">{{i.subjectName}}<hr> {{i.teacherName}}</td>
+            </tr>
+            <tr>
+                <td>Pátek</td><td ng-repeat="i in monday" class="{{i.BackgroundClass}}">{{i.subjectName}}<hr> {{i.teacherName}}</td>
+            </tr>
+                
+            
+        </table>
     </div>
         
     
