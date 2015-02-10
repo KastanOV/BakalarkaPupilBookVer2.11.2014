@@ -27,5 +27,6 @@ public interface TeachersSBLocal {
     public Teacher checkLogin(String login, String password);
     public List<Results> getResultsTeacher(String login, String password);
     public Collection<Teacher> getTeachersByAtributes(Boolean isDeleted, String lastName);
+    public Collection<Teacher> getTeachersForShedule(short day, short hour);
     
 }

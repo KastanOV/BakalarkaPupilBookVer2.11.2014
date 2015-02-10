@@ -18,6 +18,7 @@
 package SessionBeans;
 
 import Entity.Users;
+import java.util.Collection;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -33,6 +34,27 @@ public class UsersSB implements UsersSBLocal {
     private EntityManager em;
     
     @Override
+    public Collection<Users> getUsers(Boolean teachers, Boolean isDeleted, String LastName){
+        String role = teachers ? "T" : "S";
+        StringBuilder query = new StringBuilder();
+        query.append("SELECT * FROM Users u WHERE u.Role = ?s ");
+        if(!LastName.equals("")){
+            LastName = LastName + "%";
+            query.append(" AND u.lastName LIKE ?lastName ");
+        }
+        if(isDeleted == null){
+            isDeleted = false;
+        }
+        query.append(" AND deleted = ?del ");
+        
+        Collection<Users> listTmp = em.createNativeQuery(query.toString(), Users.class)
+                .setParameter("lastName", LastName)
+                .setParameter("s", role)
+                .setParameter("del", isDeleted)
+                .getResultList();
+        return listTmp;
+    }
+    @Override
     public void deleteUser(Users u){
         try{
             
@@ -42,6 +64,5 @@ public class UsersSB implements UsersSBLocal {
             em.merge(em.find(Users.class, u.getLogin()));
         }
         em.flush();
-        
     }
 }

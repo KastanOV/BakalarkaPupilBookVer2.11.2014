@@ -102,6 +102,12 @@ public class TeachersSB implements TeachersSBLocal {
         return listTmp;
     }
     
+    @Override
+    public Collection<Teacher> getTeachersForShedule(short day, short hour) {
+        return null;
+    }
+    
+    
     private void createPassword(Users s){
         char[] symbols;
         StringBuilder tmp = new StringBuilder();
@@ -163,6 +169,8 @@ public class TeachersSB implements TeachersSBLocal {
                 .getSingleResult();
         return idActualYear.getIdSchoolYear();
     }
+
+    
 
     
 }

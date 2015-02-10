@@ -106,6 +106,7 @@ public class AdminTeacherController implements Serializable{
             return null;
         }
     }
+    
     public Collection<Teacher> getTeachers(){
         Collection<Teacher> u = teachersSB.getTeachersByAtributes(showDeletedUsers, searchByLastname);
         return u;

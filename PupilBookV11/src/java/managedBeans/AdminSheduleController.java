@@ -11,6 +11,7 @@ import Entity.Studysubject;
 import Entity.Teacher;
 import SessionBeans.SheduleItemsSBLocal;
 import SessionBeans.StudySubjectsSBLocal;
+import SessionBeans.TeachersSBLocal;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.ejb.EJB;
@@ -34,6 +35,8 @@ public class AdminSheduleController implements Serializable{
     private SheduleItemsSBLocal sheduleItemsSB;
     @EJB
     private StudySubjectsSBLocal studySubjectsSB;
+    @EJB
+    private TeachersSBLocal teachersSB;
     
     private AdminMainController adminMain;
     private Teacher editedTeacher;
@@ -54,6 +57,11 @@ public class AdminSheduleController implements Serializable{
         
     
     public AdminSheduleController() {
+    }
+    
+    public Collection<Teacher> getSheduleTeachers(){
+        Collection<Teacher> u = teachersSB.getTeachersForShedule(editedSheduleItem.getDay(), editedSheduleItem.getHour());
+        return u;
     }
     
     public Sheduleitem getSheduleitem(short day, short hour){
