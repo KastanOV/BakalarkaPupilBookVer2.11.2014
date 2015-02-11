@@ -17,6 +17,7 @@
  */
 package SessionBeans;
 
+import Entity.Studygroup;
 import Entity.Users;
 import java.util.Collection;
 import javax.ejb.Local;
@@ -27,6 +28,9 @@ import javax.ejb.Local;
  */
 @Local
 public interface UsersSBLocal {
-    public Collection<Users> getUsers(Boolean teachers, Boolean isDeleted, String LastName);
+    public Collection<Users> getUsers(Boolean teachers, Boolean isDeleted, String LastName, Studygroup sg);
+    public Users findParrent(Users u);
     public void deleteUser(Users u);
+    public void saveUser(Users u);
+    
 }

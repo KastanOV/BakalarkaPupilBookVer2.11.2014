@@ -79,4 +79,17 @@ public class StudyGroupsSB implements StudyGroupsSBLocal {
             return true;
         }else return false;
     }
+
+    @Override
+    public List<Studygroup> getActualStudyGroups() {
+        return em.createNativeQuery("select * from studygroup where SchoolYear_idSchoolYear = ?id", Studygroup.class)
+                .setParameter("id", getActualSchoolYear())
+                .getResultList();
+    }
+    
+    private int getActualSchoolYear(){
+        Schoolyear idActualYear = (Schoolyear) em.createNativeQuery("SELECT * FROM schoolyear WHERE schoolyear.isactualyear = true", Schoolyear.class)
+                .getSingleResult();
+        return idActualYear.getIdSchoolYear();
+    }
 }
