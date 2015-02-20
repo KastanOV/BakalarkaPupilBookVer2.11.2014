@@ -71,7 +71,7 @@ public class StudyGroupsSB implements StudyGroupsSBLocal {
     }
 
     private boolean checkTeacher(String login, String password){
-        long tmp = (long)em.createNativeQuery("SELECT count(*) FROM Users u WHERE u.login = ?login AND u.password = ?password AND Role = 'T'")
+        long tmp = (long)em.createNativeQuery("SELECT count(*) FROM users u WHERE u.login = ?login AND u.password = ?password AND Role = 'T'")
                 .setParameter("login", login)
                 .setParameter("password", password)
                 .getSingleResult();

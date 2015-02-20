@@ -36,7 +36,7 @@ public class SheduleItemsSB implements SheduleItemsSBLocal {
     @Override
     public List<Sheduleitem> getSheduleItems(String login, String password) {
         if(checkUser(login, password)){
-            return em.createNativeQuery("SELECT * FROM SheduleItem"
+            return em.createNativeQuery("SELECT * FROM sheduleItem"
                     + " left join studygroup on sheduleitem.StudyGroup_idStudyGroup = studygroup.idStudyGroup"
                     + " join schoolyear on schoolyear.idSchoolYear = studygroup.SchoolYear_idSchoolYear"
                     + " WHERE Users_Login = ?login AND schoolyear.isactualyear = true", Sheduleitem.class)
@@ -49,7 +49,7 @@ public class SheduleItemsSB implements SheduleItemsSBLocal {
 
     @Override
     public List<Sheduleitem> getSheduleItems(Studygroup sg) {
-        return em.createNativeQuery("SELECT * FROM SheduleItem"
+        return em.createNativeQuery("SELECT * FROM sheduleItem"
              + " WHERE StudyGroup_idStudyGroup = ?sg", Sheduleitem.class)
             .setParameter("sg", sg.getIdStudyGroup())
             .getResultList();
@@ -64,7 +64,7 @@ public class SheduleItemsSB implements SheduleItemsSBLocal {
     }
     
     private boolean checkUser(String login, String password){
-        long tmp = (long)em.createNativeQuery("SELECT count(*) FROM Users u WHERE u.login = ?login AND u.password = ?password")
+        long tmp = (long)em.createNativeQuery("SELECT count(*) FROM users u WHERE u.login = ?login AND u.password = ?password")
                 .setParameter("login", login)
                 .setParameter("password", password)
                 .getSingleResult();

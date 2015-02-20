@@ -138,7 +138,7 @@ public class StudentsSB implements StudentsSBLocal {
             return em.createNativeQuery("SELECT DISTINCT s.FirstName, s.MiddleName, s.LastName, s.Phone, s.Email, s.Login, s.BirthDate, s.StudyGroup_idStudyGroup FROM SheduleItem"
                     + " left join studygroup on sheduleitem.StudyGroup_idStudyGroup = studygroup.idStudyGroup"
                     + " join schoolyear on schoolyear.idSchoolYear = studygroup.SchoolYear_idSchoolYear "
-                    + " join Users s on studygroup.idStudyGroup = s.StudyGroup_idStudyGroup "
+                    + " join users s on studygroup.idStudyGroup = s.StudyGroup_idStudyGroup "
                     + " WHERE Users_Login = ?login AND schoolyear.isactualyear = true AND s.Role = 'S'", Student.class)
                     .setParameter("login", login)
                     .getResultList();
@@ -152,7 +152,7 @@ public class StudentsSB implements StudentsSBLocal {
             return em.createNativeQuery("SELECT DISTINCT s.FirstName, s.MiddleName, s.LastName, s.Phone, s.Email, s.Login, s.BirthDate, s.StudyGroup_idStudyGroup FROM SheduleItem"
                     + " left join studygroup on sheduleitem.StudyGroup_idStudyGroup = studygroup.idStudyGroup"
                     + " join schoolyear on schoolyear.idSchoolYear = studygroup.SchoolYear_idSchoolYear "
-                    + " join Users s on studygroup.idStudyGroup = s.StudyGroup_idStudyGroup "
+                    + " join users s on studygroup.idStudyGroup = s.StudyGroup_idStudyGroup "
                     + " WHERE Users_Login = ?login AND schoolyear.isactualyear = true AND s.Role = 'S' AND studygroup.idStudyGroup = ?StudyGroupID", Student.class)
                     .setParameter("login", login)
                     .setParameter("StudyGroupID", StudyGroupId)
@@ -165,7 +165,7 @@ public class StudentsSB implements StudentsSBLocal {
     @Override
     public Collection<Student> getByParameters(String lastName, Date start, Date end, Boolean deleted) {
         StringBuilder query = new StringBuilder();
-        query.append("SELECT * FROM Users u WHERE u.Role = ?s ");
+        query.append("SELECT * FROM users u WHERE u.Role = ?s ");
         if(!lastName.equals("")){
             lastName = lastName + "%";
             query.append(" AND u.lastName LIKE ?lastName ");
@@ -223,7 +223,7 @@ public class StudentsSB implements StudentsSBLocal {
                 .substring(0,3)
                 .toUpperCase()
                 .trim());
-        Long numberOfLogin = (Long) em.createNativeQuery("SELECT COUNT(*) FROM Users WHERE login LIKE ?createLogin")
+        Long numberOfLogin = (Long) em.createNativeQuery("SELECT COUNT(*) FROM users WHERE login LIKE ?createLogin")
                 .setParameter("createLogin", LoginPrefix + "%")
                 .getSingleResult();
         s.setLogin(LoginPrefix + getPostFix(String.valueOf(numberOfLogin)));
@@ -248,7 +248,7 @@ public class StudentsSB implements StudentsSBLocal {
        return retazecBD;
    }
     private boolean checkTeacher(String login, String password){
-        long tmp = (long)em.createNativeQuery("SELECT count(*) FROM Users u WHERE u.login = ?login AND u.password = ?password AND Role = 'T'")
+        long tmp = (long)em.createNativeQuery("SELECT count(*) FROM users u WHERE u.login = ?login AND u.password = ?password AND Role = 'T'")
                 .setParameter("login", login)
                 .setParameter("password", password)
                 .getSingleResult();
@@ -257,7 +257,7 @@ public class StudentsSB implements StudentsSBLocal {
         }else return false;
     }
     private boolean checkStudent(String login, String password){
-        long tmp = (long)em.createNativeQuery("SELECT count(*) FROM Users u WHERE u.login = ?login AND u.password = ?password AND Role = 'S'")
+        long tmp = (long)em.createNativeQuery("SELECT count(*) FROM users u WHERE u.login = ?login AND u.password = ?password AND Role = 'S'")
                 .setParameter("login", login)
                 .setParameter("password", password)
                 .getSingleResult();

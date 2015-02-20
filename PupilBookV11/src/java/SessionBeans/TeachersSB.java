@@ -83,7 +83,7 @@ public class TeachersSB implements TeachersSBLocal {
     @Override
     public Collection<Teacher> getTeachersByAtributes(Boolean isDeleted, String lastName) {
         StringBuilder query = new StringBuilder();
-        query.append("SELECT * FROM Users u WHERE u.Role = ?s ");
+        query.append("SELECT * FROM users u WHERE u.Role = ?s ");
         if(!lastName.equals("")){
             lastName = lastName + "%";
             query.append(" AND u.lastName LIKE ?lastName ");
@@ -131,7 +131,7 @@ public class TeachersSB implements TeachersSBLocal {
                 .substring(0,3)
                 .toUpperCase()
                 .trim());
-        Long numberOfLogin = (Long) em.createNativeQuery("SELECT COUNT(*) FROM Users WHERE login LIKE ?createLogin")
+        Long numberOfLogin = (Long) em.createNativeQuery("SELECT COUNT(*) FROM users WHERE login LIKE ?createLogin")
                 .setParameter("createLogin", LoginPrefix + "%")
                 .getSingleResult();
         s.setLogin(LoginPrefix + getPostFix(String.valueOf(numberOfLogin)));
@@ -156,7 +156,7 @@ public class TeachersSB implements TeachersSBLocal {
        return retazecBD;
    }
     private boolean checkTeacher(String login, String password){
-        long tmp = (long)em.createNativeQuery("SELECT count(*) FROM Users u WHERE u.login = ?login AND u.password = ?password AND Role = 'T'")
+        long tmp = (long)em.createNativeQuery("SELECT count(*) FROM users u WHERE u.login = ?login AND u.password = ?password AND Role = 'T'")
                 .setParameter("login", login)
                 .setParameter("password", password)
                 .getSingleResult();
