@@ -5,19 +5,36 @@
     <h:head>
         <title>Login Popapu</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="css/bootstrap.css"/>
+        <link rel="stylesheet" href="css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="css/styles.css"/>
+        <script src="js/bootstrap.min.js"></script> 
     </h:head>
     <h:body>
-        <h:form>
-            <h:panelGroup>
-                <p:panelGrid columns="2">
-                    <p:outputLabel value="Uživatelské jméno" for="Login" />
-                    <p:inputText id="Login" value="#{loginBean.user}" />
-                    <p:outputLabel value="Heslo" for="password"/>
-                    <p:password id="password" value="#{loginBean.password}" />
-                </p:panelGrid>
-                <p:commandButton actionListener="#{loginBean.login}" value="Přihlásit"/>
-            </h:panelGroup>
-            
-        </h:form>
+        <div class="container">
+            <p:growl id="growl" life="3000"  />
+            <div class="row">
+                <div class="col-sm-6 col-md-4 col-md-offset-4">
+                    <h1 class="text-center login-title">Přihlásit do Pocket Packaged Pupil Book</h1>
+                    <div class="account-wall">
+                        <img class="profile-img" src="css/photo.png" alt=""/>
+                        <h:form class="form-signin">
+                            <p:inputText type="text" class="form-control" placeholder="Email" value="#{loginBean.user}"/>
+                            <p:inputText type="password" class="form-control" placeholder="Password" value="#{loginBean.password}"/>
+                            <p:commandButton class="btn btn-lg btn-primary btn-block" type="submit" value="Přihlásit" actionListener="#{loginBean.login}"/>
+                    
+                        <!--<label class="checkbox pull-left">
+                            <input type="checkbox" value="remember-me">
+                            Remember me
+                        </label>
+                        <a href="#" class="pull-right need-help">Need help? </a><span class="clearfix"></span>-->
+                        </h:form>
+                    </div>
+                    <!--<a href="#" class="text-center new-account">Create an account </a>-->
+                </div>
+            </div>
+        </div>
+        
     </h:body>
 </html>

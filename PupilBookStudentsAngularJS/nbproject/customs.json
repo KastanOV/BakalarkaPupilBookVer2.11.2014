@@ -1,7 +1,17 @@
 {
     "elements": {
+        "accordion": {},
+        "accordion-group": {
+            "attributes": {
+                "heading": {}
+            }
+        },
         "login-dir": {},
-        "informations": {}
+        "informations": {
+            "attributes": {
+                "ng-show": {}
+            }
+        }
     },
     "attributes": {
         "ng-controller": {},
