@@ -12,6 +12,7 @@
         $scope.showMainPage = false;
         $scope.showResults = false;
         $scope.showInformations = false;
+        $scope.showLoader = false;
         
         this.showResults = function(){
             $scope.showShedule = false;
@@ -37,6 +38,7 @@
             $scope.showResults = false;
             $scope.showInformations = true;
         };
+        
         
         var initPage = function(){
             initdb();
@@ -66,25 +68,36 @@
                 //Načtení rozhrhu hodin, Rozvrh se nejdříve načte s lokální DB a teprve potom se pokusí připojit
                 // k serveru a získat aktuální rozvrh
                 $scope.shedule = {};
-                getDBSheduleItems($scope);
                     $http.get(URL + "sheduleitems/" + studyGroup)
                        .success(function(data){
                            $scope.shedule = data;
                            setDBSheduleItems(data);
                            createSheduleItemsDays(data, $scope);
                     }).error(function(){
+                        getDBSheduleItems($scope);
                         alert("Nyní pracujete offline");
                     });
                 $scope.results = {};
-                getDBResults($scope)
                     $http.get(URL + "Students/" + login + "/" + password + "/results")
                             .success(function(data){
                                setDBResults(data);
                                $scope.results = data;
                     }).error(function(){
-                        //alert("připojení k serveru se nezdařilo");
-                        
+                        getDBResults($scope)
                     });
+                $scope.informations = {};
+                var login = localStorage.getItem('login');
+                var sg = localStorage.getItem('studyGroup');
+                var role = localStorage.getItem('role');
+                $http.get(URL + 'informations/' + login + "/" + sg + "/" + role)
+                        .success(function(data){
+                            setDBInformation(data);
+                            $scope.informations = data;
+                        debugger;
+                        }).error(function(){
+                            getDBInformations($scope);
+                            //alert("Přihlášení se nepodařilo :( asi na <> heslo");
+                        });
             } 
         };
         initPage();
@@ -168,20 +181,7 @@
             restrict: 'E',
             templateUrl: 'information.html',
             controller: function($scope,$http){
-                $scope.informations;
-                getDBInformations($scope);
-                var login = localStorage.getItem('login');
-                var sg = localStorage.getItem('studyGroup');
-                var role = localStorage.getItem('role');
-                var tmp = URL + 'informations/' + login + "/" + sg + "/" + role;
-                $http.get(URL + 'informations/' + login + "/" + sg + "/" + role)
-                        .success(function(data){
-                            debugger;
-                        setDBInformation(data);
-                        $scope.informations = data;
-                        }).error(function(){
-                            //alert("Přihlášení se nepodařilo :( asi na <> heslo");
-                        });
+                
             },
             controllerAs: 'infoCtrl'
         };
@@ -191,8 +191,10 @@
             this.login;
             this.password;
             this.HashedPassword;
+
             this.loggIn = function(){
                 this.HashedPassword = calcMD5(this.password);
+                $scope.showLoader = true;
                 $http.get(URL + "Login/" + this.login + "/" + this.HashedPassword)
                         .success(function(data){
                             if(data !== ""){
@@ -211,9 +213,11 @@
                                 $scope.$emit('reloadPage', null);
                             }   else {
                                 alert("Přihlášení se nepodařilo :( asi na <> heslo");
-                            }  
+                            } 
+                            $scope.showLoader = false;
                 }).error(function(){
                     alert("neco je spatne :(");
+                    $scope.showLoader = false;
                 });
             };
             this.loggOut = function(){

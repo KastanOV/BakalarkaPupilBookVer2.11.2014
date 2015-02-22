@@ -142,6 +142,7 @@ function getDBInformations($scope){
                     data[i] = results.rows.item(i);
                 }
                 $scope.informations = data;
+                debugger;
             }, null);
         });
 }
@@ -184,6 +185,13 @@ function logOut(){
     });
     db.transaction(function(tx) {
     var query = "DELETE FROM results";
+        tx.executeSql(query, [],
+        function (tx, results) {
+
+        });
+    });
+    db.transaction(function(tx) {
+    var query = "DELETE FROM informations";
         tx.executeSql(query, [],
         function (tx, results) {
 
