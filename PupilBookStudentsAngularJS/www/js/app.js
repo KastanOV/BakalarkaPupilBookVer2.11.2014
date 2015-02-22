@@ -78,7 +78,9 @@
                 $scope.results ={};
                     $http.get(URL + "Students/" + login + "/" + password + "/results")
                             .success(function(data){
-                               $scope.results = data; 
+                                setDBResults(data);
+                               $scope.results = data;
+                       debugger;
                     }).error(function(){
                         //alert("připojení k serveru se nezdařilo");
                         
@@ -92,7 +94,6 @@
             initPage();
         });
     });
-    
     function createSheduleItemsDays(data, $scope){
         for(i = 0;i < data.length; i++){
            if(data[i].day === 0){

@@ -1,47 +1,47 @@
 function getDBSheduleItems($scope){
     var db = getDB();
-    var tmp = {};
+    var data = {};
         db.transaction(function (tx) {
             tx.executeSql("SELECT id, day, hour, idStudyGroup, idStudySubject, login, subjectName, teacherName FROM sheduleItemForStudent", [], 
             function (tx, results) {
                 for (var i = 0; i < results.rows.length; i++){
-                    tmp[i] = results.rows.item(i);
-                    if(tmp[i].day === 0){
-                       $scope.monday[tmp[i].hour] = tmp[i];
-                       if(tmp[i].teacherName === ''){
-                           tmp[tmp[i].hour].BackgroundClass = "success"; 
+                    data[i] = results.rows.item(i);
+                    if(data[i].day === 0){
+                       $scope.monday[data[i].hour] = data[i];
+                       if(data[i].teacherName === ''){
+                           $scope.monday[data[i].hour].BackgroundClass = "success"; 
                        } else {
-                           tmp[tmp[i].hour].BackgroundClass = "danger";
+                           $scope.monday[data[i].hour].BackgroundClass = "danger";
                        }
-                   } else if(tmp[i].day === 1){
-                       $scope.tuesday[tmp[i].hour] = tmp[i];
-                       if(tmp[i].teacherName === ''){
-                           $scope.monday[tmp[i].hour].BackgroundClass = "success"; 
+                   } else if(data[i].day === 1){
+                       $scope.tuesday[data[i].hour] = data[i];
+                       if(data[i].teacherName === ''){
+                           $scope.monday[data[i].hour].BackgroundClass = "success"; 
                        } else {
-                           $scope.monday[tmp[i].hour].BackgroundClass = "danger";
+                           $scope.monday[data[i].hour].BackgroundClass = "danger";
                        }
-                   } else if(tmp[i].day === 2){
-                       $scope.wednesday[tmp[i].hour] = tmp[i];
-                       if(tmp[i].teacherName === ''){
-                           $scope.monday[tmp[i].hour].BackgroundClass = "success"; 
+                   } else if(data[i].day === 2){
+                       $scope.wednesday[data[i].hour] = data[i];
+                       if(data[i].teacherName === ''){
+                           $scope.monday[data[i].hour].BackgroundClass = "success"; 
                        } else {
-                           $scope.monday[tmp[i].hour].BackgroundClass = "danger";
+                           $scope.monday[data[i].hour].BackgroundClass = "danger";
                        }
-                   } else if(tmp[i].day === 3){
-                       $scope.thursday[tmp[i].hour] = tmp[i];
-                       if(tmp[i].teacherName === ''){
-                           $scope.monday[tmp[i].hour].BackgroundClass = "success"; 
+                   } else if(data[i].day === 3){
+                       $scope.thursday[data[i].hour] = data[i];
+                       if(data[i].teacherName === ''){
+                           $scope.monday[data[i].hour].BackgroundClass = "success"; 
                        } else {
-                           $scope.monday[tmp[i].hour].BackgroundClass = "danger";
+                           $scope.monday[data[i].hour].BackgroundClass = "danger";
                        }
-                   } else if(tmp[i].day === 4){
-                       $scope.friday[tmp[i].hour] = tmp[i];
-                       if(tmp[i].teacherName === ''){
-                           $scope.monday[tmp[i].hour].BackgroundClass = "success"; 
+                   } else if(data[i].day === 4){
+                       $scope.friday[data[i].hour] = data[i];
+                       if(data[i].teacherName === ''){
+                           $scope.monday[data[i].hour].BackgroundClass = "success"; 
                        } else {
-                           $scope.monday[tmp[i].hour].BackgroundClass = "danger";
+                           $scope.monday[data[i].hour].BackgroundClass = "danger";
                        }
-                   }
+                   } 
                 }
             }, null);
         });
@@ -71,8 +71,43 @@ function setDBSheduleItems(data){
 function getDBResults(){
     
 };
-function setDBResults(){
-    
+function setDBResults(data){
+    var db = getDB();
+    db.transaction(function(tx) {
+        var query = "DELETE FROM studySubjects";
+            tx.executeSql(query, [],
+                function (tx, results) {
+                });
+    }); 
+    db.transaction(function(tx) {
+        var query = "DELETE FROM results";
+            tx.executeSql(query, [],
+                function (tx, results) {
+                });
+    });
+    for (item in data){ 
+        (function(row){
+            db.transaction(function(tx) {
+                var query = "INSERT INTO studySubjects ( id, name) VALUES (?,?)";
+                tx.executeSql(query, [row.results[0].ssId, row.name ],
+                function (tx, results) {
+                    
+                });
+            });
+            for (res in  row.results){
+                var tmp = row.results[res];
+
+                db.transaction(function(tx) {
+                    var query = "INSERT INTO results (id, date, desc, score, ssId) VALUES (?,?,?,?,?)";
+                    tx.executeSql(query, [tmp.id, tmp.date, tmp.desc, tmp.score, tmp.ssId],
+                    function (tx, results) {
+                        debugger;
+                    });
+                });
+            }
+            
+        })(data[item]);
+    }
 };
 
 function logOut(){
@@ -81,17 +116,21 @@ function logOut(){
         var query = "DELETE FROM sheduleItemForStudent";
             tx.executeSql(query, [],
             function (tx, results) {
-                debugger;
+
             });
         });
 };
 
 function initdb(){
     var db = getDB();
-    
     db.transaction(function (tx) {  
         tx.executeSql('CREATE TABLE IF NOT EXISTS sheduleItemForStudent ( id INTEGER PRIMARY KEY, day INTEGER, hour INTEGER, idStudyGroup INTEGER, idStudySubject INTEGER, login TEXT, subjectName TEXT, teacherName TEXT)');
-        //tx.executeSql('CREATE TABLE IF NOT EXISTS TABLE_SHEDULEITEM (SHEDULE_ITEM_KEY_ID INTEGER PRIMARY KEY, SHEDULE_ITEM_KEY_DAY INTEGER, SHEDULE_ITEM_KEY_HOUR INTEGER, SHEDULE_ITEM_KEY_ID_STUDY_GROUP INTEGER, SHEDULE_ITEM_KEY_ID_STUDY_SUBJECT INTEGER, SHEDULE_ITEM_KEY_LOGIN TEXT)')
+    });
+    db.transaction(function (tx) {  
+        tx.executeSql('CREATE TABLE IF NOT EXISTS studySubjects (id INTEGER PRIMARY KEY, name TEXT)');
+    });
+    db.transaction(function (tx) {  
+        tx.executeSql('CREATE TABLE IF NOT EXISTS results (id INTEGER PRIMARY KEY, date TEXT, desc TEXT, score INTEGER, ssId INTEGER)');
     });
 };
 
