@@ -75,12 +75,12 @@
                     }).error(function(){
                         alert("Nyní pracujete offline");
                     });
-                $scope.results ={};
+                $scope.results = {};
+                getDBResults($scope)
                     $http.get(URL + "Students/" + login + "/" + password + "/results")
                             .success(function(data){
-                                setDBResults(data);
+                               setDBResults(data);
                                $scope.results = data;
-                       debugger;
                     }).error(function(){
                         //alert("připojení k serveru se nezdařilo");
                         
@@ -169,12 +169,15 @@
             templateUrl: 'information.html',
             controller: function($scope,$http){
                 $scope.informations;
+                getDBInformations($scope);
                 var login = localStorage.getItem('login');
                 var sg = localStorage.getItem('studyGroup');
                 var role = localStorage.getItem('role');
                 var tmp = URL + 'informations/' + login + "/" + sg + "/" + role;
                 $http.get(URL + 'informations/' + login + "/" + sg + "/" + role)
                         .success(function(data){
+                            debugger;
+                        setDBInformation(data);
                         $scope.informations = data;
                         }).error(function(){
                             //alert("Přihlášení se nepodařilo :( asi na <> heslo");

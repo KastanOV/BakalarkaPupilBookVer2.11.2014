@@ -68,8 +68,32 @@ function setDBSheduleItems(data){
     }
 };
 
-function getDBResults(){
-    
+function getDBResults($scope){
+    var db = getDB();
+    var studySubjects = {};
+    db.transaction(function (tx) {
+            tx.executeSql("SELECT id, name FROM studySubjects", [], 
+            function (tx, results) {
+                for (var i = 0; i < results.rows.length; i++){
+                    studySubjects[i] = results.rows.item(i);
+                    buildResultsAccordeon($scope,results.rows.item(i), i);
+                }
+            }, null);
+        });
+};
+function buildResultsAccordeon($scope, studySubjects, row){
+    var db = getDB();
+    var resultstmp = {};
+    db.transaction(function (tx) {
+        tx.executeSql("SELECT id, date, desc, score, ssId FROM results where ssId = ?", [studySubjects.id], 
+                function (tx, res) {
+                    for (var j = 0; j < res.rows.length; j++){
+                        resultstmp[j] = res.rows.item(j);
+                    }
+                    studySubjects.results = resultstmp;
+                    $scope.results[row] = studySubjects;
+                }, null);
+            });
 };
 function setDBResults(data){
     var db = getDB();
@@ -91,25 +115,57 @@ function setDBResults(data){
                 var query = "INSERT INTO studySubjects ( id, name) VALUES (?,?)";
                 tx.executeSql(query, [row.results[0].ssId, row.name ],
                 function (tx, results) {
-                    
                 });
             });
             for (res in  row.results){
-                var tmp = row.results[res];
-
-                db.transaction(function(tx) {
-                    var query = "INSERT INTO results (id, date, desc, score, ssId) VALUES (?,?,?,?,?)";
-                    tx.executeSql(query, [tmp.id, tmp.date, tmp.desc, tmp.score, tmp.ssId],
-                    function (tx, results) {
-                        debugger;
+                (function(row2){
+                    var tmp = row.results[res];
+                    db.transaction(function(tx) {
+                        var query = "INSERT INTO results (id, date, desc, score, ssId) VALUES (?,?,?,?,?)";
+                        tx.executeSql(query, [tmp.id, tmp.date, tmp.desc, tmp.score, tmp.ssId],
+                        function (tx, results) {
+                        });
                     });
-                });
+                })(row.results[res])
             }
             
         })(data[item]);
     }
 };
+function getDBInformations($scope){
+    var db = getDB();
+    var data = {};
+    db.transaction(function (tx) {
+            tx.executeSql("SELECT createDate, description, someMessage, teacherName FROM informations", [], 
+            function (tx, results) {
+                for (var i = 0; i < results.rows.length; i++){
+                    data[i] = results.rows.item(i);
+                }
+                $scope.informations = data;
+            }, null);
+        });
+}
+function setDBInformation(data){
+    var db = getDB();
+    db.transaction(function(tx) {
+        var query = "DELETE FROM informations";
+            tx.executeSql(query, [],
+                function (tx, results) {
+                });
+    }); 
 
+    for (item in data){ 
+        (function(row){
+            db.transaction(function(tx) {
+                var query = "INSERT INTO informations ( createDate, description, someMessage, teacherName) VALUES (?,?,?,?)";
+                tx.executeSql(query, [row.createDate, row.description, row.someMessage, row.teacherName ],
+                function (tx, results) {
+                    
+                });
+            });
+        })(data[item]);
+    }
+}
 function logOut(){
     var db = getDB();
     db.transaction(function(tx) {
@@ -119,6 +175,20 @@ function logOut(){
 
             });
         });
+    db.transaction(function(tx) {
+    var query = "DELETE FROM studySubjects";
+        tx.executeSql(query, [],
+        function (tx, results) {
+
+        });
+    });
+    db.transaction(function(tx) {
+    var query = "DELETE FROM results";
+        tx.executeSql(query, [],
+        function (tx, results) {
+
+        });
+    });
 };
 
 function initdb(){
@@ -131,6 +201,9 @@ function initdb(){
     });
     db.transaction(function (tx) {  
         tx.executeSql('CREATE TABLE IF NOT EXISTS results (id INTEGER PRIMARY KEY, date TEXT, desc TEXT, score INTEGER, ssId INTEGER)');
+    });
+    db.transaction(function (tx) {  
+        tx.executeSql('CREATE TABLE IF NOT EXISTS informations (id INTEGER PRIMARY KEY AUTOINCREMENT, createDate TEXT, description TEXT, someMessage TEXT, teacherName TEXT)');
     });
 };
 
