@@ -21,6 +21,7 @@ import Entity.Attendance;
 import Entity.Student;
 import Entity.Studygroup;
 import SessionBeans.AttendanceSBLocal;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -49,6 +50,17 @@ public class TeacherAttendance {
     }
     public void setAttendanceExcused(Attendance a){
         atSB.setAttendanceExcused(a);
+    }
+    public void addAttendance(){
+        Attendance at = new Attendance();
+        at.setMissingStart(new Date());
+        at.setExcussed(false);
+        at.setUsersLogin(editedStudent);
+        atSB.saveAttendance(at);
+    }
+    public void ExcuseStudent(Attendance a){
+        a.setMissingEnd(new Date());
+        atSB.saveAttendance(a);
     }
     public Student getEditedStudent() {
         return editedStudent;

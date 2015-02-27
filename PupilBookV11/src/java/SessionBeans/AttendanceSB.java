@@ -39,6 +39,7 @@ public class AttendanceSB implements AttendanceSBLocal {
         if(a.getIdAttendance() == null){
             em.persist(a);
         } else{
+            
             em.merge(a);
         }
         em.flush();
@@ -64,16 +65,17 @@ public class AttendanceSB implements AttendanceSBLocal {
             return em.createNativeQuery("SELECT * FROM attendance where Users_Login = ?ul", Attendance.class)
                 .setParameter("ul", s.getLogin())
                 .getResultList();
-        }
-        if (s != null && sg != null){
+        }else if (s == null && sg == null){
             return em.createNativeQuery("SELECT * FROM attendance", Attendance.class)
                 .getResultList();
-        }
-        if(s == null && sg != null){
-            return em.createNativeQuery("SELECT attendance.* FROM attendance join users on attendance.Users_Login = users_login " +
-                " join studygroup on StudyGroup_idStudyGroup = idStudyGroup " +
-                " where idStudyGroup = ?id ", Attendance.class)
-                .setParameter("ul", sg.getIdStudyGroup())
+        } else if (s != null && sg != null){
+            return em.createNativeQuery("SELECT * FROM attendance where Users_Login = ?ul", Attendance.class)
+                .setParameter("ul", s.getLogin())
+                .getResultList();
+        }else if(s == null && sg != null){
+            return em.createNativeQuery("SELECT * FROM attendance a " +
+            " where exists (select * from users u join studygroup on StudyGroup_idStudyGroup = idStudyGroup where idStudyGroup = ?id and u.login = a.users_login)", Attendance.class)
+                .setParameter("id", sg.getIdStudyGroup())
                 .getResultList();
         }
         return null;

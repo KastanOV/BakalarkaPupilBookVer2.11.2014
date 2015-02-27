@@ -13,11 +13,13 @@
                         <p:selectOneMenu id="studyGroup" value="#{teacherMainController.editedStudyGroup}" onchange="submit()" converter="#{StudyGroupConverter}" effect="fold" >
                             <f:selectItem itemLabel="#{bundle.dropdownStudyGroups}" itemValue="" />
                             <f:selectItems value="#{teacherMainController.studyGroups}" var="item" itemLabel="#{item.name}" itemValue="#{item}" />
+                            
                         </p:selectOneMenu>
                         <p:outputLabel for="StudySubject" value="Předmět"/>
                         <p:selectOneMenu id="StudySubject" value="#{teacherMainController.editedStudySubject}" onchange="submit()" converter="#{ConverterStudySubjects}" effect="fold">
                             <f:selectItem itemLabel="Vyberte Předmět" itemValue="" />
                             <f:selectItems value="#{teacherMainController.studySubject}" var="itemSG" itemLabel="#{itemSG.name}" itemValue="#{itemSG}"/>
+                            
                         </p:selectOneMenu>
                         
                         
@@ -35,8 +37,8 @@
                                 <h:outputText value="#{itemTab.firstName}" />
                             </p:column>
                             <p:column>
-                                <p:commandButton value="Vybrat" onclick="submit()">
-                                    <p:ajax listener="#{teacherMainController.setEditedStudent(itemTab)}"/>
+                                <p:commandButton value="Vybrat">
+                                    <p:ajax listener="#{teacherMainController.setEditedStudent(itemTab)}" update="@all"/>
                                 </p:commandButton>
                             </p:column>
                         </p:dataTable>
