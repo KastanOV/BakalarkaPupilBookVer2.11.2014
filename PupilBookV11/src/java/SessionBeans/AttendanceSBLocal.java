@@ -19,6 +19,7 @@ package SessionBeans;
 
 import Entity.Attendance;
 import Entity.Student;
+import Entity.Studygroup;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -28,11 +29,9 @@ import javax.ejb.Local;
  */
 @Local
 public interface AttendanceSBLocal {
-
-    public void delete(Attendance a);
-
-    public Attendance saveInformation(Attendance a);
-
-    public List<Attendance> getInformations(Student t);
-    
+    public void deleteAttendance(Attendance a);
+    public Attendance saveAttendance(Attendance a);
+    public void setAttendanceExcused(Attendance a);
+    //public List<Attendance> getAttendance(Student t);
+    public List<Attendance> getAttendance(Student s, Studygroup sg);
 }

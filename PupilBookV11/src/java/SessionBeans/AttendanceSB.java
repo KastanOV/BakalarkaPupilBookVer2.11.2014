@@ -19,6 +19,7 @@ package SessionBeans;
 
 import Entity.Attendance;
 import Entity.Student;
+import Entity.Studygroup;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -34,7 +35,7 @@ public class AttendanceSB implements AttendanceSBLocal {
     private EntityManager em;
     
     @Override
-    public Attendance saveInformation(Attendance a){
+    public Attendance saveAttendance(Attendance a){
         if(a.getIdAttendance() == null){
             em.persist(a);
         } else{
@@ -44,13 +45,45 @@ public class AttendanceSB implements AttendanceSBLocal {
        return a;
     }
     @Override
-    public void delete(Attendance a){
+    public void deleteAttendance(Attendance a){
         em.remove(em.find(Attendance.class, a.getIdAttendance()));
     }
+//    @Override
+//    public List<Attendance> getAttendance(Student t){
+//        return em.createNativeQuery("SELECT * FROM attendance where Users_Login = ?ul", Attendance.class)
+//                .setParameter("ul", t.getLogin())
+//                .getResultList();
+//    }
+
     @Override
-    public List<Attendance> getInformations(Student t){
-        return em.createNativeQuery("SELECT * FROM attendance where Users_Login = ?ul", Attendance.class)
-                .setParameter("ul", t.getLogin())
+    public List<Attendance> getAttendance(Student s, Studygroup sg) {
+        StringBuilder query = new StringBuilder();
+        query.append("SELECT * FROM attendance ");
+        
+        if(s != null && sg == null){
+            return em.createNativeQuery("SELECT * FROM attendance where Users_Login = ?ul", Attendance.class)
+                .setParameter("ul", s.getLogin())
                 .getResultList();
+        }
+        if (s != null && sg != null){
+            return em.createNativeQuery("SELECT * FROM attendance", Attendance.class)
+                .getResultList();
+        }
+        if(s == null && sg != null){
+            return em.createNativeQuery("SELECT attendance.* FROM attendance join users on attendance.Users_Login = users_login " +
+                " join studygroup on StudyGroup_idStudyGroup = idStudyGroup " +
+                " where idStudyGroup = ?id ", Attendance.class)
+                .setParameter("ul", sg.getIdStudyGroup())
+                .getResultList();
+        }
+        return null;
     }
+
+    @Override
+    public void setAttendanceExcused(Attendance a) {
+        a = em.find(Attendance.class, a.getIdAttendance());
+        a.setExcussed(true);
+        em.merge(a);
+    }
+    
 }

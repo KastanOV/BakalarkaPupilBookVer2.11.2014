@@ -23,13 +23,45 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
     <ui:composition rendered="#{teacherMainController.editedStudent != null}">
+       
         <h:form id="AttendanceTable">
-            <p:dataTable id="InformationsTable" var="ListItem" value="#{teacherInformations.informations}"
+            #{teacherAttendance.setEditedStudent(teacherMainController.editedStudent)}
+            #{teacherAttendance.setEditedStudyGroup(teacherMainController.editedStudyGroup)}
+            
+            <p:dataTable id="InformationsTable" var="ListItem" value="#{teacherAttendance.attendance}"
                      paginator="true"
                      paginatorPosition="bottom"
                      rows="10"
                      rowsPerPageTemplate="10,20,30,40,50">
-            
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Začátek nepřítomnosti"/>
+                    </f:facet>
+                    <h:outputText value="#{ListItem.missingStart}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Příchod"/>
+                    </f:facet>
+                    <h:outputText value="#{ListItem.missingEnd}"/>
+                </p:column>
+                <p:column rendered="#{teacherAttendance.editedStudent == null}">
+                    <f:facet name="header">
+                        <h:outputText value="Jméno"/>
+                    </f:facet>
+                    <h:outputText value="#{ListItem.usersLogin.lastName} #{ListItem.usersLogin.firstName}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Omluven"/>
+                    </f:facet>
+                    <h:outputText value="#{ListItem.excussed}"/>
+                </p:column>
+                <p:column style="width:80px">
+                    <p:commandButton update=":AttendanceTable" value="Omluvit" icon="ui-icon-search" >
+                        <p:ajax listener="#{teacherAttendance.setAttendanceExcused(ListItem)}"/>
+                    </p:commandButton>
+                </p:column>
             
             </p:dataTable>
         </h:form>

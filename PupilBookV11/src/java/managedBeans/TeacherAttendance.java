@@ -17,6 +17,12 @@
  */
 package managedBeans;
 
+import Entity.Attendance;
+import Entity.Student;
+import Entity.Studygroup;
+import SessionBeans.AttendanceSBLocal;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -27,11 +33,33 @@ import javax.faces.bean.SessionScoped;
 @ManagedBean
 @SessionScoped
 public class TeacherAttendance {
+    @EJB
+    private AttendanceSBLocal atSB;
+    
+    private Student editedStudent;
+    private Studygroup editedStudyGroup;
 
     /**
      * Creates a new instance of TeacherAttendance
      */
     public TeacherAttendance() {
     }
-    
+    public List<Attendance> getAttendance(){
+        return atSB.getAttendance(editedStudent, editedStudyGroup);
+    }
+    public void setAttendanceExcused(Attendance a){
+        atSB.setAttendanceExcused(a);
+    }
+    public Student getEditedStudent() {
+        return editedStudent;
+    }
+    public void setEditedStudent(Student editedStudent) {
+            this.editedStudent = editedStudent;
+    }
+    public Studygroup getEditedStudyGroup() {
+        return editedStudyGroup;
+    }
+    public void setEditedStudyGroup(Studygroup editedStudyGroup) {
+        this.editedStudyGroup = editedStudyGroup;
+    }
 }
