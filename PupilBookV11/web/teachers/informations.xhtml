@@ -20,14 +20,49 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 <html xmlns="http://www.w3.org/1999/xhtml"   
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:body>
     	<ui:composition template="/templates/teacher.xhtml">
             <ui:define name="body" >
                 <ui:include src="ui/informationUI.xhtml"/>
             </ui:define>
             <ui:define name="west">
-                <ui:include src="sidemenu.xhtml"/>
+                <h:form id="TeacherSideMenu">
+                    <h:panelGrid columns="2" style="margin-bottom: 10px" cellpadding="5">
+                        <p:outputLabel for="studyGroup" value="Studíjní skupina"/>
+                        <p:selectOneMenu id="studyGroup" value="#{teacherMainController.editedStudyGroup}" converter="#{StudyGroupConverter}" effect="fold" >
+                            <f:selectItem itemLabel="#{bundle.dropdownStudyGroups}" itemValue="" />
+                            <f:selectItems value="#{teacherMainController.studyGroups}" var="item" itemLabel="#{item.name}" itemValue="#{item}" />
+                            <p:ajax  update=":InformationsTableForm StudySubject StudentsTab"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel for="StudySubject" value="Předmět"/>
+                        <p:selectOneMenu id="StudySubject" value="#{teacherMainController.editedStudySubject}" converter="#{ConverterStudySubjects}" effect="fold">
+                            <f:selectItem itemLabel="Vyberte Předmět" itemValue="" />
+                            <f:selectItems value="#{teacherMainController.studySubject}" var="itemSG" itemLabel="#{itemSG.name}" itemValue="#{itemSG}"/>
+                            <p:ajax  update=":InformationsTableForm StudentsTab"/>
+                        </p:selectOneMenu>
+                    </h:panelGrid>
+                        <p:dataTable id="StudentsTab" var="itemTab" value="#{teacherMainController.students}"
+                                                paginator="true"
+                                                paginatorPosition="bottom"
+                                                rows="10"
+                                                rowsPerPageTemplate="10,20,30,40,50"
+                                                style="width: 300px">
+                            <p:column headerText="Příjmení" >
+                                <h:outputText value="#{itemTab.lastName}" />
+                            </p:column>
+                            <p:column headerText="Jméno" >
+                                <h:outputText value="#{itemTab.firstName}" />
+                            </p:column>
+                            <p:column>
+                                <p:commandButton value="Vybrat">
+                                    <p:ajax listener="#{teacherMainController.setEditedStudent(itemTab)}" update=":InformationsTableForm"/>
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                    <hr />
+            </h:form>
             </ui:define>
             
     	</ui:composition>

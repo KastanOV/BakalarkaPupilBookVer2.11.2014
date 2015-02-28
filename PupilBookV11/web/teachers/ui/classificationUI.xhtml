@@ -3,16 +3,14 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <ui:composition>
-        <ui:include src="dialogs/EditClasification.xhtml"/>
-        <ui:include src="dialogs/CreateClasification.xhtml"/>
-        #{teacherClassificationChart.setEditedStudent(teacherMainController.editedStudent)}
-        #{teacherClassificationChart.setEditedStudySubject(teacherMainController.editedStudySubject)}
-        #{teacherMainController.setLoggedUser(loginBean.userObject)}
-        #{teacherClassificationTable.setLoggedUser(loginBean.userObject)}
-        #{teacherClassificationTable.setEditedStudySubject(teacherMainController.editedStudySubject)}
-        #{teacherClassificationTable.setStudent(teacherMainController.editedStudent)}
-        <h:form id="ClassificationChart" rendered="#{teacherClassificationTable.render}">
+    <ui:composition rendered="#{teacherMainController.editedStudent != null}">
+        <h:form id="ClassificationChart">
+            #{teacherClassificationChart.setEditedStudent(teacherMainController.editedStudent)}
+            #{teacherClassificationChart.setEditedStudySubject(teacherMainController.editedStudySubject)}
+            #{teacherMainController.setLoggedUser(loginBean.userObject)}
+            #{teacherClassificationTable.setLoggedUser(loginBean.userObject)}
+            #{teacherClassificationTable.setEditedStudySubject(teacherMainController.editedStudySubject)}
+            #{teacherClassificationTable.setStudent(teacherMainController.editedStudent)}
             <p:growl id="messages" showDetail="true"/> 
             <h:panelGrid columns="2" cellpadding="5">
                 <p:outputLabel value="Popis hodnocení" for="name" />
@@ -27,7 +25,6 @@
             </h:panelGrid> 
                     <p:commandButton actionListener="#{teacherMainController.saveClassification()}" value="#{bundle.save}" update=":ClassificationChart" />
             <hr/>
-       
                 <h:outputText value="#{teacherMainController.editedStudent.lastName} #{teacherMainController.editedStudent.firstName}" style="font-size: xx-large"/>
                 <p:dataTable id="datalist" value="#{teacherClassificationTable.studentExtendResults}" var="item" >
                     <p:column>
@@ -60,7 +57,8 @@
                 </p:dataTable>
             <hr/>
                 <p:chart type="bar" model="#{teacherClassificationChart.classificationModel}" widgetVar="item"   style="height:600px;" />
-            
-        </h:form>
+        </h:form>  
+        <ui:include src="dialogs/EditClasification.xhtml"/>
+        <ui:include src="dialogs/CreateClasification.xhtml"/>     
     </ui:composition>
 </html>
