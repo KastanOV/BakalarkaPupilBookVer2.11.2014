@@ -16,8 +16,8 @@
                         <p:outputLabel value="Známka" for="classification"/>
                         <p:rating id="classification" value="#{teacherClassificationTable.editedResult.score}" stars="10"/>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{teacherClassificationTable.saveClassification}" value="#{bundle.save}" update="display,:ClassificationChart ,:growl" oncomplete="handleSubmit(args,'ClasificationEditDialog');"/>
-                    <p:commandButton actionListener="#{teacherClassificationTable.deleteClasification}" value="Odstranit" update="display,:ClassificationChart ,:growl" oncomplete="handleSubmit(args,'ClasificationEditDialog');"/>
+                    <p:commandButton actionListener="#{teacherClassificationTable.saveClassification}" value="#{bundle.save}" update="display,:ClassificationCharts ,:growl" oncomplete="handleSubmit(args,'ClasificationEditDialog');"/>
+                    <p:commandButton actionListener="#{teacherClassificationTable.deleteClasification}" value="Odstranit" update="display,:ClassificationCharts ,:growl" oncomplete="handleSubmit(args,'ClasificationEditDialog');"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

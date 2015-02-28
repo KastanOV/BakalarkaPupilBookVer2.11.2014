@@ -4,7 +4,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
     <ui:composition rendered="#{teacherMainController.editedStudent != null}">
-        <h:form id="ClassificationChart">
+        <h:form id="ClassificationCharts">
             #{teacherClassificationChart.setEditedStudent(teacherMainController.editedStudent)}
             #{teacherClassificationChart.setEditedStudySubject(teacherMainController.editedStudySubject)}
             #{teacherMainController.setLoggedUser(loginBean.userObject)}
@@ -23,7 +23,7 @@
                     </p:rating> 
                 
             </h:panelGrid> 
-                    <p:commandButton actionListener="#{teacherMainController.saveClassification()}" value="#{bundle.save}" update=":ClassificationChart" />
+                    <p:commandButton actionListener="#{teacherMainController.saveClassification()}" value="#{bundle.save}" update=":ClassificationCharts" />
             <hr/>
                 <h:outputText value="#{teacherMainController.editedStudent.lastName} #{teacherMainController.editedStudent.firstName}" style="font-size: xx-large"/>
                 <p:dataTable id="datalist" value="#{teacherClassificationTable.studentExtendResults}" var="item" >

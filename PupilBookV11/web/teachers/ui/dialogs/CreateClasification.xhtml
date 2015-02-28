@@ -15,7 +15,7 @@
                         <p:inputTextarea id="infoEdit" value="#{teacherInformations.editedInformation.idinformations}" title="Samotné informace"/>
                         
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{teacherMainController.saveClassification()}" value="#{bundle.save}" update="display,:ClassificationChart ,:growl" oncomplete="handleSubmit(args,'ClasificationCreateDialog');"/>
+                    <p:commandButton actionListener="#{teacherMainController.saveClassification()}" value="#{bundle.save}" update="display,:ClassificationCharts ,:growl" oncomplete="handleSubmit(args,'ClasificationCreateDialog');"/>
                     </h:panelGroup>
             </h:form>
         </p:dialog>
