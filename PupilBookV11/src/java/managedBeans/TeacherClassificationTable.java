@@ -61,6 +61,9 @@ public class TeacherClassificationTable implements Serializable{
     }
     
     public List<ResultsExtended> getStudentExtendResults() {
+        if(loggedUser == null || student == null || editedStudySubject == null){
+            return null;
+        }
         return ResultsSB.getStudentExtendResults(loggedUser.getLogin(), student.getLogin(), editedStudySubject.getIdStudySubject());
     }
     public void saveClassification(){

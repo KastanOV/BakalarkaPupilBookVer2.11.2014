@@ -11,7 +11,9 @@ public class Utils {
             TABLE_STUDYSUBJECT = "study_subject",
             TABLE_SHEDULEITEM = "shedule_item",
             TABLE_STUDENT = "students",
-            TABLE_RESULTS = "results";
+            TABLE_RESULTS = "results",
+            TABLE_ATTENDANCE = "attendance";
+
     //SCHOOL_YEAR
     protected static final String
             SCHOOL_YEAR_KEY_ID = "id",
@@ -52,6 +54,13 @@ public class Utils {
             RESULTS_STUDY_SUBJECT_ID = "study_subject_id",
             RESULTS_STUDENT_LOGIN = "student_login",
             RESULTS_TEACHER_LOGIN = "teacher_login";
+    //Attendance
+    protected static final String
+            ATTENDANCE_KEY_ID = "id",
+            ATTENDANCE_START = "start",
+            ATTENDANCE_END = "end",
+            ATTENDANCE_EXCUSED = "ex",
+            ATTENDANCE_LOGIN = "login";
 
     //public ResultsActivity(Integer id, String desc, short score, Date date, Integer ssId, String sL)
 }

@@ -87,5 +87,10 @@ public class AttendanceSB implements AttendanceSBLocal {
         a.setExcussed(true);
         em.merge(a);
     }
+
+    @Override
+    public List<Object> getAttendanceService(String login) {
+        return em.createNativeQuery("select * from attendance").getResultList();
+    }
     
 }
