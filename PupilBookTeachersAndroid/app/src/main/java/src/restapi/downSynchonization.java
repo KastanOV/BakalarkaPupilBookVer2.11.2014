@@ -4,7 +4,10 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 
 import java.io.IOException;
+import java.util.List;
 
+import src.DBAdapter.Attendance;
+import src.DBAdapter.AttendanceTable;
 import src.pupilbookteachers.MainActivity;
 
 /**
@@ -33,8 +36,10 @@ public class downSynchonization extends AsyncTask <String, Void, String> {
         getAttendance ga = new getAttendance(params[0], context);
         //TODO Tuhle funkci je spustit az se budou vysledky ukladat do DB
         getResults gr = new getResults(params[0], context);
+        AttendanceTable tmp = new AttendanceTable(context);
+        List<Attendance> xx = tmp.getAllAttendance();
+        String test = "test";
         try {
-
             gss.downloadUrl();
             gsg.downloadUrl();
             gsi.downloadUrl();

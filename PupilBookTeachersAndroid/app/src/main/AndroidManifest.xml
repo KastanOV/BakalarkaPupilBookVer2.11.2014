@@ -52,6 +52,10 @@
             android:name=".SheduleDayActivity"
             android:label="@string/title_activity_shedule_day" >
         </activity>
+        <activity
+            android:name=".AttendanceActivity"
+            android:label="@string/title_activity_attendance" >
+        </activity>
     </application>
 
 </manifest>

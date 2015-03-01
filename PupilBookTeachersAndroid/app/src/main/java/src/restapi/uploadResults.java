@@ -60,7 +60,6 @@ public class uploadResults {
                 } finally {
                     return newID;
                 }
-
     }
 
     private void prepareToUploadAndUpload(List<Result> results){

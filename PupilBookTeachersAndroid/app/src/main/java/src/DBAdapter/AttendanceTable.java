@@ -25,7 +25,9 @@ public class AttendanceTable extends DBMain {
 
         values.put(Utils.ATTENDANCE_KEY_ID, a.getId());
         values.put(Utils.ATTENDANCE_START, String.valueOf(a.getStart()));
-        values.put(Utils.ATTENDANCE_END, String.valueOf(a.getEnd()));
+        if(a.getEnd() != null){
+            values.put(Utils.ATTENDANCE_END, String.valueOf(a.getEnd()));
+        }
         values.put(Utils.ATTENDANCE_EXCUSED, String.valueOf(a.getExcused()));
         values.put(Utils.ATTENDANCE_LOGIN, a.getLogin());
 
@@ -39,7 +41,19 @@ public class AttendanceTable extends DBMain {
         if(cursor != null){
             cursor.moveToFirst();
         }
-        Attendance sy = new Attendance(Integer.parseInt(cursor.getString(0)), Long.valueOf(cursor.getString(1)), Long.valueOf(cursor.getString(2)), Boolean.valueOf(cursor.getString(3)), cursor.getString(4));
+        Integer attId;
+        Long end;
+        try{
+            attId = Integer.parseInt(cursor.getString(0));
+        } catch (Exception e){
+            attId = null;
+        }
+        try{
+            end = Long.valueOf(cursor.getString(2));
+        } catch (Exception e){
+            end = null;
+        }
+        Attendance sy = new Attendance(attId, Long.valueOf(cursor.getString(1)), end, Boolean.valueOf(cursor.getString(3)), cursor.getString(4));
         return sy;
     }
     public void deleteAttendance(Attendance a){
@@ -72,15 +86,21 @@ public class AttendanceTable extends DBMain {
         SQLiteDatabase db = getReadableDatabase();
 
         Cursor cursor = db.rawQuery("SELECT * FROM " + Utils.TABLE_ATTENDANCE, null);
-        Integer resultId;
+        Integer attId;
+        Long end;
         if(cursor.moveToFirst()){
             do{
                 try{
-                    resultId = Integer.parseInt(cursor.getString(0));
+                    attId = Integer.parseInt(cursor.getString(0));
                 } catch (Exception e){
-                    resultId = null;
+                    attId = null;
                 }
-                Attendance sy = new Attendance(Integer.parseInt(cursor.getString(0)), Long.valueOf(cursor.getString(1)), Long.valueOf(cursor.getString(2)), Boolean.valueOf(cursor.getString(3)), cursor.getString(4));
+                try{
+                    end = Long.valueOf(cursor.getString(2));
+                } catch (Exception e){
+                    end = null;
+                }
+                Attendance sy = new Attendance(attId, Long.valueOf(cursor.getString(1)), end, Boolean.valueOf(cursor.getString(3)), cursor.getString(4));
 
                 sys.add(sy);
             } while(cursor.moveToNext());
@@ -94,17 +114,21 @@ public class AttendanceTable extends DBMain {
 
         Cursor cursor = db.rawQuery("SELECT * FROM " + Utils.TABLE_ATTENDANCE
                 + " WHERE " + Utils.ATTENDANCE_KEY_ID + " IS NULL", null);
-        Integer resultId;
+        Integer attId;
+        Long end;
         if(cursor.moveToFirst()){
             do{
                 try{
-                    resultId = Integer.parseInt(cursor.getString(0));
+                    attId = Integer.parseInt(cursor.getString(0));
                 } catch (Exception e){
-                    resultId = null;
+                    attId = null;
                 }
-                Attendance sy = new Attendance(Integer.parseInt(cursor.getString(0)), Long.valueOf(cursor.getString(1)), Long.valueOf(cursor.getString(2)), Boolean.valueOf(cursor.getString(3)), cursor.getString(4));
-
-                sys.add(sy);
+                try{
+                    end = Long.valueOf(cursor.getString(2));
+                } catch (Exception e){
+                    end = null;
+                }
+                Attendance sy = new Attendance(attId, Long.valueOf(cursor.getString(1)), end, Boolean.valueOf(cursor.getString(3)), cursor.getString(4));
             } while(cursor.moveToNext());
         }
         return sys;
@@ -116,20 +140,24 @@ public class AttendanceTable extends DBMain {
                 + " WHERE " + Utils.ATTENDANCE_LOGIN + " = '" + StudentLogin
                 + "'", null);
 
-        Integer resultId;
+        Integer attId;
+        Long end;
         if(cursor.moveToFirst()){
             do{
                 try{
-                    resultId = Integer.parseInt(cursor.getString(0));
+                    attId = Integer.parseInt(cursor.getString(0));
                 } catch (Exception e){
-                    resultId = null;
+                    attId = null;
                 }
-                Attendance sy = new Attendance(Integer.parseInt(cursor.getString(0)), Long.valueOf(cursor.getString(1)), Long.valueOf(cursor.getString(2)), Boolean.valueOf(cursor.getString(3)), cursor.getString(4));
-
-                sys.add(sy);
+                try{
+                    end = Long.valueOf(cursor.getString(2));
+                } catch (Exception e){
+                    end = null;
+                }
+                Attendance sy = new Attendance(attId, Long.valueOf(cursor.getString(1)), end, Boolean.valueOf(cursor.getString(3)), cursor.getString(4));
             } while(cursor.moveToNext());
         }
-        return  sys;
+        return sys;
     }
     public void deleteAllAttendance(){
         SQLiteDatabase db = getWritableDatabase();

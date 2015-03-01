@@ -22,5 +22,8 @@
     <string name="SheduleButton">Rozvrh hodin</string>
     <string name="Logout">Odhlásit</string>
     <string name="title_activity_shedule_day">SheduleDayActivity</string>
+    <string name="title_activity_attendance">Attendance</string>
+    <string name="missing">Nepřítomen</string>
+    <string name="returnButton">Příchod</string>
 
 </resources>

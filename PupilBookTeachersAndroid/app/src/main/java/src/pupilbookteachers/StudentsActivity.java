@@ -44,6 +44,11 @@ public class StudentsActivity extends Activity {
         in.putExtra("selectecStudent", SelectedStudent);
         startActivity(in);
     }
+    public void goToAttendance(View view){
+        Intent in = new Intent(this, AttendanceActivity.class);
+        in.putExtra("selectecStudent", SelectedStudent);
+        startActivity(in);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

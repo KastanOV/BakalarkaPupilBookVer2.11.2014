@@ -54,7 +54,7 @@ public class Utils {
             RESULTS_STUDY_SUBJECT_ID = "study_subject_id",
             RESULTS_STUDENT_LOGIN = "student_login",
             RESULTS_TEACHER_LOGIN = "teacher_login";
-    //Attendance
+    //AttendanceActivity
     protected static final String
             ATTENDANCE_KEY_ID = "id",
             ATTENDANCE_START = "start",
