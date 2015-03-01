@@ -46,13 +46,7 @@ public class ResultsResource {
         }
         return items;
     }
-    /*@POST
-    @Consumes({"application/xml", "application/json"})
-    public void newResults(@PathParam("id") String id, @PathParam("date") String date){
-        String nasrta = id;
-        String da = date;
-    }*/
-    //http://localhost:8080/PupilBookV11/webresources/Results/CHL000/chlup
+
     @POST
     @Consumes({"application/xml", "application/json"})
     public String create(servicesDTO.Results res) {

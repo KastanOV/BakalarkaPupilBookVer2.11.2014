@@ -18,12 +18,16 @@
 package SessionBeans;
 
 import Entity.Attendance;
+import Entity.Schoolyear;
 import Entity.Student;
 import Entity.Studygroup;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import servicesDTO.AttendanceDTO;
 
 /**
  *
@@ -89,8 +93,45 @@ public class AttendanceSB implements AttendanceSBLocal {
     }
 
     @Override
-    public List<Object> getAttendanceService(String login) {
-        return em.createNativeQuery("select * from attendance").getResultList();
+    public List<AttendanceDTO> getAttendanceService(String login) {
+        List<AttendanceDTO> retval = new ArrayList<>();
+        try{
+            List<Object[]> tmp = em.createNativeQuery("select * from attendance a " +
+                " where a.users_login in (" +
+                " select distinct us.Login from sheduleitem si " +
+                " join studygroup sg on si.StudyGroup_idStudyGroup = sg.idStudyGroup " +
+                " join users us on us.StudyGroup_idStudyGroup = sg.idStudyGroup " +
+                " where si.Users_Login = ?login and sg.SchoolYear_idSchoolYear = ?si)")
+                    .setParameter("login", login)
+                    .setParameter("si", getActualSchoolYear())
+                    .getResultList();
+            AttendanceDTO addvat;
+            for(Object[] item : tmp){
+                addvat = new AttendanceDTO();
+                addvat.setId((Integer) item[0]);
+                addvat.setStart(String.valueOf(((Date) item[1]).getTime()));
+                Long timeTmp;
+                try {
+                    timeTmp =  ((Date) item[2]).getTime();
+                } catch (Exception e){
+                    timeTmp = null;
+                }
+                addvat.setEnd(String.valueOf(timeTmp));
+                
+                addvat.setExcused((String) String.valueOf(item[3]));
+                addvat.setLogin((String) item[4]);
+                retval.add(addvat);
+                
+            }
+        return retval;
+        } catch( Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
-    
+    private int getActualSchoolYear(){
+        Schoolyear idActualYear = (Schoolyear) em.createNativeQuery("SELECT * FROM schoolyear WHERE schoolyear.isactualyear = true", Schoolyear.class)
+                .getSingleResult();
+        return idActualYear.getIdSchoolYear();
+    }
 }

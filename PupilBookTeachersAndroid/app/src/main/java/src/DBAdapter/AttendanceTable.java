@@ -39,7 +39,7 @@ public class AttendanceTable extends DBMain {
         if(cursor != null){
             cursor.moveToFirst();
         }
-        Attendance sy = new Attendance(Integer.parseInt(cursor.getString(0)), Date.valueOf(cursor.getString(1)), Date.valueOf(cursor.getString(2)), Boolean.valueOf(cursor.getString(3)), cursor.getString(4));
+        Attendance sy = new Attendance(Integer.parseInt(cursor.getString(0)), Long.valueOf(cursor.getString(1)), Long.valueOf(cursor.getString(2)), Boolean.valueOf(cursor.getString(3)), cursor.getString(4));
         return sy;
     }
     public void deleteAttendance(Attendance a){
@@ -80,7 +80,7 @@ public class AttendanceTable extends DBMain {
                 } catch (Exception e){
                     resultId = null;
                 }
-                Attendance sy = new Attendance(Integer.parseInt(cursor.getString(0)), Date.valueOf(cursor.getString(1)), Date.valueOf(cursor.getString(2)), Boolean.valueOf(cursor.getString(3)), cursor.getString(4));
+                Attendance sy = new Attendance(Integer.parseInt(cursor.getString(0)), Long.valueOf(cursor.getString(1)), Long.valueOf(cursor.getString(2)), Boolean.valueOf(cursor.getString(3)), cursor.getString(4));
 
                 sys.add(sy);
             } while(cursor.moveToNext());
@@ -102,7 +102,7 @@ public class AttendanceTable extends DBMain {
                 } catch (Exception e){
                     resultId = null;
                 }
-                Attendance sy = new Attendance(Integer.parseInt(cursor.getString(0)), Date.valueOf(cursor.getString(1)), Date.valueOf(cursor.getString(2)), Boolean.valueOf(cursor.getString(3)), cursor.getString(4));
+                Attendance sy = new Attendance(Integer.parseInt(cursor.getString(0)), Long.valueOf(cursor.getString(1)), Long.valueOf(cursor.getString(2)), Boolean.valueOf(cursor.getString(3)), cursor.getString(4));
 
                 sys.add(sy);
             } while(cursor.moveToNext());
@@ -124,7 +124,7 @@ public class AttendanceTable extends DBMain {
                 } catch (Exception e){
                     resultId = null;
                 }
-                Attendance sy = new Attendance(Integer.parseInt(cursor.getString(0)), Date.valueOf(cursor.getString(1)), Date.valueOf(cursor.getString(2)), Boolean.valueOf(cursor.getString(3)), cursor.getString(4));
+                Attendance sy = new Attendance(Integer.parseInt(cursor.getString(0)), Long.valueOf(cursor.getString(1)), Long.valueOf(cursor.getString(2)), Boolean.valueOf(cursor.getString(3)), cursor.getString(4));
 
                 sys.add(sy);
             } while(cursor.moveToNext());

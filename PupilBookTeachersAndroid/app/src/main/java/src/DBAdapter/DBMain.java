@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created by Topr on 11/30/2014.
  */
 public abstract class DBMain extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 6;
 
     public DBMain(Context context) {
         super(context, Utils.DATABASE_NAME,  null, DATABASE_VERSION);
@@ -45,7 +45,7 @@ public abstract class DBMain extends SQLiteOpenHelper {
                 + Utils.ATTENDANCE_START + " TEXT, "
                 + Utils.ATTENDANCE_END + " TEXT, "
                 + Utils.ATTENDANCE_EXCUSED + " INTEGER, "
-                + Utils.ATTENDANCE_LOGIN + " TEXT, ");
+                + Utils.ATTENDANCE_LOGIN + " TEXT) ");
     }
 
     @Override
@@ -56,6 +56,7 @@ public abstract class DBMain extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + Utils.TABLE_STUDYGROUP);
         db.execSQL("DROP TABLE IF EXISTS " + Utils.TABLE_STUDYSUBJECT);
         db.execSQL("DROP TABLE IF EXISTS " + Utils.TABLE_RESULTS);
+        db.execSQL("DROP TABLE IF EXISTS " + Utils.TABLE_ATTENDANCE);
         onCreate(db);
     }
 }

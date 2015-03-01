@@ -30,6 +30,7 @@ public class downSynchonization extends AsyncTask <String, Void, String> {
         getStudyGroups gsg = new getStudyGroups(params[0], context);
         getSheduleItems gsi = new getSheduleItems(params[0], context);
         getStudents gs = new getStudents(params[0],context);
+        getAttendance ga = new getAttendance(params[0], context);
         //TODO Tuhle funkci je spustit az se budou vysledky ukladat do DB
         getResults gr = new getResults(params[0], context);
         try {
@@ -39,6 +40,7 @@ public class downSynchonization extends AsyncTask <String, Void, String> {
             gsi.downloadUrl();
             gs.downloadUrl();
             gr.downloadUrl();
+            ga.downloadUrl();
         } catch (IOException e) {
             e.printStackTrace();
         }

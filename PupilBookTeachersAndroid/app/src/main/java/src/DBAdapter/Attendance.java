@@ -7,17 +7,21 @@ import java.util.Date;
  */
 public class Attendance {
     private Integer id;
-    private Date start;
-    private Date end;
+    private Long start;
+    private Long end;
     private Boolean excused;
     private String login;
 
-    public Attendance(Integer id, Date start, Date end, Boolean excused, String login) {
+
+    public Attendance(Integer id, Long start, Long end, Boolean excused, String login) {
         this.id = id;
         this.start = start;
         this.end = end;
         this.excused = excused;
         this.login = login;
+    }
+
+    public Attendance() {
     }
 
     public Integer getId() {
@@ -28,19 +32,27 @@ public class Attendance {
         this.id = id;
     }
 
-    public Date getStart() {
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public Long getStart() {
         return start;
     }
 
-    public void setStart(Date start) {
+    public void setStart(Long start) {
         this.start = start;
     }
 
-    public Date getEnd() {
+    public Long getEnd() {
         return end;
     }
 
-    public void setEnd(Date end) {
+    public void setEnd(Long end) {
         this.end = end;
     }
 
@@ -50,13 +62,5 @@ public class Attendance {
 
     public void setExcused(Boolean excused) {
         this.excused = excused;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
     }
 }

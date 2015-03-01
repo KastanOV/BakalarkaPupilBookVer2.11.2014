@@ -18,12 +18,8 @@
 package service;
 
 import SessionBeans.AttendanceSBLocal;
-import SessionBeans.loginSessionBeanLocal;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -32,6 +28,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
+import servicesDTO.AttendanceDTO;
 
 /**
  *
@@ -47,11 +44,9 @@ public class AttendanceResource {
     private UriInfo context;
     
     @GET
-    @Path("{login}")
-    @Consumes(MediaType.APPLICATION_XML)
-    @Produces(MediaType.APPLICATION_XML)
-    public List<Object> getInformations(@PathParam("login") String login){
-        List<Object> tmp = SB.getAttendanceService("test");
-        return tmp;
+    @Path("{login}/{password}")
+    @Consumes({"application/xml", "application/json"})
+    public List<AttendanceDTO> getInformations(@PathParam("login") String login, @PathParam("password") String password){
+        return SB.getAttendanceService(login);
     }
 }

@@ -22,6 +22,7 @@ import Entity.Student;
 import Entity.Studygroup;
 import java.util.List;
 import javax.ejb.Local;
+import servicesDTO.AttendanceDTO;
 
 /**
  *
@@ -32,8 +33,7 @@ public interface AttendanceSBLocal {
     public void deleteAttendance(Attendance a);
     public Attendance saveAttendance(Attendance a);
     public void setAttendanceExcused(Attendance a);
-    
     //public List<Attendance> getAttendance(Student t);
     public List<Attendance> getAttendance(Student s, Studygroup sg);
-    public List<Object> getAttendanceService(String login);
+    public List<AttendanceDTO> getAttendanceService(String login);
 }

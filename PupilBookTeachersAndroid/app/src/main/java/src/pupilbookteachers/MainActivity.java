@@ -33,8 +33,8 @@ public class MainActivity extends Activity {
     public final static String LOGIN = "login";
     public final static String PASSWORD = "password";
     public SharedPreferences sharedpreferences;
-    //private String LOCAL_URL = "http://192.168.1.61:8080/PupilBookV11/webresources/";
-    private String LOCAL_URL = "http://86.49.147.135:9001/PupilBookV11/webresources/";
+    private String LOCAL_URL = "http://192.168.1.109:8080/PupilBookV11/webresources/";
+    //private String LOCAL_URL = "http://86.49.147.135:9001/PupilBookV11/webresources/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
