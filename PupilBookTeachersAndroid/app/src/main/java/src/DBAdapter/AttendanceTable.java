@@ -136,9 +136,9 @@ public class AttendanceTable extends DBMain {
     public List<Attendance> getAttendance(String StudentLogin){
         List<Attendance> sys = new ArrayList<Attendance>();
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + Utils.TABLE_ATTENDANCE
-                + " WHERE " + Utils.ATTENDANCE_LOGIN + " = '" + StudentLogin
-                + "'", null);
+        String query = "SELECT * FROM " + Utils.TABLE_ATTENDANCE
+                + " WHERE " + Utils.ATTENDANCE_LOGIN + " = '" + StudentLogin + "'";
+        Cursor cursor = db.rawQuery(query, null);
 
         Integer attId;
         Long end;
@@ -155,6 +155,7 @@ public class AttendanceTable extends DBMain {
                     end = null;
                 }
                 Attendance sy = new Attendance(attId, Long.valueOf(cursor.getString(1)), end, Boolean.valueOf(cursor.getString(3)), cursor.getString(4));
+                sys.add(sy);
             } while(cursor.moveToNext());
         }
         return sys;

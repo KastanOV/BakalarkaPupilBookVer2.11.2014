@@ -41,7 +41,7 @@
                             <h:outputText value="#{itemTab.firstName}" />
                         </p:column>
                         <p:column>
-                            <p:commandButton value="Vybrat"  >
+                            <p:commandButton value="Vybrat" onclick="submit()" >
                                 <p:ajax listener="#{teacherMainController.setEditedStudent(itemTab)}" update=":ClassificationCharts"/>
 
                             </p:commandButton>
