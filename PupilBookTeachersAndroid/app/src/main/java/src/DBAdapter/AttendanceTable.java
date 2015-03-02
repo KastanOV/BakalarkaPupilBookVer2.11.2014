@@ -18,12 +18,13 @@ public class AttendanceTable extends DBMain {
         super(context);
 
     }
-
     public void createAttendance(Attendance a){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
+        if(a.getId() != null){
+            values.put(Utils.ATTENDANCE_KEY_ID, a.getId());
+        }
 
-        values.put(Utils.ATTENDANCE_KEY_ID, a.getId());
         values.put(Utils.ATTENDANCE_START, String.valueOf(a.getStart()));
         if(a.getEnd() != null){
             values.put(Utils.ATTENDANCE_END, String.valueOf(a.getEnd()));
@@ -77,8 +78,8 @@ public class AttendanceTable extends DBMain {
         values.put(Utils.ATTENDANCE_END, String.valueOf(a.getEnd()));
         values.put(Utils.ATTENDANCE_EXCUSED, String.valueOf(a.getExcused()));
         values.put(Utils.ATTENDANCE_LOGIN, a.getLogin());
-        return db.update(Utils.TABLE_ATTENDANCE,values, Utils.ATTENDANCE_KEY_ID + "=?", new String[] {String.valueOf(a.getId())});
-
+        values.put(Utils.ATTENDANCE_CHANGED, 1);
+        return db.update(Utils.TABLE_ATTENDANCE,values, Utils.ATTENDANCE_START + "=?", new String[] {String.valueOf(a.getStart())});
     }
     public List<Attendance> getAllAttendance(){
         List<Attendance> sys = new ArrayList<Attendance>();
@@ -137,7 +138,7 @@ public class AttendanceTable extends DBMain {
         List<Attendance> sys = new ArrayList<Attendance>();
         SQLiteDatabase db = getReadableDatabase();
         String query = "SELECT * FROM " + Utils.TABLE_ATTENDANCE
-                + " WHERE " + Utils.ATTENDANCE_LOGIN + " = '" + StudentLogin + "'";
+                + " WHERE " + Utils.ATTENDANCE_LOGIN + " = '" + StudentLogin + "' ORDER BY " + Utils.ATTENDANCE_START + " DESC ";
         Cursor cursor = db.rawQuery(query, null);
 
         Integer attId;

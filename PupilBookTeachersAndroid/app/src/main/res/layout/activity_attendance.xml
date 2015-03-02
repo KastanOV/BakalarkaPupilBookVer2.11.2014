@@ -21,7 +21,8 @@
         android:id="@+id/missingButton"
         android:layout_below="@+id/nameView"
 
-        android:layout_alignParentLeft="true" />
+        android:layout_alignParentLeft="true"
+        android:onClick="clickMissingAttendance" />
 
     <Button
         android:layout_width="wrap_content"
@@ -31,7 +32,8 @@
 
         android:layout_below="@+id/nameView"
 
-        android:layout_alignParentRight="true"/>
+        android:layout_alignParentRight="true"
+        android:onClick="clickReturnAttendance" />
 
     <ListView
         android:layout_width="wrap_content"

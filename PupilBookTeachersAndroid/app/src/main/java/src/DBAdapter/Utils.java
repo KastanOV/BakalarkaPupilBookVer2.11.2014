@@ -60,7 +60,8 @@ public class Utils {
             ATTENDANCE_START = "start",
             ATTENDANCE_END = "end",
             ATTENDANCE_EXCUSED = "ex",
-            ATTENDANCE_LOGIN = "login";
+            ATTENDANCE_LOGIN = "login",
+            ATTENDANCE_CHANGED = "changed";
 
     //public ResultsActivity(Integer id, String desc, short score, Date date, Integer ssId, String sL)
 }
