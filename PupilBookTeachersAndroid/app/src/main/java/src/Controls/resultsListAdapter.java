@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
@@ -46,6 +47,7 @@ public class resultsListAdapter extends ArrayAdapter<Result> {
 
         return rowView;
     }
+
     public String getconvertdate(String date)
     {
         long dateValue = 0;

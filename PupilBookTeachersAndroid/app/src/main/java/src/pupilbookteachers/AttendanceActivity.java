@@ -1,17 +1,22 @@
 package src.pupilbookteachers;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Date;
 import java.util.List;
 
+import src.Controls.SpinnerObject;
 import src.Controls.attendanceListAdapter;
 import src.Controls.resultsListAdapter;
 import src.DBAdapter.Attendance;
@@ -25,16 +30,32 @@ public class AttendanceActivity extends Activity {
     private String StudentLogin;
     private ListView listViewAttendance;
     private TextView nameText;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = this;
         setContentView(R.layout.activity_attendance);
         StudentLogin = getIntent().getStringExtra("selectecStudent");
         nameText = (TextView) findViewById(R.id.nameView);
         StudentTable stTab = new StudentTable(this);
         nameText.setText(stTab.getStudent(StudentLogin).getLastName() + " " + stTab.getStudent(StudentLogin).getLastName());
         fillListViewAttendance();
+
+        listViewAttendance.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, final View view,
+                                           int position, long id) {
+                Attendance at = (Attendance) parent.getAdapter().getItem(position);
+                if(at.getExcused() == true) at.setExcused(false);
+                else at.setExcused(true);
+                AttendanceTable att = new AttendanceTable(context);
+                att.updateAttendance(at);
+                fillListViewAttendance();
+                return true;
+            }
+        });
     }
 
     private void fillListViewAttendance(){
@@ -98,4 +119,5 @@ public class AttendanceActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }

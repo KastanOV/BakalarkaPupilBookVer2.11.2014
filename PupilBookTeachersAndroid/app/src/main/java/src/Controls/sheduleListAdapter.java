@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
@@ -18,7 +19,7 @@ import src.pupilbookteachers.UtilScores;
 /**
  * Created by Topr on 12/8/2014.
  */
-public class sheduleListAdapter extends ArrayAdapter<SheduleItem>{
+public class sheduleListAdapter extends ArrayAdapter<SheduleItem> {
     private final Context context;
     private final SheduleItem[] values;
 
@@ -61,4 +62,5 @@ public class sheduleListAdapter extends ArrayAdapter<SheduleItem>{
 
         return rowView;
     }
+
 }

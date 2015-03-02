@@ -108,32 +108,6 @@ public class AttendanceTable extends DBMain {
         }
         return sys;
     }
-    public List<Attendance> getNewAttendanceForUpload(){
-        List<Attendance> sys = new ArrayList<Attendance>();
-
-        SQLiteDatabase db = getReadableDatabase();
-
-        Cursor cursor = db.rawQuery("SELECT * FROM " + Utils.TABLE_ATTENDANCE
-                + " WHERE " + Utils.ATTENDANCE_KEY_ID + " IS NULL", null);
-        Integer attId;
-        Long end;
-        if(cursor.moveToFirst()){
-            do{
-                try{
-                    attId = Integer.parseInt(cursor.getString(0));
-                } catch (Exception e){
-                    attId = null;
-                }
-                try{
-                    end = Long.valueOf(cursor.getString(2));
-                } catch (Exception e){
-                    end = null;
-                }
-                Attendance sy = new Attendance(attId, Long.valueOf(cursor.getString(1)), end, Boolean.valueOf(cursor.getString(3)), cursor.getString(4));
-            } while(cursor.moveToNext());
-        }
-        return sys;
-    }
     public List<Attendance> getAttendance(String StudentLogin){
         List<Attendance> sys = new ArrayList<Attendance>();
         SQLiteDatabase db = getReadableDatabase();
@@ -165,6 +139,31 @@ public class AttendanceTable extends DBMain {
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("DELETE FROM " + Utils.TABLE_ATTENDANCE + " WHERE " + Utils.ATTENDANCE_KEY_ID + " IS NOT NULL");
     }
+    public List<Attendance> getNewAttendanceForUpload(){
+        List<Attendance> sys = new ArrayList<Attendance>();
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + Utils.TABLE_ATTENDANCE
+                + " WHERE " + Utils.ATTENDANCE_KEY_ID + " IS NULL OR " + Utils.ATTENDANCE_CHANGED + " = 1", null);
+        Integer attId;
+        Long end;
+        if(cursor.moveToFirst()){
+            do{
+                try{
+                    attId = Integer.parseInt(cursor.getString(0));
+                } catch (Exception e){
+                    attId = null;
+                }
+                try{
+                    end = Long.valueOf(cursor.getString(2));
+                } catch (Exception e){
+                    end = null;
+                }
+                Attendance sy = new Attendance(attId, Long.valueOf(cursor.getString(1)), end, Boolean.valueOf(cursor.getString(3)), cursor.getString(4));
+                sys.add(sy);
+            } while(cursor.moveToNext());
+        }
+        return sys;
+    }
     public void updateUploadedAttendance(Attendance a){
         SQLiteDatabase db = getWritableDatabase();
 
@@ -173,7 +172,8 @@ public class AttendanceTable extends DBMain {
                 + Utils.ATTENDANCE_KEY_ID + " = " + a.getId()
                 + " WHERE "
                 + Utils.ATTENDANCE_START + " = '" + String.valueOf(a.getStart()) + "' AND "
-                + Utils.ATTENDANCE_LOGIN + " = " + a.getLogin());
+                + Utils.ATTENDANCE_LOGIN + " = " + a.getLogin()
+                + Utils.ATTENDANCE_CHANGED + " = 0");
         db.close();
 
     }
