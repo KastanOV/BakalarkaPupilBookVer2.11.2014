@@ -54,8 +54,9 @@ public class MainActivity extends Activity {
             Intent in =  new Intent(this, LoginActivity.class);
             startActivity(in);
         }
-        //Automatická synchronizace
-        new autoSynchronization(this).execute(LOCAL_URL);
+        autoSynchronization autSync = new autoSynchronization(this,LOCAL_URL);
+        autSync.start();
+
     }
 
     public void logout(View view) {

@@ -113,7 +113,6 @@ public class AttendanceSB implements AttendanceSBLocal {
                 addvat.setExcused((String) String.valueOf(item[3]));
                 addvat.setLogin((String) item[4]);
                 retval.add(addvat);
-                
             }
         return retval;
         } catch( Exception e){

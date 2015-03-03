@@ -35,10 +35,12 @@ public class AttendanceTable extends DBMain {
         db.insert(Utils.TABLE_ATTENDANCE, null, values);
         db.close();
     }
+    //TODO This method dont work
     public Attendance getAttendance(int id){
         SQLiteDatabase db = getReadableDatabase();
-
-        Cursor cursor = db.query(Utils.TABLE_ATTENDANCE, new String[] {Utils.ATTENDANCE_KEY_ID,Utils.ATTENDANCE_START, Utils.ATTENDANCE_END,Utils.ATTENDANCE_EXCUSED,Utils.ATTENDANCE_LOGIN}, Utils.ATTENDANCE_KEY_ID + "=?", new String[] {String.valueOf(id) }, null,null, null, null);
+        String query = "SELECT * FROM " + Utils.TABLE_ATTENDANCE
+                + " WHERE " + Utils.ATTENDANCE_KEY_ID + " = " + id ;
+        Cursor cursor = db.rawQuery(query, null);
         if(cursor != null){
             cursor.moveToFirst();
         }
@@ -60,6 +62,16 @@ public class AttendanceTable extends DBMain {
     public void deleteAttendance(Attendance a){
         SQLiteDatabase db = getWritableDatabase();
         db.delete(Utils.TABLE_ATTENDANCE, Utils.ATTENDANCE_KEY_ID + "=?", new String[]{String.valueOf(a.getId()) });
+        db.close();
+    }
+    public void deleteAttendance(Integer id){
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete(Utils.TABLE_ATTENDANCE, Utils.ATTENDANCE_KEY_ID + "=?", new String[]{String.valueOf(id) });
+        db.close();
+    }
+    public void deleteAttendance(Long start){
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete(Utils.TABLE_ATTENDANCE, Utils.ATTENDANCE_START + "=?", new String[]{String.valueOf(start) });
         db.close();
     }
     public int getAttendanceCount(){
@@ -166,26 +178,13 @@ public class AttendanceTable extends DBMain {
     }
     public void updateUploadedAttendance(Attendance a){
         Integer id = a.getId();
-
+        Long start = a.getStart();
         if(id == null){
             createAttendance(a);
 
         }else{
-            Attendance at = getAttendance(id);
-            deleteAttendance(a);
+            deleteAttendance(start);
             createAttendance(a);
         }
-
-        //SQLiteDatabase db = getWritableDatabase();
-
-        //db.execSQL("UPDATE " + Utils.TABLE_ATTENDANCE
-        //        + " SET "
-        //        + Utils.ATTENDANCE_KEY_ID + " = " + a.getId() + " , "
-        //        + Utils.ATTENDANCE_CHANGED + " = 0 "
-        //        + " WHERE "
-        //        + Utils.ATTENDANCE_START + " = '" + String.valueOf(a.getStart()) + "' AND "
-        //        + Utils.ATTENDANCE_LOGIN + " = '" + a.getLogin() + "'");
-        //db.close();
-
     }
 }

@@ -110,6 +110,7 @@ public class getAttendance {
                             start = Long.parseLong(text);
                             Attendance si = new Attendance(id,start,end,Boolean.valueOf(excused),login);
                             db.createAttendance(si);
+                            start = null; end = null;text=null; excused = null; login = null;
                         }
                         else{
                         }

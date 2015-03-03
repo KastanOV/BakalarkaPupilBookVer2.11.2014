@@ -28,11 +28,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
             #{teacherAttendance.setEditedStudent(teacherMainController.editedStudent)}
             #{teacherAttendance.setEditedStudyGroup(teacherMainController.editedStudyGroup)}
             
+            <style type="text/css">
+                .success {
+                    background-color: #dff0d8;
+                }
+                .warning {
+                    background-color: #f2dede;
+                }
+            </style>
+            
             <p:dataTable id="InformationsTable" var="ListItem" value="#{teacherAttendance.attendance}"
                      paginator="true"
                      paginatorPosition="bottom"
                      rows="10"
-                     rowsPerPageTemplate="10,20,30,40,50">
+                     rowsPerPageTemplate="10,20,30,40,50"
+                     rowStyleClass="#{ListItem.excussed ? 'success' : 'warning'}">
                 <f:facet name="header">
                     <p:commandButton id="createButtoninformationStudent" icon="ui-icon-plus" value="Student #{teacherMainController.editedStudent.lastName} #{teacherMainController.editedStudent.firstName} není přítomen." rendered="#{teacherAttendance.editedStudent != null}" update="InformationsTable">
                         <p:ajax listener="#{teacherAttendance.addAttendance()}"/>
@@ -56,17 +66,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                     </f:facet>
                     <h:outputText value="#{ListItem.usersLogin.lastName} #{ListItem.usersLogin.firstName}"/>
                 </p:column>
-                <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="Omluven"/>
-                    </f:facet>
-                    <h:outputText value="#{ListItem.excussed}"/>
-                </p:column>
+                
                 <p:column>
                     <f:facet name="header">
                         <h:outputText value="Omluvenky"/>
                     </f:facet>
-                    <p:commandButton update=":AttendanceTable" value="Omluvit" icon="ui-icon-search" disabled="#{!ListItem.excussed}">
+                    <p:commandButton update=":AttendanceTable" value="Omluvit" icon="ui-icon-search" disabled="#{ListItem.excussed}">
                         <p:ajax listener="#{teacherAttendance.setAttendanceExcused(ListItem)}"/>
                     </p:commandButton>
                 </p:column>

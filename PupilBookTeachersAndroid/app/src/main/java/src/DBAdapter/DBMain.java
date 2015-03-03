@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created by Topr on 11/30/2014.
  */
 public abstract class DBMain extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 8;
+    private static final int DATABASE_VERSION = 9;
 
     public DBMain(Context context) {
         super(context, Utils.DATABASE_NAME,  null, DATABASE_VERSION);
