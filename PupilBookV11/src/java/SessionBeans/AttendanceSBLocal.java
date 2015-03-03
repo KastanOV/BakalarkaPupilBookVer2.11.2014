@@ -36,4 +36,5 @@ public interface AttendanceSBLocal {
     //public List<Attendance> getAttendance(Student t);
     public List<Attendance> getAttendance(Student s, Studygroup sg);
     public List<AttendanceDTO> getAttendanceService(String login);
+    public int UploadAttendance(AttendanceDTO at);
 }

@@ -165,16 +165,27 @@ public class AttendanceTable extends DBMain {
         return sys;
     }
     public void updateUploadedAttendance(Attendance a){
-        SQLiteDatabase db = getWritableDatabase();
+        Integer id = a.getId();
 
-        db.execSQL("UPDATE " + Utils.TABLE_ATTENDANCE
-                + " SET "
-                + Utils.ATTENDANCE_KEY_ID + " = " + a.getId()
-                + " WHERE "
-                + Utils.ATTENDANCE_START + " = '" + String.valueOf(a.getStart()) + "' AND "
-                + Utils.ATTENDANCE_LOGIN + " = " + a.getLogin()
-                + Utils.ATTENDANCE_CHANGED + " = 0");
-        db.close();
+        if(id == null){
+            createAttendance(a);
+
+        }else{
+            Attendance at = getAttendance(id);
+            deleteAttendance(a);
+            createAttendance(a);
+        }
+
+        //SQLiteDatabase db = getWritableDatabase();
+
+        //db.execSQL("UPDATE " + Utils.TABLE_ATTENDANCE
+        //        + " SET "
+        //        + Utils.ATTENDANCE_KEY_ID + " = " + a.getId() + " , "
+        //        + Utils.ATTENDANCE_CHANGED + " = 0 "
+        //        + " WHERE "
+        //        + Utils.ATTENDANCE_START + " = '" + String.valueOf(a.getStart()) + "' AND "
+        //        + Utils.ATTENDANCE_LOGIN + " = '" + a.getLogin() + "'");
+        //db.close();
 
     }
 }

@@ -24,7 +24,9 @@ import src.DBAdapter.StudyGroup;
 import src.DBAdapter.StudyGroupTable;
 import src.DBAdapter.StudySubject;
 import src.DBAdapter.StudySubjectTable;
+import src.restapi.autoSynchronization;
 import src.restapi.downSynchonization;
+
 
 
 public class MainActivity extends Activity {
@@ -52,6 +54,8 @@ public class MainActivity extends Activity {
             Intent in =  new Intent(this, LoginActivity.class);
             startActivity(in);
         }
+        //Automatická synchronizace
+        new autoSynchronization(this).execute(LOCAL_URL);
     }
 
     public void logout(View view) {
@@ -82,10 +86,8 @@ public class MainActivity extends Activity {
             // TODO Connection Error Dialog
             String error = "error";
         }
-
     }
     public void myClickHandler(View view) {
-
         StudySubjectTable db = new StudySubjectTable(this);
         StudyGroupTable dbg = new StudyGroupTable(this);
         SheduleItemTable dbsi = new SheduleItemTable(this);

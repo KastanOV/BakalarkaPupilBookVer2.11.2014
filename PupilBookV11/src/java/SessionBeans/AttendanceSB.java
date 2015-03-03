@@ -21,6 +21,7 @@ import Entity.Attendance;
 import Entity.Schoolyear;
 import Entity.Student;
 import Entity.Studygroup;
+import Entity.Users;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -53,13 +54,6 @@ public class AttendanceSB implements AttendanceSBLocal {
     public void deleteAttendance(Attendance a){
         em.remove(em.find(Attendance.class, a.getIdAttendance()));
     }
-//    @Override
-//    public List<Attendance> getAttendance(Student t){
-//        return em.createNativeQuery("SELECT * FROM attendance where Users_Login = ?ul", Attendance.class)
-//                .setParameter("ul", t.getLogin())
-//                .getResultList();
-//    }
-
     @Override
     public List<Attendance> getAttendance(Student s, Studygroup sg) {
         StringBuilder query = new StringBuilder();
@@ -84,14 +78,12 @@ public class AttendanceSB implements AttendanceSBLocal {
         }
         return null;
     }
-
     @Override
     public void setAttendanceExcused(Attendance a) {
         a = em.find(Attendance.class, a.getIdAttendance());
         a.setExcussed(true);
         em.merge(a);
     }
-
     @Override
     public List<AttendanceDTO> getAttendanceService(String login) {
         List<AttendanceDTO> retval = new ArrayList<>();
@@ -133,5 +125,38 @@ public class AttendanceSB implements AttendanceSBLocal {
         Schoolyear idActualYear = (Schoolyear) em.createNativeQuery("SELECT * FROM schoolyear WHERE schoolyear.isactualyear = true", Schoolyear.class)
                 .getSingleResult();
         return idActualYear.getIdSchoolYear();
+    }
+    @Override
+    public int UploadAttendance(AttendanceDTO at) {
+        if(at.getId() == null){
+            Attendance nat = new Attendance();
+            nat.setExcussed(Boolean.valueOf(at.getExcused()));
+            nat.setMissingStart(new Date(Long.valueOf(at.getStart())));
+            if(!(at.getEnd().equals("") || at.getEnd() == null)){
+                nat.setMissingEnd(new Date(Long.valueOf(at.getEnd())));
+            }
+            //nat.setUsersLogin(em.find(Users.class, at.getLogin()));
+            //em.persist(nat);
+            int tmp = em.createNativeQuery("INSERT INTO attendance(MissingStart,MissingEnd,Excussed,Users_Login) "
+                        + " VALUES (?start,?end,?excussed,?login)")
+                    .setParameter("start", nat.getMissingStart())
+                    .setParameter("end", nat.getMissingEnd())
+                    .setParameter("excussed", nat.getExcussed())
+                    .setParameter("login", at.getLogin())
+                    .executeUpdate();
+            int id = (int) em.createNativeQuery("select max(idAttendance) FROM attendance where Users_Login = ?login")
+                    .setParameter("login", at.getLogin())
+                    .getSingleResult();
+            return id;
+        } else{
+            Attendance nat = em.find(Attendance.class, at.getId());
+            nat.setExcussed(Boolean.valueOf(at.getExcused()));
+            nat.setMissingStart(new Date(Long.valueOf(at.getStart())));
+            if(!(at.getEnd().equals("") || at.getEnd() == null)){
+                nat.setMissingEnd(new Date(Long.valueOf(at.getEnd())));
+            }
+            em.merge(nat);
+        }
+        return at.getId();
     }
 }

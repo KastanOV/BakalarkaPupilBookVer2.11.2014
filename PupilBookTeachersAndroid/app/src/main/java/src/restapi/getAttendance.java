@@ -56,7 +56,6 @@ public class getAttendance {
             is = conn.getInputStream();
             xmlFactoryObject = XmlPullParserFactory.newInstance();
             XmlPullParser myparser = xmlFactoryObject.newPullParser();
-
             myparser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES
                     , false);
             myparser.setInput(is, "UTF-8");
@@ -96,7 +95,7 @@ public class getAttendance {
                     case XmlPullParser.END_TAG:
                         if(name.equals("end")){
                             if(!text.equals("null")) {
-                                start = Long.parseLong(text);
+                                end = Long.parseLong(text);
                             }
                         }else if(name.equals("excused")){
                             excused = text;

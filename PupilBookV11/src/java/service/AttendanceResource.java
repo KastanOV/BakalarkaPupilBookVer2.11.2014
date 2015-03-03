@@ -22,6 +22,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -48,5 +49,11 @@ public class AttendanceResource {
     @Consumes({"application/xml", "application/json"})
     public List<AttendanceDTO> getInformations(@PathParam("login") String login, @PathParam("password") String password){
         return SB.getAttendanceService(login);
+    }
+    
+    @POST
+    @Consumes({"application/xml", "application/json"})
+    public String create(servicesDTO.AttendanceDTO att) {
+        return String.valueOf(SB.UploadAttendance(att));
     }
 }
