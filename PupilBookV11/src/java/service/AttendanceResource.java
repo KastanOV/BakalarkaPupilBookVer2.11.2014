@@ -47,8 +47,16 @@ public class AttendanceResource {
     @GET
     @Path("{login}/{password}")
     @Consumes({"application/xml", "application/json"})
-    public List<AttendanceDTO> getInformations(@PathParam("login") String login, @PathParam("password") String password){
+    public List<AttendanceDTO> getAttendanceTeacher(@PathParam("login") String login, @PathParam("password") String password){
         return SB.getAttendanceService(login);
+    }
+    
+    @GET
+    @Path("{login}/{password}/{Student}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<AttendanceDTO> getAttendanceStudent(@PathParam("login") String login, @PathParam("password") String password, @PathParam("Student") String Student){
+        return SB.getAttendanceServiceStudent(login);
     }
     
     @POST
@@ -57,3 +65,4 @@ public class AttendanceResource {
         return String.valueOf(SB.UploadAttendance(att));
     }
 }
+

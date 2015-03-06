@@ -1,12 +1,23 @@
 {
     "elements": {
-        "accordion": {},
+        "accordion": {
+            "attributes": {
+                "ng-show": {}
+            }
+        },
         "accordion-group": {
             "attributes": {
-                "heading": {}
+                "heading": {},
+                "ng-repeat": {},
+                "class": {}
             }
         },
         "login-dir": {},
+        "attendance": {
+            "attributes": {
+                "ng-show": {}
+            }
+        },
         "informations": {
             "attributes": {
                 "ng-show": {}

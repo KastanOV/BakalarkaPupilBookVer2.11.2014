@@ -15,11 +15,11 @@ and open the template in the editor.
     </head>
     <div class="visible-xs visible-sm hidden-lg hidden-md">
         <h1>Rozvrh hodin</h1>
-        <accordion >
-            <accordion-group heading="Pondělí">
+        <accordion ng-show="showShedule">
+            <accordion-group heading="Pondělí" class="text-center">
                 <table class="table table-striped">
                     <tr><th>Hodina</th><th>Předmět</th><th>Učitel</th></tr>
-                    <tr ng-repeat="i in monday">
+                    <tr ng-repeat="i in monday" class="{{i.BackgroundClass}}">
                         
                         <td>{{i.hour + 1}}.</td>
                         <td>{{i.subjectName}}</td>
@@ -27,20 +27,20 @@ and open the template in the editor.
                     </tr>
                 </table>
             </accordion-group>
-            <accordion-group heading="Úterý">
+            <accordion-group heading="Úterý" class="text-center">
                 <table class="table table-striped">
                     <tr><th>Hodina</th><th>Předmět</th><th>Učitel</th></tr>
-                    <tr ng-repeat="i in tuesday">
+                    <tr ng-repeat="i in tuesday" class="{{i.BackgroundClass}}">
                         <td >{{i.hour + 1}}.</td>
                         <td>{{i.subjectName}}</td>
                         <td>{{i.teacherName}}</td>
                     </tr>
                 </table>
             </accordion-group>
-            <accordion-group heading="Středa">
+            <accordion-group heading="Středa" class="text-center">
                 <table class="table table-striped">
                     <tr><th>Hodina</th><th>Předmět</th><th>Učitel</th></tr>
-                    <tr ng-repeat="i in wednesday">
+                    <tr ng-repeat="i in wednesday" class="{{i.BackgroundClass}}">
                         
                         <td>{{i.hour + 1}}.</td>
                         <td>{{i.subjectName}}</td>
@@ -48,20 +48,20 @@ and open the template in the editor.
                     </tr>
                 </table>
             </accordion-group>
-            <accordion-group heading="Čtvrtek">
+            <accordion-group heading="Čtvrtek" class="text-center">
                 <table class="table table-striped">
                     <tr><th>Hodina</th><th>Předmět</th><th>Učitel</th></tr>
-                    <tr ng-repeat="i in thursday">
+                    <tr ng-repeat="i in thursday" class="{{i.BackgroundClass}}">
                         <td>{{i.hour + 1}}</td>
                         <td>{{i.subjectName}}</td>
                         <td>{{i.teacherName}}</td>
                     </tr>
                 </table>
             </accordion-group>
-            <accordion-group heading="Pátek">
+            <accordion-group heading="Pátek" class="text-center ">
                 <table class="table table-striped">
                     <tr><th>Hodina</th><th>Předmět</th><th>Učitel</th></tr>
-                    <tr ng-repeat="i in friday" >
+                    <tr ng-repeat="i in friday" class="{{i.BackgroundClass}}">
                         
                         <td >{{i.hour + 1}}.</td>
                         <td >  {{i.subjectName}}</td>
@@ -80,16 +80,16 @@ and open the template in the editor.
                 <td>Pondělí</td><td ng-repeat="i in monday" class="{{i.BackgroundClass}}">{{i.subjectName}}<hr> {{i.teacherName}}</td>
             </tr>
             <tr>
-                <td>Úterý</td><td ng-repeat="i in monday" class="{{i.BackgroundClass}}">{{i.subjectName}}<hr> {{i.teacherName}}</td>
+                <td>Úterý</td><td ng-repeat="i in tuesday" class="{{i.BackgroundClass}}">{{i.subjectName}}<hr> {{i.teacherName}}</td>
             </tr>
             <tr>
-                <td>Středa</td><td ng-repeat="i in monday" class="{{i.BackgroundClass}}">{{i.subjectName}}<hr> {{i.teacherName}}</td>
+                <td>Středa</td><td ng-repeat="i in wednesday" class="{{i.BackgroundClass}}">{{i.subjectName}}<hr> {{i.teacherName}}</td>
             </tr>
             <tr>
-                <td>Čtvrtek</td><td ng-repeat="i in monday" class="{{i.BackgroundClass}}">{{i.subjectName}}<hr> {{i.teacherName}}</td>
+                <td>Čtvrtek</td><td ng-repeat="i in thursday" class="{{i.BackgroundClass}}">{{i.subjectName}}<hr> {{i.teacherName}}</td>
             </tr>
             <tr>
-                <td>Pátek</td><td ng-repeat="i in monday" class="{{i.BackgroundClass}}">{{i.subjectName}}<hr> {{i.teacherName}}</td>
+                <td>Pátek</td><td ng-repeat="i in friday" class="{{i.BackgroundClass}}">{{i.subjectName}}<hr> {{i.teacherName}}</td>
             </tr>
                 
             

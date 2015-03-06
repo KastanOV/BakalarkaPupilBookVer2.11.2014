@@ -12,8 +12,8 @@ and open the template in the editor.
     </head>
     <body>
         <accordion>
-            <div ng-repeat="item in informations">
-            <accordion-group heading="{{item.description}}">
+            <div ng-repeat="item in informations" class="container">
+            <accordion-group heading="{{item.description}}" class="text-center">
                 <p>{{item.someMessage}}</p>
                 <hr>
                 <p>Informaci vložil <b>{{item.teacherName}}</b> dne {{item.createDate | date : 'd.M.y'}}</p>

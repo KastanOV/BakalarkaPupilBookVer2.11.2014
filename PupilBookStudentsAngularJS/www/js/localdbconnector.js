@@ -167,6 +167,41 @@ function setDBInformation(data){
         })(data[item]);
     }
 }
+function setDBAttendance(data){
+    var db = getDB();
+    db.transaction(function(tx) {
+        var query = "DELETE FROM attendance";
+            tx.executeSql(query, [],
+                function (tx, results) {
+                });
+    }); 
+
+    for (item in data){ 
+        (function(row){
+            db.transaction(function(tx) {
+                var query = "INSERT INTO attendance (id, start, end, excused, login, changed) VALUES (?,?,?,?,?,?)";
+                tx.executeSql(query, [row.id, row.start, row.end, row.excused, row.login, 0 ],
+                function (tx, results) {
+                    
+                });
+            });
+        })(data[item]);
+    }
+}
+function getBAttendance($scope){
+    var db = getDB();
+    var data = {};
+    db.transaction(function (tx) {
+            tx.executeSql("SELECT id, start, end, excused, login, changed FROM attendance", [], 
+            function (tx, results) {
+                for (var i = 0; i < results.rows.length; i++){
+                    data[i] = results.rows.item(i);
+                }
+                $scope.attendance = data;
+                debugger;
+            }, null);
+        });
+}
 function logOut(){
     var db = getDB();
     db.transaction(function(tx) {
@@ -212,6 +247,9 @@ function initdb(){
     });
     db.transaction(function (tx) {  
         tx.executeSql('CREATE TABLE IF NOT EXISTS informations (id INTEGER PRIMARY KEY AUTOINCREMENT, createDate TEXT, description TEXT, someMessage TEXT, teacherName TEXT)');
+    });
+    db.transaction(function (tx) {  
+        tx.executeSql('CREATE TABLE IF NOT EXISTS attendance (id INTEGER PRIMARY KEY AUTOINCREMENT, start TEXT, end TEXT, excused INTEGER, login TEXT, changed INTEGER)');
     });
 };
 

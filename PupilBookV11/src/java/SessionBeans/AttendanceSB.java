@@ -158,4 +158,31 @@ public class AttendanceSB implements AttendanceSBLocal {
         }
         return at.getId();
     }
+
+    @Override
+    public List<AttendanceDTO> getAttendanceServiceStudent(String login) {
+        List<AttendanceDTO> retval = new ArrayList<>();
+        List<Object[]> tmp = em.createNativeQuery("select * from attendance a " +
+                " where a.users_login = ?login")
+                .setParameter("login", login)
+                .getResultList();
+        AttendanceDTO addvat;
+            for(Object[] item : tmp){
+                addvat = new AttendanceDTO();
+                addvat.setId((Integer) item[0]);
+                addvat.setStart(String.valueOf(((Date) item[1]).getTime()));
+                Long timeTmp;
+                try {
+                    timeTmp =  ((Date) item[2]).getTime();
+                } catch (Exception e){
+                    timeTmp = null;
+                }
+                addvat.setEnd(String.valueOf(timeTmp));
+                
+                addvat.setExcused((String) String.valueOf(item[3]));
+                addvat.setLogin((String) item[4]);
+                retval.add(addvat);
+            }
+        return retval;
+    }
 }

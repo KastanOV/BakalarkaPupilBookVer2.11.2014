@@ -20,13 +20,14 @@ and open the template in the editor.
         <script src="js/md5.js"></script>
         <script src="js/localdbconnector.js"></script>
         <script src="js/app.js"></script>
+        
     </head>
     <body ng-controller="homeController as Home">
     <navigation-bar ng-show='loggedUser'></navigation-bar>    
     <shedule ng-show="showShedule"></shedule>
     <results ng-show="showResults"></results>
     <informations ng-show="showInformations"></informations>
-    
+    <attendance ng-show="showAttendance"></attendance>
     
     
     <login-dir ></login-dir>
