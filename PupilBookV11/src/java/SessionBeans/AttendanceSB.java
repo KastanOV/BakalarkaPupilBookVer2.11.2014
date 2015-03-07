@@ -158,7 +158,33 @@ public class AttendanceSB implements AttendanceSBLocal {
         }
         return at.getId();
     }
-
+    @Override
+    public String excuseAttendance(String login, String password, Integer id) {
+        if(checkParent(login,password)){
+            try{
+                em.createNativeQuery("UPDATE attendance SET Excussed = 1 WHERE idAttendance = ?id AND Users_Login = ?login")
+                        .setParameter("id", id)
+                        .setParameter("login", login)
+                        .executeUpdate();
+                return "{ \"status\" : \"OK\", \"id\" : \"" + id + "\" }";
+            }catch(Exception e){
+                return "{ \"status\" : \"Something wrong\"}";
+            }
+        }
+        return "{ \"status\" : \"Something wrong\"}";
+    }
+    private boolean checkParent(String login, String password){
+        long tmp = (long)em.createNativeQuery("SELECT count(*) FROM users u WHERE u.login = ?login AND u.password = ?password AND Role = 'P'")
+                .setParameter("login", "p" + login)
+                .setParameter("password", password)
+                .getSingleResult();
+        
+        if(tmp > 0){
+            return true;
+        }else {
+            return false;
+        }
+    }
     @Override
     public List<AttendanceDTO> getAttendanceServiceStudent(String login) {
         List<AttendanceDTO> retval = new ArrayList<>();
@@ -185,4 +211,6 @@ public class AttendanceSB implements AttendanceSBLocal {
             }
         return retval;
     }
+
+    
 }

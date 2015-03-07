@@ -6,7 +6,6 @@ initPage = function($scope){
         if(role === "P") $scope.loggedUserIsParrent = true;
         else $scope.loggedUserIsParrent = false;
 
-
         if((login === "undefined" || password === "undefined") || login === null){
             //Uzivatel NENÍ přihlášen 
             $scope.loggedUser = false;
@@ -19,7 +18,9 @@ initPage = function($scope){
             loggeduserName = localStorage.getItem("name");
             $scope.loggedUser = true;
             $scope.showInformations = true;
-        } 
+        }
+        
+        
     };
 (function(){
     var URL = "http://localhost:8080/PupilBookV11/webresources/";
@@ -72,7 +73,7 @@ initPage = function($scope){
             $scope.showInformations = false;
             $scope.showAttendance = true;
         };
-
+        setInterval(function(){uploadChangedAttendance($scope, $http, URL)},3000);
         initPage($scope);
         //Eventa for reload page
         $scope.$on('reloadPage', function(event, args) 
@@ -223,6 +224,37 @@ initPage = function($scope){
                         getBAttendance($scope);
                         //alert("Přihlášení se nepodařilo :( asi na <> heslo");
                     });
+                    
+                $scope.excuseClick = function(id){
+                    var login = localStorage.getItem('login');
+                    var password = localStorage.getItem('password');
+                    debugger;
+                    $http.get(URL + "attendance/" + login + "/" + password + "/" + id + "/empt")
+                       .success(function(data){
+                           debugger;
+                           if(data.status === "OK"){
+                               $http.get(URL + 'attendance/' + login + "/" + password + "/student")
+                                .success(function(data){
+                                    setDBAttendance(data);
+                                    $scope.attendance = data;
+                                }).error(function(){
+                                    getBAttendance($scope);
+                                    //alert("Přihlášení se nepodařilo :( asi na <> heslo");
+                                });
+                            }
+                    }).error(function(){
+                        var db = getDB();
+                        db.transaction(function(tx) {
+                                    var query = "UPDATE attendance SET excused = 'true', changed = 1 WHERE id = ?";
+                                    tx.executeSql(query, [id],
+                                    function (tx, results) {
+
+                                    });
+                                });
+                        getBAttendance($scope);
+                    });
+                    //excuseAttendance($scope, id);
+                };
             },
             controllerAs: 'attCtrl'
         };

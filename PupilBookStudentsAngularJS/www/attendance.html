@@ -22,7 +22,7 @@ and open the template in the editor.
                     <td>{{item.start | date:'dd.MM.yyyy HH:mm'}}</td>
                     <td>{{item.end | date:'dd.MM.yyyy HH:mm'}}</td>
                     <td>{{item.excused === 'true' ? 'ANO' : 'NE'}}</td>
-                    <td ng-show="{{loggedUserIsParrent}}"><button ng-show="{{loggedUserIsParrent}}" ng-disabled="{{item.excused === 'true'}}" class="btn btn-default">Omluvit</button></td>
+                    <td ng-show="{{loggedUserIsParrent}}"><button ng-show="{{loggedUserIsParrent}}" ng-disabled="{{item.excused === 'true'}}" class="btn btn-default" ng-click="excuseClick(item.id)">Omluvit</button></td>
                 </tr>
             </table>
         </div>

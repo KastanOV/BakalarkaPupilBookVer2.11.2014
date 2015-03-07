@@ -58,6 +58,14 @@ public class AttendanceResource {
     public List<AttendanceDTO> getAttendanceStudent(@PathParam("login") String login, @PathParam("password") String password, @PathParam("Student") String Student){
         return SB.getAttendanceServiceStudent(login);
     }
+    @GET
+    @Path("{login}/{password}/{id}/{empty}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String excuseAttendance(@PathParam("login") String login, @PathParam("password") String password, @PathParam("id") Integer id, @PathParam("empty") String empty){
+        
+        return SB.excuseAttendance(login, password, id);
+    }
     
     @POST
     @Consumes({"application/xml", "application/json"})

@@ -16,37 +16,37 @@ function getDBSheduleItems($scope){
                    } else if(data[i].day === 1){
                        $scope.tuesday[data[i].hour] = data[i];
                        if(data[i].teacherName === ''){
-                           $scope.monday[data[i].hour].BackgroundClass = "success"; 
+                           $scope.tuesday[data[i].hour].BackgroundClass = "success"; 
                        } else {
-                           $scope.monday[data[i].hour].BackgroundClass = "danger";
+                           $scope.tuesday[data[i].hour].BackgroundClass = "danger";
                        }
                    } else if(data[i].day === 2){
                        $scope.wednesday[data[i].hour] = data[i];
                        if(data[i].teacherName === ''){
-                           $scope.monday[data[i].hour].BackgroundClass = "success"; 
+                           $scope.wednesday[data[i].hour].BackgroundClass = "success"; 
                        } else {
-                           $scope.monday[data[i].hour].BackgroundClass = "danger";
+                           $scope.wednesday[data[i].hour].BackgroundClass = "danger";
                        }
                    } else if(data[i].day === 3){
                        $scope.thursday[data[i].hour] = data[i];
                        if(data[i].teacherName === ''){
-                           $scope.monday[data[i].hour].BackgroundClass = "success"; 
+                           $scope.thursday[data[i].hour].BackgroundClass = "success"; 
                        } else {
-                           $scope.monday[data[i].hour].BackgroundClass = "danger";
+                           $scope.thursday[data[i].hour].BackgroundClass = "danger";
                        }
                    } else if(data[i].day === 4){
                        $scope.friday[data[i].hour] = data[i];
                        if(data[i].teacherName === ''){
-                           $scope.monday[data[i].hour].BackgroundClass = "success"; 
+                           $scope.friday[data[i].hour].BackgroundClass = "success"; 
                        } else {
-                           $scope.monday[data[i].hour].BackgroundClass = "danger";
+                           $scope.friday[data[i].hour].BackgroundClass = "danger";
                        }
                    } 
                 }
             }, null);
         });
-    
 };
+
 function setDBSheduleItems(data){
     var db = getDB();
     db.transaction(function(tx) {
@@ -240,6 +240,28 @@ function getBAttendance($scope){
 
             }, null);
         });
+}
+function excuseAttendance(idc){
+    var db = getDB();
+    debugger;
+    db.transaction(function(tx) {
+                var query = "UPDATE attendance SET excused = 'true', changed = 1 WHERE id = ?";
+                tx.executeSql(query, [idc],
+                function (tx, results) {
+                    
+                });
+            });
+}
+function excuseUploadedAttendance(idc){
+    debugger;
+    var db = getDB();
+    db.transaction(function(tx) {
+                var query = "UPDATE attendance SET excused = 'true', changed = 0 WHERE id = ?";
+                tx.executeSql(query, [idc],
+                function (tx, results) {
+                    
+                });
+            });
 }
 function logOut(){
     var db = getDB();
