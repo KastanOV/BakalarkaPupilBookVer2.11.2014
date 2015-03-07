@@ -89,12 +89,51 @@ function buildResultsAccordeon($scope, studySubjects, row){
                 function (tx, res) {
                     for (var j = 0; j < res.rows.length; j++){
                         resultstmp[j] = res.rows.item(j);
+                        resultstmp[j].classs = createBackColorForOneRow(resultstmp[j].score)
                     }
                     studySubjects.results = resultstmp;
                     $scope.results[row] = studySubjects;
                 }, null);
             });
+    
 };
+function createBackColorForOneRow(score){
+    if(score > 8 )
+    { 
+        return 'success';
+    }
+    else if (score > 5 && score <= 8) 
+    {
+        return 'warning';
+    }
+    else if (score > 2 && score <= 5) 
+    {
+        return 'info';
+    }
+    else return 'danger';
+}
+
+function createBackColor(datar){
+        for(i = 0;i < datar.length; i++){
+            for(j = 0; j < datar[i].results.length; j++){
+
+            if(datar[i].results[j].score > 8 )
+            { 
+                datar[i].results[j].classs = 'success';
+            }
+            else if (datar[i].results[j].score > 5 && datar[i].results[j].score <= 8) 
+            {
+                datar[i].results[j].classs = 'warning';
+            }
+            else if (datar[i].results[j].score > 2 && datar[i].results[j].score <= 5) 
+            {
+                datar[i].results[j].classs = 'info';
+            }
+            else datar[i].results[j].classs = 'danger';
+            }
+
+        };
+    }
 function setDBResults(data){
     var db = getDB();
     db.transaction(function(tx) {
@@ -142,7 +181,7 @@ function getDBInformations($scope){
                     data[i] = results.rows.item(i);
                 }
                 $scope.informations = data;
-                debugger;
+
             }, null);
         });
 }
@@ -198,7 +237,7 @@ function getBAttendance($scope){
                     data[i] = results.rows.item(i);
                 }
                 $scope.attendance = data;
-                debugger;
+
             }, null);
         });
 }
@@ -227,6 +266,13 @@ function logOut(){
     });
     db.transaction(function(tx) {
     var query = "DELETE FROM informations";
+        tx.executeSql(query, [],
+        function (tx, results) {
+
+        });
+    });
+    db.transaction(function(tx) {
+    var query = "DELETE FROM attendance";
         tx.executeSql(query, [],
         function (tx, results) {
 

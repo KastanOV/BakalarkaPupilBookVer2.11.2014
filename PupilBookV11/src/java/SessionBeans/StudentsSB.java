@@ -261,9 +261,17 @@ public class StudentsSB implements StudentsSBLocal {
                 .setParameter("login", login)
                 .setParameter("password", password)
                 .getSingleResult();
+        if (tmp == 0){
+            tmp = (long)em.createNativeQuery("SELECT count(*) FROM users u WHERE u.login = ?login AND u.password = ?password AND Role = 'P'")
+                .setParameter("login", "p" + login)
+                .setParameter("password", password)
+                .getSingleResult();
+        }
         if(tmp > 0){
             return true;
-        }else return false;
+        }else {
+            return false;
+        }
     }
     
     private int getActualSchoolYear(){

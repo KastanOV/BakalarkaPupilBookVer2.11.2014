@@ -1,3 +1,26 @@
+initPage = function($scope){
+        initdb();
+        var login = localStorage.getItem("login");
+        var password = localStorage.getItem("password");
+        var role = localStorage.getItem("role");
+        if(role === "P") $scope.loggedUserIsParrent = true;
+        else $scope.loggedUserIsParrent = false;
+
+
+        if((login === "undefined" || password === "undefined") || login === null){
+            //Uzivatel NENÍ přihlášen 
+            $scope.loggedUser = false;
+            $scope.showShedule = false;
+            $scope.showMainPage = false;
+            $scope.showResults = false;
+            $scope.showInformations = false;
+            $scope.showAttendance = false;
+        } else {
+            loggeduserName = localStorage.getItem("name");
+            $scope.loggedUser = true;
+            $scope.showInformations = true;
+        } 
+    };
 (function(){
     var URL = "http://localhost:8080/PupilBookV11/webresources/";
     //var URL = "http://86.49.147.135:9001/PupilBookV11/webresources/";
@@ -49,35 +72,12 @@
             $scope.showInformations = false;
             $scope.showAttendance = true;
         };
-        
-        
-        var initPage = function(){
-            initdb();
-            var login = localStorage.getItem("login");
-            var password = localStorage.getItem("password");
-            var role = localStorage.getItem("role");
-            if(role === "P") $scope.loggedUserIsParrent = true;
-            else $scope.loggedUserIsParrent = false;
-            
-            
-            if((login === "undefined" || password === "undefined") || login === null){
-                //Uzivatel NENÍ přihlášen 
-                $scope.loggedUser = false;
-                $scope.showShedule = false;
-                $scope.showMainPage = false;
-                $scope.showResults = false;
-                $scope.showInformations = true;
-                $scope.showAttendance = false;
-            } else {
-                loggeduserName = localStorage.getItem("name");
-                $scope.loggedUser = true;
-            } 
-        };
-        initPage();
+
+        initPage($scope);
         //Eventa for reload page
         $scope.$on('reloadPage', function(event, args) 
         {
-            initPage();
+            initPage($scope);
         });
     });
     
@@ -153,7 +153,9 @@
                            createSheduleItemsDays(data, $scope);
                     }).error(function(){
                         getDBSheduleItems($scope);
-                        alert("Nyní pracujete offline");
+                        if(studygroup !== "undefined"){
+                            alert("Nyní pracujete offline");
+                        }
                     });
                
            },
@@ -168,27 +170,8 @@
                 var login = localStorage.getItem('login');
                 var password = localStorage.getItem('password');
                 
-                function createBackColor(datar){
-                    for(i = 0;i < datar.length; i++){
-                        for(j = 0; j < datar[i].results.length; j++){
-                            
-                        if(datar[i].results[j].score > 8 )
-                        { 
-                            datar[i].results[j].classs = 'success';
-                        }
-                        else if (datar[i].results[j].score > 5 && datar[i].results[j].score <= 8) 
-                        {
-                            datar[i].results[j].classs = 'warning';
-                        }
-                        else if (datar[i].results[j].score > 2 && datar[i].results[j].score <= 5) 
-                        {
-                            datar[i].results[j].classs = 'info';
-                        }
-                        else datar[i].results[j].classs = 'danger';
-                        }
-                        
-                    };
-                }
+                
+                
                 $scope.results = {};
                     $http.get(URL + "Students/" + login + "/" + password + "/results")
                             .success(function(data){
@@ -271,10 +254,13 @@
                                 localStorage.setItem("email", data.email);
                                 localStorage.setItem("role", data.role);
                                 $scope.$emit('reloadPage', null);
+                                
                             }   else {
                                 alert("Přihlášení se nepodařilo :( asi na <> heslo");
                             } 
+                            initPage($scope);
                             $scope.showLoader = false;
+                            location.reload(true);
                 }).error(function(){
                     alert("neco je spatne :(");
                     $scope.showLoader = false;
@@ -289,6 +275,8 @@
                 localStorage.setItem("role", "undefined");
                 $scope.$emit('reloadPage', null);
                 $scope.loggedUserIsParrent = false;
+                logOut();
+                location.reload(true);
             };
     }]);
 })();

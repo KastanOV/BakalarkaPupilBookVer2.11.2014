@@ -16,13 +16,13 @@ and open the template in the editor.
         <div class="container" >
             <table class="table table-striped">
                 <tr>
-                    <th>Nepřítomen od</th><th>Nepřítomen do</th><td>Omluven</td>
+                    <th>Nepřítomen od</th><th>Nepřítomen do</th><td>Omluven</td><td ng-show="{{loggedUserIsParrent}}">Akce</td>
                 </tr>
                 <tr ng-repeat="item in attendance" class="{{item.excused === 'true' ? 'success' : 'danger'}}"  >
                     <td>{{item.start | date:'dd.MM.yyyy HH:mm'}}</td>
                     <td>{{item.end | date:'dd.MM.yyyy HH:mm'}}</td>
                     <td>{{item.excused === 'true' ? 'ANO' : 'NE'}}</td>
-                    
+                    <td ng-show="{{loggedUserIsParrent}}"><button ng-show="{{loggedUserIsParrent}}" ng-disabled="{{item.excused === 'true'}}" class="btn btn-default">Omluvit</button></td>
                 </tr>
             </table>
         </div>
