@@ -23,7 +23,7 @@ initPage = function($scope){
         
     };
 (function(){
-    //var URL = "http://192.168.1.109:8080/PupilBookV11/webresources/";
+    //var URL = "http://localhost:8080/PupilBookV11/webresources/";
     var URL = "http://86.49.147.115:18080/PupilBookV11/webresources/";
     var home = angular.module('home',['ui.bootstrap']);
     
@@ -266,7 +266,8 @@ initPage = function($scope){
             this.loggIn = function(){
                 this.HashedPassword = calcMD5(this.password);
                 $scope.showLoader = true;
-                
+                var test = URL + "Login/" + this.login + "/" + this.HashedPassword;
+                debugger;
                 $http.get(URL + "Login/" + this.login + "/" + this.HashedPassword)
                         .success(function(data){
                             if(data !== ""){

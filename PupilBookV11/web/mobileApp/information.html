@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Informace</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <accordion>
+            <div ng-repeat="item in informations" class="container">
+            <accordion-group heading="{{item.description}}" class="text-center">
+                <p>{{item.someMessage}}</p>
+                <hr>
+                <p>Informaci vložil <b>{{item.teacherName}}</b> dne {{item.createDate | date : 'd.M.y'}}</p>
+            </accordion-group>
+            </div>
+        </accordion>
+    </body>
+</html>
