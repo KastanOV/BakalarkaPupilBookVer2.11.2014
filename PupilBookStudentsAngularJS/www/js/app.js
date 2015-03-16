@@ -1,3 +1,112 @@
+
+buildSheduleItems = function($http, $scope, URL){
+    function createSheduleItemsDays(data, $scope){
+                    for(i = 0;i < data.length; i++){
+                       if(data[i].day === 0){
+                           $scope.monday[data[i].hour] = data[i];
+                           if(data[i].teacherName === ''){
+                               $scope.monday[data[i].hour].BackgroundClass = "success"; 
+                           } else {
+                               $scope.monday[data[i].hour].BackgroundClass = "danger";
+                           }
+                       } else if(data[i].day === 1){
+                           $scope.tuesday[data[i].hour] = data[i];
+                           if(data[i].teacherName === ''){
+                               $scope.tuesday[data[i].hour].BackgroundClass = "success"; 
+                           } else {
+                               $scope.tuesday[data[i].hour].BackgroundClass = "danger";
+                           }
+                       } else if(data[i].day === 2){
+                           $scope.wednesday[data[i].hour] = data[i];
+                           if(data[i].teacherName === ''){
+                               $scope.wednesday[data[i].hour].BackgroundClass = "success"; 
+                           } else {
+                               $scope.wednesday[data[i].hour].BackgroundClass = "danger";
+                           }
+                       } else if(data[i].day === 3){
+                           $scope.thursday[data[i].hour] = data[i];
+                           if(data[i].teacherName === ''){
+                               $scope.thursday[data[i].hour].BackgroundClass = "success"; 
+                           } else {
+                               $scope.thursday[data[i].hour].BackgroundClass = "danger";
+                           }
+                       } else if(data[i].day === 4){
+                           $scope.friday[data[i].hour] = data[i];
+                           if(data[i].teacherName === ''){
+                               $scope.friday[data[i].hour].BackgroundClass = "success"; 
+                           } else {
+                               $scope.friday[data[i].hour].BackgroundClass = "danger";
+                           }
+                       } 
+                   }
+                }
+        $scope.monday = [];
+        $scope.tuesday = [];
+        $scope.wednesday = [];
+        $scope.thursday = [];
+        $scope.friday = [];
+        $scope.shedule = {};
+        var studyGroup = localStorage.getItem("studyGroup");
+        if(studyGroup !== "undefined"){
+            $http.get(URL + "sheduleitems/" + studyGroup)
+               .success(function(data){
+                   $scope.shedule = data;
+                   setDBSheduleItems(data);
+                   createSheduleItemsDays(data, $scope);
+            }).error(function(){
+                getDBSheduleItems($scope);
+                if(studygroup !== "undefined"){
+                    alert("Nyní pracujete offline");
+                }
+            });
+        }
+};
+buildResults = function($http, $scope, URL){
+    var login = localStorage.getItem('login');
+    var password = localStorage.getItem('password');
+    if(login !== "undefined"){
+    $scope.results = {};
+        $http.get(URL + "Students/" + login + "/" + password + "/results")
+                .success(function(data){
+                   setDBResults(data);
+                   createBackColor(data);
+                   $scope.results = data;
+        }).error(function(){
+            getDBResults($scope)
+        });
+    }
+};
+buildInformations = function($http, $scope, URL){
+    $scope.informations = {};
+    var login = localStorage.getItem('login');
+    var password = localStorage.getItem('password');
+    var sg = localStorage.getItem('studyGroup');
+    var role = localStorage.getItem('role');
+    if(login !== "undefined"){
+    $http.get(URL + 'informations/' + login + "/" + sg + "/" + role)
+            .success(function(data){
+                setDBInformation(data);
+                $scope.informations = data;
+            }).error(function(){
+                getDBInformations($scope);
+            });
+        }
+};
+buildAttendance = function($http, $scope, URL){
+    var login = localStorage.getItem('login');
+    var password = localStorage.getItem('password');
+    if(login !== "undefined"){
+    $scope.attendance = {};
+    $http.get(URL + 'attendance/' + login + "/" + password + "/student")
+        .success(function(data){
+            setDBAttendance(data);
+            $scope.attendance = data;
+        }).error(function(){
+            getBAttendance($scope);
+            //alert("Přihlášení se nepodařilo :( asi na <> heslo");
+        });
+    }
+};
 initPage = function($scope){
         initdb();
         var login = localStorage.getItem("login");
@@ -18,13 +127,14 @@ initPage = function($scope){
             loggeduserName = localStorage.getItem("name");
             $scope.loggedUser = true;
             $scope.showInformations = true;
+            
         }
         
         
     };
 (function(){
-    //var URL = "http://192.168.1.109:8080/PupilBookV11/webresources/";
-    var URL = "http://86.49.147.115:18080/PupilBookV11/webresources/";
+     var URL = "http://192.168.1.109:8080/PupilBookV11/webresources/";
+    //var URL = "http://86.49.147.115:18080/PupilBookV11/webresources/";
     var home = angular.module('home',['ui.bootstrap']);
     
     home.controller('homeController',function($scope,$http){
@@ -36,7 +146,7 @@ initPage = function($scope){
         $scope.showMainPage = false;
         $scope.showResults = false;
         $scope.showInformations = false;
-        $scope.showLoader = false;
+        
         
         this.showResults = function(){
             $scope.showShedule = false;
@@ -79,6 +189,11 @@ initPage = function($scope){
         $scope.$on('reloadPage', function(event, args) 
         {
             initPage($scope);
+            buildAttendance($http, $scope, URL);
+            buildInformations($http, $scope, URL);
+            buildResults($http, $scope, URL);
+            buildSheduleItems($http, $scope, URL);
+            
         });
     });
     home.directive('loginDir', function(){
@@ -98,64 +213,7 @@ initPage = function($scope){
            restrist: 'E',
            templateUrl: 'shedule.html',
            controller: function($scope,$http){
-               function createSheduleItemsDays(data, $scope){
-                    for(i = 0;i < data.length; i++){
-                       if(data[i].day === 0){
-                           $scope.monday[data[i].hour] = data[i];
-                           if(data[i].teacherName === ''){
-                               $scope.monday[data[i].hour].BackgroundClass = "success"; 
-                           } else {
-                               $scope.monday[data[i].hour].BackgroundClass = "danger";
-                           }
-                       } else if(data[i].day === 1){
-                           $scope.tuesday[data[i].hour] = data[i];
-                           if(data[i].teacherName === ''){
-                               $scope.tuesday[data[i].hour].BackgroundClass = "success"; 
-                           } else {
-                               $scope.tuesday[data[i].hour].BackgroundClass = "danger";
-                           }
-                       } else if(data[i].day === 2){
-                           $scope.wednesday[data[i].hour] = data[i];
-                           if(data[i].teacherName === ''){
-                               $scope.wednesday[data[i].hour].BackgroundClass = "success"; 
-                           } else {
-                               $scope.wednesday[data[i].hour].BackgroundClass = "danger";
-                           }
-                       } else if(data[i].day === 3){
-                           $scope.thursday[data[i].hour] = data[i];
-                           if(data[i].teacherName === ''){
-                               $scope.thursday[data[i].hour].BackgroundClass = "success"; 
-                           } else {
-                               $scope.thursday[data[i].hour].BackgroundClass = "danger";
-                           }
-                       } else if(data[i].day === 4){
-                           $scope.friday[data[i].hour] = data[i];
-                           if(data[i].teacherName === ''){
-                               $scope.friday[data[i].hour].BackgroundClass = "success"; 
-                           } else {
-                               $scope.friday[data[i].hour].BackgroundClass = "danger";
-                           }
-                       } 
-                   }
-                }
-                $scope.monday = [];
-                $scope.tuesday = [];
-                $scope.wednesday = [];
-                $scope.thursday = [];
-                $scope.friday = [];
-                $scope.shedule = {};
-                var studyGroup = localStorage.getItem("studyGroup");
-                    $http.get(URL + "sheduleitems/" + studyGroup)
-                       .success(function(data){
-                           $scope.shedule = data;
-                           setDBSheduleItems(data);
-                           createSheduleItemsDays(data, $scope);
-                    }).error(function(){
-                        getDBSheduleItems($scope);
-                        if(studygroup !== "undefined"){
-                            alert("Nyní pracujete offline");
-                        }
-                    });
+               buildSheduleItems($http, $scope, URL);
                
            },
            controllerAs: 'sheduleCtrl'
@@ -166,20 +224,7 @@ initPage = function($scope){
             restrict: 'E',
             templateUrl: 'results.html',
             controller: function($scope,$http){
-                var login = localStorage.getItem('login');
-                var password = localStorage.getItem('password');
-                
-                
-                
-                $scope.results = {};
-                    $http.get(URL + "Students/" + login + "/" + password + "/results")
-                            .success(function(data){
-                               setDBResults(data);
-                               createBackColor(data);
-                               $scope.results = data;
-                    }).error(function(){
-                        getDBResults($scope)
-                    });
+                buildResults($http, $scope, URL);
             },
             controllerAs: 'resCtrl'
         };
@@ -189,18 +234,7 @@ initPage = function($scope){
             restrict: 'E',
             templateUrl: 'information.html',
             controller: function($scope,$http){
-                $scope.informations = {};
-                var login = localStorage.getItem('login');
-                var password = localStorage.getItem('password');
-                var sg = localStorage.getItem('studyGroup');
-                var role = localStorage.getItem('role');
-                $http.get(URL + 'informations/' + login + "/" + sg + "/" + role)
-                        .success(function(data){
-                            setDBInformation(data);
-                            $scope.informations = data;
-                        }).error(function(){
-                            getDBInformations($scope);
-                        });
+                buildInformations($http, $scope, URL);
             },
             controllerAs: 'infoCtrl'
         };
@@ -210,18 +244,7 @@ initPage = function($scope){
             restrict: 'E',
             templateUrl: 'attendance.html',
             controller: function($scope,$http){
-                var login = localStorage.getItem('login');
-                var password = localStorage.getItem('password');
                 
-                $scope.attendance = {};
-                $http.get(URL + 'attendance/' + login + "/" + password + "/student")
-                    .success(function(data){
-                        setDBAttendance(data);
-                        $scope.attendance = data;
-                    }).error(function(){
-                        getBAttendance($scope);
-                        //alert("Přihlášení se nepodařilo :( asi na <> heslo");
-                    });
                     
                 $scope.excuseClick = function(id){
                     var login = localStorage.getItem('login');
@@ -229,7 +252,6 @@ initPage = function($scope){
                     debugger;
                     $http.get(URL + "attendance/" + login + "/" + password + "/" + id + "/empt")
                        .success(function(data){
-                           debugger;
                            if(data.status === "OK"){
                                $http.get(URL + 'attendance/' + login + "/" + password + "/student")
                                 .success(function(data){
@@ -265,7 +287,7 @@ initPage = function($scope){
 
             this.loggIn = function(){
                 this.HashedPassword = calcMD5(this.password);
-                $scope.showLoader = true;
+                
                 
                 $http.get(URL + "Login/" + this.login + "/" + this.HashedPassword)
                         .success(function(data){
@@ -288,11 +310,11 @@ initPage = function($scope){
                                 alert("Přihlášení se nepodařilo :( asi na <> heslo");
                             } 
                             initPage($scope);
-                            $scope.showLoader = false;
-                            location.reload(true);
+                            
+                            
                 }).error(function(){
                     alert("neco je spatne :(");
-                    $scope.showLoader = false;
+                    
                 });
             };
             this.loggOut = function(){
@@ -305,7 +327,7 @@ initPage = function($scope){
                 $scope.$emit('reloadPage', null);
                 $scope.loggedUserIsParrent = false;
                 logOut();
-                location.reload(true);
+                
             };
     }]);
 })();

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Popapu klasifikace</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/styles.css">
+        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+        
+        <script src="js/app.js"></script>
+    </head>
+    <div class="container" >
+        <h1>klasifikace</h1>
+        <accordion>
+            
+                <accordion-group heading="{{result.name}}" ng-repeat="result in results" class="text-center">
+                    <table class="table table-striped">
+                        <tr ng-repeat="i in result.results" class="{{i.classs}}">
+                            <td>{{i.desc}}</td>
+                            <td>{{i.score}}0%</td>
+                        </tr>
+                    </table>
+                </accordion-group>
+            
+        </accordion>
+    </div>
+</html>
