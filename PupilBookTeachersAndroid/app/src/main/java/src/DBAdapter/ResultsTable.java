@@ -42,7 +42,9 @@ public class ResultsTable extends DBMain {
             cursor.moveToFirst();
         }
         Result sy = new Result(Integer.parseInt(cursor.getString(0)), cursor.getString(1), Integer.parseInt(cursor.getString(2)), cursor.getString(3), Integer.parseInt(cursor.getString(4)), cursor.getString(5),cursor.getString(6));
+        db.close();
         return sy;
+
     }
     public void deleteResult(Result r){
         SQLiteDatabase db = getWritableDatabase();
@@ -66,7 +68,8 @@ public class ResultsTable extends DBMain {
         values.put(Utils.RESULTS_DATE, r.getDate().toString());
         values.put(Utils.RESULTS_STUDY_SUBJECT_ID, r.getSsId());
         values.put(Utils.RESULTS_STUDENT_LOGIN, r.getsL());
-        return db.update(Utils.TABLE_RESULTS,values, Utils.RESULTS_KEY_ID + "=?", new String[] {String.valueOf(r.getId())});
+        int tmp = db.update(Utils.TABLE_RESULTS,values, Utils.RESULTS_KEY_ID + "=?", new String[] {String.valueOf(r.getId())});
+        return tmp;
 
     }
     public List<Result> getAllResult(){
@@ -88,6 +91,7 @@ public class ResultsTable extends DBMain {
                 sys.add(sy);
             } while(cursor.moveToNext());
         }
+        db.close();
         return sys;
     }
     public List<Result> getNewResultsForUpload(){
@@ -110,6 +114,7 @@ public class ResultsTable extends DBMain {
                 sys.add(sy);
             } while(cursor.moveToNext());
         }
+        db.close();
         return sys;
     }
     public List<Result> getResults(String StudentLogin, int StudySubjectID){
@@ -132,6 +137,7 @@ public class ResultsTable extends DBMain {
                 sys.add(sy);
             } while(cursor.moveToNext());
         }
+        db.close();
         return  sys;
     }
     public void deleteAllResult(){

@@ -19,10 +19,10 @@ import javax.ejb.Local;
 @Local
 public interface ResultsSBLocal {
     public servicesDTO.Results saveUploadedResult(servicesDTO.Results res);
-    public List<Results> getStudentResults(String login, int StudySubjectID);
+    public List<Results> getStudentResults(String TeacherLogin, String login, int StudySubjectID);
     public void insertNewResult(Results res);
     public void saveResult(Results res);
     public void deleteResult(Results res);
     public List<String> getAutoCompleteStrings(Studysubject sg, String input, Teacher t);
-    public List<ResultsExtended> getStudentExtendResults(String TeacherLogin, String StudentLogin, int StudySubjectID);
+    public List<ResultsExtended> getStudentExtendResults(String TeacherLogin, String StudentLogin, int StudySubjectID, int editedStudyGroup);
 }

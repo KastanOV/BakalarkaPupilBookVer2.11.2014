@@ -57,28 +57,34 @@ public class AttendanceTable extends DBMain {
             end = null;
         }
         Attendance sy = new Attendance(attId, Long.valueOf(cursor.getString(1)), end, Boolean.valueOf(cursor.getString(3)), cursor.getString(4));
+        db.close();
         return sy;
     }
     public void deleteAttendance(Attendance a){
         SQLiteDatabase db = getWritableDatabase();
         db.delete(Utils.TABLE_ATTENDANCE, Utils.ATTENDANCE_KEY_ID + "=?", new String[]{String.valueOf(a.getId()) });
         db.close();
+
     }
     public void deleteAttendance(Integer id){
         SQLiteDatabase db = getWritableDatabase();
         db.delete(Utils.TABLE_ATTENDANCE, Utils.ATTENDANCE_KEY_ID + "=?", new String[]{String.valueOf(id) });
         db.close();
+
+
     }
     public void deleteAttendance(Long start){
         SQLiteDatabase db = getWritableDatabase();
         db.delete(Utils.TABLE_ATTENDANCE, Utils.ATTENDANCE_START + "=?", new String[]{String.valueOf(start) });
         db.close();
+
     }
     public int getAttendanceCount(){
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + Utils.TABLE_ATTENDANCE, null);
         int tmp = cursor.getCount();
         cursor.close();
+        db.close();
         return tmp;
     }
     public int updateAttendance(Attendance a){
@@ -91,7 +97,10 @@ public class AttendanceTable extends DBMain {
         values.put(Utils.ATTENDANCE_EXCUSED, String.valueOf(a.getExcused()));
         values.put(Utils.ATTENDANCE_LOGIN, a.getLogin());
         values.put(Utils.ATTENDANCE_CHANGED, 1);
-        return db.update(Utils.TABLE_ATTENDANCE,values, Utils.ATTENDANCE_START + "=?", new String[] {String.valueOf(a.getStart())});
+        int tmp = db.update(Utils.TABLE_ATTENDANCE,values, Utils.ATTENDANCE_START + "=?", new String[] {String.valueOf(a.getStart())});
+        db.close();
+
+        return tmp;
     }
     public List<Attendance> getAllAttendance(){
         List<Attendance> sys = new ArrayList<Attendance>();
@@ -118,6 +127,7 @@ public class AttendanceTable extends DBMain {
                 sys.add(sy);
             } while(cursor.moveToNext());
         }
+        db.close();
         return sys;
     }
     public List<Attendance> getAttendance(String StudentLogin){
@@ -145,11 +155,13 @@ public class AttendanceTable extends DBMain {
                 sys.add(sy);
             } while(cursor.moveToNext());
         }
+        db.close();
         return sys;
     }
     public void deleteAllAttendance(){
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("DELETE FROM " + Utils.TABLE_ATTENDANCE + " WHERE " + Utils.ATTENDANCE_KEY_ID + " IS NOT NULL");
+        db.close();
     }
     public List<Attendance> getNewAttendanceForUpload(){
         List<Attendance> sys = new ArrayList<Attendance>();
@@ -174,6 +186,7 @@ public class AttendanceTable extends DBMain {
                 sys.add(sy);
             } while(cursor.moveToNext());
         }
+        db.close();
         return sys;
     }
     public void updateUploadedAttendance(Attendance a){

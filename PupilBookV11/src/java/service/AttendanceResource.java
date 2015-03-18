@@ -48,7 +48,7 @@ public class AttendanceResource {
     @Path("{login}/{password}")
     @Consumes({"application/xml", "application/json"})
     public List<AttendanceDTO> getAttendanceTeacher(@PathParam("login") String login, @PathParam("password") String password){
-        return SB.getAttendanceService(login);
+        return SB.getAttendanceService(login, password);
     }
     
     @GET

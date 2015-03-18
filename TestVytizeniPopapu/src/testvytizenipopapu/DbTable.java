@@ -21,7 +21,7 @@ public class DbTable extends Thread{
     {
         if (this.sConnection == null)
         {
-            String url = "jdbc:mysql://192.168.56.102:3306/pupilbook";
+            String url = "jdbc:mysql://192.168.56.102:3306/pupilbooktests";
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             this.sConnection = DriverManager.getConnection(url, "kastan", "lithium1");
             this.sConnection.setAutoCommit(false);

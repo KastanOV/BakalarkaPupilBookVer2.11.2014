@@ -36,6 +36,7 @@ public class StudyGroupTable extends DBMain{
             cursor.moveToFirst();
         }
         StudyGroup sy = new StudyGroup(Integer.parseInt(cursor.getString(0)), cursor.getString(1));
+        db.close();
         return sy;
     }
     public void deleteStudyGroup(StudyGroup s){
@@ -48,6 +49,7 @@ public class StudyGroupTable extends DBMain{
         Cursor cursor = db.rawQuery("SELECT * FROM " + Utils.TABLE_STUDYGROUP, null);
         int tmp = cursor.getCount();
         cursor.close();
+        db.close();
         return tmp;
     }
     public int updateStudyGroup(StudyGroup s){
@@ -57,8 +59,9 @@ public class StudyGroupTable extends DBMain{
 
         values.put(Utils.STUDY_GROUP_KEY_ID, s.getIdStudyGroup());
         values.put(Utils.STUDY_GROUP_KEY_NAME, s.getName());
-
-        return db.update(Utils.TABLE_STUDYGROUP,values, Utils.STUDY_GROUP_KEY_ID + "=?", new String[] {String.valueOf(s.getIdStudyGroup())});
+        int tmp = db.update(Utils.TABLE_STUDYGROUP,values, Utils.STUDY_GROUP_KEY_ID + "=?", new String[] {String.valueOf(s.getIdStudyGroup())});
+        db.close();
+        return tmp;
     }
     public List<StudyGroup> getAllStudyGroup(){
         List<StudyGroup> sys = new ArrayList<StudyGroup>();
@@ -72,10 +75,12 @@ public class StudyGroupTable extends DBMain{
                 sys.add(sy);
             } while(cursor.moveToNext());
         }
+        db.close();
         return sys;
     }
     public void deleteAllStudyGrops(){
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("DELETE FROM " + Utils.TABLE_STUDYGROUP);
+        db.close();
     }
 }

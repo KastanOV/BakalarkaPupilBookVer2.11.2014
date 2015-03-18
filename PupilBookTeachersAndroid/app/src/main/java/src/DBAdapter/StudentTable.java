@@ -41,6 +41,7 @@ public class StudentTable extends DBMain{
             cursor.moveToFirst();
         }
         Student sy = new Student(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6),Integer.parseInt(cursor.getString(7)) );
+        db.close();
         return sy;
     }
     public void deleteStudent(Student s){
@@ -53,6 +54,7 @@ public class StudentTable extends DBMain{
         Cursor cursor = db.rawQuery("SELECT * FROM " + Utils.TABLE_STUDENT, null);
         int tmp = cursor.getCount();
         cursor.close();
+        db.close();
         return tmp;
     }
     public int updateStudent(Student s){
@@ -68,8 +70,9 @@ public class StudentTable extends DBMain{
         values.put(Utils.STUDENT_KEY_EMAIL, s.getEmail());
         values.put(Utils.STUDENT_KEY_PASSWORD, s.getPassword());
         values.put(Utils.STUDENT_KEY_STUDYGROUP, s.getStudyGroupID());
-
-        return db.update(Utils.TABLE_STUDENT,values, Utils.STUDENT_KEY_ID + "=?", new String[] {s.getLogin()});
+        int tmp = db.update(Utils.TABLE_STUDENT,values, Utils.STUDENT_KEY_ID + "=?", new String[] {s.getLogin()});
+        db.close();
+        return tmp;
     }
     public List<Student> getAllStudent(){
         List<Student> sys = new ArrayList<Student>();
@@ -83,6 +86,7 @@ public class StudentTable extends DBMain{
                 sys.add(sy);
             } while(cursor.moveToNext());
         }
+        db.close();
         return sys;
     }
     public List<Student> getStudentsAsStudyGroup(int StudyGroup){
@@ -97,6 +101,7 @@ public class StudentTable extends DBMain{
                 sys.add(sy);
             } while(cursor.moveToNext());
         }
+        db.close();
         return sys;
     }
     public void deleteAllStudents(){

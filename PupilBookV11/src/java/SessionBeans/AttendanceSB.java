@@ -85,40 +85,45 @@ public class AttendanceSB implements AttendanceSBLocal {
         em.merge(a);
     }
     @Override
-    public List<AttendanceDTO> getAttendanceService(String login) {
-        List<AttendanceDTO> retval = new ArrayList<>();
-        try{
-            List<Object[]> tmp = em.createNativeQuery("select * from attendance a " +
-                " where a.users_login in (" +
-                " select distinct us.Login from sheduleitem si " +
-                " join studygroup sg on si.StudyGroup_idStudyGroup = sg.idStudyGroup " +
-                " join users us on us.StudyGroup_idStudyGroup = sg.idStudyGroup " +
-                " where si.Users_Login = ?login and sg.SchoolYear_idSchoolYear = ?si)")
-                    .setParameter("login", login)
-                    .setParameter("si", getActualSchoolYear())
-                    .getResultList();
-            AttendanceDTO addvat;
-            for(Object[] item : tmp){
-                addvat = new AttendanceDTO();
-                addvat.setId((Integer) item[0]);
-                addvat.setStart(String.valueOf(((Date) item[1]).getTime()));
-                Long timeTmp;
-                try {
-                    timeTmp =  ((Date) item[2]).getTime();
-                } catch (Exception e){
-                    timeTmp = null;
+    public List<AttendanceDTO> getAttendanceService(String login, String password) {
+        if(checkTeacher(login, password)){
+             List<AttendanceDTO> retval = new ArrayList<>();
+            try{
+                List<Object[]> tmp = em.createNativeQuery("select * from attendance a " +
+                    " where a.users_login in (" +
+                    " select distinct us.Login from sheduleitem si " +
+                    " join studygroup sg on si.StudyGroup_idStudyGroup = sg.idStudyGroup " +
+                    " join users us on us.StudyGroup_idStudyGroup = sg.idStudyGroup " +
+                    " where si.Users_Login = ?login and sg.SchoolYear_idSchoolYear = ?si)")
+                        .setParameter("login", login)
+                        .setParameter("si", getActualSchoolYear())
+                        .getResultList();
+                AttendanceDTO addvat;
+                for(Object[] item : tmp){
+                    addvat = new AttendanceDTO();
+                    addvat.setId((Integer) item[0]);
+                    addvat.setStart(String.valueOf(((Date) item[1]).getTime()));
+                    Long timeTmp;
+                    try {
+                        timeTmp =  ((Date) item[2]).getTime();
+                    } catch (Exception e){
+                        timeTmp = null;
+                    }
+                    addvat.setEnd(String.valueOf(timeTmp));
+
+                    addvat.setExcused((String) String.valueOf(item[3]));
+                    addvat.setLogin((String) item[4]);
+                    retval.add(addvat);
                 }
-                addvat.setEnd(String.valueOf(timeTmp));
-                
-                addvat.setExcused((String) String.valueOf(item[3]));
-                addvat.setLogin((String) item[4]);
-                retval.add(addvat);
+            return retval;
+            } catch( Exception e){
+                e.printStackTrace();
             }
-        return retval;
-        } catch( Exception e){
-            e.printStackTrace();
+            return null;
+        } else{
+            return null;
         }
-        return null;
+       
     }
     private int getActualSchoolYear(){
         Schoolyear idActualYear = (Schoolyear) em.createNativeQuery("SELECT * FROM schoolyear WHERE schoolyear.isactualyear = true", Schoolyear.class)
@@ -211,6 +216,14 @@ public class AttendanceSB implements AttendanceSBLocal {
             }
         return retval;
     }
-
+    private boolean checkTeacher(String login, String password){
+        long tmp = (long)em.createNativeQuery("SELECT count(*) FROM users u WHERE u.login = ?login AND u.password = ?password AND Role = 'T'")
+                .setParameter("login", login)
+                .setParameter("password", password)
+                .getSingleResult();
+        if(tmp > 0){
+            return true;
+        }else return false;
+    }
     
 }

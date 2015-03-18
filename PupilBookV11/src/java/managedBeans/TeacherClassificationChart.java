@@ -7,6 +7,7 @@ package managedBeans;
 
 import Entity.Results;
 import Entity.Studysubject;
+import Entity.Teacher;
 import Entity.Users;
 import SessionBeans.ResultsSBLocal;
 import java.io.Serializable;
@@ -34,8 +35,16 @@ public class TeacherClassificationChart implements Serializable{
 //    private LineChartModel classificationModel;
     private BarChartModel barModel;
     private Users editedStudent;
-    private Studysubject editedStudySubject;
 
+    public Teacher getLoggedTeacher() {
+        return loggedTeacher;
+    }
+
+    public void setLoggedTeacher(Teacher loggedTeacher) {
+        this.loggedTeacher = loggedTeacher;
+    }
+    private Studysubject editedStudySubject;
+    private Teacher loggedTeacher;
     public TeacherClassificationChart() {
     }
     private void createClassificationModel(){
@@ -55,7 +64,7 @@ public class TeacherClassificationChart implements Serializable{
         BarChartModel model = new BarChartModel();
         ChartSeries classification = new ChartSeries("Známky");
             if(editedStudent != null && editedStudySubject != null){
-                List<Results> res = sb.getStudentResults(editedStudent.getLogin(), editedStudySubject.getIdStudySubject());
+                List<Results> res = sb.getStudentResults(loggedTeacher.getLogin(), editedStudent.getLogin(), editedStudySubject.getIdStudySubject());
                 if(!res.isEmpty()){
                     for(Results item : res){
                     double score = (double) (item.getScore());

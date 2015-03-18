@@ -47,11 +47,13 @@ public class ResultsSB implements ResultsSBLocal {
     }
     
     @Override
-    public List<Results> getStudentResults(String login, int StudySubjectID){
-        return em.createNativeQuery("select * from results WHERE Student_Login = ?login AND SchoolYear_idSchoolYear = ?syId AND StudySubject_idStudySubject = ?StudySubjectID", Results.class)
+    public List<Results> getStudentResults(String TeacherLogin, String login, int StudySubjectID){
+        int YearID = getActualSchoolYear();
+        return em.createNativeQuery("select * from results WHERE Student_Login = ?login AND SchoolYear_idSchoolYear = ?syId AND StudySubject_idStudySubject = ?StudySubjectID  AND Teacher_Login = ?TeacherLogin", Results.class)
                     .setParameter("login", login)
                     .setParameter("syId", getActualSchoolYear())
                     .setParameter("StudySubjectID", StudySubjectID)
+                    .setParameter("TeacherLogin", TeacherLogin)
                     .getResultList();
     }
     
@@ -84,14 +86,15 @@ public class ResultsSB implements ResultsSBLocal {
     }
     
     @Override
-    public List<ResultsExtended> getStudentExtendResults(String TeacherLogin, String StudentLogin, int StudySubjectID){
+    public List<ResultsExtended> getStudentExtendResults(String TeacherLogin, String StudentLogin, int StudySubjectID, int editedStudyGroup){
         int YearID = getActualSchoolYear();
         List<String> tmp = (List<String>) em.createNativeQuery("select distinct Description "
-                + " from results "
-                + " where StudySubject_idStudySubject = ?StudySubject AND Teacher_Login = ?TeacherLogin AND SchoolYear_idSchoolYear = ?ActualYear ")
+                + " from results join users on results.Student_Login = users.Login "
+                + " where StudySubject_idStudySubject = ?StudySubject AND Teacher_Login = ?TeacherLogin AND SchoolYear_idSchoolYear = ?ActualYear AND users.StudyGroup_idStudyGroup = ?sgID")
                 .setParameter("StudySubject", StudySubjectID)
                 .setParameter("TeacherLogin", TeacherLogin)
                 .setParameter("ActualYear", YearID)
+                .setParameter("sgID", editedStudyGroup)
                 .getResultList();
         List<ResultsExtended> exRes = new ArrayList<>();
         for (String item : tmp){

@@ -20,6 +20,7 @@ package managedBeans;
 import Entity.Results;
 import Entity.ResultsExtended;
 import Entity.Student;
+import Entity.Studygroup;
 import Entity.Studysubject;
 import Entity.Users;
 import SessionBeans.ResultsSBLocal;
@@ -43,6 +44,15 @@ public class TeacherClassificationTable implements Serializable{
     private ResultsExtended editedResult;
     private List<Results> Results;
     private Studysubject editedStudySubject;
+    private Studygroup editedStudyGroup;
+
+    public Studygroup getEditedStudyGroup() {
+        return editedStudyGroup;
+    }
+
+    public void setEditedStudyGroup(Studygroup editedStudyGroup) {
+        this.editedStudyGroup = editedStudyGroup;
+    }
     private Users loggedUser;
     private Student student;
     private Boolean render;
@@ -64,7 +74,7 @@ public class TeacherClassificationTable implements Serializable{
         if(loggedUser == null || student == null || editedStudySubject == null){
             return null;
         }
-        return ResultsSB.getStudentExtendResults(loggedUser.getLogin(), student.getLogin(), editedStudySubject.getIdStudySubject());
+        return ResultsSB.getStudentExtendResults(loggedUser.getLogin(), student.getLogin(), editedStudySubject.getIdStudySubject(), editedStudyGroup.getIdStudyGroup());
     }
     public void saveClassification(){
         ResultsSB.saveResult(editedResult);

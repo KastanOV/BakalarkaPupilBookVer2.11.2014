@@ -103,7 +103,7 @@ class CommonUser extends DbTable{
                 System.out.println(e.getMessage());
             }
             try {
-                Thread.sleep(this.rnd.nextInt(200));
+                Thread.sleep(this.rnd.nextInt(500));
             } catch (InterruptedException ex) {
                 Logger.getLogger(CommonUser.class.getName()).log(Level.SEVERE, null, ex);
             }

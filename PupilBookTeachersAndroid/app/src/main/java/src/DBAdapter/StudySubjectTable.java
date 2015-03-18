@@ -37,6 +37,7 @@ public class StudySubjectTable extends DBMain{
         cursor.moveToFirst();
         }
         StudySubject sy = new StudySubject(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2));
+        db.close();
         return sy;
         }
 
@@ -50,6 +51,7 @@ public class StudySubjectTable extends DBMain{
         Cursor cursor = db.rawQuery("SELECT * FROM " + Utils.TABLE_STUDYSUBJECT, null);
         int tmp = cursor.getCount();
         cursor.close();
+        db.close();
         return tmp;
         }
     public int updateStudySubject(StudySubject s){
@@ -60,8 +62,9 @@ public class StudySubjectTable extends DBMain{
         values.put(Utils.STUDY_SUBJECT_KEY_ID, s.getIdStudySubject());
         values.put(Utils.STUDY_SUBJECT_KEY_NAME, s.getName());
         values.put(Utils.STUDY_SUBJECT_KEY_SHORT_NAME, s.getShortName());
-
-        return db.update(Utils.TABLE_STUDYSUBJECT,values, Utils.STUDY_SUBJECT_KEY_ID + "=?", new String[] {String.valueOf(s.getIdStudySubject())});
+        int tmp = db.update(Utils.TABLE_STUDYSUBJECT,values, Utils.STUDY_SUBJECT_KEY_ID + "=?", new String[] {String.valueOf(s.getIdStudySubject())});
+        db.close();
+        return tmp;
         }
     public List<StudySubject> getAllStudySubject(){
         List<StudySubject> sys = new ArrayList<StudySubject>();
@@ -75,6 +78,7 @@ public class StudySubjectTable extends DBMain{
         sys.add(sy);
         } while(cursor.moveToNext());
         }
+        db.close();
         return sys;
     }
     public List<StudySubject> getStudySubjectsFromStudyGroup(int StudyGroupId){
@@ -98,10 +102,12 @@ public class StudySubjectTable extends DBMain{
                 sys.add(sy);
             } while(cursor.moveToNext());
         }
+        db.close();
         return sys;
     }
     public void deleteAllStudySubjects(){
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("DELETE FROM " + Utils.TABLE_STUDYSUBJECT);
+        db.close();
 }
 }

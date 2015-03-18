@@ -35,7 +35,7 @@ public interface AttendanceSBLocal {
     public void setAttendanceExcused(Attendance a);
     //public List<Attendance> getAttendance(Student t);
     public List<Attendance> getAttendance(Student s, Studygroup sg);
-    public List<AttendanceDTO> getAttendanceService(String login);
+    public List<AttendanceDTO> getAttendanceService(String login, String password);
     public List<AttendanceDTO> getAttendanceServiceStudent(String login);
     public int UploadAttendance(AttendanceDTO at);
     public String excuseAttendance(String login, String password, Integer id);

@@ -9,7 +9,9 @@
             #{teacherClassificationChart.setEditedStudySubject(teacherMainController.editedStudySubject)}
             #{teacherMainController.setLoggedUser(loginBean.userObject)}
             #{teacherClassificationTable.setLoggedUser(loginBean.userObject)}
+            #{teacherClassificationChart.setLoggedTeacher(loginBean.userObject)}
             #{teacherClassificationTable.setEditedStudySubject(teacherMainController.editedStudySubject)}
+            #{teacherClassificationTable.setEditedStudyGroup(teacherMainController.editedStudyGroup)}
             #{teacherClassificationTable.setStudent(teacherMainController.editedStudent)}
             <p:growl id="messages" showDetail="true"/> 
             <h:panelGrid columns="2" cellpadding="5">

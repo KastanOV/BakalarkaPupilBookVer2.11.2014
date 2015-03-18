@@ -36,6 +36,7 @@ public class SchoolyearTable extends DBMain {
             cursor.moveToFirst();
         }
         Schoolyear sy = new Schoolyear(Integer.parseInt(cursor.getString(0)), cursor.getString(1));
+        db.close();
         return sy;
     }
     public void deleteSchoolyear(Schoolyear s){
@@ -48,6 +49,7 @@ public class SchoolyearTable extends DBMain {
         Cursor cursor = db.rawQuery("SELECT * FROM " + Utils.TABLE_SCHOOLYEAR, null);
         int tmp = cursor.getCount();
         cursor.close();
+        db.close();
         return tmp;
     }
     public int updateSchoolyear(Schoolyear s){
@@ -57,8 +59,9 @@ public class SchoolyearTable extends DBMain {
 
         values.put(Utils.SCHOOL_YEAR_KEY_ID, s.get_id());
         values.put(Utils.SCHOOL_YEAR_KEY_NAME, s.get_name());
-
-        return db.update(Utils.TABLE_SCHOOLYEAR,values, Utils.SCHOOL_YEAR_KEY_ID + "=?", new String[] {String.valueOf(s.get_id())});
+        int tmp = db.update(Utils.TABLE_SCHOOLYEAR,values, Utils.SCHOOL_YEAR_KEY_ID + "=?", new String[] {String.valueOf(s.get_id())});
+        db.close();
+        return tmp;
     }
     public List<Schoolyear> getAllSchoolyears(){
         List<Schoolyear> sys = new ArrayList<Schoolyear>();
@@ -72,6 +75,7 @@ public class SchoolyearTable extends DBMain {
                 sys.add(sy);
             } while(cursor.moveToNext());
         }
+        db.close();
         return sys;
     }
 }

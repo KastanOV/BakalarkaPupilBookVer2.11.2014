@@ -40,6 +40,7 @@ public class SheduleItemTable extends DBMain {
             cursor.moveToFirst();
         }
         SheduleItem sy = new SheduleItem(Integer.parseInt(cursor.getString(0)), Integer.parseInt(cursor.getString(1)), Integer.parseInt(cursor.getString(2)), Integer.parseInt(cursor.getString(3)), Integer.parseInt(cursor.getString(4)), cursor.getString(5));
+        db.close();
         return sy;
     }
     public void deleteSheduleItem(SheduleItem s){
@@ -52,6 +53,7 @@ public class SheduleItemTable extends DBMain {
         Cursor cursor = db.rawQuery("SELECT * FROM " + Utils.TABLE_SHEDULEITEM, null);
         int tmp = cursor.getCount();
         cursor.close();
+        db.close();
         return tmp;
     }
     public int updateSheduleItem(SheduleItem s){
@@ -65,7 +67,9 @@ public class SheduleItemTable extends DBMain {
         values.put(Utils.SHEDULE_ITEM_KEY_ID_STUDY_GROUP, s.getIdStudyGroup());
         values.put(Utils.SHEDULE_ITEM_KEY_ID_STUDY_SUBJECT, s.getIdStudySubject());
         values.put(Utils.SHEDULE_ITEM_KEY_LOGIN, s.getLogin());
-        return db.update(Utils.TABLE_SHEDULEITEM,values, Utils.SHEDULE_ITEM_KEY_ID + "=?", new String[] {String.valueOf(s.getId())});
+        int tmp = db.update(Utils.TABLE_SHEDULEITEM,values, Utils.SHEDULE_ITEM_KEY_ID + "=?", new String[] {String.valueOf(s.getId())});
+        db.close();
+        return tmp;
 
     }
     public List<SheduleItem> getAllSheduleItem(){
@@ -81,6 +85,7 @@ public class SheduleItemTable extends DBMain {
                 sys.add(sy);
             } while(cursor.moveToNext());
         }
+        db.close();
         return sys;
     }
     public List<SheduleItem> getSheduleitemsByDay(int day){
@@ -96,10 +101,12 @@ public class SheduleItemTable extends DBMain {
                 sys.add(sy);
             } while(cursor.moveToNext());
         }
+        db.close();
         return sys;
     }
     public void deleteAllSheduleItems(){
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("DELETE FROM " + Utils.TABLE_SHEDULEITEM);
+        db.close();
     }
 }
