@@ -57,7 +57,7 @@ class CommonUser extends DbTable{
             Logger.getLogger(CommonUser.class.getName()).log(Level.SEVERE, null, ex);
         }
         try{
-            for (int i = 0; i < 10 ; i++){
+            for (int i = 0; i < 2 ; i++){
                 
                 GenerateSchoolYear(i + 2001, ActualYear);
                 ActualYear = false;
@@ -238,7 +238,7 @@ class CommonUser extends DbTable{
                 pstmt.executeUpdate();
                 this.pstmt.clearParameters();
                 this.sConnection.commit();
-                out.printf("%s;%s;T\n", LastNames[lastTmp], passTmp);
+                out.printf("%s;%s;%s\n", LastNames[lastTmp], passTmp, HashPassword.md5Hash(passTmp));
                 TeachersLogins[i] = LastNames[lastTmp];
             }catch (Exception e){
 
@@ -286,7 +286,7 @@ class CommonUser extends DbTable{
                 pstmt.executeUpdate();
                 this.pstmt.clearParameters();
                 this.sConnection.commit();
-                out.printf("%s;%s;T\n", LastNames[lastTmp], passTmp);
+                out.printf("%s;%s;%s\n", LastNames[lastTmp], passTmp, HashPassword.md5Hash(passTmp));
                 GenerateAttendance(LastNames[lastTmp]);
                 this.pstmt = this.sConnection.prepareStatement("INSERT INTO users(FirstName,LastName,Phone,Email,Login,Password,StudyGroup_idStudyGroup,Role,deleted)VALUES(?,?,?,?,?,?,?,?,?);");
                 this.pstmt.setString(1, FirstNames[firstTmp]);
