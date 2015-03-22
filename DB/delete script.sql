@@ -1,5 +1,7 @@
 DELETE FROM pupilbooktests.attendance;
 DELETE FROM pupilbooktests.parrentstudent;
+DELETE FROM pupilbooktests.informations;
+DELETE FROM pupilbooktests.results;
 DELETE FROM pupilbooktests.sheduleitem;
 DELETE FROM pupilbooktests.users;
 DELETE FROM pupilbooktests.studygroup;

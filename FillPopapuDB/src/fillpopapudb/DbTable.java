@@ -50,7 +50,7 @@ public class DbTable extends Thread{
         createNames();
         if (this.sConnection == null)
         {
-            String url = "jdbc:mysql://192.168.1.162:3306/pupilbooktests";
+            String url = "jdbc:mysql://185.8.237.235:3306/pupilbooktests";
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             this.sConnection = DriverManager.getConnection(url, "kastan", "lithium1");
             this.sConnection.setAutoCommit(false);

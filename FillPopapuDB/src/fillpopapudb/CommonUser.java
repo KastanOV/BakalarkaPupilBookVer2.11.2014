@@ -57,7 +57,7 @@ class CommonUser extends DbTable{
             Logger.getLogger(CommonUser.class.getName()).log(Level.SEVERE, null, ex);
         }
         try{
-            for (int i = 0; i < 2 ; i++){
+            for (int i = 0; i < 3 ; i++){
                 
                 GenerateSchoolYear(i + 2001, ActualYear);
                 ActualYear = false;
@@ -286,7 +286,7 @@ class CommonUser extends DbTable{
                 pstmt.executeUpdate();
                 this.pstmt.clearParameters();
                 this.sConnection.commit();
-                out.printf("%s;%s;%s\n", LastNames[lastTmp], passTmp, HashPassword.md5Hash(passTmp));
+                out.printf("%s;%s;%s;%s;S\n", LastNames[lastTmp], passTmp, HashPassword.md5Hash(passTmp), String.valueOf(sgID) );
                 GenerateAttendance(LastNames[lastTmp]);
                 this.pstmt = this.sConnection.prepareStatement("INSERT INTO users(FirstName,LastName,Phone,Email,Login,Password,StudyGroup_idStudyGroup,Role,deleted)VALUES(?,?,?,?,?,?,?,?,?);");
                 this.pstmt.setString(1, FirstNames[firstTmp]);
@@ -301,7 +301,7 @@ class CommonUser extends DbTable{
                 pstmt.executeUpdate();
                 this.pstmt.clearParameters();
                 this.sConnection.commit();
-                out.printf("%s;%s;T\n", "p" + LastNames[lastTmp], passTmp);
+                out.printf("%s;%s;%s;%s;P\n", LastNames[lastTmp], passTmp, HashPassword.md5Hash(passTmp), String.valueOf(sgID) );
                 this.pstmt = this.sConnection.prepareStatement("INSERT INTO parrentstudent (Student_Login,Parent_Login) VALUES (?,?)");
                 this.pstmt.setString(1, LastNames[lastTmp]);
                 this.pstmt.setString(2, "p" + LastNames[lastTmp]);
