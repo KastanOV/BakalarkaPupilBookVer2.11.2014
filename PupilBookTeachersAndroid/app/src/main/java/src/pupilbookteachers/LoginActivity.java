@@ -17,7 +17,8 @@ import src.restapi.MD5Hash;
 
 public class LoginActivity extends Activity {
 
-    private final String stringUrl = "http://192.168.1.109:8080/PupilBookV11/webresources/teachers/";
+    //private final String stringUrl = "http://192.168.1.109:8080/PupilBookV11/webresources/teachers/";
+    private final String stringUrl = "http://185.8.237.235:8080/PupilBookV11/webresources/teachers/";
     //private final String stringUrl = "http://86.49.147.115:18080/PupilBookV11/webresources/teachers/";
 
 

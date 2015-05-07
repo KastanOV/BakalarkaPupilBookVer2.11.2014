@@ -68,7 +68,7 @@ class CommonUser extends DbTable{
         
     }
     private void GenerateInformation(String StudentLogin, Long sgID){
-        for(int i = 0; i < rnd.nextInt(10); i++){
+        for(int i = 0; i < rnd.nextInt(5); i++){
             String tmps = Lorum[rnd.nextInt(Lorum.length)].substring(0, 19);
             String tmpl = Lorum[rnd.nextInt(Lorum.length)];
             Boolean forsg = rnd.nextBoolean();
@@ -232,13 +232,13 @@ class CommonUser extends DbTable{
                 this.pstmt.setString(4, LastNames[lastTmp] + "." + FirstNames[firstTmp] + "@seznam.com");
                 this.pstmt.setString(5, LastNames[lastTmp]);
                 String passTmp = createPassword();
-                this.pstmt.setString(6, HashPassword.md5Hash(passTmp));
+                this.pstmt.setString(6, HashPassword.md5Hash(LastNames[lastTmp]));
                 this.pstmt.setString(7, "T");
                 this.pstmt.setBoolean(8, false);
                 pstmt.executeUpdate();
                 this.pstmt.clearParameters();
                 this.sConnection.commit();
-                out.printf("%s;%s;%s\n", LastNames[lastTmp], passTmp, HashPassword.md5Hash(passTmp));
+                out.printf("%s;%s;%s\n", LastNames[lastTmp], LastNames[lastTmp], HashPassword.md5Hash(LastNames[lastTmp]));
                 TeachersLogins[i] = LastNames[lastTmp];
             }catch (Exception e){
 
@@ -279,14 +279,14 @@ class CommonUser extends DbTable{
                 this.pstmt.setString(4, LastNames[lastTmp] + "." + FirstNames[firstTmp] + "@seznam.com");
                 this.pstmt.setString(5, LastNames[lastTmp]);
                 String passTmp = createPassword();
-                this.pstmt.setString(6, HashPassword.md5Hash(passTmp));
+                this.pstmt.setString(6, HashPassword.md5Hash(LastNames[lastTmp]));
                 this.pstmt.setLong(7, sgID);
                 this.pstmt.setString(8, "S");
                 this.pstmt.setBoolean(9, false);
                 pstmt.executeUpdate();
                 this.pstmt.clearParameters();
                 this.sConnection.commit();
-                out.printf("%s;%s;%s;%s;S\n", LastNames[lastTmp], passTmp, HashPassword.md5Hash(passTmp), String.valueOf(sgID) );
+                out.printf("%s;%s;%s;%s;S\n", LastNames[lastTmp], LastNames[lastTmp], HashPassword.md5Hash(LastNames[lastTmp]), String.valueOf(sgID) );
                 GenerateAttendance(LastNames[lastTmp]);
                 this.pstmt = this.sConnection.prepareStatement("INSERT INTO users(FirstName,LastName,Phone,Email,Login,Password,StudyGroup_idStudyGroup,Role,deleted)VALUES(?,?,?,?,?,?,?,?,?);");
                 this.pstmt.setString(1, FirstNames[firstTmp]);
@@ -294,14 +294,14 @@ class CommonUser extends DbTable{
                 this.pstmt.setString(3, LastNames[lastTmp]);
                 this.pstmt.setString(4, LastNames[lastTmp] + "." + FirstNames[firstTmp] + "@seznam.com");
                 this.pstmt.setString(5, "p" + LastNames[lastTmp]);
-                this.pstmt.setString(6, HashPassword.md5Hash(passTmp));
+                this.pstmt.setString(6, HashPassword.md5Hash(LastNames[lastTmp]));
                 this.pstmt.setLong(7, sgID);
                 this.pstmt.setString(8, "P");
                 this.pstmt.setBoolean(9, false);
                 pstmt.executeUpdate();
                 this.pstmt.clearParameters();
                 this.sConnection.commit();
-                out.printf("%s;%s;%s;%s;P\n", LastNames[lastTmp], passTmp, HashPassword.md5Hash(passTmp), String.valueOf(sgID) );
+                out.printf("%s;%s;%s;%s;P\n", LastNames[lastTmp], LastNames[lastTmp], HashPassword.md5Hash(LastNames[lastTmp]), String.valueOf(sgID) );
                 this.pstmt = this.sConnection.prepareStatement("INSERT INTO parrentstudent (Student_Login,Parent_Login) VALUES (?,?)");
                 this.pstmt.setString(1, LastNames[lastTmp]);
                 this.pstmt.setString(2, "p" + LastNames[lastTmp]);

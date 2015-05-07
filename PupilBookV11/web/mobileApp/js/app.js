@@ -24,7 +24,8 @@ initPage = function($scope){
     };
 (function(){
     //var URL = "http://localhost:8080/PupilBookV11/webresources/";
-    var URL = "http://86.49.147.115:18080/PupilBookV11/webresources/";
+    //var URL = "http://86.49.147.115:18080/PupilBookV11/webresources/";
+    var URL = "http://185.8.237.235:8080/PupilBookV11/webresources/";
     var home = angular.module('home',['ui.bootstrap']);
     
     home.controller('homeController',function($scope,$http){
@@ -144,6 +145,7 @@ initPage = function($scope){
                 $scope.thursday = [];
                 $scope.friday = [];
                 $scope.shedule = {};
+                
                 var studyGroup = localStorage.getItem("studyGroup");
                     $http.get(URL + "sheduleitems/" + studyGroup)
                        .success(function(data){

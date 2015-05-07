@@ -25,6 +25,7 @@ import Entity.Studysubject;
 import Entity.Users;
 import SessionBeans.ResultsSBLocal;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -72,7 +73,7 @@ public class TeacherClassificationTable implements Serializable{
     
     public List<ResultsExtended> getStudentExtendResults() {
         if(loggedUser == null || student == null || editedStudySubject == null){
-            return null;
+            return new ArrayList<ResultsExtended>();
         }
         return ResultsSB.getStudentExtendResults(loggedUser.getLogin(), student.getLogin(), editedStudySubject.getIdStudySubject(), editedStudyGroup.getIdStudyGroup());
     }

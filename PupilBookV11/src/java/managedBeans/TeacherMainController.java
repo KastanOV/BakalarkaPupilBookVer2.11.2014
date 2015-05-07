@@ -66,6 +66,9 @@ public class TeacherMainController implements Serializable{
     
     public TeacherMainController() {
         showDeletedUsers = false;
+        if(score == null){
+            score = 0;
+        }
     }
     
     public void onRate(RateEvent rateEvent){
@@ -143,6 +146,7 @@ public class TeacherMainController implements Serializable{
         this.classificationDescription = classificationDescription;
     }
     public Integer getScore() {
+       
         return score;
     }
 

@@ -60,19 +60,19 @@ public class AttendanceSB implements AttendanceSBLocal {
         query.append("SELECT * FROM attendance ");
         
         if(s != null && sg == null){
-            return em.createNativeQuery("SELECT * FROM attendance where Users_Login = ?ul", Attendance.class)
+            return em.createNativeQuery("SELECT * FROM attendance where Users_Login = ?ul order by MissingStart desc", Attendance.class)
                 .setParameter("ul", s.getLogin())
                 .getResultList();
         }else if (s == null && sg == null){
-            return em.createNativeQuery("SELECT * FROM attendance", Attendance.class)
+            return em.createNativeQuery("SELECT * FROM attendance order by MissingStart desc", Attendance.class)
                 .getResultList();
         } else if (s != null && sg != null){
-            return em.createNativeQuery("SELECT * FROM attendance where Users_Login = ?ul", Attendance.class)
+            return em.createNativeQuery("SELECT * FROM attendance where Users_Login = ?ul order by MissingStart desc", Attendance.class)
                 .setParameter("ul", s.getLogin())
                 .getResultList();
         }else if(s == null && sg != null){
             return em.createNativeQuery("SELECT * FROM attendance a " +
-            " where exists (select * from users u join studygroup on StudyGroup_idStudyGroup = idStudyGroup where idStudyGroup = ?id and u.login = a.users_login)", Attendance.class)
+            " where exists (select * from users u join studygroup on StudyGroup_idStudyGroup = idStudyGroup where idStudyGroup = ?id and u.login = a.users_login order by MissingStart desc)", Attendance.class)
                 .setParameter("id", sg.getIdStudyGroup())
                 .getResultList();
         }
